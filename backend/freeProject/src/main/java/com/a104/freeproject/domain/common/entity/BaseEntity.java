@@ -1,4 +1,4 @@
-package com.a104.freeproject.domain.common.db.entity;
+package com.a104.freeproject.domain.common.entity;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
