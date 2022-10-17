@@ -49,7 +49,7 @@ public class AmazonS3Controller {
     /**
      * Amazon S3에 업로드 된 파일을 삭제
      * return 성공 시 200 Success
-     */
+     */ 
     @ApiOperation(value = "Amazon S3에 업로드 된 파일을 삭제", notes = "Amazon S3에 업로드된 파일 삭제")
     @DeleteMapping("/file")
     public ResponseEntity<Void> deleteFile(@ApiParam(value="파일 하나 삭제(url 전달)", required = true) @RequestParam String url) {
