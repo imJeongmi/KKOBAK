@@ -32,7 +32,7 @@ dependencies {
 	implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
 
 	// AWS S3
-	implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-aws', version: '2.2.6.RELEASE'
+//	implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-aws', version: '2.2.6.RELEASE'
 }
 
 tasks.named('test') {
