@@ -6,6 +6,8 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -44,6 +46,7 @@ public class Member {
     @NotNull
     private String watchInfo;
 
+    @Setter
     @NotNull
     @Builder.Default
     @ColumnDefault("false")
@@ -57,4 +60,10 @@ public class Member {
     @CreationTimestamp
     private Timestamp joinDate;
 
+    public Member(String email, String password, String nickname, String hp) {
+        this.email = email;
+        this.password = password;
+        this.nickname = nickname;
+        this.hp = hp;
+    }
 }
