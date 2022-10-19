@@ -39,3 +39,4 @@ out/
 ### MY ADD ###
 application-aws.yml
 application-credentials.yml
+application-secret.properties
