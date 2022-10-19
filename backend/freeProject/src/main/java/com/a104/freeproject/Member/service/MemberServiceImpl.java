@@ -47,6 +47,25 @@ public class MemberServiceImpl implements MemberService{
 
         Member member = new Member(input.getEmail(), passwordEncoder.encode(input.getPassword()), input.getNickname(), input.getHp());
         member.setAuthority(Authority.ROLE_USER);
+
+        char[] charSet = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F',
+                'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
+
+        boolean tagFlag=true;
+        while(tagFlag){
+            String tmpTag = "";
+            int idx = 0;
+            for (int i = 0; i < 10; i++) {
+                idx = (int) (charSet.length * Math.random());
+                tmpTag += charSet[idx];
+            }
+
+            if(!memberRepository.existsByTag(tmpTag)) {
+                tagFlag = false;
+                member.setTag(tmpTag);
+            }
+        }
+
         memberRepository.save(member);
 
         return login(new LoginRequest(member.getEmail(), input.getPassword()));

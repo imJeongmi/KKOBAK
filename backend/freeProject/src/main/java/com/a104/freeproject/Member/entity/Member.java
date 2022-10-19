@@ -32,6 +32,7 @@ public class Member {
     @Column(unique = true)
     private String email;
 
+    @Setter
     @NotNull
     @Column(unique = true)
     private String tag;
