@@ -6,6 +6,7 @@ import com.a104.freeproject.Member.entity.Member;
 import com.a104.freeproject.Member.repository.MemberRepository;
 import com.a104.freeproject.Member.request.JoinRequest;
 import com.a104.freeproject.Member.request.LoginRequest;
+import com.a104.freeproject.Member.request.RegWatchRequest;
 import com.a104.freeproject.Member.response.TokenResponse;
 import com.a104.freeproject.advice.exceptions.NotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -100,6 +101,19 @@ public class MemberServiceImpl implements MemberService{
     @Override
     public boolean nameCheck(String name) {
         if(memberRepository.existsByNickname(name)) return false;
+        return true;
+    }
+
+    @Override
+    public boolean regWatch(RegWatchRequest input) throws NotFoundException {
+
+        // 추후 watch 등록 과정 존재 시 추가할 것.
+        if(!memberRepository.existsByEmail(input.getEmail())) throw new NotFoundException("가입되지 않은 이메일입니다.");
+
+        Member member = memberRepository.findByEmail(input.getEmail());
+        member.setWatchInfo(input.getSerialNum());
+        memberRepository.save(member);
+
         return true;
     }
 }

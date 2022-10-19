@@ -2,6 +2,7 @@ package com.a104.freeproject.Member.controller;
 
 import com.a104.freeproject.Member.request.JoinRequest;
 import com.a104.freeproject.Member.request.LoginRequest;
+import com.a104.freeproject.Member.request.RegWatchRequest;
 import com.a104.freeproject.Member.response.TokenResponse;
 import com.a104.freeproject.Member.service.MemberServiceImpl;
 import com.a104.freeproject.advice.exceptions.NotFoundException;
@@ -55,4 +56,9 @@ public class MemberController {
         return memberService.nameCheck(name);
     }
 
+    @PostMapping("/register/watch")
+    @ApiOperation(value="갤럭시 워치 등록", notes = "워치 시리얼 넘버라고 생각하고 우선 string 값 저장한다고 생각. 현재는 성공 시 return true")
+    public ResponseEntity<Boolean> join(@RequestBody RegWatchRequest input) throws NotFoundException {
+        return ResponseEntity.ok().body(memberService.regWatch(input));
+    }
 }

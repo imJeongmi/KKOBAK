@@ -57,6 +57,11 @@ public class Member {
     @Setter
     @NotNull
     @Builder.Default
+    private int theme = 0;
+
+    @Setter
+    @NotNull
+    @Builder.Default
     @ColumnDefault("false")
     private boolean isDelete = false;
 
@@ -78,5 +83,6 @@ public class Member {
         this.password = password;
         this.nickname = nickname;
         this.hp = hp;
+        this.theme = 0;
     }
 }
