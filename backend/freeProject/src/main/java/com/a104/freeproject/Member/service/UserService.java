@@ -6,12 +6,18 @@ import com.a104.freeproject.Member.response.MemberResponse;
 import com.a104.freeproject.Member.util.SecurityUtil;
 import com.a104.freeproject.advice.exceptions.NotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.PropertySources;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
+@PropertySources({
+        @PropertySource("classpath:application.properties"),
+        @PropertySource("classpath:application-secret.properties")
+})
 public class UserService {
 
     private final MemberRepository memberRepository;

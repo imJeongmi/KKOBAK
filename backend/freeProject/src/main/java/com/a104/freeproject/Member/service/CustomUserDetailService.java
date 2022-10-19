@@ -3,6 +3,8 @@ package com.a104.freeproject.Member.service;
 import com.a104.freeproject.Member.entity.Member;
 import com.a104.freeproject.Member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.PropertySources;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -16,6 +18,10 @@ import java.util.Collections;
 
 @Service
 @RequiredArgsConstructor
+@PropertySources({
+        @PropertySource("classpath:application.properties"),
+        @PropertySource("classpath:application-secret.properties")
+})
 public class CustomUserDetailService implements UserDetailsService {
 
     private final MemberRepository memberRepository;

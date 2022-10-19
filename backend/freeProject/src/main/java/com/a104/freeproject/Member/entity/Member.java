@@ -11,6 +11,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 @Entity
 @Getter
@@ -27,7 +29,12 @@ public class Member {
     private Long id;
 
     @NotNull
+    @Column(unique = true)
     private String email;
+
+    @NotNull
+    @Column(unique = true)
+    private String tag;
 
     @Setter
     @NotNull
@@ -35,7 +42,7 @@ public class Member {
 
     @Setter
     @NotNull
-    @Column(length = 20)
+    @Column(length = 20, unique = true)
     private String nickname;
 
     @Setter
@@ -57,8 +64,13 @@ public class Member {
     private Authority authority;
 
     @NotNull
-    @CreationTimestamp
-    private Timestamp joinDate;
+    private LocalDateTime joinDate;
+
+    @PrePersist
+    public void test() {
+        this.joinDate =  LocalDateTime.now(ZoneId.of("Asia/Seoul"));
+    }
+
 
     public Member(String email, String password, String nickname, String hp) {
         this.email = email;

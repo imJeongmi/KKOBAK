@@ -2,6 +2,8 @@ package com.a104.freeproject.Member.Jwt;
 
 import com.a104.freeproject.Member.service.CustomUserDetailService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.PropertySources;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -13,6 +15,10 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
+@PropertySources({
+        @PropertySource("classpath:application.properties"),
+        @PropertySource("classpath:application-secret.properties")
+})
 public class AuthenticationProviderImpl implements AuthenticationProvider {
 
     private final CustomUserDetailService userDetailsService;

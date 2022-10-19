@@ -1,6 +1,8 @@
 package com.a104.freeproject.Member.Jwt;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.PropertySources;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.StringUtils;
@@ -15,6 +17,10 @@ import java.io.IOException;
 import java.util.Map;
 
 @RequiredArgsConstructor
+@PropertySources({
+        @PropertySource("classpath:application.properties"),
+        @PropertySource("classpath:application-secret.properties")
+})
 public class JwtFilter extends OncePerRequestFilter {
 
     private final TokenProvider tokenProvider;

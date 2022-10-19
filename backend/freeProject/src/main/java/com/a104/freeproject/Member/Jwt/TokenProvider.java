@@ -4,6 +4,8 @@ import com.a104.freeproject.Member.response.TokenResponse;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.PropertySources;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -19,11 +21,15 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Component
+@PropertySources({
+        @PropertySource("classpath:application.properties"),
+        @PropertySource("classpath:application-secret.properties")
+})
 public class TokenProvider {
 
     @Value("${spring.security.authorities_key}")
     private String AUTHORITIES_KEY = "";
-    private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 24;            // 24시간
+    private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 24 * 7;            // 24시간 * 7 = 7일
     @Value("${spring.security.secretKey}")
     private String secretKey = "";
 

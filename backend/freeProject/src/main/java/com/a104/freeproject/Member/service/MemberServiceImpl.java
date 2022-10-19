@@ -10,6 +10,8 @@ import com.a104.freeproject.Member.response.TokenResponse;
 import com.a104.freeproject.advice.exceptions.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.PropertySources;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
@@ -22,6 +24,10 @@ import java.util.regex.Pattern;
 @Service
 @Transactional
 @RequiredArgsConstructor
+@PropertySources({
+        @PropertySource("classpath:application.properties"),
+        @PropertySource("classpath:application-secret.properties")
+})
 public class MemberServiceImpl implements MemberService{
 
     private final MemberRepository memberRepository;
