@@ -7,9 +7,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class RegWatchRequest {
-
-    private String email;
+public class WatchRequest {
     private String serialNum;
 
 }

@@ -27,9 +27,8 @@ import java.util.stream.Collectors;
 })
 public class TokenProvider {
 
-    @Value("${spring.security.authorities_key}")
-    private String AUTHORITIES_KEY = "";
-    private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 24 * 7;            // 24시간 * 7 = 7일
+    private static final String AUTHORITIES_KEY = "auth";
+    private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000L * 60 * 60 * 24 * 7;            // 24시간 * 7 = 7일
     @Value("${spring.security.secretKey}")
     private String secretKey = "";
 
@@ -48,7 +47,7 @@ public class TokenProvider {
         Date accessTokenExpiresIn = new Date(now + ACCESS_TOKEN_EXPIRE_TIME);
         String accessToken = Jwts.builder()
                 .setSubject(authentication.getName())
-                .claim("role", authorities)
+                .claim(AUTHORITIES_KEY, authorities)
                 .setExpiration(accessTokenExpiresIn)
                 .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
@@ -68,6 +67,7 @@ public class TokenProvider {
         System.out.println("TokenProvider의 getAuthentication parseClaims 끝");
 
         if (claims.get(AUTHORITIES_KEY) == null) {
+            System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 권한 정보가 없는 토큰입니다.");
             throw new RuntimeException("권한 정보가 없는 토큰입니다.");
         }
 

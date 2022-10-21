@@ -47,6 +47,7 @@ public class JwtFilter extends OncePerRequestFilter {
         if (StringUtils.hasText(accessToken) && tokenProvider.validateToken(accessToken)) {
             System.out.println("토큰 잘 들어오고, 유효한 토큰임");
             Authentication authentication = tokenProvider.getAuthentication(accessToken);
+            System.out.println("authentication 잘 만들었음~~~~~~");
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
 
@@ -54,7 +55,7 @@ public class JwtFilter extends OncePerRequestFilter {
     }
 
     private String getHeader(@RequestHeader Map<String, Object> requestHeader){
-        return (String) requestHeader.get("token");
+        return (String) requestHeader.get("Authorization");
     }
 
     // Request Header 에서 토큰 정보를 꺼내오기
@@ -66,6 +67,7 @@ public class JwtFilter extends OncePerRequestFilter {
         System.out.println("JwtFilter의 resolveToken accessToken = " + accessToken);
 
         if(StringUtils.hasText(accessToken)){
+            System.out.println("jwtfilter accesstoken 존재");
             return accessToken;
         }
 

@@ -4,11 +4,13 @@ import com.a104.freeproject.Member.Jwt.TokenProvider;
 import com.a104.freeproject.Member.entity.Authority;
 import com.a104.freeproject.Member.entity.Member;
 import com.a104.freeproject.Member.repository.MemberRepository;
-import com.a104.freeproject.Member.request.JoinRequest;
-import com.a104.freeproject.Member.request.LoginRequest;
-import com.a104.freeproject.Member.request.RegWatchRequest;
+import com.a104.freeproject.Member.request.*;
+import com.a104.freeproject.Member.response.AuthNumResponse;
+import com.a104.freeproject.Member.response.EmailResponse;
+import com.a104.freeproject.Member.response.MyInfoResponse;
 import com.a104.freeproject.Member.response.TokenResponse;
 import com.a104.freeproject.advice.exceptions.NotFoundException;
+import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -20,6 +22,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.*;
 import java.util.regex.Pattern;
 
 @Service
@@ -36,8 +40,7 @@ public class MemberServiceImpl implements MemberService{
     private final PasswordEncoder passwordEncoder;
     private final TokenProvider tokenProvider;
 
-    @Value("${spring.security.authorities_key}")
-    private static final String AUTHORITIES_KEY = "";
+    private static final String AUTHORITIES_KEY = "auth";
 
     @Override
     public TokenResponse join(JoinRequest input) throws NotFoundException {
@@ -85,7 +88,6 @@ public class MemberServiceImpl implements MemberService{
         return tokenProvider.generateTokenDto(authentication);
     }
 
-
     @Override
     public boolean emailCheck(String email) {
         if(memberRepository.existsByEmail(email)) return false;
@@ -105,15 +107,95 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public boolean regWatch(RegWatchRequest input) throws NotFoundException {
+    public Member findEmailbyToken(HttpServletRequest req) throws NotFoundException {
+        try{
+            System.out.println(req.getHeader("Authorization"));
+            String token = (String) req.getHeader("Authorization");
+            System.out.println(">>>>>>>>>>>>>>>>> token = " + token);
+            Claims claim = tokenProvider.parseClaims(token);
+            System.out.println(">>>>>>>>>>>>>>>>>>>> 클레임 잘 뽑음~~~~~");
+            String email = claim.get("sub").toString();
+            System.out.println(">>>>>>>>>>>>>>>>>>>> email = " + email);
 
-        // 추후 watch 등록 과정 존재 시 추가할 것.
-        if(!memberRepository.existsByEmail(input.getEmail())) throw new NotFoundException("가입되지 않은 이메일입니다.");
+            if(!memberRepository.existsByEmail(email)) throw new NotFoundException("유효한 회원이 아닙니다.");
+            Member member = memberRepository.findByEmail(email);
 
-        Member member = memberRepository.findByEmail(input.getEmail());
+
+
+            if(member.isDelete()) throw new NotFoundException("유효한 회원이 아닙니다.");
+            return member;
+
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+            throw new NotFoundException("토큰이 넘어오지 않았거나, 유효한 토큰이 아닙니다.");
+        }
+    }
+
+    @Override
+    public boolean regWatch(WatchRequest input, HttpServletRequest req) throws NotFoundException {
+
+        Member member = findEmailbyToken(req);
         member.setWatchInfo(input.getSerialNum());
         memberRepository.save(member);
 
         return true;
     }
+
+    @Override
+    public boolean changeNick(NickRequest input, HttpServletRequest req) throws NotFoundException {
+        try{
+            Member member = findEmailbyToken(req);
+            member.setNickname(input.getNickname());
+            memberRepository.save(member);
+            return true;
+        } catch (Exception e){
+            throw e;
+        }
+    }
+
+    @Override
+    public boolean changePhone(PhoneRequest input, HttpServletRequest req) throws NotFoundException {
+        try{
+            Member member = findEmailbyToken(req);
+            member.setHp(input.getPhoneNumber());
+            memberRepository.save(member);
+            return true;
+        } catch (Exception e){
+            throw e;
+        }
+    }
+
+    @Override
+    public boolean delWatch(WatchRequest input, HttpServletRequest req) throws NotFoundException {
+        try{
+            Member member = findEmailbyToken(req);
+            member.setWatchInfo("");
+            memberRepository.save(member);
+            return true;
+        } catch (Exception e){
+            throw e;
+        }
+    }
+
+    @Override
+    public MyInfoResponse getMyInfo(HttpServletRequest req) throws NotFoundException {
+        try{
+            Member member = findEmailbyToken(req);
+            return MyInfoResponse.builder().nickName(member.getNickname()).email(member.getEmail()).build();
+        } catch (Exception e){
+            throw e;
+        }
+    }
+
+    @Override
+    public EmailResponse getUserInfo(NickRequest input) {
+        try{
+            Member member = memberRepository.findByNickname(input.getNickname());
+            return EmailResponse.builder().email(member.getEmail()).build();
+        } catch (Exception e){
+            throw e;
+        }
+    }
+
+
 }
