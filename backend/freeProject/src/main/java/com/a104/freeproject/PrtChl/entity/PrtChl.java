@@ -7,8 +7,11 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
+import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
+import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -31,4 +34,11 @@ public class PrtChl {
     @ManyToOne
     @JoinColumn(name="member_id")
     private Member member;
+
+    @NotNull
+    private Timestamp startDate;
+
+    @NotNull
+    private Timestamp endDate;
+
 }

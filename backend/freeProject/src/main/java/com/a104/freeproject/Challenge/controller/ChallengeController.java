@@ -23,10 +23,16 @@ public class ChallengeController {
     @PostMapping("/register")
     @ApiOperation(value = "[수정필요] 챌린지 등록", notes = "return 값 변경 원하시면 MM 주세용\n"
             +"startTime, endTime 걍 스웨거 무시하시고 \"startTime\": \"2022-10-22T22:37\" 형식으로 입력해주시면 됩니당\n"
-            +"현재 해시태그, 카테고리, 스케쥴러와는 연결 완료. 유저와 연결 필요 + 알람???")
+            +"현재 해시태그, 카테고리, 스케쥴러와는 연결 완료. prtchl 연결 안료. log 연결 필요")
     public ResponseEntity<Boolean> register(@RequestBody registerRequest input, HttpServletRequest req) throws NotFoundException{
         return ResponseEntity.ok().body(challengeService.register(input, req));
     }
+
+    // 챌린지 참여. 위에 api 참고. 위 api는 챌린지 생성+참여이므로
+
+    // 카테고리+status 별 챌린지 리스트 불러오기
+
+    // 세부카테고리+status 별 챌린지 리스트 불러오기
 
 
 }

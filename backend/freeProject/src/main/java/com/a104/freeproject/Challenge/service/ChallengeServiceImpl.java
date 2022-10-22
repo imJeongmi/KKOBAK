@@ -10,6 +10,7 @@ import com.a104.freeproject.Challenge.request.registerRequest;
 import com.a104.freeproject.HashTag.service.ChltagServiceImpl;
 import com.a104.freeproject.Member.entity.Member;
 import com.a104.freeproject.Member.service.MemberServiceImpl;
+import com.a104.freeproject.PrtChl.service.PrtChlServiceImpl;
 import com.a104.freeproject.advice.exceptions.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,7 @@ public class ChallengeServiceImpl implements ChallengeService{
     private final ChltagServiceImpl chltagService;
     private final MemberServiceImpl memberService;
     private final ChlTimeServiceImpl chlTimeService;
+    private final PrtChlServiceImpl prtChlService;
 
     @Override
     public boolean register(registerRequest input, HttpServletRequest req) throws NotFoundException {
@@ -84,7 +86,7 @@ public class ChallengeServiceImpl implements ChallengeService{
         chlTimeService.addRow(c,input.getStartTime(), input.getEndTime());
 
         //PrtChl 추가
-        
+        prtChlService.participate(c.getId(),req);
 
         return true;
     }
