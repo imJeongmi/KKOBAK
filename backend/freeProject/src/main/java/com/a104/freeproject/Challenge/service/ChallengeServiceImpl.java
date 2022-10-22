@@ -7,7 +7,6 @@ import com.a104.freeproject.Category.repository.DetailCategoryRepository;
 import com.a104.freeproject.Challenge.entity.Challenge;
 import com.a104.freeproject.Challenge.repository.ChallengeRepository;
 import com.a104.freeproject.Challenge.request.registerRequest;
-import com.a104.freeproject.HashTag.entity.ChlTag;
 import com.a104.freeproject.HashTag.service.ChltagServiceImpl;
 import com.a104.freeproject.Member.entity.Member;
 import com.a104.freeproject.Member.service.MemberServiceImpl;
@@ -19,7 +18,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.List;
 
 @Service
 @Transactional
@@ -85,16 +83,10 @@ public class ChallengeServiceImpl implements ChallengeService{
         //ChlTime 추가
         chlTimeService.addRow(c,input.getStartTime(), input.getEndTime());
 
+        //PrtChl 추가
+        
+
         return true;
     }
 
-    @Override
-    public List<ChlTag> test(Long cNum) {
-        try{
-            Challenge c = challengeRepository.findById(cNum).get();
-            return c.getTagList();
-        } catch(Exception e){
-            throw e;
-        }
-    }
 }

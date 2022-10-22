@@ -9,5 +9,4 @@ import java.util.List;
 
 public interface ChallengeService {
     boolean register(registerRequest input, HttpServletRequest req) throws NotFoundException;
-    List<ChlTag> test(Long cNum);
 }

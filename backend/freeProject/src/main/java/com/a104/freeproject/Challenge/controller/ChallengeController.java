@@ -22,14 +22,11 @@ public class ChallengeController {
 
     @PostMapping("/register")
     @ApiOperation(value = "[수정필요] 챌린지 등록", notes = "return 값 변경 원하시면 MM 주세용\n"
-            +"현재 해시태그, 카테고리와는 연결 완료")
+            +"startTime, endTime 걍 스웨거 무시하시고 \"startTime\": \"2022-10-22T22:37\" 형식으로 입력해주시면 됩니당\n"
+            +"현재 해시태그, 카테고리, 스케쥴러와는 연결 완료. 유저와 연결 필요 + 알람???")
     public ResponseEntity<Boolean> register(@RequestBody registerRequest input, HttpServletRequest req) throws NotFoundException{
         return ResponseEntity.ok().body(challengeService.register(input, req));
     }
 
-    @PostMapping("/test/{chlNum}")
-    @ApiOperation(value = "mappedBy", notes = "이후 삭제 예정")
-    public ResponseEntity<List<ChlTag>> test(@PathVariable("chlNum") Long chlNum) throws Exception{
-        return ResponseEntity.ok().body(challengeService.test(chlNum));
-    }
+
 }
