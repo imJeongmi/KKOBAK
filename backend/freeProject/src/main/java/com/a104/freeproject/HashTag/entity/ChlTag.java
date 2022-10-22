@@ -1,5 +1,6 @@
-package com.a104.freeproject.Category.entity;
+package com.a104.freeproject.HashTag.entity;
 
+import com.a104.freeproject.Challenge.entity.Challenge;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,16 +16,18 @@ import javax.persistence.*;
 @DynamicInsert
 @NoArgsConstructor
 @AllArgsConstructor
-public class DetailCategory {
+public class ChlTag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name", nullable = false)
-    private String name;
+    @JsonIgnore
+    @JoinColumn(name= "hashtag_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Hashtag hashtag;
 
     @JsonIgnore
+    @JoinColumn(name="challenge_id")
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id")
-    private Category category;
+    private Challenge challenge;
 }

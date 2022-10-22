@@ -9,5 +9,6 @@ import java.util.List;
 public interface DetailCategoryRepository extends JpaRepository<DetailCategory,Long> {
     boolean existsByName(String name);
     boolean existsByCategoryAndName(Category category, String name);
+    boolean existsByCategoryAndId(Category category, Long id);
     List<DetailCategory> findAllByCategory(Category category);
 }

@@ -15,7 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/hashtag")
 @RequiredArgsConstructor
-@ApiOperation(value = "[태그] Hashtag Controller", notes = "수정, 삭제, 리스트 불러오기는 MM 주세용 + 읽기는 필요 없을 것 같아서 추가 안함")
+@ApiOperation(value = "[태그] Hashtag Controller",
+        notes = "수정, 삭제, 리스트 불러오기는 MM 주세용 + 읽기는 필요 없을 것 같아서 추가 안함. 추후 필요 없는 컨트롤러라면 삭제 예정")
 public class HashtagController {
 
     private final HashtagServiceImpl hashtagService;
