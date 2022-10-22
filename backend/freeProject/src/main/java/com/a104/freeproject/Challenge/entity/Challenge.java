@@ -70,10 +70,12 @@ public class Challenge implements Serializable {
     @Column(name="unit", nullable = false)
     private String unit;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="category_id")
     private Category category;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="detail_category_id")
     private DetailCategory detailCategory;

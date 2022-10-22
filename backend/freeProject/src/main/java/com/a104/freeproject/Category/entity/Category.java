@@ -1,5 +1,6 @@
 package com.a104.freeproject.Category.entity;
 
+import com.a104.freeproject.Challenge.entity.Challenge;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -28,4 +29,8 @@ public class Category implements Serializable {
     @Builder.Default
     @OneToMany(mappedBy = "category",cascade = CascadeType.ALL)
     private List<DetailCategory> details = new LinkedList<>();
+
+    @Builder.Default
+    @OneToMany(mappedBy = "category",cascade = CascadeType.ALL)
+    private List<Challenge> challenges = new LinkedList<>();
 }
