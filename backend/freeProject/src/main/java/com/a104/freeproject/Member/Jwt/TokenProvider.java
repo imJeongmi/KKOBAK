@@ -34,13 +34,13 @@ public class TokenProvider {
 
     public TokenResponse generateTokenDto(Authentication authentication) {
 
-        System.out.println("TokenProvider의 generateToken authentication.getName() = " + authentication.getName());
+//        System.out.println("TokenProvider의 generateToken authentication.getName() = " + authentication.getName());
         // 권한들 가져오기
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
 
-        System.out.println("TokenProvider의 generateToken의 authorities = " + authorities);
+//        System.out.println("TokenProvider의 generateToken의 authorities = " + authorities);
 
         long now = (new Date()).getTime();
         // Access Token 생성
@@ -59,19 +59,19 @@ public class TokenProvider {
 
     public Authentication getAuthentication(String accessToken) {
 
-        System.out.println("TokenProvider의 getAuthentication 시작");
+//        System.out.println("TokenProvider의 getAuthentication 시작");
 
         // 토큰 복호화
         Claims claims = parseClaims(accessToken);
 
-        System.out.println("TokenProvider의 getAuthentication parseClaims 끝");
+//        System.out.println("TokenProvider의 getAuthentication parseClaims 끝");
 
         if (claims.get(AUTHORITIES_KEY) == null) {
-            System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 권한 정보가 없는 토큰입니다.");
+//            System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 권한 정보가 없는 토큰입니다.");
             throw new RuntimeException("권한 정보가 없는 토큰입니다.");
         }
 
-        System.out.println("TokenProvider의 getAuthentication claim의 권한이 널이 아님");
+//        System.out.println("TokenProvider의 getAuthentication claim의 권한이 널이 아님");
 
         // 클레임에서 권한 정보 가져오기
         Collection<? extends GrantedAuthority> authorities =
@@ -79,22 +79,22 @@ public class TokenProvider {
                         .map(SimpleGrantedAuthority::new)
                         .collect(Collectors.toList());
 
-        System.out.println("TokenProvider의 getAuthentication 클레임에서 권한 정보 가져오기 끝");
+//        System.out.println("TokenProvider의 getAuthentication 클레임에서 권한 정보 가져오기 끝");
 
         // UserDetails 객체를 만들어서 Authentication 리턴
         UserDetails principal = new User(claims.getSubject(), "", authorities);
 
-        System.out.println("TokenProvider의 getAuthentication UserDetails 객체를 만들어서 Authentication 리턴 끝");
+//        System.out.println("TokenProvider의 getAuthentication UserDetails 객체를 만들어서 Authentication 리턴 끝");
 
         return new UsernamePasswordAuthenticationToken(principal, "", authorities);
     }
 
     public boolean validateToken(String token) {
 
-        System.out.println("TokenProvider의 validateToken 시작");
+//        System.out.println("TokenProvider의 validateToken 시작");
 
         try {
-            System.out.println("validateToken start");
+//            System.out.println("validateToken start");
             Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
             return true;
         } catch (SecurityException | MalformedJwtException e) {
@@ -112,12 +112,12 @@ public class TokenProvider {
 
     public Claims parseClaims(String accessToken) {
 
-        System.out.println("TokenProvider의 parseClaims 시작");
+//        System.out.println("TokenProvider의 parseClaims 시작");
 
         try {
             return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(accessToken).getBody();
         } catch (ExpiredJwtException e) {
-            System.out.println("TokenProvider의 passeClaims에서 에러가 나서 반환이 됨");
+//            System.out.println("TokenProvider의 passeClaims에서 에러가 나서 반환이 됨");
             return e.getClaims();
         }
     }

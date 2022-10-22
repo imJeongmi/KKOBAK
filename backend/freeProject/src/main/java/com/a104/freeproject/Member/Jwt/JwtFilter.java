@@ -30,8 +30,8 @@ public class JwtFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException, ServletException {
 
-        System.out.println("JwtFilter의 doFilterInternal 시작");
-        System.out.println("request.getServletPath() = " + request.getServletPath());
+//        System.out.println("JwtFilter의 doFilterInternal 시작");
+//        System.out.println("request.getServletPath() = " + request.getServletPath());
 
         // 1. Request Header 에서 토큰을 꺼냄
         String accessToken = resolveToken(request);
@@ -45,9 +45,9 @@ public class JwtFilter extends OncePerRequestFilter {
         // 2. validateToken 으로 토큰 유효성 검사
         // 정상 토큰이면 해당 토큰으로 Authentication 을 가져와서 SecurityContext 에 저장
         if (StringUtils.hasText(accessToken) && tokenProvider.validateToken(accessToken)) {
-            System.out.println("토큰 잘 들어오고, 유효한 토큰임");
+//            System.out.println("토큰 잘 들어오고, 유효한 토큰임");
             Authentication authentication = tokenProvider.getAuthentication(accessToken);
-            System.out.println("authentication 잘 만들었음~~~~~~");
+//            System.out.println("authentication 잘 만들었음~~~~~~");
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
 
@@ -61,13 +61,13 @@ public class JwtFilter extends OncePerRequestFilter {
     // Request Header 에서 토큰 정보를 꺼내오기
     private String resolveToken(HttpServletRequest request) {
 
-        System.out.println("JwtFilter의 resolveToken 시작");
+//        System.out.println("JwtFilter의 resolveToken 시작");
 
         String accessToken = request.getHeader("Authorization");
-        System.out.println("JwtFilter의 resolveToken accessToken = " + accessToken);
+//        System.out.println("JwtFilter의 resolveToken accessToken = " + accessToken);
 
         if(StringUtils.hasText(accessToken)){
-            System.out.println("jwtfilter accesstoken 존재");
+//            System.out.println("jwtfilter accesstoken 존재");
             return accessToken;
         }
 

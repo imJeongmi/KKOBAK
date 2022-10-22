@@ -30,30 +30,30 @@ public class AuthenticationProviderImpl implements AuthenticationProvider {
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 
-        System.out.println("AuthenticationProviderImpl의 authenticate 시작");
+//        System.out.println("AuthenticationProviderImpl의 authenticate 시작");
 
         // 전달 받은 UsernamePasswordAuthenticationToken
-        System.out.println("전달 받은 UsernamePasswordAuthenticationToken");
+//        System.out.println("전달 받은 UsernamePasswordAuthenticationToken");
         UsernamePasswordAuthenticationToken token = (UsernamePasswordAuthenticationToken) authentication;
 
         // AuthenticaionFilter에서 생성된 토큰으로부터 아이디와 비밀번호를 추출
-        System.out.println("AuthenticaionFilter에서 생성된 토큰으로부터 아이디와 비밀번호를 추출");
+//        System.out.println("AuthenticaionFilter에서 생성된 토큰으로부터 아이디와 비밀번호를 추출");
         String username = token.getName();
-        System.out.println("username = " + username);
+//        System.out.println("username = " + username);
         String password = (String) token.getCredentials();
-        System.out.println("password = " + password);
+//        System.out.println("password = " + password);
 
         // 해당 회원 Database 조회
-        System.out.println("해당 회원 db 조회");
+//        System.out.println("해당 회원 db 조회");
         UserDetails userDetail = userDetailsService.loadUserByUsername(username);
 
         // 비밀번호 확인
-        System.out.println("비밀번호 확인");
+//        System.out.println("비밀번호 확인");
         if (!passwordEncoder.matches(password, userDetail.getPassword()))
             throw new BadCredentialsException(userDetail.getUsername() + "Invalid password");
 
         // 인증 성공 시 UsernamePasswordAuthenticationToken 반환
-        System.out.println("인증 성공 시 UsernamePasswordAuthenticationToken 반환");
+//        System.out.println("인증 성공 시 UsernamePasswordAuthenticationToken 반환");
         return new UsernamePasswordAuthenticationToken(userDetail.getUsername(), "", userDetail.getAuthorities());
     }
 
