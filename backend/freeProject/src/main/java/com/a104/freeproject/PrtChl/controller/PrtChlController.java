@@ -20,7 +20,7 @@ public class PrtChlController {
 
     // 참여
     @PostMapping("/{chlId}")
-    @ApiOperation(value = "챌린지 참여", notes = "return 값 변경 원하시면 MM 주세용\n")
+    @ApiOperation(value = "[확인] 챌린지 참여", notes = "return 값 변경 원하시면 MM 주세용\n")
     public ResponseEntity<Boolean> register(@PathVariable("chlId") Long cid, HttpServletRequest req) throws NotFoundException {
         return ResponseEntity.ok().body(prtChlService.participate(cid, req));
     }
