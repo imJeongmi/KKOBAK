@@ -24,7 +24,10 @@ import java.util.Map;
 @RestController
 @RequestMapping("/member")
 @RequiredArgsConstructor
-@ApiOperation(value = "[유저] Member Controller")
+@ApiOperation(value = "[유저] Member Controller",
+        notes = "개인정보라 대부분 post 처리 했어요~ 수정 원하시면 MM 주세용\n"
+                +"access token의 경우 제가 보내는건 accessToken으로 보내요.\n"
+                +"헤더에 담아서 보내주실 때는 Authorization으로 보내주세용. 이것도 수정 원하시면 MM 주세용")
 public class MemberController {
 
     private final MemberServiceImpl memberService;
@@ -38,7 +41,7 @@ public class MemberController {
 
     @PostMapping("/login")
     @ApiOperation(value="[확인] 로그인", notes = "이메일, 패스워드 입력 필요, 토큰: accessToken")
-    public ResponseEntity<TokenResponse> login(@RequestBody LoginRequest input, HttpSession session) throws NotFoundException {
+    public ResponseEntity<TokenResponse> login(@RequestBody LoginRequest input) throws NotFoundException {
         return ResponseEntity.ok().body(memberService.login(input));
     }
 
@@ -92,13 +95,13 @@ public class MemberController {
     }
 
     @GetMapping("/my-info")
-    @ApiOperation(value="[확인] 토큰으로 내 정보 받기", notes = "닉네임, 이메일")
+    @ApiOperation(value="[확인] 토큰으로 내 정보 받기", notes = "return 닉네임, 이메일")
     public ResponseEntity<MyInfoResponse> getMyInfo (HttpServletRequest req) throws NotFoundException {
         return ResponseEntity.ok().body(memberService.getMyInfo(req));
     }
 
-    @PostMapping("")
-    @ApiOperation(value="[확인] 다른 유저 닉네임으로 이메일 받기")
+    @PostMapping("/user-info")
+    @ApiOperation(value="[확인] 다른 유저 닉네임으로 이메일 받기", notes = "닉네임이 한글일 수 있어 PostMapping")
     public ResponseEntity<EmailResponse> getUserInfo (@RequestBody NickRequest input) throws NotFoundException {
         return ResponseEntity.ok().body(memberService.getUserInfo(input));
     }
