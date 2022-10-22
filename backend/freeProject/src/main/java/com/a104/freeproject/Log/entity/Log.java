@@ -1,6 +1,7 @@
 package com.a104.freeproject.Log.entity;
 
 import com.a104.freeproject.PrtChl.entity.PrtChl;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -26,11 +27,12 @@ public class Log {
     private Date date;
 
     @Column(name="finished",nullable = false)
-    private boolean fininshed;
+    private boolean isFin;
 
     @Column(name="complete_time")
-    private DateTime complete_time;
+    private DateTime completeTime;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="prt_chl_id")
     private PrtChl prtChl;
