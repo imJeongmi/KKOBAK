@@ -8,19 +8,17 @@ import com.a104.freeproject.Challenge.entity.Challenge;
 import com.a104.freeproject.Challenge.repository.ChallengeRepository;
 import com.a104.freeproject.Challenge.request.registerRequest;
 import com.a104.freeproject.HashTag.entity.ChlTag;
-import com.a104.freeproject.HashTag.entity.Hashtag;
-import com.a104.freeproject.HashTag.repository.ChlTagRepository;
-import com.a104.freeproject.HashTag.repository.HashtagRepository;
 import com.a104.freeproject.HashTag.service.ChltagServiceImpl;
 import com.a104.freeproject.Member.entity.Member;
 import com.a104.freeproject.Member.service.MemberServiceImpl;
 import com.a104.freeproject.advice.exceptions.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.web3j.crypto.Hash;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Service
@@ -33,6 +31,7 @@ public class ChallengeServiceImpl implements ChallengeService{
     private final DetailCategoryRepository detailRepository;
     private final ChltagServiceImpl chltagService;
     private final MemberServiceImpl memberService;
+    private final ChlTimeServiceImpl chlTimeService;
 
     @Override
     public boolean register(registerRequest input, HttpServletRequest req) throws NotFoundException {
@@ -45,6 +44,10 @@ public class ChallengeServiceImpl implements ChallengeService{
             throw e;
         }
 
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:00");
+        input.setStartTime(Timestamp.valueOf(sdf.format(input.getStartTime())));
+        input.setEndTime(Timestamp.valueOf(sdf.format(input.getEndTime())));
+
         if(!categoryRepository.existsById(input.getCategoryId())) throw new NotFoundException("카테고리를 다시 입력해주세요.");
         Category category = categoryRepository.findById(input.getCategoryId()).get();
         Challenge challenge;
@@ -53,7 +56,7 @@ public class ChallengeServiceImpl implements ChallengeService{
             challenge = Challenge.builder().title(input.getTitle()).contents(input.getContents()).imgurl(input.getImgurl()).
                     isWatch(input.isWatch()).roomtype(input.getRoomtype()).password(input.getPassword()).writer(member.getId())
                     .limitPeople(input.getLimitPeople()).alarm(input.getAlarm())
-                    .status(input.getStatus()).goal(input.getGoal()).unit(input.getUnit()).category(category)
+                    .goal(input.getGoal()).unit(input.getUnit()).category(category)
                     .build();
         }
         else{ // 세부 카테고리가 있음
@@ -63,15 +66,24 @@ public class ChallengeServiceImpl implements ChallengeService{
             challenge = Challenge.builder().title(input.getTitle()).contents(input.getContents()).imgurl(input.getImgurl()).
                     isWatch(input.isWatch()).roomtype(input.getRoomtype()).password(input.getPassword()).writer(member.getId())
                     .limitPeople(input.getLimitPeople()).alarm(input.getAlarm())
-                    .status(input.getStatus()).goal(input.getGoal()).unit(input.getUnit()).category(category).detailCategory(detail)
+                    .goal(input.getGoal()).unit(input.getUnit()).category(category).detailCategory(detail)
                     .build();
         }
+
+        // 시간 체크하고 지금시간보다 전이면(입력하느라 시간 지난거 등을 생각해서)
+        Timestamp time = new Timestamp(System.currentTimeMillis());
+        Timestamp now = Timestamp.valueOf(sdf.format(time));
+
+        if(input.getStartTime().equals(now) || input.getStartTime().before(now)) challenge.setStatus(1);
 
         Long cid = challengeRepository.save(challenge).getId();
         Challenge c = challengeRepository.findById(cid).get();
 
         //해시태그 추가
         chltagService.addChallengeTag(c,input.getTagList());
+
+        //ChlTime 추가
+        chlTimeService.addRow(c,input.getStartTime(), input.getEndTime());
 
         return true;
     }

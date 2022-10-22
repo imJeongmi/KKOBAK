@@ -109,13 +109,13 @@ public class MemberServiceImpl implements MemberService{
     @Override
     public Member findEmailbyToken(HttpServletRequest req) throws NotFoundException {
         try{
-            System.out.println(req.getHeader("Authorization"));
+//            System.out.println(req.getHeader("Authorization"));
             String token = (String) req.getHeader("Authorization");
-            System.out.println(">>>>>>>>>>>>>>>>> token = " + token);
+//            System.out.println(">>>>>>>>>>>>>>>>> token = " + token);
             Claims claim = tokenProvider.parseClaims(token);
-            System.out.println(">>>>>>>>>>>>>>>>>>>> 클레임 잘 뽑음~~~~~");
+//            System.out.println(">>>>>>>>>>>>>>>>>>>> 클레임 잘 뽑음~~~~~");
             String email = claim.get("sub").toString();
-            System.out.println(">>>>>>>>>>>>>>>>>>>> email = " + email);
+//            System.out.println(">>>>>>>>>>>>>>>>>>>> email = " + email);
 
             if(!memberRepository.existsByEmail(email)) throw new NotFoundException("유효한 회원이 아닙니다.");
             Member member = memberRepository.findByEmail(email);
