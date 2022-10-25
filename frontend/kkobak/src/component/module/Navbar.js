@@ -14,9 +14,6 @@ import AppBar from "@mui/material/AppBar";
 export default function SelectedListItem() {
   const [selectedIndex, setSelectedIndex] = React.useState(0);
 
-  // event: React.MouseEvent<HTMLDivElement, MouseEvent>
-  // index: number
-
   const handleListItemClick = (event, index) => {
     setSelectedIndex(index);
   };
