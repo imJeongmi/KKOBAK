@@ -33,4 +33,7 @@ public class Category implements Serializable {
     @Builder.Default
     @OneToMany(mappedBy = "category",cascade = CascadeType.ALL)
     private List<Challenge> challenges = new LinkedList<>();
+
+    @Column(name="imgurl")
+    private String imgurl;
 }
