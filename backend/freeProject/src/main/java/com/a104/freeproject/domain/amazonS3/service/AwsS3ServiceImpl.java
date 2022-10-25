@@ -23,9 +23,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @PropertySources({
         @PropertySource("classpath:application.properties"),
-        @PropertySource("classpath:application-secret.properties"),
-        @PropertySource("classpath:application-aws.yml"),
-        @PropertySource("classpath:application-credentials.yml")
+        @PropertySource("classpath:application-secret.properties")
 })
 public class AwsS3ServiceImpl implements AwsS3Service {
     @Value("${cloud.aws.s3.bucket}")
