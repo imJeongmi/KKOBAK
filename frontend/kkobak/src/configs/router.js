@@ -1,7 +1,5 @@
 import React from "react";
-
 import { Routes, Route } from "react-router-dom";
-
 import Main from "../component/page/Main";
 import Challenge from "../component/page/Challenge";
 import MyChallenge from "../component/page/MyChallenge";
