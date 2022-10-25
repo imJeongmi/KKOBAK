@@ -1,7 +1,7 @@
 import "./App.css";
-import Nav from "./component/module/navBar";
+import Nav from "./component/module/Navbar";
 
-import RouterConfiguration from "./configs/router";
+import RouterConfiguration from "./configs/Router";
 
 import { Box } from "@mui/material";
 
