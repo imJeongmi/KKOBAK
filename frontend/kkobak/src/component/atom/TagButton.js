@@ -4,7 +4,7 @@ import React from "react";
 const TagSpan = styled(`Button`)(
   () => `
   color: black;
-  background-color: #CDE3B5; 
+  background-color: #E8F2F9; 
   border-radius: 10px;
   border-style: none;
   height: 5vh;
