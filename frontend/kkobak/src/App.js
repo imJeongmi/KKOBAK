@@ -7,16 +7,28 @@ import { Box } from "@mui/material";
 
 function App() {
   return (
-    <Box sx={{ display: "flex" }}>
-      <Box>
+    <Box
+      sx={{
+        overflow: "hidden",
+      }}
+    >
+      <Box
+        sx={{
+          float: "left",
+        }}
+      >
         <Box
-          sx={{ width: "80px", height: "100vh", backgroundColor: "black" }}
+          sx={{
+            width: "80px",
+            height: "100vh",
+            backgroundColor: "black",
+          }}
         ></Box>
-        <Box>
-          <Nav />
-        </Box>
+        <Nav />
       </Box>
-      <RouterConfiguration />
+      <Box>
+        <RouterConfiguration />
+      </Box>
     </Box>
   );
 }
