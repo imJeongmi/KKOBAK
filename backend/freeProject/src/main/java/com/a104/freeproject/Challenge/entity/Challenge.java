@@ -4,6 +4,7 @@ import com.a104.freeproject.Category.entity.Category;
 import com.a104.freeproject.Category.entity.DetailCategory;
 import com.a104.freeproject.HashTag.entity.ChlTag;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sun.istack.NotNull;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
@@ -79,6 +80,12 @@ public class Challenge implements Serializable {
     @Setter
     @Column(name="unit", nullable = false)
     private String unit;
+
+    @Setter
+    @NotNull
+    @Builder.Default
+    @ColumnDefault("false")
+    private boolean isFin = false;
 
     @JsonIgnore
     @ManyToOne
