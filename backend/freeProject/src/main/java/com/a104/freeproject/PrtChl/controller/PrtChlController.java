@@ -19,10 +19,12 @@ public class PrtChlController {
     private final PrtChlServiceImpl prtChlService;
 
     // 참여
-    @PostMapping("/{chlId}")
-    @ApiOperation(value = "[확인] 챌린지 참여", notes = "return 값 변경 원하시면 MM 주세용\n")
-    public ResponseEntity<Boolean> register(@PathVariable("chlId") Long cid, HttpServletRequest req) throws NotFoundException {
-        return ResponseEntity.ok().body(prtChlService.participate(cid, req));
+    @PostMapping("/{chlId}/{alarm}")
+    @ApiOperation(value = "[확인] 챌린지 참여", notes = "'/participate/1/4' 형식으로 사용.\n"
+            +"alarm: 1 웹앱, 2 웹, 3 앱, 4 안받음 \n"
+            +"return 값 변경 원하시면 MM 주세용\n")
+    public ResponseEntity<Boolean> register(@PathVariable("chlId") Long cid, @PathVariable("alarm") int alarm, HttpServletRequest req) throws NotFoundException {
+        return ResponseEntity.ok().body(prtChlService.participate(cid, req, alarm));
     }
 
     // 완료 여부 변경 (시간 되어서 마감한게 아니라 유저가 걍 마감쳤을 때)
@@ -30,5 +32,7 @@ public class PrtChlController {
     // 스케쥴러 돌려서 종료일 되면 알아서 마감되게 하는거 작성
 
     // 스케쥴러 돌려서 참여일 되면 알아서 챌린지 로그 생성되는 api 작성
+
+    // 스케줄러 돌려서 알람 보내는거 작성
 
 }

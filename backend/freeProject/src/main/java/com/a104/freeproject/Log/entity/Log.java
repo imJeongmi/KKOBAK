@@ -1,9 +1,11 @@
 package com.a104.freeproject.Log.entity;
 
 import com.a104.freeproject.PrtChl.entity.PrtChl;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
+import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -21,15 +23,15 @@ public class Log {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="data",nullable = false)
+    @NotNull
+    @JsonFormat(pattern = "yyyy-MM-dd", shape = JsonFormat.Shape.STRING)
     private LocalDate date;
 
     @Setter
-    @Column(name="finished",nullable = false)
+    @NotNull
     private boolean isFin;
 
     @Setter
-    @Column(name="complete_time")
     private Timestamp completeTime;
 
     @JsonIgnore

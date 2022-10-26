@@ -1,13 +1,14 @@
 package com.a104.freeproject.Member.service;
 
+import com.a104.freeproject.Challenge.response.ChlSimpleResponse;
 import com.a104.freeproject.Member.entity.Member;
 import com.a104.freeproject.Member.request.*;
-import com.a104.freeproject.Member.response.EmailResponse;
-import com.a104.freeproject.Member.response.MyInfoResponse;
-import com.a104.freeproject.Member.response.TokenResponse;
+import com.a104.freeproject.Member.response.*;
 import com.a104.freeproject.advice.exceptions.NotFoundException;
+import org.springframework.data.domain.Pageable;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.Map;
 
 public interface MemberService {
@@ -23,5 +24,10 @@ public interface MemberService {
     boolean delWatch(WatchRequest input, HttpServletRequest req) throws NotFoundException;
     MyInfoResponse getMyInfo(HttpServletRequest req) throws NotFoundException;
     EmailResponse getUserInfo(NickRequest input);
-
+    List<ChlSimpleResponse> getUserChallenge(Pageable pageable, HttpServletRequest req) throws NotFoundException;
+    int getMyChlTotalSum(Pageable pageable, HttpServletRequest req) throws NotFoundException;
+    List<ChlSimpleResponse> getMemberChallenge(Pageable pageable, NickRequest input) throws NotFoundException;
+    int getUserChlTotalSum(Pageable pageable, NickRequest input) throws NotFoundException;
+    ChlSimpleStatResponse getChlSimpleStatistics(HttpServletRequest req) throws NotFoundException;
+    List<MonthChlResponse> monthChlInfo(Long chlId, String year, String month, HttpServletRequest req) throws NotFoundException;
 }

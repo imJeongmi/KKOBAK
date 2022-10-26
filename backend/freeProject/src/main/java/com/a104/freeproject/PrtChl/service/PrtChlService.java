@@ -5,7 +5,6 @@ import com.a104.freeproject.advice.exceptions.NotFoundException;
 import javax.servlet.http.HttpServletRequest;
 
 public interface PrtChlService {
-
-    boolean participate(Long cid, HttpServletRequest req) throws NotFoundException;
+    boolean participate(Long cid, HttpServletRequest req, int alarm) throws NotFoundException;
 
 }

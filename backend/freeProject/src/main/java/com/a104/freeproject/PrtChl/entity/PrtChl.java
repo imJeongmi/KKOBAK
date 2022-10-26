@@ -46,6 +46,10 @@ public class PrtChl implements Serializable {
 
     @Setter
     @NotNull
+    private int alarmDir;
+
+    @Setter
+    @NotNull
     @Builder.Default
     @ColumnDefault("0")
     private int sucDay = 0;

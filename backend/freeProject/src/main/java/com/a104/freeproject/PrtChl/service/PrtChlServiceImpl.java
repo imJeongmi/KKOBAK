@@ -31,7 +31,7 @@ public class PrtChlServiceImpl implements PrtChlService{
     private final LogServiceImpl logService;
 
     @Override
-    public boolean participate(Long cid, HttpServletRequest req) throws NotFoundException {
+    public boolean participate(Long cid, HttpServletRequest req, int alarm) throws NotFoundException {
         if(!challengeRepository.existsById(cid)) throw new NotFoundException("존재하지 않는 챌린지입니다.");
         Challenge c = challengeRepository.findById(cid).get();
 
@@ -50,7 +50,7 @@ public class PrtChlServiceImpl implements PrtChlService{
         ChlTime chl = chlTimeRepository.findByChallenge(c);
 
         Long prtId = prtChlRepository.save(PrtChl.builder().challenge(c).member(member)
-                .is_fin(false).startDate(now.toLocalDateTime().toLocalDate())
+                .is_fin(false).startDate(now.toLocalDateTime().toLocalDate()).alarmDir(alarm)
                 .endDate(chl.getEndTime().toLocalDateTime().toLocalDate()).build()).getId();
 
         // 로그 생성

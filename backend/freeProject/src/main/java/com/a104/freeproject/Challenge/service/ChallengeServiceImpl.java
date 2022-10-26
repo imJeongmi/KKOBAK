@@ -86,7 +86,7 @@ public class ChallengeServiceImpl implements ChallengeService{
         chlTimeService.addRow(c,input.getStartTime(), input.getEndTime());
 
         //PrtChl 추가
-        prtChlService.participate(c.getId(),req);
+        prtChlService.participate(c.getId(),req, input.getAlarmDir());
 
         return true;
     }

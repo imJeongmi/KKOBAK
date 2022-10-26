@@ -23,7 +23,8 @@ public class LogController {
     private final LogServiceImpl logService;
 
     @PostMapping("/change-status")
-    @ApiOperation(value = "[확인] 특정 일의 챌린지 수행여부 변경", notes = "return 값 변경 원하시면 MM 주세용\n")
+    @ApiOperation(value = "[확인] 특정 일의 챌린지 수행여부 변경", notes = "return 값 변경 원하시면 MM 주세용\n"
+            + "day 형식은 2022-03-03 이런식으로 보내주시면 됩니당.")
     public ResponseEntity<Boolean> changeStatus(@RequestBody ChangeStatusRequest input, HttpServletRequest req) throws NotFoundException {
         return ResponseEntity.ok().body(logService.changeTodoList(input, req));
     }
