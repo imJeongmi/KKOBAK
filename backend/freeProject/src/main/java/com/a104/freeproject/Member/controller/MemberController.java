@@ -54,13 +54,13 @@ public class MemberController {
     @PostMapping("/chk-pw")
     @ApiOperation(value="[확인] 비밀번호 체크",
             notes =  "비밀번호 형식: 8-20자, 숫자/특수문자($`~!@$!%*#^?&()_=+)/영문자 필수 >> boolean 형식으로 return (형식에 잘 맞으면 return true)")
-    public boolean pwCheck(@RequestBody String pw, HttpServletRequest req){
+    public boolean pwCheck(@RequestBody String pw){
         return memberService.pwCheck(pw);
     }
 
     @PostMapping("/chk-name")
     @ApiOperation(value="[확인] 닉네임 중복 체크", notes =  "닉네임 중복 여부 boolean 형식으로 return (중복 >> return false, 사용가능한 닉네임 >> return true)")
-    public boolean nameCheck(@RequestBody String name, HttpServletRequest req){
+    public boolean nameCheck(@RequestBody String name){
         return memberService.nameCheck(name);
     }
 
@@ -102,7 +102,7 @@ public class MemberController {
 
     @PostMapping("/user-info")
     @ApiOperation(value="[확인] 다른 유저 닉네임으로 이메일 받기", notes = "닉네임이 한글일 수 있어 PostMapping")
-    public ResponseEntity<EmailResponse> getUserInfo (@RequestBody NickRequest input) throws NotFoundException {
+    public ResponseEntity<EmailResponse> getUserInfo (@RequestBody NickRequest input, HttpServletRequest req) throws NotFoundException {
         return ResponseEntity.ok().body(memberService.getUserInfo(input));
     }
 
@@ -127,7 +127,7 @@ public class MemberController {
     @ApiOperation(value="[확인] 다른 사람이 참여한 챌린지 목록 받기", notes = "'/member/user-chl-list?page=0&size=3' 형식으로 사용.\n"
             + "이 api는 스웨거에서 페이지랑 사이즈 조절 불가. 원하는 데이터 있으면 백엔드 문의해주세용\n"
             + "return 변경 원하시면 MM주세용~")
-    public ResponseEntity<List<ChlSimpleResponse>> getUserChallenge (@RequestBody NickRequest input,Pageable pageable) throws NotFoundException {
+    public ResponseEntity<List<ChlSimpleResponse>> getUserChallenge (@RequestBody NickRequest input,Pageable pageable, HttpServletRequest req) throws NotFoundException {
         return ResponseEntity.ok().body(memberService.getMemberChallenge(pageable, input));
     }
 
@@ -135,7 +135,7 @@ public class MemberController {
     @ApiOperation(value="[확인] 다른 사람이 참여한 챌린지 page 수 받기", notes = "'/member/sum/user-chl-list?size=3' 형식으로 사용.\n"
             + "이 api는 스웨거에서 페이지랑 사이즈 조절 불가. 원하는 데이터 있으면 백엔드 문의해주세용\n"
             + "size 갯수만큼 페이지를 만든다면 몇 페이지 까지 만들 수 있는지 return")
-    public ResponseEntity<Integer> getUserChlTotalSum (@RequestBody NickRequest input,Pageable pageable) throws NotFoundException {
+    public ResponseEntity<Integer> getUserChlTotalSum (@RequestBody NickRequest input,Pageable pageable, HttpServletRequest req) throws NotFoundException {
         return ResponseEntity.ok().body(memberService.getUserChlTotalSum(pageable, input));
     }
 
@@ -147,7 +147,7 @@ public class MemberController {
         return ResponseEntity.ok().body(memberService.getChlSimpleStatistics(req));
     }
 
-    @PostMapping("/month-info/{chlId}/{year}/{month}")
+    @GetMapping("/month-info/{chlId}/{year}/{month}")
     @ApiOperation(value="[확인] 챌린지 별 달 전체 로그 뽑아오기",
             notes = "'/member/month-chl/2/2022/10' 형식으로 사용.\n"+
                     "다른 사람건 일단 안만들게요 필요하면 말해주세용 + return 데이터 수정 필요하면 말해주세용\n")

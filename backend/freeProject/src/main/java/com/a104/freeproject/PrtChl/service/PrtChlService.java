@@ -6,5 +6,5 @@ import javax.servlet.http.HttpServletRequest;
 
 public interface PrtChlService {
     boolean participate(Long cid, HttpServletRequest req, int alarm) throws NotFoundException;
-
+    boolean dropChl(Long cid, HttpServletRequest req) throws NotFoundException;
 }

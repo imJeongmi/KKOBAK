@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -21,7 +22,7 @@ public class CategoryController {
 
     @PostMapping("/reg")
     @ApiOperation(value = "[확인] 카테고리 등록",notes = "등록 완료 시 return true")
-    public ResponseEntity<Boolean> regCategory(@RequestBody CategoryNameRequest input) throws NotFoundException {
+    public ResponseEntity<Boolean> regCategory(@RequestBody CategoryNameRequest input, HttpServletRequest req) throws NotFoundException {
         return ResponseEntity.ok().body(categoryService.regCategory(input.getName()));
     }
 
