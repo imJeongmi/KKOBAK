@@ -64,9 +64,6 @@ public class LogServiceImpl implements LogService {
 
     @Override
     public boolean changeTodoList(ChangeStatusRequest input, HttpServletRequest req) throws NotFoundException {
-
-        System.out.println("Day >> "+input.getDay());
-
         Member member;
         try{
             member = memberService.findEmailbyToken(req);
