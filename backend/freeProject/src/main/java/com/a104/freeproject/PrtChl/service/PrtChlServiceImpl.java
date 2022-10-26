@@ -4,6 +4,7 @@ import com.a104.freeproject.Challenge.entity.Challenge;
 import com.a104.freeproject.Challenge.entity.ChlTime;
 import com.a104.freeproject.Challenge.repository.ChallengeRepository;
 import com.a104.freeproject.Challenge.repository.ChlTimeRepository;
+import com.a104.freeproject.Log.service.LogServiceImpl;
 import com.a104.freeproject.Member.entity.Member;
 import com.a104.freeproject.Member.service.MemberServiceImpl;
 import com.a104.freeproject.PrtChl.entity.PrtChl;
@@ -27,6 +28,7 @@ public class PrtChlServiceImpl implements PrtChlService{
     private final PrtChlRepository prtChlRepository;
     private final MemberServiceImpl memberService;
     private final ChlTimeRepository chlTimeRepository;
+    private final LogServiceImpl logService;
 
     @Override
     public boolean participate(Long cid, HttpServletRequest req) throws NotFoundException {
@@ -47,10 +49,12 @@ public class PrtChlServiceImpl implements PrtChlService{
         if(!chlTimeRepository.existsByChallenge(c)) throw new NotFoundException("챌린지 스케쥴러에 존재하지 않습니다. 이 문제가 발생하면 백엔드에 문의하세용");
         ChlTime chl = chlTimeRepository.findByChallenge(c);
 
-        prtChlRepository.save(PrtChl.builder().challenge(c).member(member)
-                .is_fin(false).startDate(now).endDate(chl.getEndTime()).build());
+        Long prtId = prtChlRepository.save(PrtChl.builder().challenge(c).member(member)
+                .is_fin(false).startDate(now.toLocalDateTime().toLocalDate())
+                .endDate(chl.getEndTime().toLocalDateTime().toLocalDate()).build()).getId();
 
-
+        // 로그 생성
+        logService.createLog(prtChlRepository.findById(prtId).get());
 
         return true;
     }

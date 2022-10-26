@@ -2,14 +2,12 @@ package com.a104.freeproject.Log.entity;
 
 import com.a104.freeproject.PrtChl.entity.PrtChl;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
-import org.joda.time.DateTime;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -24,16 +22,17 @@ public class Log {
     private Long id;
 
     @Column(name="data",nullable = false)
-    private Date date;
+    private LocalDate date;
 
+    @Setter
     @Column(name="finished",nullable = false)
     private boolean isFin;
 
+    @Setter
     @Column(name="complete_time")
-    private DateTime completeTime;
+    private Timestamp completeTime;
 
     @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name="prt_chl_id")
+    @ManyToOne(fetch = FetchType.LAZY)
     private PrtChl prtChl;
 }
