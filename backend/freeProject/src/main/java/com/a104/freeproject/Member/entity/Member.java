@@ -1,5 +1,7 @@
 package com.a104.freeproject.Member.entity;
 
+import com.a104.freeproject.Log.entity.Log;
+import com.a104.freeproject.PrtChl.entity.PrtChl;
 import com.sun.istack.NotNull;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
@@ -10,9 +12,12 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.LinkedList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -22,7 +27,7 @@ import java.time.ZoneId;
 @NoArgsConstructor
 @AllArgsConstructor
 @RequiredArgsConstructor
-public class Member {
+public class Member implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -71,6 +76,10 @@ public class Member {
 
     @NotNull
     private LocalDateTime joinDate;
+
+    @Builder.Default
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<PrtChl> challenges = new LinkedList<>();
 
     @PrePersist
     public void test() {

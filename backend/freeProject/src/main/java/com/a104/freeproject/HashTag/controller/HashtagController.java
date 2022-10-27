@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+
 @RestController
 @RequestMapping("/hashtag")
 @RequiredArgsConstructor
@@ -24,7 +26,7 @@ public class HashtagController {
     //등록
     @PostMapping("/reg")
     @ApiOperation(value = "[확인] tag 등록",notes = "등록 완료 시 return true")
-    public ResponseEntity<Boolean> regTag(@RequestBody HashtagInputRequest input) throws NotFoundException {
+    public ResponseEntity<Boolean> regTag(@RequestBody HashtagInputRequest input, HttpServletRequest req) throws NotFoundException {
         return ResponseEntity.ok().body(hashtagService.registerTag(input.getTagList()));
     }
 

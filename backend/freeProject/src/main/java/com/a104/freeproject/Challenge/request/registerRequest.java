@@ -26,6 +26,7 @@ public class registerRequest {
     private String unit;
     private long categoryId;
     private long detailCategoryId;
+    private int alarmDir;
     @Setter
     @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm", timezone = "Asia/Seoul")
     private Timestamp startTime;

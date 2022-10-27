@@ -3,7 +3,9 @@ package com.a104.freeproject.Challenge.entity;
 import com.a104.freeproject.Category.entity.Category;
 import com.a104.freeproject.Category.entity.DetailCategory;
 import com.a104.freeproject.HashTag.entity.ChlTag;
+import com.a104.freeproject.PrtChl.entity.PrtChl;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sun.istack.NotNull;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
@@ -80,6 +82,12 @@ public class Challenge implements Serializable {
     @Column(name="unit", nullable = false)
     private String unit;
 
+    @Setter
+    @NotNull
+    @Builder.Default
+    @ColumnDefault("false")
+    private boolean isFin = false;
+
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name="category_id")
@@ -93,4 +101,8 @@ public class Challenge implements Serializable {
     @Builder.Default
     @OneToMany(mappedBy = "challenge", cascade = CascadeType.ALL)
     private List<ChlTag> tagList = new LinkedList<>();
+
+    @Builder.Default
+    @OneToMany(mappedBy = "challenge", cascade = CascadeType.ALL)
+    private List<PrtChl> chlList = new LinkedList<>();
 }
