@@ -12,5 +12,6 @@ import lombok.NoArgsConstructor;
 public class DetailNameRequest {
 
     private String name;
+    private String imgurl;
 
 }
