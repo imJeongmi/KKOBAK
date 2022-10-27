@@ -1,4 +1,4 @@
-package com.a104.freeproject.Category.response;
+package com.a104.freeproject.Category.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CategoryResponse {
+public class CategoryUpdateRequest {
     private Long id;
     private String name;
     private String imgurl;

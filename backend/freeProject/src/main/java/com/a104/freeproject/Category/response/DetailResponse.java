@@ -12,4 +12,5 @@ import lombok.NoArgsConstructor;
 public class DetailResponse {
     private Long detailId;
     private String detailName;
+    private String imgurl;
 }
