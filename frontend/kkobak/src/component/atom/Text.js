@@ -6,7 +6,7 @@ const TextSpan = styled("span")(
   font-size: ${getSize(size)};
   color: ${getColor(color)};
   margin: ${getMarginY(my)}px ${getMarginX(mx)}px;
-  font-family: ${getWeight(weight)}
+  font-family: ${getWeight(weight)};
   padding: 0;
   `,
 );
