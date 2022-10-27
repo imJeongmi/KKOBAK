@@ -11,7 +11,19 @@ from flask_cors import CORS;
 from clarifai_grpc.channel.clarifai_channel import ClarifaiChannel
 from clarifai_grpc.grpc.api import resources_pb2, service_pb2, service_pb2_grpc
 from clarifai_grpc.grpc.api.status import status_code_pb2
-import io
+import warnings
+warnings.simplefilter("ignore")
+
+import konlpy
+konlpy.__version__
+
+from konlpy.tag import *
+komoran = Komoran()
+
+#금지어 지정
+exList = ["린지", "이번", "후회", "벌레", "개새끼", "사람", "새끼", "시발", "염병", "베비", "가지"]
+
+
 
 app = Flask(__name__);
 @app.route('/ai/image', methods = [ 'POST' ])
@@ -45,7 +57,7 @@ def shImage():
                 #         output_config=resources_pb2.OutputConfig(
                 #             language='ko'
                 #         )
-                #     )
+                    # )
                 # )
             ),
             metadata=metadata
@@ -114,6 +126,21 @@ def shImage2():
             print("%s %.2f" % (concept.name, concept.value))
             tags.append([concept.name, concept.value ])
 
+        return {'tags' : tags}
+
+@app.route('/ai/sentence', methods = [ 'POST' ])
+def strparser():
+    if request.method == 'POST':
+        # input data
+        str = request.json["str"]
+
+        wordList = komoran.nouns("\n".join([s for s in str.split("\n") if s]))
+        wordList = [x for x in wordList if len(x)>1 and x not in exList and " " not in x]
+
+        print(set(wordList)) # 이게 정답임
+        tags = []
+        for word in wordList:
+            tags.append(word)
         return {'tags' : tags}
 
 if __name__ == '__main__':
