@@ -1,0 +1,37 @@
+$ruler: 15px;
+$color-bg: #ffffff;
+$color-shadow: #babecc;
+$color-white: #fff;
+
+
+.label {
+  display: block;
+  margin-bottom: $ruler*0.8;
+  width: 100%;
+}
+
+.input {
+  font-family: "SUIT-Medium";
+  font-size: $ruler;
+  border: 0;
+  outline: 0;
+  font-size: $ruler;
+  border-radius: $ruler*20;
+  padding: $ruler;
+  margin-top: $ruler*0.5 ;
+  background-color:$color-bg;
+  text-shadow: 1px 1px 0 $color-white;
+}
+
+.input {
+  box-shadow:  inset 2px 2px 5px $color-shadow, inset -5px -5px 10px $color-white;
+  width: 80vw;
+  box-sizing: border-box;
+  transition: all 0.2s ease-in-out;
+  appearance: none;
+  -webkit-appearance: none;
+
+  &:focus {
+    box-shadow:  inset 1px 1px 2px $color-shadow, inset -1px -1px 2px $color-white;
+  }
+}
