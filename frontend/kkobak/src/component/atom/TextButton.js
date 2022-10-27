@@ -22,7 +22,7 @@ const StyledButton = styled(Button)(
   &:hover {
     background-color: ${getHoverColor(color)};
   }
-  `,
+  `
 );
 
 function getWidthBySize(size) {
@@ -33,6 +33,8 @@ function getWidthBySize(size) {
       return "20vw";
     case "s":
       return "10vw";
+    case "ss":
+      return "120px";
     default:
       return "30vw";
   }
@@ -46,6 +48,8 @@ function getHeightBySize(size) {
       return "5vh";
     case "s":
       return "3vh";
+    case "ss":
+      return "30px";
     default:
       return "7vh";
   }

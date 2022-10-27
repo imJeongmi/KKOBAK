@@ -6,7 +6,7 @@ import TagButton from "../atom/TagButton";
 
 export default function ChallengeCard(props) {
   return (
-    <div style={{ marginLeft: 30, marginTop: 12 }}>
+    <div style={{ marginLeft: 35, marginTop: 12 }}>
       <Box
         sx={{
           width: "260px",
