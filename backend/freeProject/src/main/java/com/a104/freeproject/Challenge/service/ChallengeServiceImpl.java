@@ -7,6 +7,7 @@ import com.a104.freeproject.Category.repository.DetailCategoryRepository;
 import com.a104.freeproject.Challenge.entity.Challenge;
 import com.a104.freeproject.Challenge.repository.ChallengeRepository;
 import com.a104.freeproject.Challenge.request.registerRequest;
+import com.a104.freeproject.Challenge.response.ChallengeListResponse;
 import com.a104.freeproject.Challenge.response.ChlUserNameResponse;
 import com.a104.freeproject.Challenge.response.ChlUserSimpleStatResponse;
 import com.a104.freeproject.HashTag.service.ChltagServiceImpl;
@@ -16,6 +17,9 @@ import com.a104.freeproject.PrtChl.entity.PrtChl;
 import com.a104.freeproject.PrtChl.service.PrtChlServiceImpl;
 import com.a104.freeproject.advice.exceptions.NotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -127,4 +131,37 @@ public class ChallengeServiceImpl implements ChallengeService{
         return output;
     }
 
+    @Override
+    public List<ChallengeListResponse> getChallengePageList(int page) throws NotFoundException{
+        PageRequest pageRequest = PageRequest.of(page-1,6, Sort.Direction.DESC, "id");
+        Page<Challenge> challengePage = challengeRepository.findAll(pageRequest);
+        List<Challenge> content = challengePage.getContent();
+
+        List<ChallengeListResponse> result = new ArrayList<>();
+
+        for (Challenge c : content) {
+            ChallengeListResponse temp = ChallengeListResponse.builder()
+                    .id(c.getId())
+                    .categoryId(c.getCategory().getId())
+                    .detailCategoryId(c.getDetailCategory().getId())
+                    .writer(c.getWriter())
+                    .title(c.getTitle())
+                    .contents(c.getContents())
+                    .imgurl(c.getImgurl())
+                    .isWatch(c.isWatch())
+                    .roomtype(c.getRoomtype())
+                    .password(c.getPassword())
+                    .limitPeolple(c.getLimitPeople())
+                    .currentNum(c.getCurrentNum())
+                    .alarm(c.getAlarm())
+                    .goal(c.getGoal())
+                    .unit(c.getUnit())
+                    .isFin(c.isFin())
+                    .build();
+            System.out.println(c.getTitle());
+            result.add(temp);
+        }
+
+        return result;
+    }
 }

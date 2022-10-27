@@ -1,6 +1,7 @@
 package com.a104.freeproject.Challenge.controller;
 
 import com.a104.freeproject.Challenge.request.registerRequest;
+import com.a104.freeproject.Challenge.response.ChallengeListResponse;
 import com.a104.freeproject.Challenge.response.ChlUserNameResponse;
 import com.a104.freeproject.Challenge.response.ChlUserSimpleStatResponse;
 import com.a104.freeproject.Challenge.service.ChallengeServiceImpl;
@@ -42,6 +43,12 @@ public class ChallengeController {
             +"성공 비율의 경우 소수점 셋째 자리까지 나오게 표현.")
     public ResponseEntity<List<ChlUserSimpleStatResponse>> getUserSimpleStatInfo (@PathVariable("chlId") Long chlId, HttpServletRequest req) throws NotFoundException {
         return ResponseEntity.ok().body(challengeService.getUserSimpleStatInfo(chlId));
+    }
+
+    @GetMapping("/list/{page}")
+    @ApiOperation(value="챌린지 리스트 페이지네이션으로 반환", notes = "목록에 무슨 데이터가 필요한지 몰라서 일단 테이블에 있는거만 가져옵니다, 데이터 없는거 말해주새요 수정 예정")
+    public ResponseEntity<List<ChallengeListResponse>> getChallengePageList(@PathVariable("page") int page, HttpServletRequest req) throws NotFoundException{
+        return ResponseEntity.ok().body(challengeService.getChallengePageList(page));
     }
 
 

@@ -41,14 +41,14 @@ public class DetailCategoryController {
     }
 
     @PatchMapping("/update")
-    @ApiOperation(value = "세부 카테고리 내용 수정", notes = "id와 수정할 name & imgurl을 다 넘겨주세요")
+    @ApiOperation(value = "세부 카테고리 내용 수정", notes = "상세카테고리의 id와 수정할 name & imgurl을 다 넘겨주세요")
     public ResponseEntity<Boolean> updateCategory(@RequestBody CategoryUpdateRequest input) throws NotFoundException{
         return ResponseEntity.ok().body(detailService.updateDetailCategory(input));
     }
     // 추후 세부 카테고리별 챌린지 리스트 가져오는 api 추가해야함
 
     @DeleteMapping("/delete/{id}")
-    @ApiOperation(value = "상세 카테고리 삭제")
+    @ApiOperation(value = "상세 카테고리 삭제", notes="상세 카테고리의 ID 값을 넘겨주세요")
     public ResponseEntity<Boolean> deleteDetailCategory(@PathVariable("id") Long id) throws NotFoundException{
         return ResponseEntity.ok().body(detailService.deleteDetailCategory(id));
     }
