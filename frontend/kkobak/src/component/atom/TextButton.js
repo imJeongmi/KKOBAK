@@ -15,7 +15,7 @@ const StyledButton = styled(Button)(
   margin: ${getmarginY(my)} 1vw;
   border-radius: 10px;
   text-align: center;
-  font-size: 1.5vw;
+  font-size: 15px;
   font-weight: bold;
   color: white;
   background-color: ${getColor(color)};
@@ -54,22 +54,22 @@ function getHeightBySize(size) {
 function getColor(color) {
   switch (color) {
     case "primary":
-      return "#F1A6A7";
+      return "#99B9D6";
     case "secondary":
       return "#adadad";
     default:
-      return "#F1A6A7";
+      return "#99B9D6";
   }
 }
 
 function getHoverColor(color) {
   switch (color) {
     case "primary":
-      return "#fabebf";
+      return "#ADCDEA";
     case "secondary":
       return "#d6d6d6";
     default:
-      return "#fabebf";
+      return "#ADCDEA";
   }
 }
 
