@@ -1,4 +1,4 @@
-$ruler: 15px;
+$ruler: 13px;
 $color-bg: #ffffff;
 $color-shadow: #babecc;
 $color-white: #fff;
@@ -6,7 +6,7 @@ $color-white: #fff;
 
 .label {
   display: block;
-  margin-bottom: $ruler*0.8;
+  margin-bottom: $ruler*0.5;
   width: 100%;
 }
 
