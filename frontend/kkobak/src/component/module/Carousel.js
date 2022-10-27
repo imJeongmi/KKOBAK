@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import Box from "@mui/material/Box";
 import WidgetTime from "./WidgetTime";
 import WidgetWeather from "./WidgetWeather";
 
@@ -16,7 +15,7 @@ export default class VerticalMode extends Component {
       slidesToScroll: 1,
       vertical: true,
       verticalSwiping: true,
-      autoplay: true,
+      autoplay: false,
       autospeed: 500,
     };
     return (
