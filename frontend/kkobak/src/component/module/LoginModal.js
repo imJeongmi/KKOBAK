@@ -13,7 +13,7 @@ const ModalStyle = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: '35%',
+  width: '50%',
   height: '55%',
   bgcolor: 'white',
   borderRadius: '10px',
@@ -41,7 +41,7 @@ export default function LoginModal() {
       <Box sx={ModalStyle}>
         <CloseIcon onClick={handleClose} sx={{ m: 1, float: 'right' }}></CloseIcon>
         <Box sx={LogoStyle}>
-          <img alt="logo" src={Logo} height="95%" object-fit="cover" />
+          <img alt="logo" src={Logo} height="95%" />
         </Box>
         <Box sx={{ width: "80%", margin: "auto", textAlign: "center", mt: 2 }}>
           <Input type="text" placeholder="이메일"></Input>
