@@ -4,7 +4,7 @@ import storage from "../helper/storage";
 
 // configuration
 const api = axios.create({
-	baseURL: "",
+	baseURL: "kkobak.ml/api",
 	headers: {
 		"Content-Type": "application/json",
 	},
