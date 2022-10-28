@@ -3,6 +3,9 @@ import Text from "component/atom/Text";
 import Box from "@mui/material/Box";
 import ChallengeCardList from "component/module/ChallengeCardList";
 import SideBar from "component/atom/SideBar";
+import SearchInput from "component/atom/SearchInput";
+import SearchToggle from "component/atom/SearchToggle";
+import CategoryToggle from "component/atom/CategoryToggle";
 
 export default function Challenge() {
   return (
@@ -23,14 +26,20 @@ export default function Challenge() {
               검색
             </Text>
           </Box>
-          <Box>검색 필터링 토글</Box>
-          <Box>검색 인풋창</Box>
+          <Box sx={{ float: "right", marginRight: "150px" }}>
+            <SearchToggle />
+          </Box>
           <Box>
+            <SearchInput />
+          </Box>
+          <Box sx={{ marginTop: "30px" }}>
             <Text size="l" weight="bold">
               카테고리
             </Text>
           </Box>
-          <Box>카테고리토글</Box>
+          <Box sx={{ marginLeft: "40px", marginTop: "30px" }}>
+            <CategoryToggle />
+          </Box>
         </SideBar>
       </Box>
     </Box>
