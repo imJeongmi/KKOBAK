@@ -14,5 +14,6 @@ public class DetailCategoryResponse {
     private Long detailId;
     private Long categoryId;
     private String detailName;
+    private String imgurl;
 
 }

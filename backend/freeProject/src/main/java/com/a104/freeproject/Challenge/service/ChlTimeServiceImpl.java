@@ -3,6 +3,8 @@ import com.a104.freeproject.Challenge.entity.Challenge;
 import com.a104.freeproject.Challenge.entity.ChlTime;
 import com.a104.freeproject.Challenge.repository.ChallengeRepository;
 import com.a104.freeproject.Challenge.repository.ChlTimeRepository;
+import com.a104.freeproject.PrtChl.entity.PrtChl;
+import com.a104.freeproject.PrtChl.repository.PrtChlRepository;
 import com.a104.freeproject.advice.exceptions.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.PropertySource;
@@ -26,6 +28,7 @@ public class ChlTimeServiceImpl implements ChlTimeService{
 
     private final ChlTimeRepository chlTimeRepository;
     private final ChallengeRepository challengeRepository;
+    private final PrtChlRepository prtChlRepository;
 
     @Override
     public boolean addRow(Challenge c, Timestamp st, Timestamp ed) throws NotFoundException {
@@ -46,11 +49,22 @@ public class ChlTimeServiceImpl implements ChlTimeService{
         for(Challenge c : postList){
             ChlTime chlTime = chlTimeRepository.findByChallenge(c);
             if(chlTime.getEndTime().equals(now) || chlTime.getEndTime().before(now)) c.setStatus(2);
+            c.setFin(true);
             challengeRepository.save(c);
+
+            List<PrtChl> chlList = c.getChlList();
+            for (PrtChl p:chlList){
+                p.set_fin(true);
+                prtChlRepository.save(p);
+            }
+
         }
 
         List<Challenge> preList = challengeRepository.findAllByStatus(0);
         for(Challenge c : preList){
+
+            // 현재는 이거를 사용할 일이 거의 없을 것임. 만약에 생기면 챌린지 관련해서 챌린지 create 어쩌고 필요한 부분 넣어야함
+
             ChlTime chlTime = chlTimeRepository.findByChallenge(c);
             if(chlTime.getStartTime().equals(now) || chlTime.getStartTime().before(now)) c.setStatus(1);
             challengeRepository.save(c);

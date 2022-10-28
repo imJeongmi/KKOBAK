@@ -1,4 +1,4 @@
-package com.a104.freeproject.Category.response;
+package com.a104.freeproject.Challenge.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,8 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CategoryResponse {
-    private Long id;
-    private String name;
-    private String imgurl;
+public class ChlUserSimpleStatResponse {
+    private String nickname;
+    private double sucRatio;
 }

@@ -1,15 +1,15 @@
 package com.a104.freeproject.Log.entity;
 
 import com.a104.freeproject.PrtChl.entity.PrtChl;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
-import org.joda.time.DateTime;
+import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -23,17 +23,18 @@ public class Log {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="data",nullable = false)
-    private Date date;
+    @NotNull
+    @JsonFormat(pattern = "yyyy-MM-dd", shape = JsonFormat.Shape.STRING)
+    private LocalDate date;
 
-    @Column(name="finished",nullable = false)
+    @Setter
+    @NotNull
     private boolean isFin;
 
-    @Column(name="complete_time")
-    private DateTime completeTime;
+    @Setter
+    private Timestamp completeTime;
 
     @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name="prt_chl_id")
+    @ManyToOne(fetch = FetchType.LAZY)
     private PrtChl prtChl;
 }

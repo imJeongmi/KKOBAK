@@ -7,9 +7,12 @@ import com.a104.freeproject.Category.repository.DetailCategoryRepository;
 import com.a104.freeproject.Challenge.entity.Challenge;
 import com.a104.freeproject.Challenge.repository.ChallengeRepository;
 import com.a104.freeproject.Challenge.request.registerRequest;
+import com.a104.freeproject.Challenge.response.ChlUserNameResponse;
+import com.a104.freeproject.Challenge.response.ChlUserSimpleStatResponse;
 import com.a104.freeproject.HashTag.service.ChltagServiceImpl;
 import com.a104.freeproject.Member.entity.Member;
 import com.a104.freeproject.Member.service.MemberServiceImpl;
+import com.a104.freeproject.PrtChl.entity.PrtChl;
 import com.a104.freeproject.PrtChl.service.PrtChlServiceImpl;
 import com.a104.freeproject.advice.exceptions.NotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Service
 @Transactional
@@ -86,9 +90,41 @@ public class ChallengeServiceImpl implements ChallengeService{
         chlTimeService.addRow(c,input.getStartTime(), input.getEndTime());
 
         //PrtChl 추가
-        prtChlService.participate(c.getId(),req);
+        prtChlService.participate(c.getId(),req, input.getAlarmDir());
 
         return true;
+    }
+
+    @Override
+    public List<ChlUserNameResponse> getUserInfo(Long chlId) throws NotFoundException {
+        if(!challengeRepository.existsById(chlId)) throw new NotFoundException("챌린지가 존재하지 않습니다.");
+        Challenge c = challengeRepository.findById(chlId).get();
+
+        List<PrtChl> chlList = c.getChlList();
+        List<ChlUserNameResponse> output = new LinkedList<>();
+
+        for (PrtChl p:chlList){
+            output.add(ChlUserNameResponse.builder().nickname(p.getMember().getNickname()).build());
+        }
+
+        return output;
+    }
+
+    @Override
+    public List<ChlUserSimpleStatResponse> getUserSimpleStatInfo(Long chlId) throws NotFoundException {
+        if(!challengeRepository.existsById(chlId)) throw new NotFoundException("챌린지가 존재하지 않습니다.");
+        Challenge c = challengeRepository.findById(chlId).get();
+
+        List<PrtChl> chlList = c.getChlList();
+        List<ChlUserSimpleStatResponse> output = new LinkedList<>();
+
+        for (PrtChl p:chlList){
+            double ratio = (1.0*p.getSucDay())/(p.getSucDay()+p.getFailDay());
+            output.add(ChlUserSimpleStatResponse.builder().nickname(p.getMember().getNickname())
+                    .sucRatio(Math.round(ratio*1000)/1000.0).build());
+        }
+
+        return output;
     }
 
 }
