@@ -164,4 +164,107 @@ public class ChallengeServiceImpl implements ChallengeService{
 
         return result;
     }
+    @Override
+    public List<ChallengeListResponse> getChallengePageListByCategory(int page, Long id) throws NotFoundException{
+        PageRequest pageRequest = PageRequest.of(page-1,6, Sort.Direction.DESC, "id");
+        Page<Challenge> challengePage = challengeRepository.findAllByCategoryId(id, pageRequest);
+        List<Challenge> content = challengePage.getContent();
+
+        List<ChallengeListResponse> result = new ArrayList<>();
+
+        for (Challenge c : content) {
+            ChallengeListResponse temp = ChallengeListResponse.builder()
+                    .id(c.getId())
+                    .categoryId(c.getCategory().getId())
+                    .detailCategoryId(c.getDetailCategory().getId())
+                    .writer(c.getWriter())
+                    .title(c.getTitle())
+                    .contents(c.getContents())
+                    .imgurl(c.getImgurl())
+                    .isWatch(c.isWatch())
+                    .roomtype(c.getRoomtype())
+                    .password(c.getPassword())
+                    .limitPeolple(c.getLimitPeople())
+                    .currentNum(c.getCurrentNum())
+                    .alarm(c.getAlarm())
+                    .goal(c.getGoal())
+                    .unit(c.getUnit())
+                    .isFin(c.isFin())
+                    .build();
+            System.out.println(c.getTitle());
+            result.add(temp);
+        }
+
+        return result;
+    }
+
+
+    @Override
+    public List<ChallengeListResponse> getChallengePageListByDetailCategory(int page, Long id) throws NotFoundException{
+        PageRequest pageRequest = PageRequest.of(page-1,6, Sort.Direction.DESC, "id");
+        Page<Challenge> challengePage = challengeRepository.findAllByDetailCategoryId(id, pageRequest);
+        List<Challenge> content = challengePage.getContent();
+
+        List<ChallengeListResponse> result = new ArrayList<>();
+
+        for (Challenge c : content) {
+            ChallengeListResponse temp = ChallengeListResponse.builder()
+                    .id(c.getId())
+                    .categoryId(c.getCategory().getId())
+                    .detailCategoryId(c.getDetailCategory().getId())
+                    .writer(c.getWriter())
+                    .title(c.getTitle())
+                    .contents(c.getContents())
+                    .imgurl(c.getImgurl())
+                    .isWatch(c.isWatch())
+                    .roomtype(c.getRoomtype())
+                    .password(c.getPassword())
+                    .limitPeolple(c.getLimitPeople())
+                    .currentNum(c.getCurrentNum())
+                    .alarm(c.getAlarm())
+                    .goal(c.getGoal())
+                    .unit(c.getUnit())
+                    .isFin(c.isFin())
+                    .build();
+            System.out.println(c.getTitle());
+            result.add(temp);
+        }
+
+        return result;
+    }
+    @Override
+    public List<ChallengeListResponse> getChallengePageListByTitle(int page, String word) throws NotFoundException{
+        PageRequest pageRequest = PageRequest.of(page-1,6, Sort.Direction.DESC, "id");
+        Page<Challenge> challengePage = challengeRepository.findByTitleContains(word, pageRequest);
+        List<Challenge> content = challengePage.getContent();
+
+        List<ChallengeListResponse> result = new ArrayList<>();
+
+        for (Challenge c : content) {
+            ChallengeListResponse temp = ChallengeListResponse.builder()
+                    .id(c.getId())
+                    .categoryId(c.getCategory().getId())
+                    .detailCategoryId(c.getDetailCategory().getId())
+                    .writer(c.getWriter())
+                    .title(c.getTitle())
+                    .contents(c.getContents())
+                    .imgurl(c.getImgurl())
+                    .isWatch(c.isWatch())
+                    .roomtype(c.getRoomtype())
+                    .password(c.getPassword())
+                    .limitPeolple(c.getLimitPeople())
+                    .currentNum(c.getCurrentNum())
+                    .alarm(c.getAlarm())
+                    .goal(c.getGoal())
+                    .unit(c.getUnit())
+                    .isFin(c.isFin())
+                    .build();
+            System.out.println(c.getTitle());
+            result.add(temp);
+        }
+
+        return result;
+    }
 }
+
+

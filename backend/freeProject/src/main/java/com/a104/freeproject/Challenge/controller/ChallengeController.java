@@ -51,5 +51,21 @@ public class ChallengeController {
         return ResponseEntity.ok().body(challengeService.getChallengePageList(page));
     }
 
+    @GetMapping("/list/category/{categoryId}/{page}")
+    @ApiOperation(value="카테고리별 챌린지 리스트 페이지네이션", notes = "목록에 무슨 데이터가 필요한지 몰라서 일단 테이블에 있는거만 가져옵니다, 데이터 없는거 말해주새요 수정 예정")
+    public ResponseEntity<List<ChallengeListResponse>> getChallengePageListByCategory(@PathVariable("page") int page, @PathVariable("categoryId") Long id,HttpServletRequest req) throws NotFoundException{
+        return ResponseEntity.ok().body(challengeService.getChallengePageListByCategory(page,id));
+    }
 
+    @GetMapping("/list/detail/{detailCategoryId}/{page}")
+    @ApiOperation(value="상세 카테고리별 챌린지 리스트 페이지네이션", notes = "목록에 무슨 데이터가 필요한지 몰라서 일단 테이블에 있는거만 가져옵니다, 데이터 없는거 말해주새요 수정 예정")
+    public ResponseEntity<List<ChallengeListResponse>> getChallengePageListByDetailCategory(@PathVariable("page") int page, @PathVariable("detailCategoryId") Long id, HttpServletRequest req) throws NotFoundException{
+        return ResponseEntity.ok().body(challengeService.getChallengePageListByDetailCategory(page, id));
+    }
+
+    @GetMapping("/list/search/title/{word}/{page}")
+    @ApiOperation(value="챌린지 제목 검색", notes = "제목에 단어가 포함되면 모두 검색")
+    public ResponseEntity<List<ChallengeListResponse>> getChallengePageListByTitle(@PathVariable("page") int page, @PathVariable("word") String word) throws NotFoundException{
+        return ResponseEntity.ok().body(challengeService.getChallengePageListByTitle(page, word));
+    }
 }

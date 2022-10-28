@@ -17,4 +17,10 @@ public interface ChallengeService {
     List<ChlUserSimpleStatResponse> getUserSimpleStatInfo(Long chlId) throws NotFoundException;
 
     List<ChallengeListResponse> getChallengePageList(int page) throws NotFoundException;
+
+    List<ChallengeListResponse> getChallengePageListByCategory(int page, Long id) throws NotFoundException;
+
+    List<ChallengeListResponse> getChallengePageListByDetailCategory(int page, Long id) throws NotFoundException;
+
+    List<ChallengeListResponse> getChallengePageListByTitle(int page, String word) throws NotFoundException;
 }
