@@ -12,6 +12,7 @@ import java.util.List;
 
 public interface ChallengeService {
     boolean register(registerRequest input, HttpServletRequest req) throws NotFoundException;
+
     List<ChlUserNameResponse> getUserInfo(Long chlId) throws NotFoundException;
 
     List<ChlUserSimpleStatResponse> getUserSimpleStatInfo(Long chlId) throws NotFoundException;
@@ -23,4 +24,12 @@ public interface ChallengeService {
     List<ChallengeListResponse> getChallengePageListByDetailCategory(int page, Long id) throws NotFoundException;
 
     List<ChallengeListResponse> getChallengePageListByTitle(int page, String word) throws NotFoundException;
+
+    List<ChallengeListResponse> getChallengePageListByNickName(int page, String nickName) throws NotFoundException;
+
+    List<ChallengeListResponse> getChallengePageListByTag(int page, String tag) throws NotFoundException;
+
+    ChallengeListResponse getChallenge(Long id) throws NotFoundException;
+
+    boolean checkPassword(Long id, String password) throws NotFoundException;
 }

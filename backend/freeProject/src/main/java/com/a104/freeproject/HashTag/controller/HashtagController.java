@@ -6,13 +6,15 @@ import com.a104.freeproject.HashTag.service.HashtagServiceImpl;
 import com.a104.freeproject.advice.exceptions.NotFoundException;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/hashtag")
@@ -31,4 +33,17 @@ public class HashtagController {
     }
 
     // 챌린지 추가 후 chl_tag 추가
+    @PostMapping(value = "/image", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+    @ApiOperation(value="이미지 전송시 AI 태그 반환")
+    public ResponseEntity<?> getTagsByImage(@RequestPart(value = "file") MultipartFile multipartFile) throws Exception{
+        Map<String, List<String>> result = hashtagService.getTagsByImage(multipartFile) ;
+        return (new ResponseEntity<Map<String, List<String>>>(result, HttpStatus.OK));
+    }
+
+    @PostMapping(value = "/contents")
+    @ApiOperation(value="이미지 전송시 AI 태그 반환")
+    public ResponseEntity<?> getTagsByContents(@RequestBody String contents) throws Exception{
+        Map<String, List<String>> result = hashtagService.getTagsByContents(contents) ;
+        return (new ResponseEntity<Map<String, List<String>>>(result, HttpStatus.OK));
+    }
 }

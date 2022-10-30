@@ -1,6 +1,9 @@
 package com.a104.freeproject.Challenge.response;
 import lombok.*;
 
+import java.sql.Timestamp;
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -23,4 +26,8 @@ public class ChallengeListResponse {
     private int goal;
     private String unit;
     private boolean isFin;
+    private String nickName;
+    private Timestamp startTime;
+    private Timestamp endTime;
+    private List<String> tagList;
 }

@@ -15,4 +15,8 @@ public interface ChallengeRepository extends JpaRepository<Challenge,Long> {
     Page<Challenge> findAllByDetailCategoryId(Long detailCategoryId, PageRequest pageRequest);
 
     Page<Challenge> findByTitleContains(String word, PageRequest pageRequest);
+
+    Page<Challenge> findByWriter(Long writerId, PageRequest pageRequest);
+
+    Page<Challenge> findByIdIn(List<Long> challengeIdList, PageRequest pageRequest);
 }
