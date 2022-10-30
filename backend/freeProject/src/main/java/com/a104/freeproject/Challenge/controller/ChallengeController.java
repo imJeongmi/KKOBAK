@@ -1,6 +1,8 @@
 package com.a104.freeproject.Challenge.controller;
 
+import com.a104.freeproject.Challenge.request.passCheckRequest;
 import com.a104.freeproject.Challenge.request.registerRequest;
+import com.a104.freeproject.Challenge.response.ChallengeListResponse;
 import com.a104.freeproject.Challenge.response.ChlUserNameResponse;
 import com.a104.freeproject.Challenge.response.ChlUserSimpleStatResponse;
 import com.a104.freeproject.Challenge.service.ChallengeServiceImpl;
@@ -8,6 +10,7 @@ import com.a104.freeproject.Member.request.NickRequest;
 import com.a104.freeproject.advice.exceptions.NotFoundException;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.aspectj.weaver.ast.Not;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,5 +47,51 @@ public class ChallengeController {
         return ResponseEntity.ok().body(challengeService.getUserSimpleStatInfo(chlId));
     }
 
+    @GetMapping("/list/{page}")
+    @ApiOperation(value="챌린지 리스트 페이지네이션으로 반환", notes = "목록에 무슨 데이터가 필요한지 몰라서 일단 테이블에 있는거만 가져옵니다, 데이터 없는거 말해주새요 수정 예정")
+    public ResponseEntity<List<ChallengeListResponse>> getChallengePageList(@PathVariable("page") int page, HttpServletRequest req) throws NotFoundException{
+        return ResponseEntity.ok().body(challengeService.getChallengePageList(page));
+    }
 
+    @GetMapping("/list/category/{categoryId}/{page}")
+    @ApiOperation(value="카테고리별 챌린지 리스트 페이지", notes = "목록에 무슨 데이터가 필요한지 몰라서 일단 테이블에 있는거만 가져옵니다, 데이터 없는거 말해주새요 수정 예정")
+    public ResponseEntity<List<ChallengeListResponse>> getChallengePageListByCategory(@PathVariable("page") int page, @PathVariable("categoryId") Long id,HttpServletRequest req) throws NotFoundException{
+        return ResponseEntity.ok().body(challengeService.getChallengePageListByCategory(page,id));
+    }
+
+    @GetMapping("/list/detail/{detailCategoryId}/{page}")
+    @ApiOperation(value="상세 카테고리별 챌린지 리스트 페이지", notes = "목록에 무슨 데이터가 필요한지 몰라서 일단 테이블에 있는거만 가져옵니다, 데이터 없는거 말해주새요 수정 예정")
+    public ResponseEntity<List<ChallengeListResponse>> getChallengePageListByDetailCategory(@PathVariable("page") int page, @PathVariable("detailCategoryId") Long id, HttpServletRequest req) throws NotFoundException{
+        return ResponseEntity.ok().body(challengeService.getChallengePageListByDetailCategory(page, id));
+    }
+
+    @GetMapping("/list/search/title/{word}/{page}")
+    @ApiOperation(value="챌린지 리스트 제목으로 검색 페이지", notes = "제목에 단어가 포함되면 모두 검색")
+    public ResponseEntity<List<ChallengeListResponse>> getChallengePageListByTitle(@PathVariable("page") int page, @PathVariable("word") String word) throws NotFoundException{
+        return ResponseEntity.ok().body(challengeService.getChallengePageListByTitle(page, word));
+    }
+
+    @GetMapping("/list/search/nickname/{nickName}/{page}")
+    @ApiOperation(value="챌린지 리스트 닉네임으로 검색 페이지", notes = "닉네임 정확히 일치해야 검색")
+    public ResponseEntity<List<ChallengeListResponse>> getChallengePageListByNickName(@PathVariable("page") int page, @PathVariable("nickName") String nickName) throws NotFoundException{
+        return ResponseEntity.ok().body(challengeService.getChallengePageListByNickName(page, nickName));
+    }
+
+    @GetMapping("/list/search/tag/{tag}/{page}")
+    @ApiOperation(value="챌린지 리스트 태그로 검색 페이지", notes = "해당 태그 정확히 일치해야 검색")
+    public ResponseEntity<List<ChallengeListResponse>> getChallengePageListByTag(@PathVariable("page") int page, @PathVariable("tag") String tag) throws NotFoundException{
+        return ResponseEntity.ok().body(challengeService.getChallengePageListByTag(page, tag));
+    }
+
+    @GetMapping("/{challengeId}")
+    @ApiOperation(value="챌린지 상세 정보", notes = "챌린지 아이디를 넘겨주세요")
+    public ResponseEntity<ChallengeListResponse> getChallenge(@PathVariable("challengeId") Long Id) throws NotFoundException{
+        return ResponseEntity.ok().body(challengeService.getChallenge(Id));
+    }
+
+    @PostMapping("/chk-pw")
+    @ApiOperation(value="챌린지 방 비밀번호 체크", notes = "챌린지 아이디를 넘겨주세요")
+    public boolean pwCheck(@RequestBody passCheckRequest input) throws NotFoundException{
+        return challengeService.checkPassword(input.getId(), input.getPassword());
+    }
 }

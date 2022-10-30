@@ -7,15 +7,22 @@ import com.a104.freeproject.Category.repository.DetailCategoryRepository;
 import com.a104.freeproject.Challenge.entity.Challenge;
 import com.a104.freeproject.Challenge.repository.ChallengeRepository;
 import com.a104.freeproject.Challenge.request.registerRequest;
+import com.a104.freeproject.Challenge.response.ChallengeListResponse;
 import com.a104.freeproject.Challenge.response.ChlUserNameResponse;
 import com.a104.freeproject.Challenge.response.ChlUserSimpleStatResponse;
+import com.a104.freeproject.HashTag.entity.ChlTag;
+import com.a104.freeproject.HashTag.repository.HashtagRepository;
 import com.a104.freeproject.HashTag.service.ChltagServiceImpl;
 import com.a104.freeproject.Member.entity.Member;
+import com.a104.freeproject.Member.repository.MemberRepository;
 import com.a104.freeproject.Member.service.MemberServiceImpl;
 import com.a104.freeproject.PrtChl.entity.PrtChl;
 import com.a104.freeproject.PrtChl.service.PrtChlServiceImpl;
 import com.a104.freeproject.advice.exceptions.NotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,6 +39,8 @@ public class ChallengeServiceImpl implements ChallengeService{
     private final ChallengeRepository challengeRepository;
     private final CategoryRepository categoryRepository;
     private final DetailCategoryRepository detailRepository;
+    private  final MemberRepository memberRepository;
+    private final HashtagRepository hashtagRepository;
     private final ChltagServiceImpl chltagService;
     private final MemberServiceImpl memberService;
     private final ChlTimeServiceImpl chlTimeService;
@@ -127,4 +136,151 @@ public class ChallengeServiceImpl implements ChallengeService{
         return output;
     }
 
+    @Override
+    public List<ChallengeListResponse> getChallengePageList(int page) throws NotFoundException{
+        PageRequest pageRequest = PageRequest.of(page-1,6, Sort.Direction.DESC, "id");
+        Page<Challenge> challengePage = challengeRepository.findAll(pageRequest);
+        List<Challenge> content = challengePage.getContent();
+
+        return makeResponse(content);
+    }
+    @Override
+    public List<ChallengeListResponse> getChallengePageListByCategory(int page, Long id) throws NotFoundException{
+        PageRequest pageRequest = PageRequest.of(page-1,6, Sort.Direction.DESC, "id");
+        Page<Challenge> challengePage = challengeRepository.findAllByCategoryId(id, pageRequest);
+        List<Challenge> content = challengePage.getContent();
+
+        return makeResponse(content);
+    }
+
+
+    @Override
+    public List<ChallengeListResponse> getChallengePageListByDetailCategory(int page, Long id) throws NotFoundException{
+        PageRequest pageRequest = PageRequest.of(page-1,6, Sort.Direction.DESC, "id");
+        Page<Challenge> challengePage = challengeRepository.findAllByDetailCategoryId(id, pageRequest);
+        List<Challenge> content = challengePage.getContent();
+
+        return makeResponse(content);
+    }
+    @Override
+    public List<ChallengeListResponse> getChallengePageListByTitle(int page, String word) throws NotFoundException{
+        PageRequest pageRequest = PageRequest.of(page-1,6, Sort.Direction.DESC, "id");
+        Page<Challenge> challengePage = challengeRepository.findByTitleContains(word, pageRequest);
+        List<Challenge> content = challengePage.getContent();
+
+        return makeResponse(content);
+    }
+
+    @Override
+    public List<ChallengeListResponse> getChallengePageListByNickName(int page, String nickName) throws NotFoundException{
+        PageRequest pageRequest = PageRequest.of(page-1,6, Sort.Direction.DESC, "id");
+        Long writerId = memberRepository.findByNickname(nickName).getId();
+        Page<Challenge> challengePage = challengeRepository.findByWriter(writerId, pageRequest);
+        List<Challenge> content = challengePage.getContent();
+
+        return makeResponse(content);
+    }
+
+    @Override
+    public List<ChallengeListResponse> getChallengePageListByTag(int page, String tag) throws NotFoundException{
+        PageRequest pageRequest = PageRequest.of(page-1,6, Sort.Direction.DESC, "id");
+        List<ChlTag> chlTags= hashtagRepository.findByName(tag).getChlTags();
+        //페이지네이션용
+        List<Long> challengeIdList = new ArrayList<>();
+        for (ChlTag chlTag : chlTags) {
+            challengeIdList.add(chlTag.getChallenge().getId());
+        }
+        Page<Challenge> challengePage = challengeRepository.findByIdIn(challengeIdList, pageRequest);
+        List<Challenge> content = challengePage.getContent();
+
+        return makeResponse(content);
+    }
+
+    @Override
+    public ChallengeListResponse getChallenge(Long id) throws NotFoundException{
+        Challenge c = challengeRepository.findById(id).get();
+        List<ChlTag> tagList= c.getTagList();
+        List<String> tagListName = new ArrayList<>();
+        for (ChlTag a: tagList){
+            tagListName.add(a.getHashtag().getName());
+        }
+        ChallengeListResponse result = ChallengeListResponse.builder()
+                .id(c.getId())
+                .categoryId(c.getCategory().getId())
+                .detailCategoryId(c.getDetailCategory().getId())
+                .writer(c.getWriter())
+                .title(c.getTitle())
+                .contents(c.getContents())
+                .imgurl(c.getImgurl())
+                .isWatch(c.isWatch())
+                .roomtype(c.getRoomtype())
+                .password(c.getPassword())
+                .limitPeolple(c.getLimitPeople())
+                .currentNum(c.getCurrentNum())
+                .alarm(c.getAlarm())
+                .goal(c.getGoal())
+                .unit(c.getUnit())
+                .isFin(c.isFin())
+                .nickName(memberRepository.findById(c.getWriter()).get().getNickname())
+                .startTime(c.getChlTime().getStartTime())
+                .endTime(c.getChlTime().getEndTime())
+                .tagList(tagListName)
+                .build();
+
+        return result;
+    }
+
+    @Override
+    public boolean checkPassword(Long id, String password) throws  NotFoundException{
+        if(!challengeRepository.existsById(id)) throw new NotFoundException("해당 방이 없습니다.");
+        Challenge challenge = challengeRepository.findById(id).get();
+        if(password.equals(challenge.getPassword())){
+            return true;
+        }
+        return false;
+     }
+
+
+
+    public List<ChallengeListResponse> makeResponse(List<Challenge> content) {
+        List<ChallengeListResponse> result = new ArrayList<>();
+
+        for (Challenge c : content) {
+            List<ChlTag> tagList= c.getTagList();
+            List<String> tagListName = new ArrayList<>();
+            for (ChlTag a: tagList){
+                tagListName.add(a.getHashtag().getName());
+            }
+            ChallengeListResponse temp = ChallengeListResponse.builder()
+                    .id(c.getId())
+                    .categoryId(c.getCategory().getId())
+                    .detailCategoryId(c.getDetailCategory().getId())
+                    .writer(c.getWriter())
+                    .title(c.getTitle())
+                    .contents(c.getContents())
+                    .imgurl(c.getImgurl())
+                    .isWatch(c.isWatch())
+                    .roomtype(c.getRoomtype())
+                    .password(c.getPassword())
+                    .limitPeolple(c.getLimitPeople())
+                    .currentNum(c.getCurrentNum())
+                    .alarm(c.getAlarm())
+                    .goal(c.getGoal())
+                    .unit(c.getUnit())
+                    .isFin(c.isFin())
+                    .nickName(memberRepository.findById(c.getWriter()).get().getNickname())
+                    .startTime(c.getChlTime().getStartTime())
+                    .endTime(c.getChlTime().getEndTime())
+                    .tagList(tagListName)
+                    .build();
+            System.out.println(c.getTitle());
+            result.add(temp);
+        }
+
+        return result;
+    }
+
+
 }
+
+

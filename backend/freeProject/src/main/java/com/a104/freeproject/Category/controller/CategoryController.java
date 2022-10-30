@@ -42,7 +42,7 @@ public class CategoryController {
     // 챌린지 완성 시 카테고리별 챌린지 불러오는 API 작성하기
 
     @DeleteMapping("/delete/{id}")
-    @ApiOperation(value="카테고리 내용 삭제")
+    @ApiOperation(value="카테고리 내용 삭제", notes="카테고리의 Id를 넘겨주세요")
     public ResponseEntity<Boolean> deleteCategory(@PathVariable("id") Long id) throws NotFoundException{
         return ResponseEntity.ok().body(categoryService.deleteCategory(id));
     }
