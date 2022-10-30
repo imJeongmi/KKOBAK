@@ -1,17 +1,21 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import moment from "moment";
 import Box from "@mui/material/Box";
-import Text from "../atom/Text";
 
-//시간위젯
-export default function WidgetTime() {
-  let today = new Date();
-  let time = {
-    year: today.getFullYear(),
-    month: today.getMonth() + 1,
-    date: today.getDate(),
-    hour: today.getHours(),
-    minutes: today.getMinutes(),
-  };
+// 시간 실시간으로 적용되도록 수정했음.
+
+export default function ClockContainer() {
+  // let timer: any = null;
+  let timer = null;
+  const [time, setTime] = useState(moment());
+  useEffect(() => {
+    timer = setInterval(() => {
+      setTime(moment());
+    }, 1000);
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
 
   return (
     <Box
@@ -26,17 +30,12 @@ export default function WidgetTime() {
       }}
     >
       <Box>
-        <Box>
-          <Text size="xl">
-            {time.hour} : {time.minutes}
-          </Text>
-          <br />
-          <Text>
-            {time.year}년{" "}
-            {time.month > 9 ? time.month : "0" + String(time.month)}월{" "}
-            {time.date > 9 ? time.date : "0" + String(time.date)}일
-          </Text>
-        </Box>
+        <div className="neon blue" style={{ fontSize: "50px" }}>
+          {time.format("HH : mm")}
+        </div>
+        <div className="neon pink" style={{ fontFamily: "alarm_clock" }}>
+          &nbsp;{time.format("YYYY년 MM월 DD일")}
+        </div>
       </Box>
     </Box>
   );

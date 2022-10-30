@@ -17,6 +17,7 @@ export default class VerticalMode extends Component {
       verticalSwiping: true,
       autoplay: false,
       autospeed: 500,
+      arrows: false,
     };
     return (
       <div style={{ width: "280px" }}>
