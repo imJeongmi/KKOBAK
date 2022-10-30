@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { styled } from "@mui/system";
-import { Box, Select } from "@mui/material";
+import Box from "@mui/material/Box";
 import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 
 const ToggleBox = styled(ToggleButtonGroup)(

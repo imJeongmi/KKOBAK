@@ -14,7 +14,7 @@ export default function ChallengeCardList() {
       <Box
         sx={{
           width: "924px",
-          minHeight: "765px",
+          minHeight: "650px",
           backgroundColor: "#F5F5F5",
           verticalAlign: "middle",
           display: "flex",
@@ -23,31 +23,34 @@ export default function ChallengeCardList() {
         }}
       >
         {/* 받아온 챌린지리스트 순회하기 */}
-        <Box sx={{ marginTop: "60px" }}>
+        <Box
+          sx={{
+            display: "flex",
+            flexWrap: "wrap",
+            marginTop: "70px",
+            width: "924px",
+            height: "600px",
+          }}
+        >
+          <ChallengeCard />
+          <ChallengeCard />
+          <ChallengeCard />
+          <ChallengeCard />
+          <ChallengeCard />
           <ChallengeCard />
         </Box>
-        <Box sx={{ marginTop: "60px" }}>
-          <ChallengeCard />
+
+        <Box sx={{ marginLeft: "275px", marginTop: "45px" }}>
+          <Stack spacing={2}>
+            <Pagination count={10} shape="rounded" />
+          </Stack>
         </Box>
-        <Box sx={{ marginTop: "60px" }}>
-          <ChallengeCard />
+        <Box sx={{ marginLeft: "735px", marginTop: "-80px" }}>
+          <Button size="ss">챌린지 생성</Button>
         </Box>
-        <Box sx={{ marginBottom: "100px" }}>
-          <ChallengeCard />
+        <Box sx={{ marginLeft: "750px", marginTop: "-720px" }}>
+          <WatchToggle></WatchToggle>
         </Box>
-        <ChallengeCard />
-        <ChallengeCard />
-      </Box>
-      <Box sx={{ marginLeft: "275px", marginTop: "-55px" }}>
-        <Stack spacing={2}>
-          <Pagination count={10} shape="rounded" />
-        </Stack>
-      </Box>
-      <Box sx={{ marginLeft: "735px", marginTop: "-100px" }}>
-        <Button size="ss">챌린지 생성</Button>
-      </Box>
-      <Box sx={{ marginLeft: "750px", marginTop: "-710px" }}>
-        <WatchToggle></WatchToggle>
       </Box>
     </Box>
   );

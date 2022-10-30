@@ -34,13 +34,13 @@ export default function SelectedListItem() {
       {/* 로고 위치 */}
       <List component="nav" aria-label="main" sx={{ flex: 1 }}>
         <ListItemButton
-          href="/main"
+          href="/setting"
           sx={{ paddingLeft: "21px" }}
-          selected={selectedIndex === 0}
+          // selected={selectedIndex === 0}
           onClick={(event) => handleListItemClick(event, 0)}
         >
           <ListItemIcon>
-            <img src={Logo} width={38} height={38} />
+            <img src={Logo} width={35} height={35} />
           </ListItemIcon>
         </ListItemButton>
       </List>
@@ -50,13 +50,13 @@ export default function SelectedListItem() {
       <List component="nav" aria-label="secondary" sx={{ flex: 10 }}>
         <ListItemButton
           href="/main"
-          selected={selectedIndex === 1}
+          // selected={selectedIndex === 1}
           onClick={(event) => handleListItemClick(event, 1)}
           sx={{ paddingLeft: "21px", marginBottom: "30px", color: "gray" }}
         >
           <Box>
-            <ListItemIcon>
-              <img src={Home} width={34} height={34} />
+            <ListItemIcon sx={{ marginLeft: "3px" }}>
+              <img src={Home} width={28} height={28} />
             </ListItemIcon>
             <ListItemText
               sx={{ paddingLeft: "5px" }}
@@ -68,13 +68,13 @@ export default function SelectedListItem() {
 
         <ListItemButton
           href="/challenge"
-          selected={selectedIndex === 2}
+          // selected={selectedIndex === 2}
           onClick={(event) => handleListItemClick(event, 2)}
-          sx={{ paddingLeft: "21px", marginBottom: "30px", color: "gray" }}
+          sx={{ paddingLeft: "20px", marginBottom: "30px", color: "gray" }}
         >
           <Box>
-            <ListItemIcon>
-              <img src={Flag} width={34} height={34} />
+            <ListItemIcon sx={{ marginLeft: "4px" }}>
+              <img src={Flag} width={28} height={28} />
             </ListItemIcon>
             <ListItemText
               primary="챌린지"
@@ -84,18 +84,18 @@ export default function SelectedListItem() {
         </ListItemButton>
         <ListItemButton
           href="/myChallenge"
-          selected={selectedIndex === 3}
+          // selected={selectedIndex === 3}
           onClick={(event) => handleListItemClick(event, 3)}
           sx={{
-            paddingLeft: "16px",
+            paddingLeft: "14px",
             paddingRight: "4px",
             marginBottom: "30px",
             color: "gray",
           }}
         >
           <Box>
-            <ListItemIcon sx={{ paddingLeft: "5px" }}>
-              <img src={User} width={34} height={34} />
+            <ListItemIcon sx={{ paddingLeft: "8px" }}>
+              <img src={User} width={28} height={28} />
             </ListItemIcon>
             <ListItemText
               primary="내챌린지"
@@ -108,12 +108,12 @@ export default function SelectedListItem() {
       <List component="nav" aria-label="last" sx={{ flex: 1 }}>
         <ListItemButton
           href="/setting"
-          sx={{ paddingLeft: "21px" }}
-          selected={selectedIndex === 4}
+          sx={{ paddingLeft: "24px" }}
+          // selected={selectedIndex === 4}
           onClick={(event) => handleListItemClick(event, 4)}
         >
           <ListItemIcon>
-            <img src={Settings} width={34} height={34} />
+            <img src={Settings} width={28} height={28} />
           </ListItemIcon>
         </ListItemButton>
       </List>
