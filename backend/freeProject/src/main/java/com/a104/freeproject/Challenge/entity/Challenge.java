@@ -105,4 +105,7 @@ public class Challenge implements Serializable {
     @Builder.Default
     @OneToMany(mappedBy = "challenge", cascade = CascadeType.ALL)
     private List<PrtChl> chlList = new LinkedList<>();
+
+    @OneToOne(mappedBy = "challenge")
+    private ChlTime chlTime;
 }
