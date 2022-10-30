@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
-import Text from "component/atom/Text";
 
 import Paper from "@mui/material/Paper";
 import ToggleButton from "@mui/material/ToggleButton";
@@ -37,6 +36,7 @@ export default function CustomizedDividers() {
         sx={{
           display: "flex",
           flexWrap: "wrap",
+          marginLeft: "20px",
         }}
       >
         <StyledToggleButtonGroup
@@ -46,7 +46,7 @@ export default function CustomizedDividers() {
           onChange={handleFilter}
           aria-label="text alignment"
           orientation="vertical"
-          sx={{ width: "240px" }}
+          sx={{ width: "300px" }}
           color="primary"
         >
           <ToggleButton value="1" aria-label="1">
