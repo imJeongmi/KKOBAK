@@ -16,7 +16,7 @@ export default function CustomizedInputBase() {
         p: "2px 4px",
         display: "flex",
         alignItems: "center",
-        width: 280,
+        width: 320,
         // border: 1,
         // borderRadius: 3,
       }}
@@ -28,7 +28,7 @@ export default function CustomizedInputBase() {
       <Box
         component="form"
         sx={{
-          "& > :not(style)": { m: 1, width: "21ch" },
+          "& > :not(style)": { m: 1, width: "220px" },
         }}
         noValidate
         autoComplete="off"
