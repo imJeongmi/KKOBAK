@@ -9,8 +9,8 @@ import CategoryToggle from "component/atom/CategoryToggle";
 
 export default function Challenge() {
   return (
-    <Box>
-      <Box sx={{ marginLeft: "10%" }}>
+    <Box sx={{ display: "flex", flexDirection: "row" }}>
+      <Box sx={{ marginLeft: "40px", flex: 6 }}>
         <Box sx={{ marginY: 3 }}>
           <Text size="l" weight="bold">
             챌린지리스트
@@ -19,25 +19,25 @@ export default function Challenge() {
         <ChallengeCardList />
       </Box>
 
-      <Box sx={{ marginTop: "-130px", float: "right" }}>
+      <Box sx={{ float: "right", flex: 1 }}>
         <SideBar>
-          <Box>
+          <Box sx={{ paddingY: "30px", marginLeft: "10px" }}>
             <Text size="l" weight="bold">
               검색
             </Text>
           </Box>
-          <Box sx={{ float: "right", marginRight: "150px" }}>
+          <Box sx={{ float: "right", marginRight: "115px" }}>
             <SearchToggle />
           </Box>
           <Box>
             <SearchInput />
           </Box>
-          <Box sx={{ marginTop: "30px" }}>
+          <Box sx={{ marginTop: "30px", marginLeft: "10px" }}>
             <Text size="l" weight="bold">
               카테고리
             </Text>
           </Box>
-          <Box sx={{ marginLeft: "40px", marginTop: "30px" }}>
+          <Box sx={{ marginTop: "30px" }}>
             <CategoryToggle />
           </Box>
         </SideBar>

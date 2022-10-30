@@ -2,7 +2,7 @@ import React from "react";
 import Box from "@mui/material/Box";
 import Text from "../atom/Text";
 import Watch from "../../static/watch.svg";
-import TagButton from "../atom/TagButton";
+import TagLabel from "../atom/TagLabel";
 
 export default function ChallengeCard(props) {
   return (
@@ -45,7 +45,7 @@ export default function ChallengeCard(props) {
             }}
           >
             {/* 태그들 앞에 3개만 보이도록 수정 map 활용 태그 모양 수정 필요*/}
-            <TagButton>{props.tag}</TagButton>
+            <TagLabel>{props.tag}</TagLabel>
           </Box>
           <Box
             sx={{
