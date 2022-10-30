@@ -9,7 +9,8 @@ export default function ChallengeBasicForm() {
 
 	return (
 		<Box>
-			<input style="display: none" ref={challengeImgInput} type='file' accept='image/*' onChange={onImgChange} />
+			<input id='challengeImg' ref={challengeImgInput} type='file' accept='image/*' onChange={onImgChange} />
+			<Box></Box>
 		</Box>
 	)
 }

@@ -9,9 +9,8 @@ import cry from '../../static/emoji/cry.png'
 import { Box } from '@mui/system';
 
 const CalendarBox = {
-	// margin: "auto",
-	marginLeft: "20px",
-	width: "100%",
+	margin: "auto",
+	width: "95%",
 	minHeight: "80vh",
 	backgroundColor: "#F5F5F5",
 	textAlign: "center",
@@ -49,7 +48,7 @@ export default function MainCalendar() {
 								textAlign: "center",
 								width: "8vw", height: "8vh"
 							}}>
-								{true ? <img object-fit="cover" src={smile} /> : <img object-fit="cover" src={cry} />}
+								{true ? <img object-fit="cover" src={smile} alt="smile"/> : <img object-fit="cover" src={cry} alt="cry"/>}
 							</Box>
 						);
 					}} />
