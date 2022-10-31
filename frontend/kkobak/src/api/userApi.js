@@ -33,10 +33,20 @@ function requestPasswdCheck(passwd, success, fail) {
   api.post("member/chk-pw", passwd).then(success).catch(fail);
 }
 
+function requestLogin(email, password, success, fail) {
+  console.log(email, password);
+  api.post("member/login", {
+    email: email,
+    password: password,
+  }).then(success).catch(fail)
+}
+
 export {
   requestJoin,
   requestEmailCheck,
   requestNicknameCheck,
   requestAuthNum,
   requestPasswdCheck,
+  requestLogin,
+
 };
