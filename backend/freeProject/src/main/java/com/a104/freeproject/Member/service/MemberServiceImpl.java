@@ -106,7 +106,6 @@ public class MemberServiceImpl implements MemberService{
 
     @Override
     public boolean emailCheck(String email) throws NotFoundException {
-        email = email.replaceAll("\"","");
         if(memberRepository.existsByEmail(email)) throw new NotFoundException("중복 이메일 >> "+email);
         if(!Pattern.matches("\\w+@\\w+\\.\\w+(\\.\\w+)?", email)) throw new NotFoundException("이메일 형식이 잘못됨 >> "+email);
         return true;

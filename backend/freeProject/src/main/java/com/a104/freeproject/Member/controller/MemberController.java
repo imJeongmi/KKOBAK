@@ -47,21 +47,21 @@ public class MemberController {
 
     @PostMapping("/chk-email")
     @ApiOperation(value="[확인] 이메일 형식/중복 체크", notes = "이메일 형식/중복 체크가 맞는지 boolean 형식으로 return (문제가 있으면 return false)")
-    public boolean emailCheck(@RequestBody String email) throws NotFoundException {
-        return memberService.emailCheck(email);
+    public boolean emailCheck(@RequestBody EmailRequest input) throws NotFoundException {
+        return memberService.emailCheck(input.getEmail());
     }
 
     @PostMapping("/chk-pw")
     @ApiOperation(value="[확인] 비밀번호 체크",
             notes =  "비밀번호 형식: 8-20자, 숫자/특수문자($`~!@$!%*#^?&()_=+)/영문자 필수 >> boolean 형식으로 return (형식에 잘 맞으면 return true)")
-    public boolean pwCheck(@RequestBody String pw){
-        return memberService.pwCheck(pw);
+    public boolean pwCheck(@RequestBody PasswordRequest input){
+        return memberService.pwCheck(input.getPw());
     }
 
     @PostMapping("/chk-name")
     @ApiOperation(value="[확인] 닉네임 중복 체크", notes =  "닉네임 중복 여부 boolean 형식으로 return (중복 >> return false, 사용가능한 닉네임 >> return true)")
-    public boolean nameCheck(@RequestBody String name){
-        return memberService.nameCheck(name);
+    public boolean nameCheck(@RequestBody NickRequest input){
+        return memberService.nameCheck(input.getNickname());
     }
 
     @PatchMapping("/register/watch")
