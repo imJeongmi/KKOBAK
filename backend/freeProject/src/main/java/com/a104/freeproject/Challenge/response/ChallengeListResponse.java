@@ -1,4 +1,5 @@
 package com.a104.freeproject.Challenge.response;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import java.sql.Timestamp;
@@ -27,7 +28,9 @@ public class ChallengeListResponse {
     private String unit;
     private boolean isFin;
     private String nickName;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private Timestamp startTime;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private Timestamp endTime;
     private List<String> tagList;
 }
