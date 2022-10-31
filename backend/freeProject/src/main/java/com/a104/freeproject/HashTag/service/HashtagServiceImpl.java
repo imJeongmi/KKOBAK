@@ -30,8 +30,8 @@ public class HashtagServiceImpl implements HashtagService{
 
     private final HashtagRepository tagRepository;
 
-    private  final String aiURL = "http://localhost:8081/ai/image2";
-    private  final String aiURL2 = "http://localhost:8081/ai/sentence";
+    private  final String aiURL = "https://kkobak.ml/ai/image2";
+    private  final String aiURL2 = "https://kkobak.ml/ai/sentence";
     @Override
     public boolean registerTag(List<String> tagList) {
 
