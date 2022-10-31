@@ -4,7 +4,7 @@ import storage from "../helper/storage";
 
 // configuration
 const api = axios.create({
-	baseURL: "kkobak.ml/api",
+	baseURL: "https://kkobak.ml/api",
 	headers: {
 		"Content-Type": "application/json",
 	},
@@ -12,10 +12,10 @@ const api = axios.create({
 
 api.interceptors.request.use(
 	config => {
-		const token = storage.get("accessToken");
-		if (token) {
-			config.headers["Authorization"] = accessToken;
-		}
+		const accessToken = storage.get("accessToken");
+		if (accessToken) {
+      config.headers["Authorization"] = accessToken;
+    }
 		return config;
 	},
 	error => {
