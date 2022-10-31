@@ -1,6 +1,7 @@
 package com.a104.freeproject.Challenge.response;
 
 import com.a104.freeproject.HashTag.entity.Hashtag;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -17,7 +18,9 @@ public class ChlSimpleResponse {
     private String imgurl;
     private boolean isWatch;
     private int roomtype;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDate startTime;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDate endTime;
     List<String> tags;
 }
