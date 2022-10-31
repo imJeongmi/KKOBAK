@@ -13,15 +13,11 @@ function requestJoin(email, hp, nickname, password, success, fail) {
 }
 
 function requestEmailCheck(email, success, fail) {
-    api.post("/member/chk-email", {email})
-    .then(success)
-    .catch(fail)
+  api.post("/member/chk-email", email).then(success).catch(fail);
 }
 
 function requestNicknameCheck(nickname, success, fail) {
-    api.post("member/chk-name", {nickname})
-    .then(success)
-    .catch(fail)
+  api.post("member/chk-name", nickname).then(success).catch(fail);
 }
 
 function requestAuthNum(phoneNumber, success, fail) {
@@ -30,17 +26,11 @@ function requestAuthNum(phoneNumber, success, fail) {
       phoneNumber: phoneNumber,
     })
     .then(success)
-    .catch(fail)
-}
-
-function requestConfirmAuthNum() {
-
+    .catch(fail);
 }
 
 function requestPasswdCheck(passwd, success, fail) {
-    api.post("member/chk-pw", {passwd})
-    .then(success)
-    .catch(fail)
+  api.post("member/chk-pw", passwd).then(success).catch(fail);
 }
 
 export {
@@ -48,6 +38,5 @@ export {
   requestEmailCheck,
   requestNicknameCheck,
   requestAuthNum,
-  requestConfirmAuthNum,
   requestPasswdCheck,
 };

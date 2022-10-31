@@ -1,7 +1,7 @@
-import { Modal } from "@mui/material";
-import { Box } from "@mui/system";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Box } from "@mui/system";
+import { Modal } from "@mui/material";
 
 import CloseIcon from "@mui/icons-material/Close";
 import Logo from "static/Logo.png";
@@ -16,7 +16,6 @@ import {
   requestEmailCheck,
   requestNicknameCheck,
   requestAuthNum,
-  requestConfirmAuthNum,
   requestPasswdCheck,
 } from "api/userApi";
 
@@ -46,17 +45,20 @@ export default function SignupModal() {
   const navigate = useNavigate();
 
   const [open, setOpen] = React.useState(true);
-  // const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   const [email, setEmail] = useState("");
+  const [passwd, setPasswd] = useState("");
+  const [passwdCheck, setPasswdCheck] = useState("");
   const [nickname, setNickname] = useState("");
   const [phoneNum, setPhoneNum] = useState("");
   const [authNum, setAuthNum] = useState("");
-  const [passwd, setPasswd] = useState("");
+  const [confirmEmail, setConfirmEmail] = useState("");
   const [confirmPasswd, setConfirmPasswd] = useState("");
-  const [signupMessage, setSignupMessage] =
-    useState("여기에 회원가입 메시지 출력!");
+  const [confirmNickname, setConfirmNickname] = useState("");
+  const [confirmPhoneNum, setConfirmPhoneNum] = useState("");
+  const [confirmAuthNum, setConfirmAuthNum] = useState("");
+  const [signupMessage, setSignupMessage] = useState("");
 
   function goToLogin() {
     navigate("/login");
@@ -64,51 +66,158 @@ export default function SignupModal() {
 
   function onChangeEmail(e) {
     setEmail(e.target.value);
+    setConfirmEmail("");
+  }
+
+  function onChangePasswd(e) {
+    setPasswd(e.target.value);
+    setConfirmPasswd("");
+  }
+
+  function onChangePasswdCheck(e) {
+    setPasswdCheck(e.target.value);
+    setConfirmPasswd("");
   }
 
   function onChangeNickname(e) {
     setNickname(e.target.value);
+    setConfirmNickname("");
   }
 
   function onChangePhoneNum(e) {
     setPhoneNum(e.target.value);
+    setConfirmPhoneNum("");
   }
 
   function onChangeAuthNum(e) {
     setAuthNum(e.target.value);
   }
 
-  function onChangePasswd(e) {
-    setPasswd(e.target.value);
+  // 회원가입
+  function joinSuccess(res) {
+    const accessToken = res.data.accessToken;
+    storage.set("accessToken", accessToken);
+
+    setEmail("");
+    setPasswd("");
+    setPasswdCheck("");
+    setNickname("");
+    setPhoneNum("");
+    setAuthNum("");
+    setConfirmEmail("");
+    setConfirmPasswd("");
+    setConfirmNickname("");
+    setConfirmPhoneNum("");
+    setConfirmAuthNum("");
+
+    setSignupMessage("회원가입 완료");
   }
-  
-  function onChangeConfirmPasswd(e) {
-    setConfirmPasswd(e.target.value);
+  function joinFail(res) {
+    console.log("Signup Fail", res);
+  }
+  function onClickSignup() {
+    if (!email) {
+      setSignupMessage("이메일을 입력해주세요.");
+      setTimeout(() => setSignupMessage(""), 1500);
+      return;
+    }
+
+    if (!confirmEmail) {
+      setSignupMessage("이메일 중복 인증이 필요해요.");
+      setTimeout(() => setSignupMessage(""), 1500);
+      return;
+    }
+
+    if (!passwd || !passwdCheck) {
+      setSignupMessage("비밀번호를 입력해주세요.");
+      setTimeout(() => setSignupMessage(""), 1500);
+      return;
+    }
+
+    if (!nickname) {
+      setSignupMessage("닉네임을 입력해주세요.");
+      setTimeout(() => setSignupMessage(""), 1500);
+      return;
+    }
+
+    if (!confirmNickname) {
+      setSignupMessage("닉네임 중복 인증이 필요해요.");
+      setTimeout(() => setSignupMessage(""), 1500);
+      return;
+    }
+
+    if (!phoneNum) {
+      setSignupMessage("전화번호를 입력해주세요.");
+      setTimeout(() => setSignupMessage(""), 1500);
+      return;
+    }
+
+    if (!authNum) {
+      setSignupMessage("인증번호를 입력해주세요.");
+      setTimeout(() => setSignupMessage(""), 1500);
+      return;
+    }
+
+    onClickPasswdCheck();
+
+    if (confirmPasswd && onClickAuthNumCheck()) {
+      requestJoin(
+        confirmEmail,
+        confirmPhoneNum,
+        confirmNickname,
+        passwdCheck,
+        joinSuccess,
+        joinFail
+      );
+    }
   }
 
-  // 1) 이메일 중복 확인
+  // 이메일 중복 확인
   function emailCheckSuccess(res) {
-    // console.log(res.data);
     if (res.data) {
-      setSignupMessage("등록 가능한 이메일입니다.");
-      setTimeout(() => setSignupMessage(""), 1500);
-    } else {
-      setSignupMessage("다른 이메일을 입력해주세요.");
+      setConfirmEmail(email);
+      setSignupMessage("사용 가능한 이메일입니다.");
       setTimeout(() => setSignupMessage(""), 1500);
     }
   }
   function emailCheckFail(res) {
-    console.log("Email Check Fail", res);
+    setConfirmEmail("");
+    setSignupMessage("다른 이메일을 입력해주세요.");
+    setTimeout(() => setSignupMessage(""), 1500);
+    // console.log("Email Check Fail", res);
   }
   function onClickEmailCheck() {
     requestEmailCheck(email, emailCheckSuccess, emailCheckFail);
   }
 
-  // 2) 닉네임 중복 확인
-  function nicknameCheckSuccess(res) {
-    // console.log(res.data);
+  // 비밀번호 확인
+  function passwdCheckSuccess(res) {
     if (res.data) {
-      setSignupMessage("등록 가능한 닉네임입니다.");
+      setConfirmPasswd(passwd);
+    } else {
+      setSignupMessage(
+        "영문자, 숫자, 특수문자($`~!@$!%*#^?&()_=+)를 포함한 8-20자로 설정해주세요."
+      );
+      setTimeout(() => setSignupMessage(""), 1500);
+    }
+  }
+  function passwdCheckFail(res) {
+    console.log("Password Check Fail", res);
+  }
+  function onClickPasswdCheck() {
+    if (passwd !== passwdCheck) {
+      setSignupMessage("비밀번호가 일치하지 않습니다.");
+      setTimeout(() => setSignupMessage(""), 1500);
+    } else {
+      requestPasswdCheck(passwd, passwdCheckSuccess, passwdCheckFail);
+    }
+  }
+
+  // 닉네임 중복 확인
+  function nicknameCheckSuccess(res) {
+    if (res.data) {
+      setConfirmNickname(nickname);
+      setSignupMessage("사용 가능한 닉네임입니다.");
       setTimeout(() => setSignupMessage(""), 1500);
     } else {
       setSignupMessage("다른 닉네임을 입력해주세요.");
@@ -122,12 +231,11 @@ export default function SignupModal() {
     requestNicknameCheck(nickname, nicknameCheckSuccess, nicknameCheckFail);
   }
 
-  // 3) 인증번호 요청
+  // 인증번호 요청
   function sendAuthNumSuccess(res) {
-    setAuthNum(res.data.authNum);
-
-    setSignupMessage("인증번호 : " + authNum);
-    setTimeout(() => setSignupMessage(""), 1500);
+    setConfirmPhoneNum(phoneNum);
+    setConfirmAuthNum(res.data.authNum);
+    console.log("인증번호 : " + res.data.authNum);
   }
   function sendAuthNumFail(res) {
     console.log("Send AuthNum Fail", res);
@@ -136,68 +244,14 @@ export default function SignupModal() {
     requestAuthNum(Number(phoneNum), sendAuthNumSuccess, sendAuthNumFail);
   }
 
-  // 4) 인증번호 확인
-  function authNumCheckSuccess(res) {
-    // console.log(res.data);
-    if (res.data) {
-      setSignupMessage("인증되었습니다.");
-      setTimeout(() => setSignupMessage(""), 1500);
+  // 인증번호 확인
+  function onClickAuthNumCheck() {
+    if (authNum === confirmAuthNum) {
+      return true;
     } else {
       setSignupMessage("잘못된 인증번호입니다.");
       setTimeout(() => setSignupMessage(""), 1500);
     }
-  }
-  function authNumCheckFail(res) {
-    console.log("AuthNum Check Fail", res);
-  }
-  function onClickAuthNumCheck() {
-    requestConfirmAuthNum(authNum, authNumCheckSuccess, authNumCheckFail);
-  }
-
-  // 5) 비밀번호 확인
-  function passwdCheckSuccess(res) {
-    // console.log(res.data);
-    if (res.data) {
-      setSignupMessage("사용 가능한 비밀번호입니다.");
-      setTimeout(() => setSignupMessage(""), 1500);
-    } else {
-      setSignupMessage(
-        "영문자, 숫자, 특수문자($`~!@$!%*#^?&()_=+)를 포함한 8-20자로 설정해주세요."
-      );
-      setTimeout(() => setSignupMessage(""), 1500);
-    }
-  }
-  function passwdCheckFail(res) {
-    console.log("Password Check Fail", res);
-  }
-  function onClickPasswdCheck() {
-    if (passwd != confirmPasswd) {
-      setSignupMessage("비밀번호가 일치하지 않습니다.");
-      setTimeout(() => setSignupMessage(""), 1500);
-    } else {
-      requestPasswdCheck(String(passwd), passwdCheckSuccess, passwdCheckFail);
-    }
-  }
-
-  // 6) 회원가입
-  function joinSuccess(res) {
-    const accessToken = res.data.accessToken;
-    storage.set("accessToken", accessToken);
-
-    setEmail("");
-    setNickname("");
-    setPhoneNum("");
-    setAuthNum("");
-    setPasswd("");
-    setConfirmPasswd("");
-    setSignupMessage("회원가입 완료");
-  }
-  function joinFail(res) {
-    console.log("Signup Fail", res);
-  }
-  function onClickSignup(e) {
-    // e.preventDefault();
-    requestJoin(email, phoneNum, nickname, passwd, joinSuccess, joinFail);
   }
 
   return (
@@ -212,55 +266,76 @@ export default function SignupModal() {
         </Box>
 
         <Box sx={{ width: "80%", margin: "auto", textAlign: "center", mt: 2 }}>
-          <Input
-            type="text"
-            placeholder="이메일"
-            onChange={onChangeEmail}
-          ></Input>
-          <Box onClick={onClickEmailCheck}>
-            <Text size="s">이메일 중복 확인</Text>
-            <br />
+          <Box
+            sx={{ display: "flex", flexDirection: "col", alignItems: "center" }}
+          >
+            <Input
+              type="text"
+              placeholder="이메일"
+              onChange={onChangeEmail}
+            ></Input>
+            <Box onClick={onClickEmailCheck} sx={{ width: "70px" }}>
+              <Text size="s">중복 확인</Text>
+            </Box>
           </Box>
 
-          <Input
-            type="text"
-            placeholder="닉네임"
-            onChange={onChangeNickname}
-          ></Input>
-          <Box onClick={onClickNicknameCheck}>
-            <Text size="s">닉네임 중복 확인</Text>
+          <Box
+            sx={{ display: "flex", flexDirection: "col", alignItems: "center" }}
+          >
+            <Input
+              type="password"
+              placeholder="비밀번호"
+              onChange={onChangePasswd}
+            ></Input>
+            <Box sx={{ width: "70px" }} />
           </Box>
 
-          <Input
-            type="text"
-            placeholder="전화번호"
-            onChange={onChangePhoneNum}
-          ></Input>
-          <Box onClick={onClickSendAuthNum}>
-            <Text size="s">인증번호 전송</Text>
+          <Box
+            sx={{ display: "flex", flexDirection: "col", alignItems: "center" }}
+          >
+            <Input
+              type="password"
+              placeholder="비밀번호 재확인"
+              onChange={onChangePasswdCheck}
+            ></Input>
+            <Box sx={{ width: "70px" }} />
           </Box>
 
-          <Input
-            type="text"
-            placeholder="인증번호"
-            onChange={onChangeAuthNum}
-          ></Input>
-          <Box onClick={onClickAuthNumCheck}>
-            <Text size="s">인증번호 확인</Text>
+          <Box
+            sx={{ display: "flex", flexDirection: "col", alignItems: "center" }}
+          >
+            <Input
+              type="text"
+              placeholder="닉네임"
+              onChange={onChangeNickname}
+            ></Input>
+            <Box onClick={onClickNicknameCheck} sx={{ width: "70px" }}>
+              <Text size="s">중복 확인</Text>
+            </Box>
           </Box>
 
-          <Input
-            type="password"
-            placeholder="비밀번호"
-            onChange={onChangePasswd}
-          ></Input>
-          <Input
-            type="password"
-            placeholder="비밀번호 확인"
-            onChange={onChangeConfirmPasswd}
-          ></Input>
-          <Box onClick={onClickPasswdCheck}>
-            <Text size="s">비밀번호 확인</Text>
+          <Box
+            sx={{ display: "flex", flexDirection: "col", alignItems: "center" }}
+          >
+            <Input
+              type="text"
+              placeholder="전화번호"
+              onChange={onChangePhoneNum}
+            ></Input>
+            <Box onClick={onClickSendAuthNum} sx={{ width: "70px" }}>
+              <Text size="s">인증번호 받기</Text>
+            </Box>
+          </Box>
+
+          <Box
+            sx={{ display: "flex", flexDirection: "col", alignItems: "center" }}
+          >
+            <Input
+              type="text"
+              placeholder="인증번호"
+              onChange={onChangeAuthNum}
+            ></Input>
+            <Box sx={{ width: "70px" }}></Box>
           </Box>
 
           <Box onClick={onClickSignup}>
@@ -271,7 +346,6 @@ export default function SignupModal() {
             <Text size="s">로그인</Text>
           </Box>
 
-          <br />
           <Text>{signupMessage}</Text>
         </Box>
       </Box>
