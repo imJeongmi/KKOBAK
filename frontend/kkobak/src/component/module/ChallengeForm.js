@@ -32,10 +32,6 @@ const inputStyle = {
   display: "none",
 };
 
-// const textInputStyle = {
-//   display: "flex",
-//   width: "60%"
-// }
 
 export default function ChallengeBasicForm() {
   const challengeImgInput = useRef();
