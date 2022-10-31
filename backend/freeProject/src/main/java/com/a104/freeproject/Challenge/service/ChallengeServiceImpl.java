@@ -49,6 +49,7 @@ public class ChallengeServiceImpl implements ChallengeService{
     @Override
     public boolean register(registerRequest input, HttpServletRequest req) throws NotFoundException {
 
+        System.out.println("처음 들어온 값 service >> "+input.getStartTime());
         Member member;
 
         try{
@@ -58,8 +59,12 @@ public class ChallengeServiceImpl implements ChallengeService{
         }
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:00");
+        TimeZone tz = TimeZone.getTimeZone("Asia/Seoul");
+        sdf.setTimeZone(tz);
         input.setStartTime(Timestamp.valueOf(sdf.format(input.getStartTime())));
         input.setEndTime(Timestamp.valueOf(sdf.format(input.getEndTime())));
+
+        System.out.println("변경 후 start time >> " + input.getStartTime());
 
         if(!categoryRepository.existsById(input.getCategoryId())) throw new NotFoundException("카테고리를 다시 입력해주세요.");
         Category category = categoryRepository.findById(input.getCategoryId()).get();
@@ -82,24 +87,39 @@ public class ChallengeServiceImpl implements ChallengeService{
                     .goal(input.getGoal()).unit(input.getUnit()).category(category).detailCategory(detail)
                     .build();
         }
+        System.out.println("에러 안남 1");
 
         // 시간 체크하고 지금시간보다 전이면(입력하느라 시간 지난거 등을 생각해서)
         Timestamp time = new Timestamp(System.currentTimeMillis());
         Timestamp now = Timestamp.valueOf(sdf.format(time));
 
+        System.out.println("now : "+ now);
+
+        System.out.println("에러 안남 2");
+
         if(input.getStartTime().equals(now) || input.getStartTime().before(now)) challenge.setStatus(1);
+
+        System.out.println("에러 안남 3");
 
         Long cid = challengeRepository.save(challenge).getId();
         Challenge c = challengeRepository.findById(cid).get();
 
+        System.out.println("에러 안남 4");
+
         //해시태그 추가
         chltagService.addChallengeTag(c,input.getTagList());
+
+        System.out.println("에러 안남 5");
 
         //ChlTime 추가
         chlTimeService.addRow(c,input.getStartTime(), input.getEndTime());
 
+        System.out.println("에러 안남 6");
+
         //PrtChl 추가
         prtChlService.participate(c.getId(),req, input.getAlarmDir());
+
+        System.out.println("에러 안남 7");
 
         return true;
     }

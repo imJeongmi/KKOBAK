@@ -31,6 +31,7 @@ public class ChallengeController {
             +"startTime, endTime 걍 스웨거 무시하시고 \"startTime\": \"2022-10-22T22:37\" 형식으로 입력해주시면 됩니당\n"
             +"알람시간은 24시간 표시 형식으로 >> 14:25 이렇게 보내주세용")
     public ResponseEntity<Boolean> register(@RequestBody registerRequest input, HttpServletRequest req) throws NotFoundException{
+        System.out.println("처음 들어온 값 controller >> "+input.getStartTime());
         return ResponseEntity.ok().body(challengeService.register(input, req));
     }
 

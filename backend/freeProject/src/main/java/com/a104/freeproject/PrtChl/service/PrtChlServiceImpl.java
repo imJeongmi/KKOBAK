@@ -18,6 +18,7 @@ import javax.transaction.Transactional;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.TimeZone;
 
 @Service
 @Transactional
@@ -38,6 +39,8 @@ public class PrtChlServiceImpl implements PrtChlService{
 
         Timestamp time = new Timestamp(System.currentTimeMillis());
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:00");
+        TimeZone tz = TimeZone.getTimeZone("Asia/Seoul");
+        sdf.setTimeZone(tz);
         Timestamp now = Timestamp.valueOf(sdf.format(time));
 
         if(!chlTimeRepository.existsByChallenge(c)) throw new NotFoundException("챌린지 스케쥴러에 존재하지 않습니다. 이 문제가 발생하면 백엔드에 문의하세용");
