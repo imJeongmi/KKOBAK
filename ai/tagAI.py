@@ -103,13 +103,13 @@ def shImage2():
                         )
                     )
                 ],
-                # model=resources_pb2.Model(
-                #     output_info=resources_pb2.OutputInfo(
-                #         output_config=resources_pb2.OutputConfig(
-                #             language='ko'
-                #         )
-                #     )
-                # )
+                model=resources_pb2.Model(
+                    output_info=resources_pb2.OutputInfo(
+                        output_config=resources_pb2.OutputConfig(
+                            language='ko'
+                        )
+                    )
+                )
             ),
             metadata=metadata
         )
@@ -124,7 +124,7 @@ def shImage2():
         tags = []
         for concept in output.data.concepts:
             print("%s %.2f" % (concept.name, concept.value))
-            tags.append([concept.name, concept.value ])
+            tags.append(concept.name)
 
         return {'tags' : tags}
 
