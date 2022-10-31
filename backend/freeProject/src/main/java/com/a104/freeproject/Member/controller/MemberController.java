@@ -47,7 +47,7 @@ public class MemberController {
 
     @PostMapping("/chk-email")
     @ApiOperation(value="[확인] 이메일 형식/중복 체크", notes = "이메일 형식/중복 체크가 맞는지 boolean 형식으로 return (문제가 있으면 return false)")
-    public boolean emailCheck(@RequestBody String email){
+    public boolean emailCheck(@RequestBody String email) throws NotFoundException {
         return memberService.emailCheck(email);
     }
 

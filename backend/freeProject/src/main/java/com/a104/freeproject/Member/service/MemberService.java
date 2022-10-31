@@ -14,7 +14,7 @@ import java.util.Map;
 public interface MemberService {
     TokenResponse join(JoinRequest input) throws NotFoundException;
     TokenResponse login(LoginRequest input);
-    boolean emailCheck(String email);
+    boolean emailCheck(String email) throws NotFoundException;
     boolean pwCheck(String pw);
     boolean nameCheck(String name);
     Member findEmailbyToken(HttpServletRequest req) throws NotFoundException;
