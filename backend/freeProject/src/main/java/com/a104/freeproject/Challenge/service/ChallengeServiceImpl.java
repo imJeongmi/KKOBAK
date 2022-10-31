@@ -208,8 +208,6 @@ public class ChallengeServiceImpl implements ChallengeService{
             tagListName.add(a.getHashtag().getName());
         }
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:00");
-        TimeZone tz = TimeZone.getTimeZone("Asia/Seoul");
-        sdf.setTimeZone(tz);
 
         ChallengeListResponse result = ChallengeListResponse.builder()
                 .id(c.getId())
@@ -229,10 +227,11 @@ public class ChallengeServiceImpl implements ChallengeService{
                 .unit(c.getUnit())
                 .isFin(c.isFin())
                 .nickName(memberRepository.findById(c.getWriter()).get().getNickname())
-                .startTime(Timestamp.valueOf(sdf.format(c.getChlTime().getStartTime())))
-                .endTime(Timestamp.valueOf(sdf.format(c.getChlTime().getEndTime())))
+                .startTime(c.getChlTime().getStartTime())
+                .endTime(c.getChlTime().getEndTime())
                 .tagList(tagListName)
                 .build();
+        System.out.println("time zone : "+result.getStartTime());
 
         return result;
     }
