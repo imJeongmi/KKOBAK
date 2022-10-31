@@ -9,7 +9,7 @@ import TodolistItem from "component/atom/TodolistItem";
 const TodolistBox = styled(Box)(
   () => `
     width: 278px;
-    height: 655px;
+    height: 450px;
     background-color: #FBFBFB;
     border-radius: 20px;
 
@@ -17,12 +17,12 @@ const TodolistBox = styled(Box)(
 );
 
 const DateBox = styled(Box)(
-    () => `
+  () => `
     padding: 25px 35px 35px 35px;
     display: flex;
     justify-content: space-around;
     `
-)
+);
 
 function getDay(num) {
   switch (num) {
@@ -50,9 +50,13 @@ export default function Todolist() {
   return (
     <TodolistBox>
       <DateBox>
-        <Text color="blue" weight="bold">&lt;</Text>
+        <Text color="blue" weight="bold">
+          &lt;
+        </Text>
         <Text weight="semibold">{nowDate + " (" + nowDay + ")"}</Text>
-        <Text color="blue" weight="bold">&gt;</Text>
+        <Text color="blue" weight="bold">
+          &gt;
+        </Text>
       </DateBox>
       <TodolistItem />
     </TodolistBox>
