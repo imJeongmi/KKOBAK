@@ -347,5 +347,24 @@ public class MemberServiceImpl implements MemberService{
         }
     }
 
+    @Override
+    public List<TodoListInfoResponse> getTodoListInfo(DayRequest day, HttpServletRequest req) throws NotFoundException {
+        Member member;
+        try{
+            member = findEmailbyToken(req);
+            List<PrtChl> chlList = member.getChallenges();
+            List<TodoListInfoResponse> todoListInfo = new LinkedList<>();
+            for(PrtChl p : chlList){
+                Log log = logRepository.findByPrtChlAndDate(p,day.getDay());
+                Challenge c = p.getChallenge();
+                todoListInfo.add(TodoListInfoResponse.builder().chlId(c.getId())
+                        .title(c.getTitle()).isDone(log.isFin()).build());
+            }
+            return todoListInfo;
+        } catch (Exception e){
+            throw e;
+        }
+    }
+
 
 }

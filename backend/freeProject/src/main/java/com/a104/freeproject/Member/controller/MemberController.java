@@ -107,7 +107,7 @@ public class MemberController {
     }
 
     @GetMapping("/my-chl-list")
-    @ApiOperation(value="[확인] 내가 참여한 챌린지 목록 받기", notes = "'/member/my-chl-list?page=0&size=3' 형식으로 사용.\n"
+    @ApiOperation(value="[확인] 내가 참여한 챌린지 목록 받기", notes = "'/member/my-chl-list?page=0&size=3&sort=id,DESC' 형식으로 사용.\n"
             + "이 api는 스웨거에서 페이지랑 사이즈 조절 불가. 원하는 데이터 있으면 백엔드 문의해주세용\n"
             + "return 변경 원하시면 MM주세용~")
     public ResponseEntity<List<ChlSimpleResponse>> getMyChallenge (Pageable pageable, HttpServletRequest req) throws NotFoundException {
@@ -115,7 +115,7 @@ public class MemberController {
     }
 
     @GetMapping("/sum/my-chl-list")
-    @ApiOperation(value="[확인] 내가 참여한 챌린지 page 수 받기", notes = "'/member/sum/my-chl-list?size=3' 형식으로 사용.\n"
+    @ApiOperation(value="[확인] 내가 참여한 챌린지 page 수 받기", notes = "'/member/sum/my-chl-list?size=3&sort=id,DESC' 형식으로 사용.\n"
             + "이 api는 스웨거에서 페이지랑 사이즈 조절 불가. 원하는 데이터 있으면 백엔드 문의해주세용\n"
             + "size 갯수만큼 페이지를 만든다면 몇 페이지 까지 만들 수 있는지 return")
     public ResponseEntity<Integer> getMyChlTotalSum (Pageable pageable, HttpServletRequest req) throws NotFoundException {
@@ -124,7 +124,7 @@ public class MemberController {
 
     // 다른 사람 닉네임으로 참여한 챌린지 목록 받기
     @PostMapping("/user-chl-list")
-    @ApiOperation(value="[확인] 다른 사람이 참여한 챌린지 목록 받기", notes = "'/member/user-chl-list?page=0&size=3' 형식으로 사용.\n"
+    @ApiOperation(value="[확인] 다른 사람이 참여한 챌린지 목록 받기", notes = "'/member/user-chl-list?page=0&size=3&sort=id,DESC' 형식으로 사용.\n"
             + "이 api는 스웨거에서 페이지랑 사이즈 조절 불가. 원하는 데이터 있으면 백엔드 문의해주세용\n"
             + "return 변경 원하시면 MM주세용~")
     public ResponseEntity<List<ChlSimpleResponse>> getUserChallenge (@RequestBody NickRequest input,Pageable pageable, HttpServletRequest req) throws NotFoundException {
@@ -132,7 +132,7 @@ public class MemberController {
     }
 
     @PostMapping("/sum/user-chl-list")
-    @ApiOperation(value="[확인] 다른 사람이 참여한 챌린지 page 수 받기", notes = "'/member/sum/user-chl-list?size=3' 형식으로 사용.\n"
+    @ApiOperation(value="[확인] 다른 사람이 참여한 챌린지 page 수 받기", notes = "'/member/sum/user-chl-list?size=3&sort=id,DESC' 형식으로 사용.\n"
             + "이 api는 스웨거에서 페이지랑 사이즈 조절 불가. 원하는 데이터 있으면 백엔드 문의해주세용\n"
             + "size 갯수만큼 페이지를 만든다면 몇 페이지 까지 만들 수 있는지 return")
     public ResponseEntity<Integer> getUserChlTotalSum (@RequestBody NickRequest input,Pageable pageable, HttpServletRequest req) throws NotFoundException {
@@ -154,5 +154,13 @@ public class MemberController {
     public ResponseEntity<List<MonthChlResponse>> monthChlInfo (@PathVariable("chlId") Long chlId, @PathVariable("year") String year,
                                                                 @PathVariable("month") String month, HttpServletRequest req) throws NotFoundException {
         return ResponseEntity.ok().body(memberService.monthChlInfo(chlId, year, month, req));
+    }
+
+    @PostMapping("/todo-list/info")
+    @ApiOperation(value="[확인] (todo-list) 일자별 본인 챌린지 목록 및 실행 여부 가져오기\n"
+            +"'/member/todo-list/info' 형식으로 사용. \n"
+            + "'2022-03-03' 형식으로 날짜 입력해주세용")
+    public ResponseEntity<List<TodoListInfoResponse>> getTodoListInfo (@RequestBody DayRequest day,HttpServletRequest req) throws NotFoundException {
+        return ResponseEntity.ok().body(memberService.getTodoListInfo(day, req));
     }
 }
