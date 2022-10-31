@@ -49,6 +49,7 @@ public class ChlTimeServiceImpl implements ChlTimeService{
         for(Challenge c : postList){
             ChlTime chlTime = chlTimeRepository.findByChallenge(c);
             if(chlTime.getEndTime().equals(now) || chlTime.getEndTime().before(now)) c.setStatus(2);
+            else continue;
             c.setFin(true);
             challengeRepository.save(c);
 
