@@ -8,7 +8,7 @@ const TextSpan = styled("span")(
   margin: ${getMarginY(my)}px ${getMarginX(mx)}px;
   font-family: ${getWeight(weight)};
   padding: 0;
-  `,
+  `
 );
 
 function getSize(size) {
@@ -21,6 +21,8 @@ function getSize(size) {
       return "20px";
     case "s":
       return "10px";
+    case size:
+      return size;
     default:
       return "15px";
   }

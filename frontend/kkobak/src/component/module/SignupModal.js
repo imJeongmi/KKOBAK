@@ -35,10 +35,10 @@ const LogoStyle = {
   bgcolor: "#E8F2F9",
   width: "100%",
   height: "15%",
-  mt: 5,
-  textAlign: "center",
+  my: 5,
   display: "flex",
   justifyContent: "center",
+  alignItems: "center",
 };
 
 export default function SignupModal() {
@@ -262,7 +262,7 @@ export default function SignupModal() {
           sx={{ m: 1, float: "right" }}
         ></CloseIcon>
         <Box sx={LogoStyle}>
-          <img alt="logo" src={Logo} height="95%" />
+          <img alt="logo" src={Logo} height="80%" />
         </Box>
 
         <Box sx={{ width: "80%", margin: "auto", textAlign: "center", mt: 2 }}>
@@ -274,8 +274,10 @@ export default function SignupModal() {
               placeholder="이메일"
               onChange={onChangeEmail}
             ></Input>
-            <Box onClick={onClickEmailCheck} sx={{ width: "70px" }}>
-              <Text size="s">중복 확인</Text>
+            <Box onClick={onClickEmailCheck} sx={{ width: "20%" }}>
+              <Text size="13px" weight="medium" color="grey">
+                중복 확인
+              </Text>
             </Box>
           </Box>
 
@@ -287,7 +289,7 @@ export default function SignupModal() {
               placeholder="비밀번호"
               onChange={onChangePasswd}
             ></Input>
-            <Box sx={{ width: "70px" }} />
+            <Box sx={{ width: "20%" }} />
           </Box>
 
           <Box
@@ -298,7 +300,7 @@ export default function SignupModal() {
               placeholder="비밀번호 재확인"
               onChange={onChangePasswdCheck}
             ></Input>
-            <Box sx={{ width: "70px" }} />
+            <Box sx={{ width: "20%" }} />
           </Box>
 
           <Box
@@ -309,8 +311,8 @@ export default function SignupModal() {
               placeholder="닉네임"
               onChange={onChangeNickname}
             ></Input>
-            <Box onClick={onClickNicknameCheck} sx={{ width: "70px" }}>
-              <Text size="s">중복 확인</Text>
+            <Box onClick={onClickNicknameCheck} sx={{ width: "20%" }}>
+              <Text size="13px" weight="medium" color="grey">중복 확인</Text>
             </Box>
           </Box>
 
@@ -322,8 +324,8 @@ export default function SignupModal() {
               placeholder="전화번호"
               onChange={onChangePhoneNum}
             ></Input>
-            <Box onClick={onClickSendAuthNum} sx={{ width: "70px" }}>
-              <Text size="s">인증번호 받기</Text>
+            <Box onClick={onClickSendAuthNum} sx={{ width: "20%" }}>
+              <Text size="13px" weight="medium" color="grey">인증번호 받기</Text>
             </Box>
           </Box>
 
@@ -335,15 +337,15 @@ export default function SignupModal() {
               placeholder="인증번호"
               onChange={onChangeAuthNum}
             ></Input>
-            <Box sx={{ width: "70px" }}></Box>
+            <Box sx={{ width: "20%" }}></Box>
           </Box>
 
-          <Box onClick={onClickSignup}>
-            <TextButton size="m">회원가입</TextButton>
+          <Box onClick={onClickSignup} sx={{ mt: "20px"}}>
+            <TextButton size="l" my="15px">회원가입</TextButton>
           </Box>
-
           <Box onClick={goToLogin}>
-            <Text size="s">로그인</Text>
+            {/* <Text size="s">로그인</Text> */}
+            <TextButton size="l" color="secondary" my="5px">로그인</TextButton>
           </Box>
 
           <Text>{signupMessage}</Text>
