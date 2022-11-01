@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Box } from "@mui/system";
 import { Modal } from "@mui/material";
@@ -66,6 +66,8 @@ export default function LoginModal() {
 
     setLoginMessage("로그인 완료");
     navigate("/");
+
+    window.location.reload();
   }
   function loginFail(res) {
     setLoginMessage("이메일 또는 비밀번호를 잘못 입력했습니다.");
