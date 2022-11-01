@@ -14,7 +14,6 @@ export default function ChallengeCardList() {
       <Box
         sx={{
           width: "924px",
-          minHeight: "650px",
           backgroundColor: "#F5F5F5",
           verticalAlign: "middle",
           display: "flex",
@@ -27,9 +26,9 @@ export default function ChallengeCardList() {
           sx={{
             display: "flex",
             flexWrap: "wrap",
-            marginTop: "70px",
+            marginTop: "40px",
             width: "924px",
-            height: "600px",
+            height: "560px",
           }}
         >
           <ChallengeCard />
@@ -48,7 +47,7 @@ export default function ChallengeCardList() {
         <Box sx={{ marginLeft: "735px", marginTop: "-80px" }}>
           <Button size="ss">챌린지 생성</Button>
         </Box>
-        <Box sx={{ marginLeft: "750px", marginTop: "-720px" }}>
+        <Box sx={{ marginLeft: "750px", marginTop: "-670px" }}>
           <WatchToggle></WatchToggle>
         </Box>
       </Box>
