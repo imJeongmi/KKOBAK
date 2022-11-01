@@ -65,6 +65,7 @@ export default function LoginModal() {
     setPasswd("");
 
     setLoginMessage("로그인 완료");
+    navigate("/");
   }
   function loginFail(res) {
     setLoginMessage("이메일 또는 비밀번호를 잘못 입력했습니다.");
@@ -110,11 +111,15 @@ export default function LoginModal() {
             onChange={onChangePasswd}
           ></Input>
 
-          <Box onClick={onClickLogin} sx={{ mt: "20px"}}>
-            <TextButton size="m" my="15px">로그인</TextButton>
+          <Box onClick={onClickLogin} sx={{ mt: "20px" }}>
+            <TextButton size="m" my="15px">
+              로그인
+            </TextButton>
           </Box>
           <Box onClick={goToSignup}>
-            <TextButton size="m" color="secondary" my="5px">회원가입</TextButton>
+            <TextButton size="m" color="secondary" my="5px">
+              회원가입
+            </TextButton>
           </Box>
 
           <Text size="s">{loginMessage}</Text>
