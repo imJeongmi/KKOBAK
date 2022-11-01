@@ -36,6 +36,8 @@ export default function ChallengeSecondForm() {
   const [lock, setLock] = useState('true');
   const [startTime, setStartTime] = useState(new Date());
   const [endTime, setEndTime] = useState(new Date());
+  const [limitPeople, setLimitPeople] = useState(1);
+  const [goal, setGoal] = useState(0);
 
   const watchHandleChange = (event) => {
     setWatch(event.target.value);
@@ -49,7 +51,7 @@ export default function ChallengeSecondForm() {
     <Box sx={BoxStyle}>
       <Box sx={CardStyle}>
 
-        <Box sx={{ width: "80%", margin: "auto", display: "flex", justifyContent: "space-between", alignItems: "center", my: 1 }}>
+        <Box sx={{ width: "80%", margin: "auto", display: "flex", justifyContent: "space-between", alignItems: "center", mb: 1, mt: 6 }}>
           <Text weight="bold" >기간ㅤㅤㅤ</Text>
           <Box sx={{ marginLeft: "5%", width: "40%" }}>
             <DatePick onChange={setStartTime} value={startTime}></DatePick>
@@ -69,10 +71,19 @@ export default function ChallengeSecondForm() {
         </Box>
         <Box sx={{ width: "80%", margin: "auto", display: "flex", justifyContent: "space-between", alignItems: "center", my: 1 }}>
 
+          <Text weight="bold">최대 인원ㅤ</Text>
+          <Box sx={{ marginLeft: "5%", width: "40%" }}>
+            <Input type="number" value={limitPeople} onChange={setLimitPeople}></Input>
+          </Box>
+          <Box sx={{ width: "40%" }}>
+          </Box>
+        </Box>
+        <Box sx={{ width: "80%", margin: "auto", display: "flex", justifyContent: "space-between", alignItems: "center", my: 1 }}>
+
           <Text weight="bold">목표치ㅤㅤ</Text>
 
           <Box sx={{ marginLeft: "5%", width: "40%" }}>
-            <Input></Input>
+            <Input type="number" value={goal} onChange={setGoal}></Input>
           </Box>
           <Box sx={{ width: "40%" }}>
             <Input></Input>
@@ -111,7 +122,7 @@ export default function ChallengeSecondForm() {
             </RadioGroup>
           </FormControl>
         </Box>
-        <Box sx={{ width: "80%", margin: "auto", display: "flex", justifyContent: "space-between", alignItems: "center", my: 1 }}>
+        <Box sx={{ width: "80%", margin: "auto", display: "flex", justifyContent: "space-between", alignItems: "center", mt: 1, mb: 5 }}>
 
           <Text weight="bold">해시 태그</Text>
           <Box sx={{ marginLeft: "5%", width: "85%" }}>
