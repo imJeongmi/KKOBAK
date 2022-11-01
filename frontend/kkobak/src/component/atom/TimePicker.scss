@@ -1,0 +1,34 @@
+$ruler: 12px;
+$color-bg: #ffffff;
+$color-shadow: #babecc;
+$color-white: #fff;
+
+
+.react-time-picker {
+  width: 75%;
+}
+
+.react-time-picker__wrapper {
+  font-family: "SUIT-Medium";
+  font-size: $ruler*2;
+  border: 0;
+  outline: 0;
+  font-size: $ruler;
+  border-radius: $ruler*20;
+  padding: $ruler * 0.5;
+  margin-top: $ruler*0.5 ;
+  background-color: $color-bg;
+  text-shadow: 1px 1px 0 $color-white;
+}
+
+.react-time-picker__wrapper {
+  box-shadow: inset 2px 2px 5px $color-shadow, inset -5px -5px 10px $color-white;
+  box-sizing: border-box;
+  transition: all 0.2s ease-in-out;
+  appearance: none;
+  -webkit-appearance: none;
+
+  &:focus {
+    box-shadow: inset 1px 1px 2px $color-shadow, inset -1px -1px 2px $color-white;
+  }
+}
