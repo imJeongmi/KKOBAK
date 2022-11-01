@@ -9,6 +9,7 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import DatePick from 'component/atom/DatePicker';
+import TimePick from 'component/atom/TimePicker';
 
 const BoxStyle = {
   height: "100vh",
@@ -38,6 +39,7 @@ export default function ChallengeSecondForm() {
   const [endTime, setEndTime] = useState(new Date());
   const [limitPeople, setLimitPeople] = useState(1);
   const [goal, setGoal] = useState(0);
+  const [alarm, setAlarm] = useState(0);
 
   const watchHandleChange = (event) => {
     setWatch(event.target.value);
@@ -64,7 +66,7 @@ export default function ChallengeSecondForm() {
 
           <Text weight="bold">알림 시간ㅤ</Text>
           <Box sx={{ marginLeft: "5%", width: "40%" }}>
-            <Input></Input>
+            <TimePick value={alarm} onChange={setAlarm}></TimePick>
           </Box>
           <Box sx={{ width: "40%" }}>
           </Box>
