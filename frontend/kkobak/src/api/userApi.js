@@ -34,11 +34,13 @@ function requestPasswdCheck(passwd, success, fail) {
 }
 
 function requestLogin(email, password, success, fail) {
-  console.log(email, password);
-  api.post("member/login", {
-    email: email,
-    password: password,
-  }).then(success).catch(fail)
+  api
+    .post("member/login", {
+      email: email,
+      password: password,
+    })
+    .then(success)
+    .catch(fail);
 }
 
 export {
@@ -48,5 +50,4 @@ export {
   requestAuthNum,
   requestPasswdCheck,
   requestLogin,
-
 };

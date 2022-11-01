@@ -49,7 +49,7 @@ export default function SelectedListItem() {
       {/* 화면 이동 nav 메인, 챌린지, 나의챌린지, 통계 등 */}
       <List component="nav" aria-label="secondary" sx={{ flex: 10 }}>
         <ListItemButton
-          href="/main"
+          href="/"
           // selected={selectedIndex === 1}
           onClick={(event) => handleListItemClick(event, 1)}
           sx={{ paddingLeft: "21px", marginBottom: "30px", color: "gray" }}
