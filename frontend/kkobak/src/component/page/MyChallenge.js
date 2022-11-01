@@ -10,7 +10,7 @@ export default function Challenge() {
   return (
     <Box sx={{ display: "flex", flexDirection: "row" }}>
       <Box sx={{ marginLeft: "40px", flex: 6 }}>
-        <Box sx={{ marginY: 3 }}>
+        <Box>
           <Text size="l" weight="bold">
             경원님의 챌린지리스트
           </Text>
@@ -20,7 +20,8 @@ export default function Challenge() {
 
       <Box sx={{ float: "right", flex: 1 }}>
         <SideBar>
-          <Box sx={{ paddingY: "30px", marginLeft: "10px" }}>
+          {/* paddingY: "30px" 임시로 아래 패딩Y 뺐음. 화면 확인 위해 */}
+          <Box sx={{ marginLeft: "10px" }}>
             <Text size="l" weight="bold">
               승리님의 챌린지 현황
             </Text>
@@ -34,7 +35,7 @@ export default function Challenge() {
               카테고리
             </Text>
           </Box>
-          <Box sx={{ marginTop: "30px" }}>
+          <Box>
             <CategoryToggle />
           </Box>
         </SideBar>
