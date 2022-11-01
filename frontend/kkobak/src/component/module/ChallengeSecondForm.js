@@ -8,6 +8,7 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
+import DatePick from 'component/atom/DatePicker';
 
 const BoxStyle = {
   height: "100vh",
@@ -33,6 +34,8 @@ const CardStyle = {
 export default function ChallengeSecondForm() {
   const [watch, setWatch] = useState('true');
   const [lock, setLock] = useState('true');
+  const [startTime, setStartTime] = useState(new Date());
+  const [endTime, setEndTime] = useState(new Date());
 
   const watchHandleChange = (event) => {
     setWatch(event.target.value);
@@ -45,82 +48,81 @@ export default function ChallengeSecondForm() {
   return (
     <Box sx={BoxStyle}>
       <Box sx={CardStyle}>
-        <Box sx={{ margin: "auto", my: 5 }}>
-          <Box sx={{ width: "80%", margin: "auto", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
 
-            <Text weight="bold">기간ㅤㅤㅤ</Text>
-            <Box sx={{ marginLeft: "5%", width: "40%" }}>
-              <Input></Input>
-            </Box>
-            <Box sx={{ width: "40%" }}>
-              <Input></Input>
-            </Box>
+        <Box sx={{ width: "80%", margin: "auto", display: "flex", justifyContent: "space-between", alignItems: "center", my: 1 }}>
+          <Text weight="bold" >기간ㅤㅤㅤ</Text>
+          <Box sx={{ marginLeft: "5%", width: "40%" }}>
+            <DatePick onChange={setStartTime} value={startTime}></DatePick>
           </Box>
-          <Box sx={{ width: "80%", margin: "auto", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-
-            <Text weight="bold">알림 시간ㅤ</Text>
-            <Box sx={{ marginLeft: "5%", width: "40%" }}>
-              <Input></Input>
-            </Box>
-            <Box sx={{ width: "40%" }}>
-            </Box>
+          <Box sx={{ width: "40%" }}>
+            <DatePick onChange={setEndTime} value={endTime}></DatePick>
           </Box>
-          <Box sx={{ width: "80%", margin: "auto", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        </Box>
+        <Box sx={{ width: "80%", margin: "auto", display: "flex", justifyContent: "space-between", alignItems: "center", my: 1 }}>
 
-            <Text weight="bold">목표치ㅤㅤ</Text>
-
-            <Box sx={{ marginLeft: "5%", width: "40%" }}>
-              <Input></Input>
-            </Box>
-            <Box sx={{ width: "40%" }}>
-              <Input></Input>
-
-            </Box>
+          <Text weight="bold">알림 시간ㅤ</Text>
+          <Box sx={{ marginLeft: "5%", width: "40%" }}>
+            <Input></Input>
           </Box>
-          <Box sx={{ width: "80%", margin: "auto", display: "flex", alignItems: "center" }}>
-
-            <Text weight="bold">워치 사용</Text>
-            <FormControl sx={{ marginLeft: "15%" }}>
-              <RadioGroup
-                row
-                aria-labelledby="demo-row-controlled-radio-buttons-group"
-                name="controlled-radio-buttons-group"
-                value={watch}
-                onChange={watchHandleChange}
-              >
-                <FormControlLabel value="true" control={<Radio />} label="사용" />
-                <FormControlLabel value="false" control={<Radio />} label="사용 안함" />
-              </RadioGroup>
-            </FormControl>
+          <Box sx={{ width: "40%" }}>
           </Box>
-          <Box sx={{ width: "80%", margin: "auto", display: "flex", alignItems: "center" }}>
+        </Box>
+        <Box sx={{ width: "80%", margin: "auto", display: "flex", justifyContent: "space-between", alignItems: "center", my: 1 }}>
 
-            <Text weight="bold">잠금 설정</Text>
-            <FormControl sx={{ marginLeft: "15%" }}>
-              <RadioGroup
-                row
-                aria-labelledby="demo-row-controlled-radio-buttons-group"
-                name="controlled-radio-buttons-group"
-                value={lock}
-                onChange={lockHandleChange}
-              >
-                <FormControlLabel value="true" control={<Radio />} label="사용" />
-                <FormControlLabel value="false" control={<Radio />} label="사용 안함" />
-              </RadioGroup>
-            </FormControl>
+          <Text weight="bold">목표치ㅤㅤ</Text>
+
+          <Box sx={{ marginLeft: "5%", width: "40%" }}>
+            <Input></Input>
           </Box>
-          <Box sx={{ width: "80%", margin: "auto", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <Box sx={{ width: "40%" }}>
+            <Input></Input>
 
-            <Text weight="bold">해시 태그</Text>
-            <Box sx={{ marginLeft: "5%", width: "90%" }}>
-              <Textarea></Textarea>
-            </Box>
           </Box>
+        </Box>
+        <Box sx={{ width: "80%", margin: "auto", display: "flex", alignItems: "center", my: 1 }}>
 
+          <Text weight="bold">워치 사용</Text>
+          <FormControl sx={{ marginLeft: "15%" }}>
+            <RadioGroup
+              row
+              aria-labelledby="demo-row-controlled-radio-buttons-group"
+              name="controlled-radio-buttons-group"
+              value={watch}
+              onChange={watchHandleChange}
+            >
+              <FormControlLabel value="true" control={<Radio />} label="사용" />
+              <FormControlLabel value="false" control={<Radio />} label="사용 안함" />
+            </RadioGroup>
+          </FormControl>
+        </Box>
+        <Box sx={{ width: "80%", margin: "auto", display: "flex", alignItems: "center", my: 1 }}>
+
+          <Text weight="bold">잠금 설정</Text>
+          <FormControl sx={{ marginLeft: "15%" }}>
+            <RadioGroup
+              row
+              aria-labelledby="demo-row-controlled-radio-buttons-group"
+              name="controlled-radio-buttons-group"
+              value={lock}
+              onChange={lockHandleChange}
+            >
+              <FormControlLabel value="true" control={<Radio />} label="사용" />
+              <FormControlLabel value="false" control={<Radio />} label="사용 안함" />
+            </RadioGroup>
+          </FormControl>
+        </Box>
+        <Box sx={{ width: "80%", margin: "auto", display: "flex", justifyContent: "space-between", alignItems: "center", my: 1 }}>
+
+          <Text weight="bold">해시 태그</Text>
+          <Box sx={{ marginLeft: "5%", width: "85%" }}>
+            <Textarea></Textarea>
+          </Box>
         </Box>
 
       </Box>
+
     </Box>
+
 
 
 
