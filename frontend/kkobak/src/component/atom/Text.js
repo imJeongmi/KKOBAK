@@ -1,7 +1,8 @@
 import React from "react";
 import { styled } from "@mui/system";
+import { Box } from "@mui/material";
 
-const TextSpan = styled("span")(
+const TextBox = styled('span')(
   ({ size, color, weight, my, mx }) => `
   font-size: ${getSize(size)};
   color: ${getColor(color)};
@@ -84,8 +85,8 @@ function getMarginX(mx) {
 
 export default function Text({ children, size, color, weight, my, mx }) {
   return (
-    <TextSpan size={size} color={color} weight={weight} my={my} mx={mx}>
+    <TextBox size={size} color={color} weight={weight} my={my} mx={mx}>
       {children}
-    </TextSpan>
+    </TextBox>
   );
 }
