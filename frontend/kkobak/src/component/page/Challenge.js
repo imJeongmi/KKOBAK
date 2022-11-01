@@ -11,12 +11,14 @@ export default function Challenge() {
   return (
     <Box sx={{ display: "flex", flexDirection: "row" }}>
       <Box sx={{ marginLeft: "40px", flex: 6 }}>
-        <Box sx={{ marginY: 3 }}>
+        <Box>
           <Text size="l" weight="bold">
             챌린지리스트
           </Text>
         </Box>
-        <ChallengeCardList />
+        <Box>
+          <ChallengeCardList />
+        </Box>
       </Box>
 
       <Box sx={{ float: "right", flex: 1 }}>
@@ -37,7 +39,7 @@ export default function Challenge() {
               카테고리
             </Text>
           </Box>
-          <Box sx={{ marginTop: "30px" }}>
+          <Box>
             <CategoryToggle />
           </Box>
         </SideBar>
