@@ -8,7 +8,7 @@ function checkChallengePassword(challengeId, password, success, fail) {
   api.post('/challenge/chk-pw', { id: challengeId, password: password }).then(success).catch(fail)
 }
 
-function getChallengeList(page, success, fail) {
+function fetchChallengeList(page, success, fail) {
   api.get(`/challenge/list/${page}`).then(success).catch(fail)
 }
 
@@ -32,16 +32,35 @@ function searchChallengeListWithTitle(word, page, success, fail) {
   api.get(`/challenge/list/search/title/${word}/${page}`).then(success).catch(fail)
 }
 
-function registerChallenge() {
-  
+function registerChallenge(alarm, categoryId, contents, detailCategoryId, endTime, goal, imgurl, limitpeople, roomtype, startTime, tagList, title, unit, watch) {
+  api.post('challenge/register', {
+    alarm: alarm,
+    categoryId: categoryId,
+    detailCategoryId: detailCategoryId,
+    contents: contents,
+    endTime: endTime,
+    goal: goal,
+    imgurl: imgurl,
+    limitpeople: limitpeople,
+    password: password,
+    roomtype: roomtype,
+    startTime: startTime,
+    tagList: tagList,
+    title: title,
+    unit: unit,
+    watch: watch
+  }).then(success).catch(fail)
 }
+
+
 export {
   getChallengeDetail,
   checkChallengePassword,
-  getChallengeList,
+  fetchChallengeList,
   getChallengeListWithCategory,
   getChallengeListWithDetailCategory,
   searchChallengeListWithNickname,
   searchChallengeListWithTag,
-  searchChallengeListWithTitle
+  searchChallengeListWithTitle,
+  registerChallenge,
 }
