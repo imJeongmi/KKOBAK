@@ -1,13 +1,13 @@
 import React from "react";
 import { styled } from "@mui/system";
 import { Box } from "@mui/material";
+import { NearbyError } from "@mui/icons-material";
 
 const TextBox = styled(Box)(
-// const TextBox = styled('span')(
-  ({ size, color, weight, my, mx }) => `
+  ({ size, color, weight, my, mx, mt }) => `
   font-size: ${getSize(size)};
   color: ${getColor(color)};
-  margin: ${getMarginY(my)}px ${getMarginX(mx)}px;
+  margin: ${getMarginTop(mt, my)}px ${getMarginX(mx)}px ${getMarginY(my)}px ${getMarginX(mx)}px;
   font-family: ${getWeight(weight)};
   padding: 0;
   `
@@ -84,9 +84,18 @@ function getMarginX(mx) {
   }
 }
 
-export default function Text({ children, size, color, weight, my, mx }) {
+function getMarginTop(mt, my) {
+  if (!!mt) {
+    return mt;
+  }
+  else {
+    return my;
+  }
+}
+
+export default function Text({ children, size, color, weight, my, mx, mt }) {
   return (
-    <TextBox size={size} color={color} weight={weight} my={my} mx={mx}>
+    <TextBox size={size} color={color} weight={weight} my={my} mx={mx} mt={mt}>
       {children}
     </TextBox>
   );
