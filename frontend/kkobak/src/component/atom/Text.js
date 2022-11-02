@@ -2,7 +2,8 @@ import React from "react";
 import { styled } from "@mui/system";
 import { Box } from "@mui/material";
 
-const TextBox = styled('span')(
+const TextBox = styled(Box)(
+// const TextBox = styled('span')(
   ({ size, color, weight, my, mx }) => `
   font-size: ${getSize(size)};
   color: ${getColor(color)};
