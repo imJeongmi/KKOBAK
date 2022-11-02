@@ -6,7 +6,12 @@ import MainCalendar from "component/atom/MainCalendar";
 import Text from "component/atom/Text";
 import SideBar from "component/atom/SideBar";
 
+import { useSelector } from "react-redux";
+
 export default function Main() {
+  const user = useSelector((state) => state.user.info);
+  console.log(user);
+
   return (
     <Box sx={{ display: "flex", flexDirection: "row" }}>
       <Box sx={{ marginLeft: "40px", flex: 8 }}>
