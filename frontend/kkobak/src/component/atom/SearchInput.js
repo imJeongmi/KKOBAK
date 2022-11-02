@@ -26,7 +26,7 @@ export default function CustomizedInputBase() {
       </Box>
       {/* <InputBase sx={{ ml: 1, flex: 1 }} /> */}
       <Box
-        component="form"
+        // component="form"
         sx={{
           "& > :not(style)": { m: 1, width: "220px" },
         }}
