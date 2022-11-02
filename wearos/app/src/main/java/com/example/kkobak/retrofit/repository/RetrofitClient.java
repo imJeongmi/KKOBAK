@@ -1,4 +1,4 @@
-package com.example.kkobak.repository;
+package com.example.kkobak.retrofit.repository;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

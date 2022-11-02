@@ -1,12 +1,12 @@
-package com.example.kkobak;
+package com.example.kkobak.ui;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
+import com.example.kkobak.R;
 import com.example.kkobak.databinding.ActivityMainBinding;
 
 public class MainActivity extends Activity {
