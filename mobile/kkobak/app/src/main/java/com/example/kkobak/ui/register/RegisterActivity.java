@@ -1,5 +1,6 @@
 package com.example.kkobak.ui.register;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -69,6 +70,10 @@ public class RegisterActivity extends AppCompatActivity {
 
                     new InsertAsyncTask(db.accessTokenDao()).execute(new AccessToken(response.body().getAccessToken()));
 
+                    Intent intent = new Intent();
+                    intent.putExtra("accessToken", response.body().getAccessToken());
+                    setResult(RESULT_OK, intent);
+
                     finish();
 
                 }
@@ -96,6 +101,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         @Override
         protected Void doInBackground(AccessToken... accessTokens) {
+            accessTokenDao.deleteAll();
             accessTokenDao.insert(accessTokens[0]);
             return (null);
         }

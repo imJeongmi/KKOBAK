@@ -4,6 +4,7 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import com.example.kkobak.data.room.entity.AccessToken;
 
@@ -16,6 +17,9 @@ public interface AccessTokenDao {
 
     @Delete
     void delete(AccessToken accessToken);
+
+    @Update
+    void update(AccessToken accessToken);
 
     @Query("SELECT * FROM AccessToken")
     List<AccessToken> getAll();
