@@ -6,7 +6,11 @@ import lombok.Getter;
 
 @Getter
 public class TokenResponse {
-    @SerializedName("Authorization") private String accessToken;
+    @SerializedName("accessToken") private String accessToken;
+
+    public String getAccessToken() {
+        return accessToken;
+    }
 
     public TokenResponse(String accessToken) {
         this.accessToken = accessToken;
