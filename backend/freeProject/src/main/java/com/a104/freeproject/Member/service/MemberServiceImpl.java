@@ -61,9 +61,18 @@ public class MemberServiceImpl implements MemberService{
     @Override
     public TokenResponse join(JoinRequest input) throws NotFoundException {
 
-        if(memberRepository.existsByEmail(input.getEmail())) throw new NotFoundException("이미 사용 중인 이메일입니다.");
-        if(memberRepository.existsByNickname(input.getNickname())) throw new NotFoundException("이미 사용 중인 닉네임입니다.");
-        if(!pwCheck(input.getPassword())) throw new NotFoundException("비밀번호는 영문자, 숫자, 특수문자를 모두 포함한 8-20자 형식입니다.");
+        if(memberRepository.existsByEmail(input.getEmail())) {
+            System.out.println("이미 사용 중인 이메일입니다.");
+            throw new NotFoundException("이미 사용 중인 이메일입니다.");
+        }
+        if(memberRepository.existsByNickname(input.getNickname())) {
+            System.out.println("이미 사용 중인 닉네임입니다.");
+            throw new NotFoundException("이미 사용 중인 닉네임입니다.");
+        }
+        if(!pwCheck(input.getPassword())) {
+            System.out.println("비번 형식 잘못됨");
+            throw new NotFoundException("비밀번호는 영문자, 숫자, 특수문자를 모두 포함한 8-20자 형식입니다.");
+        }
 
         Member member = new Member(input.getEmail(), passwordEncoder.encode(input.getPassword()), input.getNickname(), input.getHp());
         member.setAuthority(Authority.ROLE_USER);

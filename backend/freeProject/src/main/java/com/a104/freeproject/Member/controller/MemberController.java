@@ -36,6 +36,8 @@ public class MemberController {
     @PostMapping("/join")
     @ApiOperation(value="[확인] 회원가입", notes = "이메일, 비밀번호, 닉네임, 핸드폰 번호 입력하기, 토큰: accessToken")
     public ResponseEntity<TokenResponse> join(@RequestBody JoinRequest input) throws NotFoundException {
+        System.out.println(input.getEmail());
+        System.out.println(input.getPassword());
         return ResponseEntity.ok().body(memberService.join(input));
     }
 
