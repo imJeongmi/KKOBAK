@@ -8,6 +8,8 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
@@ -22,7 +24,12 @@ public class MainActivity extends Activity implements SensorEventListener {
     private ActivityMainBinding binding;
     private SensorManager sensorManager;
     private Sensor hr;
+
+    LocationManager locationManager;
+    LocationListener locationListener;
+
     private static final String TAG = "____Main___";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
