@@ -5,31 +5,33 @@ import Todolist from "component/module/Todolist";
 import MainCalendar from "component/atom/MainCalendar";
 import Text from "component/atom/Text";
 import SideBar from "component/atom/SideBar";
+import MainBox from "component/atom/MainBox";
 
 export default function Main() {
   return (
-    <Box sx={{ display: "flex", flexDirection: "row" }}>
-      <Box sx={{ marginLeft: "40px", flex: 8 }}>
-        <Box sx={{ paddingTop: "30px", marginLeft: "10px" }}>
-          <Text size="l" weight="bold">
-            안녕하세요, 정미님
-          </Text>
-        </Box>
-        <Box>
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "space-between",
+      }}
+    >
+      <Box sx={{ margin: "0 auto" }}>
+        <Text size="l" weight="bold" my="25px">
+          안녕하세요, 정미님
+        </Text>
+        <MainBox>
           <MainCalendar />
+        </MainBox>
+      </Box>
+      <SideBar>
+        <Box sx={{ paddingY: "30px", marginLeft: "20px" }}>
+          <MainCarousel />
         </Box>
-      </Box>
-      <Box sx={{ float: "right", flex: 1 }}>
-        <SideBar>
-          <Box sx={{ paddingY: "30px", marginLeft: "20px" }}>
-            <MainCarousel />
-          </Box>
 
-          <Box sx={{ marginTop: "30px", marginLeft: "30px" }}>
-            <Todolist />
-          </Box>
-        </SideBar>
-      </Box>
+        <Box sx={{ marginTop: "30px", marginLeft: "30px" }}>
+          <Todolist />
+        </Box>
+      </SideBar>
     </Box>
   );
 }
