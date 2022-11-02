@@ -1,7 +1,8 @@
 import { styled } from "@mui/system";
 import React from "react";
+import Button from "@mui/material/Button";
 
-const TagSpan = styled(`Button`)(
+const TagSpan = styled(`button`)(
   () => `
   color: black;
   background-color: #E8F2F9; 
@@ -10,10 +11,8 @@ const TagSpan = styled(`Button`)(
   height: 5vh;
   min-height: 30px;
   `
-)
+);
 
 export default function TagButton({ children, onClick }) {
-  return (
-    <TagSpan onClick={onClick}>{children}</TagSpan>
-  );
+  return <TagSpan onClick={onClick}>{children}</TagSpan>;
 }

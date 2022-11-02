@@ -6,13 +6,6 @@ import MainCalendar from "component/atom/MainCalendar";
 import Text from "component/atom/Text";
 import SideBar from "component/atom/SideBar";
 
-// 로그인 이후 메인 화면 다시 실행시켜서 비로그인에서 로그인 됐을시 적용 되도록 하기
-// function ReloadTime() {
-//   useEffect(() => {
-//     window.location.reload();
-//   }, []);
-// }
-
 export default function Main() {
   return (
     <Box sx={{ display: "flex", flexDirection: "row" }}>
