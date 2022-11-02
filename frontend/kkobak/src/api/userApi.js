@@ -43,6 +43,10 @@ function requestLogin(email, password, success, fail) {
     .catch(fail);
 }
 
+function requestUserInfo(success, fail) {
+  api.get("member/my-info").then(success).catch(fail);
+}
+
 export {
   requestJoin,
   requestEmailCheck,
@@ -50,4 +54,5 @@ export {
   requestAuthNum,
   requestPasswdCheck,
   requestLogin,
+  requestUserInfo,
 };
