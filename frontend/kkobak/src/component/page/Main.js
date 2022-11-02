@@ -8,12 +8,7 @@ import SideBar from "component/atom/SideBar";
 import MainBox from "component/atom/MainBox";
 import { requestUserInfo } from "api/userApi";
 
-// import { useSelector } from "react-redux";
-
 export default function Main() {
-  // const user = useSelector((state) => state.user.info);
-  // console.log(user);
-
   const [user, setUser] = useState([]);
 
   function requestUserInfoSuccess(res) {
