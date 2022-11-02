@@ -1,15 +1,32 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ChallengeCard from "./ChallengeCard";
 import Box from "@mui/material/Box";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import Button from "component/atom/TextButton";
 import WatchToggle from "component/atom/WatchToggle";
+// import { fetchChallengeList } from "api/challengeApi";
 
 export default function ChallengeCardList() {
   const [ChallengeList, setChallengeList] = useState([]);
 
-  return (
+  // function fetchChallengeListSuccess(res) {
+  //   setChallengeList([res.data]);
+  //   console.log(res);
+  // }
+
+  // function fetchChallengeListFail(err) {
+  //   setChallengeList([]);
+  //   console.log(err);
+  // }
+
+  // useEffect(() => {
+  //   fetchChallengeList(fetchChallengeListSuccess, fetchChallengeListFail);
+  // }, []);
+
+  return ChallengeList.length === 0 ? (
+    <Box> 챌린지 리스트가 없음. </Box>
+  ) : (
     <Box>
       <Box
         sx={{
