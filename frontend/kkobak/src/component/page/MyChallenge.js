@@ -10,11 +10,9 @@ export default function Challenge() {
   return (
     <Box sx={{ display: "flex", flexDirection: "row" }}>
       <Box sx={{ marginLeft: "40px", flex: 6 }}>
-        <Box sx={{ marginY: 3 }}>
-          <Text size="l" weight="bold">
+          <Text size="l" weight="bold" my="25px">
             경원님의 챌린지리스트
           </Text>
-        </Box>
         <ChallengeCardList />
       </Box>
 
