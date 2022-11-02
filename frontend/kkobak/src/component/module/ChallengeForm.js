@@ -3,10 +3,14 @@ import Input from 'component/atom/Input';
 import Text from 'component/atom/Text';
 import Textarea from 'component/atom/Textarea';
 import React from 'react';
-import { useState } from 'react';
 import { useRef } from 'react';
 
-import initial from "../../static/initial.png"
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+import DatePick from 'component/atom/DatePicker';
+import TimePick from 'component/atom/TimePicker';
 
 const BoxStyle = {
   height: "100vh",
@@ -33,9 +37,25 @@ const inputStyle = {
 };
 
 
-export default function ChallengeBasicForm() {
+export default function ChallengeBasicForm(
+  { imgSrc,
+    title,
+    contents,
+    startTime,
+    endTime,
+    alarm,
+    watch,
+    setImgSrc,
+    setTitle, 
+    setContents,
+    setStartTime,
+    setEndTime,
+    setAlarm,
+    setWatch
+  }
+  ) {
   const challengeImgInput = useRef();
-  const [imgSrc, setImgSrc] = useState(initial);
+  
   function onImgChange(e) {
     e.preventDefault()
   }
@@ -43,10 +63,11 @@ export default function ChallengeBasicForm() {
     e.preventDefault();
     challengeImgInput.current.click();
   }
+
   return (
     <Box sx={BoxStyle}>
       <Box sx={CardStyle}>
-        <Box sx={{ my: 5 }}>
+        <Box sx={{ my: 2 }}>
           <input style={inputStyle} id='challengeImg' ref={challengeImgInput} type='file' accept='image/*' onChange={onImgChange} />
           <img onClick={imgDivClick} alt="img" src={imgSrc}></img>
         </Box>
@@ -54,25 +75,46 @@ export default function ChallengeBasicForm() {
           <Box sx={{ width: "80%", margin: "auto", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
 
             <Text weight="bold">제목</Text>
-            <Box sx={{ width: "80%" }}>
-              <Input></Input>
+            <Box sx={{ width: "90%" }}>
+              <Input value={title} onChange={(e) => setTitle(e.target.value)}></Input>
             </Box>
           </Box>
-          <Box sx={{ width: "80%", margin: "auto", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
 
-            <Text weight="bold">세부 카테고리</Text>
-            <Box sx={{ width: "80%" }}>
-              <Input ></Input>
-            </Box>
-          </Box>
           <Box sx={{ width: "80%", margin: "auto", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
 
             <Text weight="bold">상세 설명</Text>
-            <Box sx={{ width: "80%" }}>
-              <Textarea></Textarea>
+            <Box sx={{ width: "90%" }}>
+              <Textarea value={contents} onChange={setContents}></Textarea>
             </Box>
           </Box>
+          <Box sx={{ width: "80%", margin: "auto", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <Text weight="bold" >기간ㅤㅤㅤ</Text>
+            <Box sx={{ marginLeft: "8%", width: "30%" }}>
+              <DatePick onChange={setStartTime} value={startTime}></DatePick>
+            </Box>
+            <Box sx={{ width: "30%" }}>
+              <DatePick onChange={setEndTime} value={endTime}></DatePick>
+            </Box>
+            <Box sx={{ width: "30%" }}>
+              <TimePick value={alarm} onChange={setAlarm}></TimePick>
+            </Box>
+          </Box>
+          <Box sx={{ width: "80%", margin: "auto", display: "flex", alignItems: "center" }}>
 
+            <Text weight="bold">워치 사용</Text>
+            <FormControl sx={{ marginLeft: "15%" }}>
+              <RadioGroup
+                row
+                aria-labelledby="demo-row-controlled-radio-buttons-group"
+                name="controlled-radio-buttons-group"
+                value={watch}
+                
+              >
+                <FormControlLabel onSelect={(e) => setWatch(e.target.value)} value="true" control={<Radio />} label="사용" />
+                <FormControlLabel onSelect={(e) => setWatch(e.target.value)} value="false" control={<Radio />} label="사용 안함" />
+              </RadioGroup>
+            </FormControl>
+          </Box>
         </Box>
 
       </Box>
