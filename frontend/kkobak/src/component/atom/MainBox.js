@@ -1,17 +1,49 @@
 import React from "react";
 import { Box } from "@mui/system";
+import styled from "@emotion/styled";
 
-const MainBoxStyle = {
-  width: "60vw",
-  minHeight: "80vh",
-  backgroundColor: "#F5F5F5",
-  borderRadius: "20px",
-  textAlign: "center",
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-};
+function getFlexDirection(flexDir) {
+  switch (flexDir) {
+    case "col":
+      return "column";
+    default:
+      return "row";
+  }
+}
 
-export default function MainBox({ children }) {
-  return <Box sx={MainBoxStyle}>{children}</Box>;
+function getAlignItems(flexDir) {
+  switch (flexDir) {
+    case "col":
+      return "center";
+    default:
+      return "none";
+  }
+}
+
+function getJustifyContent(flexDir) {
+  switch (flexDir) {
+    case "col":
+      return "space-between";
+    default:
+      return "center";
+  }
+}
+
+const GreyMainBox = styled(Box)(
+  ({flexDir}) => `
+  width: 60vw;
+  height: 90vh;
+  minHeight: 80vh;
+  background-color: #F5F5F5;
+  border-radius: 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: ${getFlexDirection(flexDir)};
+  align-items: ${getAlignItems(flexDir)};
+  justify-content: ${getJustifyContent(flexDir)};
+  `
+);
+
+export default function MainBox({ children, flexDir }) {
+  return <GreyMainBox flexDir={flexDir}>{children}</GreyMainBox>;
 }
