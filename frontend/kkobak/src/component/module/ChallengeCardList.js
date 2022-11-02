@@ -1,12 +1,49 @@
 import React, { useEffect, useState } from "react";
-import ChallengeCard from "./ChallengeCard";
 import Box from "@mui/material/Box";
+import styled from "@emotion/styled";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
+
+import ChallengeCard from "component/module/ChallengeCard";
 import Button from "component/atom/TextButton";
+import Text from "component/atom/Text";
+import MainBox from "component/atom/MainBox";
 import WatchToggle from "component/atom/WatchToggle";
-import { fetchChallengeList } from "api/Challenge";
-import { fetchChallengePageCnt } from "api/Challenge";
+
+import { fetchChallengeList, fetchChallengePageCnt } from "api/Challenge";
+
+const WatchToggleBox = styled(Box)(
+  () => `
+  width: 90%;
+  margin: 20px 20px 0 20px;
+  display: flex;
+  justify-content: start
+  `
+);
+
+const ChallengeListBox = styled(Box)(
+  () => `
+  width: 100%;
+  height: 70vh;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  `
+);
+
+const ButtonBox = styled(Box)(
+  () => `
+  width: 95%;
+  display: flex;
+  justify-content: end;
+  `
+);
+
+const PageBox = styled(Box)(
+  () => `
+  margin: 10px auto;
+  `
+);
 
 export default function ChallengeCardList() {
   const [ChallengeList, setChallengeList] = useState([]);
@@ -46,63 +83,48 @@ export default function ChallengeCardList() {
     );
   }, []);
 
-  // 현재 챌린지리스트 길이로 했는데 전체 길이로 수정해야 함
   return ChallengeList.length === 0 ? (
-    <Box> 챌린지 리스트가 없음. </Box>
+    <MainBox>
+      <Text> 생성된 챌린지가 없어요 </Text>
+    </MainBox>
   ) : (
-    <Box>
-      <Box
-        sx={{
-          width: "924px",
-          backgroundColor: "#F5F5F5",
-          verticalAlign: "middle",
-          display: "flex",
-          flexWrap: "wrap",
-          borderRadius: 5,
-        }}
-      >
-        {/* 받아온 챌린지리스트 순회하기 */}
-        <Box
-          sx={{
-            display: "flex",
-            flexWrap: "wrap",
-            marginTop: "40px",
-            width: "924px",
-            height: "560px",
-          }}
-        >
-          {ChallengeList.map((item) => {
-            return (
-              <ChallengeCard
-                key={item.id}
-                imgurl={item.imgurl}
-                tagList={item.tagList}
-                title={item.title}
-                startTime={item.startTime}
-                endTime={item.endTime}
-              ></ChallengeCard>
-            );
-          })}
-        </Box>
+    <MainBox flexDir="col">
+      <WatchToggleBox>
+        <WatchToggle />
+      </WatchToggleBox>
 
-        <Box sx={{ marginLeft: "275px", marginTop: "45px" }}>
-          <Stack spacing={2}>
-            {/* 해당 챌린지리스트 말고 전체 몇 개 오면 그거 6 나눠서 몇 페이지 까지 있는지 표시해주기 */}
-            <Pagination
-              count={TotalPage}
-              defaultPage={1}
-              shape="rounded"
-              onChange={(e) => handlePage(e)}
-            />
-          </Stack>
-        </Box>
-        <Box sx={{ marginLeft: "735px", marginTop: "-80px" }}>
-          <Button size="ss">챌린지 생성</Button>
-        </Box>
-        <Box sx={{ marginLeft: "750px", marginTop: "-670px" }}>
-          <WatchToggle></WatchToggle>
-        </Box>
-      </Box>
-    </Box>
+      <ChallengeListBox>
+        {/* 받아온 챌린지리스트 순회하기 */}
+        {ChallengeList.map((item) => {
+          return (
+            <ChallengeCard
+              key={item.id}
+              imgurl={item.imgurl}
+              tagList={item.tagList}
+              title={item.title}
+              startTime={item.startTime}
+              endTime={item.endTime}
+            ></ChallengeCard>
+          );
+        })}
+      </ChallengeListBox>
+
+      <ButtonBox>
+        <Button size="ss" my="0">
+          챌린지 생성
+        </Button>
+      </ButtonBox>
+
+      <PageBox>
+        <Stack spacing={2}>
+          <Pagination
+            count={TotalPage}
+            defaultPage={1}
+            shape="rounded"
+            onChange={(e) => handlePage(e)}
+          />
+        </Stack>
+      </PageBox>
+    </MainBox>
   );
 }

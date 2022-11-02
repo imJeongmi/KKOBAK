@@ -8,10 +8,9 @@ import NoWatchImage from "static/noWatch.png";
 
 const ToggleBox = styled(ToggleButtonGroup)(
   () => `
-width: 132px;
+width: 130px;
 height: 32px;
-border-radius: 20px;
-// background-color : #CCCCCC;
+background-color : white;
     `
 );
 
