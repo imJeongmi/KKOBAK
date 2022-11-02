@@ -1,4 +1,4 @@
-package com.example.kkobak.retrofit.repository.response;
+package com.example.kkobak.repository.response;
 
 import com.google.gson.annotations.SerializedName;
 

@@ -1,10 +1,11 @@
-package com.example.kkobak.retrofit.repository;
+package com.example.kkobak.repository;
 
-import com.example.kkobak.retrofit.repository.request.LoginRequest;
-import com.example.kkobak.retrofit.repository.response.TokenResponse;
+import com.example.kkobak.repository.request.LoginRequest;
+import com.example.kkobak.repository.response.TokenResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 
 public interface RetrofitService {

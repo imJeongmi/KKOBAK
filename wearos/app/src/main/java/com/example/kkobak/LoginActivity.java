@@ -1,4 +1,4 @@
-package com.example.kkobak.ui;
+package com.example.kkobak;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -6,8 +6,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.kkobak.R;
-import com.example.kkobak.retrofit.repository.request.LoginRequest;
+import com.example.kkobak.repository.RetrofitService;
+import com.example.kkobak.repository.request.LoginRequest;
+
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoginActivity extends Activity {
 

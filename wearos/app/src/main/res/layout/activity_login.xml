@@ -7,7 +7,7 @@
     android:background="#FFFFFF"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".ui.LoginActivity">
+    tools:context=".LoginActivity">
 
     <EditText
         android:id="@+id/et_email"
