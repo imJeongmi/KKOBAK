@@ -1,4 +1,4 @@
-package com.example.kkobak.ui.member;
+package com.example.kkobak.ui.register;
 
 import androidx.databinding.ObservableField;
 
@@ -14,8 +14,12 @@ public class Member {
     public Member(String email, String hp, String nickname, String password) {
         this.email.set(email);
         this.hp.set(hp);
-        this.nickname.set(nickname);x
+        this.nickname.set(nickname);
         this.password.set(password);
+    }
+
+    public void setEmail(ObservableField<String> email) {
+        this.email = email;
     }
 
     public void setHp(ObservableField<String> hp) {
@@ -28,10 +32,6 @@ public class Member {
 
     public void setPassword(ObservableField<String> password) {
         this.password = password;
-    }
-
-    public void setEmail(ObservableField<String> email) {
-        this.email = email;
     }
 
     public ObservableField<String> getEmail() {
@@ -48,5 +48,21 @@ public class Member {
 
     public ObservableField<String> getPassword() {
         return password;
+    }
+
+    public void onEmailChanged(CharSequence s, int start, int before, int count) {
+        email.set(s.toString());
+    }
+
+    public void onNicknameChanged(CharSequence s, int start, int before, int count) {
+        nickname.set(s.toString());
+    }
+
+    public void onPasswordChanged(CharSequence s, int start, int before, int count) {
+        password.set(s.toString());
+    }
+
+    public void onHpChanged(CharSequence s, int start, int before, int count) {
+        hp.set(s.toString());
     }
 }

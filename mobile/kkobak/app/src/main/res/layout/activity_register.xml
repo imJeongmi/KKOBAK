@@ -6,7 +6,7 @@
     <data>
         <variable
             name="member"
-            type="com.example.kkobak.ui.member.Member" />
+            type="com.example.kkobak.ui.register.Member" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -33,6 +33,7 @@
             android:ems="10"
             android:hint="전화번호"
             android:text="@{member.hp}"
+            android:onTextChanged="@{member::onHpChanged}"
             android:inputType="textPersonName"
             android:minHeight="48dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -48,6 +49,7 @@
             android:ems="10"
             android:hint="닉네임"
             android:text="@{member.nickname}"
+            android:onTextChanged="@{member::onNicknameChanged}"
             android:inputType="textPersonName"
             android:minHeight="48dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -63,6 +65,7 @@
             android:ems="10"
             android:hint="비밀번호"
             android:text="@{member.password}"
+            android:onTextChanged="@{member::onPasswordChanged}"
             android:inputType="textPersonName"
             android:minHeight="48dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -78,6 +81,7 @@
             android:ems="10"
             android:hint="이메일"
             android:text="@{member.email}"
+            android:onTextChanged="@{member::onEmailChanged}"
             android:inputType="textPersonName"
             android:minHeight="48dp"
             app:layout_constraintEnd_toEndOf="parent"
