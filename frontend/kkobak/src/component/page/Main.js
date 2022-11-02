@@ -16,7 +16,7 @@ export default function Main() {
       }}
     >
       <Box sx={{ margin: "0 auto" }}>
-        <Text size="l" weight="bold" my="25px">
+        <Text size="l" weight="bold" mt="30" my="15">
           안녕하세요, 정미님
         </Text>
         <MainBox>

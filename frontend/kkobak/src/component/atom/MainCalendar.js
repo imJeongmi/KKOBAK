@@ -27,7 +27,7 @@ export default function MainCalendar() {
   return (
     <Box
       sx={{
-        height: "90vh",
+        height: "85vh",
         width: "60vw",
         display: "flex",
         // alignItems: "center"

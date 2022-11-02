@@ -341,11 +341,11 @@ export default function SignupModal() {
           </Box>
 
           <Box onClick={onClickSignup} sx={{ mt: "20px"}}>
-            <TextButton size="l" my="15px">회원가입</TextButton>
+            <TextButton size="l" my="15">회원가입</TextButton>
           </Box>
           <Box onClick={goToLogin}>
             {/* <Text size="s">로그인</Text> */}
-            <TextButton size="l" color="secondary" my="5px">로그인</TextButton>
+            <TextButton size="l" color="secondary" my="5">로그인</TextButton>
           </Box>
 
           <Text>{signupMessage}</Text>

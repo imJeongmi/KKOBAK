@@ -64,8 +64,8 @@ export default function ChallengeCard(props) {
       <TextBox>
         {/* <Text>{props.title}</Text> */}
         <Text size="m" weight="medium">매일 아침 러닝!</Text>
-        {/* <Text my="2px">{props.period}</Text> */}
-        <Text my="5px" size="12px" color="grey">
+        {/* <Text my="2">{props.period}</Text> */}
+        <Text my="5" size="12px" color="grey">
           기간
         </Text>
       </TextBox>

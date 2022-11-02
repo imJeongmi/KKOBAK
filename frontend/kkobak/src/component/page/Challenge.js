@@ -11,7 +11,7 @@ export default function Challenge() {
   return (
     <Box sx={{ display: "flex", justifyContent: "space-between" }}>
       <Box sx={{ margin: "0 auto" }}>
-        <Text size="l" weight="bold" my="25px">
+        <Text size="l" weight="bold" mt="30" my="15">
           챌린지리스트
         </Text>
         <ChallengeCardList />
