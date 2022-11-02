@@ -22,6 +22,7 @@ import com.a104.freeproject.advice.exceptions.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -142,7 +143,7 @@ public class ChallengeServiceImpl implements ChallengeService{
     @Override
     public List<ChallengeListResponse> getChallengePageList(int page) throws NotFoundException{
         PageRequest pageRequest = PageRequest.of(page-1,6, Sort.Direction.DESC, "id");
-        Page<Challenge> challengePage = challengeRepository.findAll(pageRequest);
+        Page<Challenge> challengePage = challengeRepository.findAllChallenge(pageRequest);
         List<Challenge> content = challengePage.getContent();
 
         return makeResponse(content);
@@ -246,6 +247,11 @@ public class ChallengeServiceImpl implements ChallengeService{
         return false;
      }
 
+    @Override
+    public int getChallengePageCnt(Pageable pageable) {
+        Page<Challenge> page = challengeRepository.findAllChallengeSet(pageable);
+        return page.getTotalPages();
+    }
 
 
     public List<ChallengeListResponse> makeResponse(List<Challenge> content) {

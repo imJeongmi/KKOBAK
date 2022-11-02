@@ -11,6 +11,7 @@ import com.a104.freeproject.advice.exceptions.NotFoundException;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.aspectj.weaver.ast.Not;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -50,9 +51,17 @@ public class ChallengeController {
 
     @GetMapping("/list/{page}")
     @ApiOperation(value="챌린지 리스트 페이지네이션으로 반환", notes = "목록에 무슨 데이터가 필요한지 몰라서 일단 테이블에 있는거만 가져옵니다, 데이터 없는거 말해주새요 수정 예정")
-    public ResponseEntity<List<ChallengeListResponse>> getChallengePageList(@PathVariable("page") int page, HttpServletRequest req) throws NotFoundException{
+    public ResponseEntity<List<ChallengeListResponse>> getChallengePageList(@PathVariable("page") int page) throws NotFoundException{
         return ResponseEntity.ok().body(challengeService.getChallengePageList(page));
     }
+
+    @GetMapping("/list/page-cnt/{size}")
+    @ApiOperation(value="[test] 전체 챌린지 목록 총 페이지", notes = "'/api/challenge/list/page-cnt/size=3&&sort=id,DESC' 형식으로 사용")
+    public ResponseEntity<Integer> getChallengePageCnt(Pageable pageable) throws NotFoundException{
+        return ResponseEntity.ok().body(challengeService.getChallengePageCnt(pageable));
+    }
+
+
 
     @GetMapping("/list/category/{categoryId}/{page}")
     @ApiOperation(value="카테고리별 챌린지 리스트 페이지", notes = "목록에 무슨 데이터가 필요한지 몰라서 일단 테이블에 있는거만 가져옵니다, 데이터 없는거 말해주새요 수정 예정")
