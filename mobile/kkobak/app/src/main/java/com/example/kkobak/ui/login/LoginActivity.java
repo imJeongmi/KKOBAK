@@ -103,7 +103,6 @@ public class LoginActivity extends AppCompatActivity {
 
     public void moveRegisterPage(View v) {
         Intent intent = new Intent(this, RegisterActivity.class);
-//        startActivity(intent);
         startActivityForResult(intent, REGISTER_PAGE);
     }
 
