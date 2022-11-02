@@ -76,7 +76,10 @@ function registerChallenge(
   tagList,
   title,
   unit,
-  watch
+  watch,
+  password,
+  success,
+  fail
 ) {
   api
     .post("challenge/register", {
