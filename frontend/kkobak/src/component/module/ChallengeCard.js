@@ -6,11 +6,11 @@ import TagLabel from "../atom/TagLabel";
 
 export default function ChallengeCard(props) {
   return (
-    <div style={{ marginLeft: 35, marginTop: 12 }}>
       <Box
         sx={{
           width: "260px",
           height: "260px",
+          margin: "20px 10px",
           backgroundColor: "white",
           borderRadius: 2,
           boxShadow: 5,
@@ -64,11 +64,9 @@ export default function ChallengeCard(props) {
           <Box height="55px" />
           <Text>{props.title}</Text>
           <Text size="m">매일 아침 러닝!</Text>
-          <br />
-          <Text>{props.period}</Text>
-          <Text size="s">기간</Text>
+          <Text my="2px">{props.period}</Text>
+          <Text my="5px" size="s">기간</Text>
         </Box>
       </Box>
-    </div>
   );
 }
