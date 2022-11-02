@@ -16,7 +16,8 @@ export default function Challenge() {
         <ChallengeCardList />
       </Box>
       <SideBar>
-        <Box sx={{ paddingY: "30px", marginLeft: "10px" }}>
+        {/* paddingY: "30px" 임시로 아래 패딩Y 뺐음. 화면 확인 위해 */}
+        <Box sx={{ marginLeft: "10px" }}>
           <Text size="l" weight="bold">
             승리님의 챌린지 현황
           </Text>
@@ -30,9 +31,7 @@ export default function Challenge() {
             카테고리
           </Text>
         </Box>
-        <Box sx={{ marginTop: "30px" }}>
-          <CategoryToggle />
-        </Box>
+        <CategoryToggle />
       </SideBar>
     </Box>
   );

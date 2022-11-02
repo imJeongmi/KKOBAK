@@ -33,9 +33,7 @@ export default function Challenge() {
             카테고리
           </Text>
         </Box>
-        <Box sx={{ marginTop: "30px" }}>
-          <CategoryToggle />
-        </Box>
+        <CategoryToggle />
       </SideBar>
     </Box>
   );

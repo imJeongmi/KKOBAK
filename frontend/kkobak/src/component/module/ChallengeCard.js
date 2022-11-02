@@ -4,7 +4,7 @@ import { styled } from "@mui/system";
 
 import Text from "component/atom/Text";
 import TagLabel from "component/atom/TagLabel";
-import Watch from "static/watch.svg";
+import WatchImg from "static/watch.svg";
 
 const CardBox = styled(Box)(
   () => `
@@ -45,28 +45,30 @@ const TextBox = styled(Box)(
   `
 );
 
-export default function ChallengeCard(props) {
+export default function ChallengeCard({
+  imgurl,
+  tagList,
+  title,
+  startTime,
+  endTime,
+  watch,
+}) {
   return (
     <CardBox>
       <ImageBox>
         {/* <img src={props.src} width="100%" height="100%" /> */}
-        <img
-          src="https://t1.daumcdn.net/thumb/R720x0.fjpg/?fname=http://t1.daumcdn.net/brunch/service/user/2xMI/image/eRlaPLwEH3RjexrX_uVmse2g-LU.jpg"
-          width="100%"
-          height="100%"
-        />
+        <img src={imgurl} width="100%" height="100%" />
       </ImageBox>
       <FilterBox>
-        {/* 태그들 앞에 3개만 보이도록 수정 map 활용 태그 모양 수정 필요*/}
-        <TagLabel>{props.tag}</TagLabel>
-        <img src={Watch} width="25px" />
+        <TagLabel>{tagList[0]}</TagLabel>
+        <img src={WatchImg} width="25px" />
       </FilterBox>
       <TextBox>
-        {/* <Text>{props.title}</Text> */}
-        <Text size="m" weight="medium">매일 아침 러닝!</Text>
-        {/* <Text my="2">{props.period}</Text> */}
+        <Text size="m" weight="medium">
+          {title}
+        </Text>
         <Text my="5" size="12px" color="grey">
-          기간
+          {startTime} - {endTime}
         </Text>
       </TextBox>
     </CardBox>
