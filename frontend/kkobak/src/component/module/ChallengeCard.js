@@ -68,7 +68,7 @@ export default function ChallengeCard({
           {title}
         </Text>
         <Text my="5" size="12px" color="grey">
-          {startTime} - {endTime}
+          {startTime.substr(0, 10)} - {endTime.substr(0, 10)}
         </Text>
       </TextBox>
     </CardBox>

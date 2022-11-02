@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
+import styled from "@emotion/styled";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 
 import ChallengeCard from "component/module/ChallengeCard";
 import Button from "component/atom/TextButton";
+import Text from "component/atom/Text";
 import MainBox from "component/atom/MainBox";
 import WatchToggle from "component/atom/WatchToggle";
 
@@ -22,7 +24,7 @@ const WatchToggleBox = styled(Box)(
 const ChallengeListBox = styled(Box)(
   () => `
   width: 100%;
-  minHeight: 70vh;
+  height: 70vh;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -32,10 +34,14 @@ const ChallengeListBox = styled(Box)(
 const ButtonBox = styled(Box)(
   () => `
   width: 95%;
-  height: 40px;
-  my: 5px;
   display: flex;
   justify-content: end;
+  `
+);
+
+const PageBox = styled(Box)(
+  () => `
+  margin: 10px auto;
   `
 );
 
@@ -78,7 +84,9 @@ export default function ChallengeCardList() {
   }, []);
 
   return ChallengeList.length === 0 ? (
-    <Text> 생성된 챌린지가 없어요 </Text>
+    <MainBox>
+      <Text> 생성된 챌린지가 없어요 </Text>
+    </MainBox>
   ) : (
     <MainBox flexDir="col">
       <WatchToggleBox>
@@ -107,7 +115,7 @@ export default function ChallengeCardList() {
         </Button>
       </ButtonBox>
 
-      <Box>
+      <PageBox>
         <Stack spacing={2}>
           <Pagination
             count={TotalPage}
@@ -116,7 +124,7 @@ export default function ChallengeCardList() {
             onChange={(e) => handlePage(e)}
           />
         </Stack>
-      </Box>
+      </PageBox>
     </MainBox>
   );
 }
