@@ -47,9 +47,7 @@ export default function RouterConfiguration() {
       <Route
         path="/Setting"
         element={
-          <CheckAuth>
-            <Setting />
-          </CheckAuth>
+          <Setting />
         }
       />
     </Routes>
