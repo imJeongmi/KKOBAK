@@ -12,7 +12,7 @@ import TutorialButton from "component/atom/TutorialButton";
 
 const CalendarBox = {
   // margin: "auto",
-  marginLeft: "20px",
+  // marginLeft: "20px",
   width: "100%",
   minHeight: "80vh",
   backgroundColor: "#F5F5F5",
@@ -27,7 +27,7 @@ export default function MainCalendar() {
   return (
     <Box
       sx={{
-        height: "90vh",
+        height: "85vh",
         width: "60vw",
         display: "flex",
         // alignItems: "center"
@@ -52,7 +52,9 @@ export default function MainCalendar() {
             return (
               <Box
                 sx={{
-                  textAlign: "center",
+                  // textAlign: "center",
+                  left: "50%",
+                  transform: "translate(-50%)",
                   width: "8vw",
                   height: "8vh",
                 }}
