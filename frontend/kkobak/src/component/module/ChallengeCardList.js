@@ -5,25 +5,48 @@ import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import Button from "component/atom/TextButton";
 import WatchToggle from "component/atom/WatchToggle";
-// import { fetchChallengeList } from "api/challengeApi";
+import { fetchChallengeList } from "api/Challenge";
+import { fetchChallengePageCnt } from "api/Challenge";
 
 export default function ChallengeCardList() {
   const [ChallengeList, setChallengeList] = useState([]);
+  const [TotalPage, setPageNation] = useState([]);
+  const [page, setPage] = useState(1);
 
-  // function fetchChallengeListSuccess(res) {
-  //   setChallengeList([res.data]);
-  //   console.log(res);
-  // }
+  const handlePage = (event) => {
+    const nowPageInt = parseInt(event.target.outerText);
+    setPage(nowPageInt);
+  };
 
-  // function fetchChallengeListFail(err) {
-  //   setChallengeList([]);
-  //   console.log(err);
-  // }
+  function fetchChallengeListSuccess(res) {
+    setChallengeList(res.data);
+  }
 
-  // useEffect(() => {
-  //   fetchChallengeList(fetchChallengeListSuccess, fetchChallengeListFail);
-  // }, []);
+  function fetchChallengeListFail(err) {
+    setChallengeList([]);
+  }
 
+  useEffect(() => {
+    fetchChallengeList(page, fetchChallengeListSuccess, fetchChallengeListFail);
+  }, [page]);
+
+  function fetchChallengePageCntSuccess(res) {
+    setPageNation(res.data);
+    console.log(res.data);
+  }
+
+  function fetchChallengePageCntFail(res) {
+    setPageNation([]);
+  }
+
+  useEffect(() => {
+    fetchChallengePageCnt(
+      fetchChallengePageCntSuccess,
+      fetchChallengePageCntFail
+    );
+  }, []);
+
+  // 현재 챌린지리스트 길이로 했는데 전체 길이로 수정해야 함
   return ChallengeList.length === 0 ? (
     <Box> 챌린지 리스트가 없음. </Box>
   ) : (
@@ -48,17 +71,29 @@ export default function ChallengeCardList() {
             height: "560px",
           }}
         >
-          <ChallengeCard />
-          <ChallengeCard />
-          <ChallengeCard />
-          <ChallengeCard />
-          <ChallengeCard />
-          <ChallengeCard />
+          {ChallengeList.map((item) => {
+            return (
+              <ChallengeCard
+                key={item.id}
+                imgurl={item.imgurl}
+                tagList={item.tagList}
+                title={item.title}
+                startTime={item.startTime}
+                endTime={item.endTime}
+              ></ChallengeCard>
+            );
+          })}
         </Box>
 
         <Box sx={{ marginLeft: "275px", marginTop: "45px" }}>
           <Stack spacing={2}>
-            <Pagination count={10} shape="rounded" />
+            {/* 해당 챌린지리스트 말고 전체 몇 개 오면 그거 6 나눠서 몇 페이지 까지 있는지 표시해주기 */}
+            <Pagination
+              count={TotalPage}
+              defaultPage={1}
+              shape="rounded"
+              onChange={(e) => handlePage(e)}
+            />
           </Stack>
         </Box>
         <Box sx={{ marginLeft: "735px", marginTop: "-80px" }}>

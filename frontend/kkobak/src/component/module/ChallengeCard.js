@@ -4,14 +4,14 @@ import Text from "../atom/Text";
 import WatchImg from "../../static/watch.svg";
 import TagLabel from "../atom/TagLabel";
 
-export default function ChallengeCard(
+export default function ChallengeCard({
   imgurl,
   tagList,
   title,
   startTime,
   endTime,
-  watch
-) {
+  watch,
+}) {
   return (
     <div style={{ marginLeft: 35, marginTop: 12 }}>
       <Box
