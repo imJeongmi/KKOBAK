@@ -1,7 +1,6 @@
 package com.a104.freeproject.Challenge.controller;
 
-import com.a104.freeproject.Challenge.request.passCheckRequest;
-import com.a104.freeproject.Challenge.request.registerRequest;
+import com.a104.freeproject.Challenge.request.*;
 import com.a104.freeproject.Challenge.response.ChallengeListResponse;
 import com.a104.freeproject.Challenge.response.ChlUserNameResponse;
 import com.a104.freeproject.Challenge.response.ChlUserSimpleStatResponse;
@@ -56,7 +55,7 @@ public class ChallengeController {
     }
 
     @GetMapping("/list/page-cnt")
-    @ApiOperation(value="[test] 전체 챌린지 목록 총 페이지", notes = "'/api/challenge/list/page-cnt?size=3&&sort=id,DESC' 형식으로 사용")
+    @ApiOperation(value="[확인] 전체 챌린지 목록 총 페이지", notes = "'/api/challenge/list/page-cnt?size=3&&sort=id,DESC' 형식으로 사용")
     public ResponseEntity<Integer> getChallengePageCnt(Pageable pageable) throws NotFoundException{
         return ResponseEntity.ok().body(challengeService.getChallengePageCnt(pageable));
     }
@@ -75,22 +74,22 @@ public class ChallengeController {
         return ResponseEntity.ok().body(challengeService.getChallengePageListByDetailCategory(page, id));
     }
 
-    @GetMapping("/list/search/title/{word}/{page}")
+    @GetMapping("/list/search/title/{page}")
     @ApiOperation(value="챌린지 리스트 제목으로 검색 페이지", notes = "제목에 단어가 포함되면 모두 검색")
-    public ResponseEntity<List<ChallengeListResponse>> getChallengePageListByTitle(@PathVariable("page") int page, @PathVariable("word") String word) throws NotFoundException{
-        return ResponseEntity.ok().body(challengeService.getChallengePageListByTitle(page, word));
+    public ResponseEntity<List<ChallengeListResponse>> getChallengePageListByTitle(@PathVariable("page") int page, @RequestBody WordRequest input) throws NotFoundException{
+        return ResponseEntity.ok().body(challengeService.getChallengePageListByTitle(page, input.getWord()));
     }
 
-    @GetMapping("/list/search/nickname/{nickName}/{page}")
+    @GetMapping("/list/search/nickname/{page}")
     @ApiOperation(value="챌린지 리스트 닉네임으로 검색 페이지", notes = "닉네임 정확히 일치해야 검색")
-    public ResponseEntity<List<ChallengeListResponse>> getChallengePageListByNickName(@PathVariable("page") int page, @PathVariable("nickName") String nickName) throws NotFoundException{
-        return ResponseEntity.ok().body(challengeService.getChallengePageListByNickName(page, nickName));
+    public ResponseEntity<List<ChallengeListResponse>> getChallengePageListByNickName(@PathVariable("page") int page, @RequestBody NicknameRequest input) throws NotFoundException{
+        return ResponseEntity.ok().body(challengeService.getChallengePageListByNickName(page, input.getNickname()));
     }
 
-    @GetMapping("/list/search/tag/{tag}/{page}")
+    @GetMapping("/list/search/tag/{page}")
     @ApiOperation(value="챌린지 리스트 태그로 검색 페이지", notes = "해당 태그 정확히 일치해야 검색")
-    public ResponseEntity<List<ChallengeListResponse>> getChallengePageListByTag(@PathVariable("page") int page, @PathVariable("tag") String tag) throws NotFoundException{
-        return ResponseEntity.ok().body(challengeService.getChallengePageListByTag(page, tag));
+    public ResponseEntity<List<ChallengeListResponse>> getChallengePageListByTag(@PathVariable("page") int page, @RequestBody TagRequest input) throws NotFoundException{
+        return ResponseEntity.ok().body(challengeService.getChallengePageListByTag(page, input.getTag()));
     }
 
     @GetMapping("/{challengeId}")
