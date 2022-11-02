@@ -55,8 +55,8 @@ public class ChallengeController {
         return ResponseEntity.ok().body(challengeService.getChallengePageList(page));
     }
 
-    @GetMapping("/list/page-cnt/{size}")
-    @ApiOperation(value="[test] 전체 챌린지 목록 총 페이지", notes = "'/api/challenge/list/page-cnt/size=3&&sort=id,DESC' 형식으로 사용")
+    @GetMapping("/list/page-cnt")
+    @ApiOperation(value="[test] 전체 챌린지 목록 총 페이지", notes = "'/api/challenge/list/page-cnt?size=3&&sort=id,DESC' 형식으로 사용")
     public ResponseEntity<Integer> getChallengePageCnt(Pageable pageable) throws NotFoundException{
         return ResponseEntity.ok().body(challengeService.getChallengePageCnt(pageable));
     }
