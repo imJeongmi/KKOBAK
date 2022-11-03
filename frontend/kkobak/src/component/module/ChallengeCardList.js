@@ -69,7 +69,6 @@ export default function ChallengeCardList() {
 
   function fetchChallengePageCntSuccess(res) {
     setPageNation(res.data);
-    console.log(res.data);
   }
 
   function fetchChallengePageCntFail(res) {
@@ -99,7 +98,7 @@ export default function ChallengeCardList() {
           return (
             <ChallengeCard
               key={item.id}
-              id={item.id}
+              chlId={item.chlId}
               imgurl={item.imgurl}
               tagList={item.tagList}
               title={item.title}

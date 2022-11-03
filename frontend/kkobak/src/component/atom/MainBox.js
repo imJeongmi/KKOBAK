@@ -33,7 +33,7 @@ const GreyMainBox = styled(Box)(
   ({flexDir}) => `
   width: 60vw;
   // minHeight: 80vh;
-  background-color: #F5F5F5;
+  background-color: #F7F7F7;
   border-radius: 20px;
   text-align: center;
   display: flex;
