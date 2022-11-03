@@ -4,8 +4,8 @@ import com.google.gson.annotations.SerializedName;
 
 public class TodoListResponse {
     @SerializedName("chlId") private int chlId;
-    @SerializedName("done") private int done;
-    @SerializedName("title") private int title;
+    @SerializedName("done") private boolean done;
+    @SerializedName("title") private String title;
 
     public int getChlId() {
         return chlId;
@@ -15,19 +15,19 @@ public class TodoListResponse {
         this.chlId = chlId;
     }
 
-    public int getDone() {
+    public boolean isDone() {
         return done;
     }
 
-    public void setDone(int done) {
+    public void setDone(boolean done) {
         this.done = done;
     }
 
-    public int getTitle() {
+    public String getTitle() {
         return title;
     }
 
-    public void setTitle(int title) {
+    public void setTitle(String title) {
         this.title = title;
     }
 }
