@@ -103,8 +103,12 @@ export default function ChallengeCardList() {
               imgurl={item.imgurl}
               tagList={item.tagList}
               title={item.title}
+              contents={item.contents}
               startTime={item.startTime}
               endTime={item.endTime}
+              categoryId={item.categoryId}
+              alarm={item.alarm}
+              watch={item.watch}
             ></ChallengeCard>
           );
         })}
