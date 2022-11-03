@@ -366,6 +366,8 @@ public class MemberServiceImpl implements MemberService{
             List<PrtChl> chlList = member.getChallenges();
             List<TodoListInfoResponse> todoListInfo = new LinkedList<>();
             for(PrtChl p : chlList){
+                if(p.is_fin()) continue;
+                if(p.getChallenge().isFin()) continue;
                 Log log = logRepository.findByPrtChlAndDate(p,day.getDay());
                 Challenge c = p.getChallenge();
                 todoListInfo.add(TodoListInfoResponse.builder().chlId(c.getId())
