@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { styled } from "@mui/system";
 import { Box } from "@mui/material";
 
@@ -9,10 +9,9 @@ import TodolistItem from "component/atom/TodolistItem";
 const TodolistBox = styled(Box)(
   () => `
     width: 278px;
-    height: 450px;
-    background-color: #FBFBFB;
+    height: 600px;
+    background-color: #FAFAFA;
     border-radius: 20px;
-
     `
 );
 
@@ -44,19 +43,42 @@ function getDay(num) {
 }
 
 export default function Todolist() {
-  const nowDate = moment().format("YYYY.MM.DD");
-  const nowDay = getDay(moment().day());
+  const today = moment();
+  const [nowDate, setNowDate] = useState(today);
+  const [formedNowDate, setFormedNowDate] = useState(
+    nowDate.format("YYYY.MM.DD")
+  );
+  const [formedNowDay, setFormedNowDay] = useState(getDay(nowDate.day()));
+
+  function onClickPrevDay() {
+    setNowDate(nowDate.subtract(1, "day"));
+    // console.log(nowDate.format("YYYY.MM.DD"), getDay(nowDate.day()));
+    setFormedNowDate(nowDate.format("YYYY.MM.DD"));
+    setFormedNowDay(getDay(nowDate.day()));
+  }
+
+  function onClickNextDay() {
+    setNowDate(nowDate.add(1, "day"));
+    setFormedNowDate(nowDate.format("YYYY.MM.DD"));
+    setFormedNowDay(getDay(nowDate.day()));
+  }
 
   return (
     <TodolistBox>
       <DateBox>
-        <Text color="blue" weight="bold">
-          &lt;
+        <Box onClick={onClickPrevDay}>
+          <Text color="blue" weight="bold">
+            &lt;
+          </Text>
+        </Box>
+        <Text weight="semibold">
+          {`${formedNowDate} (${formedNowDay})`}
         </Text>
-        <Text weight="semibold">{nowDate + " (" + nowDay + ")"}</Text>
-        <Text color="blue" weight="bold">
-          &gt;
-        </Text>
+        <Box onClick={onClickNextDay}>
+          <Text color="blue" weight="bold">
+            &gt;
+          </Text>
+        </Box>
       </DateBox>
       <TodolistItem />
     </TodolistBox>
