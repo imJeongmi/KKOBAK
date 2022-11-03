@@ -50,7 +50,6 @@ public class ChallengeServiceImpl implements ChallengeService{
     @Override
     public boolean register(registerRequest input, HttpServletRequest req) throws NotFoundException {
 
-        System.out.println("처음 들어온 값 service >> "+input.getStartTime());
         Member member;
 
         try{
@@ -64,6 +63,8 @@ public class ChallengeServiceImpl implements ChallengeService{
         sdf.setTimeZone(tz);
         input.setStartTime(Timestamp.valueOf(sdf.format(input.getStartTime())));
         input.setEndTime(Timestamp.valueOf(sdf.format(input.getEndTime())));
+
+        System.out.println("input.isWatch() = "+input.isWatch());
 
         if(!categoryRepository.existsById(input.getCategoryId())) throw new NotFoundException("카테고리를 다시 입력해주세요.");
         Category category = categoryRepository.findById(input.getCategoryId()).get();
