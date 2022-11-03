@@ -4,6 +4,19 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class MyChallengeRes {
+    @Override
+    public String toString() {
+        return "MyChallengeRes{" +
+                "title='" + title + '\'' +
+                ", imgUrl='" + imgUrl + '\'' +
+                ", startTime='" + startTime + '\'' +
+                ", endTime='" + endTime + '\'' +
+                ", roomType=" + roomType +
+                ", id=" + id +
+                ", watch=" + watch +
+                '}';
+    }
+
     @SerializedName("title")
     @Expose
     private String title;

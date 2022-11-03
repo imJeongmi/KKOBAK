@@ -8,7 +8,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MyChallengeApi {
-    private static final String BASE_URL = "https://kkobak.ml/api/member/my-chl-list?page=0&size=10000&sort=id,DESC";
+    private static final String BASE_URL = "https://kkobak.ml/api/";
 
     private static Retrofit getInstance() {
         Gson gson = new GsonBuilder().setLenient().create();
