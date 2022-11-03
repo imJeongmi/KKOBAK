@@ -389,8 +389,13 @@ public class MemberServiceImpl implements MemberService{
             LocalDate today = LocalDate.now(ZoneId.of("Asia/Seoul"));
             System.out.println("today = " + today);
 
+            System.out.println("chlList 시작");
             for(PrtChl p : chlList){
+                System.out.println(p.getId());
                 Log log = logRepository.findByPrtChlAndDate(p,today);
+                System.out.println("log 정보");
+                System.out.println(log.getDate());
+                System.out.println(log.isFin());
                 System.out.println(log.getPrtChl().getChallenge().getId()+": 오늘 했냐 >> "+log.isFin());
                 Challenge c = p.getChallenge();
                 todoListInfo.add(TodoListInfoResponse.builder().chlId(c.getId())
