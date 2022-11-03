@@ -1,6 +1,7 @@
 package com.example.kkobak;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
@@ -61,14 +62,18 @@ public class ListActivity extends Activity {
         todoAdapter.setOnItemClickListener(new TodoAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int pos) {
-                Toast.makeText(getApplicationContext(), "onItemClick position : " + pos, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "임시적으로 HEART로 연결" + pos, Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(ListActivity.this, HeartrateActivity.class);
+                startActivity(intent);
             }
         });
 
         todoAdapter.setOnLongItemClickListener(new TodoAdapter.OnLongItemClickListener() {
             @Override
             public void onLongItemClick(int pos) {
-                Toast.makeText(getApplicationContext(), "onLongItemClick position : " + pos, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "임시적으로 GPS로 연결", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(ListActivity.this, GpsActivity.class);
+                startActivity(intent);
             }
         });
 
