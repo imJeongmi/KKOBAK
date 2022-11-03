@@ -34,7 +34,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.*;
 import java.util.regex.Pattern;
 
@@ -365,6 +367,28 @@ public class MemberServiceImpl implements MemberService{
             List<TodoListInfoResponse> todoListInfo = new LinkedList<>();
             for(PrtChl p : chlList){
                 Log log = logRepository.findByPrtChlAndDate(p,day.getDay());
+                Challenge c = p.getChallenge();
+                todoListInfo.add(TodoListInfoResponse.builder().chlId(c.getId())
+                        .title(c.getTitle()).isDone(log.isFin()).build());
+            }
+            return todoListInfo;
+        } catch (Exception e){
+            throw e;
+        }
+    }
+
+    @Override
+    public List<TodoListInfoResponse> getTodayListInfo(HttpServletRequest req) throws NotFoundException {
+        Member member;
+        try{
+            member = findEmailbyToken(req);
+            List<PrtChl> chlList = member.getChallenges();
+            List<TodoListInfoResponse> todoListInfo = new LinkedList<>();
+
+            LocalDate today = LocalDate.now(ZoneId.of("Asia/Seoul"));
+
+            for(PrtChl p : chlList){
+                Log log = logRepository.findByPrtChlAndDate(p,today);
                 Challenge c = p.getChallenge();
                 todoListInfo.add(TodoListInfoResponse.builder().chlId(c.getId())
                         .title(c.getTitle()).isDone(log.isFin()).build());
