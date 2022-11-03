@@ -50,8 +50,6 @@ export default function MyChallengeCardList() {
   const [TotalMyPage, setMyPageNation] = useState([]);
   const [page, setPage] = useState(1);
 
-  console.log(TotalMyPage);
-
   const handlePage = (event) => {
     const nowPageInt = parseInt(event.target.outerText);
     setPage(nowPageInt);
@@ -59,7 +57,6 @@ export default function MyChallengeCardList() {
 
   function fetchMyChallengeListSuccess(res) {
     setMyChallengeList(res.data);
-    console.log(res.data);
   }
 
   function fetchMyChallengeListFail(err) {
@@ -76,7 +73,6 @@ export default function MyChallengeCardList() {
 
   function fetchChallengePageCntSuccess(res) {
     setMyPageNation(res.data);
-    // console.log(res.data);
   }
 
   function fetchChallengePageCntFail(res) {
@@ -104,15 +100,19 @@ export default function MyChallengeCardList() {
         {/* 받아온 챌린지리스트 순회하기 */}
 
         {MyChallengeList.map((item) => {
-          // console.log(item);
           return (
             <ChallengeCard
-              key={item.id}
+              key={item.chlId}
+              chlId={item.chlId}
               imgurl={item.imgurl}
               tagList={item.tagList}
               title={item.title}
+              contents={item.contents}
               startTime={item.startTime}
               endTime={item.endTime}
+              categoryId={item.categoryId}
+              alarm={item.alarm}
+              watch={item.watch}
             ></ChallengeCard>
           );
         })}

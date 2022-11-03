@@ -47,9 +47,8 @@ const TextBox = styled(Box)(
 );
 
 export default function ChallengeCard({
-  id,
+  chlId,
   imgurl,
-  tagList,
   title,
   contents,
   categoryId,
@@ -61,7 +60,7 @@ export default function ChallengeCard({
   const navigate = useNavigate();
 
   function onClickCard() {
-    navigate(`/myChallenge/${id}`, {
+    navigate(`/myChallenge/${chlId}`, {
       state: {
         imgurl: imgurl,
         title: title,
