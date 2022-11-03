@@ -8,7 +8,7 @@ import smile from "../../static/emoji/smile.png";
 import cry from "../../static/emoji/cry.png";
 import { Box } from "@mui/system";
 
-import TutorialButton from "component/atom/TutorialButton";
+import Text from "component/atom/Text";
 
 const CalendarBox = {
   // margin: "auto",
@@ -22,12 +22,12 @@ const CalendarBox = {
   justifyContent: "center",
 };
 
-export default function MainCalendar() {
+export default function MainCalendar({ id, startTime, endTime }) {
   const [value, onChange] = useState(new Date());
   return (
     <Box
       sx={{
-        height: "85vh",
+        height: "80vh",
         width: "60vw",
         display: "flex",
         // alignItems: "center"
@@ -35,6 +35,9 @@ export default function MainCalendar() {
         justifyContent: "center",
       }}
     >
+      <Text my="5" size="12px" color="grey">
+        {startTime.substr(0, 10)} - {endTime.substr(0, 10)}
+      </Text>
       <Box sx={CalendarBox}>
         <Calendar
           next2Label={null}
@@ -59,7 +62,7 @@ export default function MainCalendar() {
                   height: "8vh",
                 }}
               >
-                {true ? (
+                {false ? (
                   <img object-fit="cover" src={smile} />
                 ) : (
                   <img object-fit="cover" src={cry} />
