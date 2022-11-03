@@ -71,9 +71,9 @@ export default function Todolist() {
             &lt;
           </Text>
         </Box>
-        <Text weight="semibold">
-          {`${formedNowDate} (${formedNowDay})`}
-        </Text>
+        <Box sx={{ width: "140px", textAlign: "center" }}>
+          <Text weight="semibold">{`${formedNowDate} (${formedNowDay})`}</Text>
+        </Box>
         <Box onClick={onClickNextDay}>
           <Text color="blue" weight="bold">
             &gt;
