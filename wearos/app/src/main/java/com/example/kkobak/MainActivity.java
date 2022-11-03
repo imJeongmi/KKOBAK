@@ -14,8 +14,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
+import androidx.room.Room;
+
 import com.example.kkobak.databinding.ActivityMainBinding;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends Activity implements SensorEventListener {
@@ -29,6 +34,8 @@ public class MainActivity extends Activity implements SensorEventListener {
     LocationListener locationListener;
 
     private static final String TAG = "____Main___";
+
+    private List<Integer> heartRate = new ArrayList<>();
 
 
     @Override
@@ -44,6 +51,8 @@ public class MainActivity extends Activity implements SensorEventListener {
         hr = sensorManager.getDefaultSensor(Sensor.TYPE_HEART_RATE);
 
         checkPermission();
+
+
     }
 
     @Override
@@ -57,8 +66,11 @@ public class MainActivity extends Activity implements SensorEventListener {
     public void onSensorChanged(SensorEvent sensorEvent) {
         System.out.println("센서 이벤트 발생");
         if (sensorEvent.sensor.getType()== Sensor.TYPE_HEART_RATE){
-//            mTextView.setText((int)sensorEvent.values[0]);
+            int heartValue = (int)sensorEvent.values[0];
+            System.out.println(LocalDateTime.now());
+            mTextView.setText(heartValue+"");
             System.out.println(sensorEvent.values[0]);
+            heartRate.add(heartValue);
         }
     }
 
@@ -78,5 +90,16 @@ public class MainActivity extends Activity implements SensorEventListener {
         } else {
             Log.d(TAG, "ALREADY GRANTED"); //if BODY_SENSORS is allowed for this app then print this line in log.
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        System.out.println("========================================심박수 데이터 입니다!!");
+        System.out.println(heartRate.size());
+        for (Integer integer : heartRate) {
+            System.out.println(integer);
+        }
+
+        super.onDestroy();
     }
 }
