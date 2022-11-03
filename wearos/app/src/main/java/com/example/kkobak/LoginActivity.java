@@ -8,8 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import androidx.room.Room;
-
 import com.example.kkobak.repository.request.LoginRequest;
 import com.example.kkobak.repository.response.TokenResponse;
 import com.example.kkobak.repository.util.RetrofitClient;
@@ -40,10 +38,7 @@ public class LoginActivity extends Activity {
         btn_loginchk = findViewById(R.id.btn_loginchk);
 
         // Room 관련 코드
-        AccessTokenDatabase database = Room.databaseBuilder(getApplicationContext(), AccessTokenDatabase.class, "kkobak_db")
-                        .fallbackToDestructiveMigration()       // 스키마 버전 변경 가능
-                        .allowMainThreadQueries()               // Main Thread에서 DB에 IO 가능하게 함.
-                        .build();
+        AccessTokenDatabase database = AccessTokenDatabase.getInstance(getApplicationContext());
 
         tokenDao = database.tokenDao();
 
@@ -53,12 +48,12 @@ public class LoginActivity extends Activity {
             public void onClick(View view) {
                 System.out.println(et_email.getText());
                 System.out.println(et_pw.getText());
-                callPhoneAlreadyCheck(et_email.getText().toString(),et_pw.getText().toString());
+                getToken(et_email.getText().toString(),et_pw.getText().toString());
             }
         });
     }
 
-    public void callPhoneAlreadyCheck(String email, String pw){
+    public void getToken(String email, String pw){
 
         //Retrofit 호출
         LoginRequest loginRequest = new LoginRequest(et_email.getText().toString(),et_pw.getText().toString());
