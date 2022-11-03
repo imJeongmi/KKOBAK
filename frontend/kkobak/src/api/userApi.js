@@ -53,9 +53,24 @@ function fetchMyChallengeList(page, success, fail) {
     .then(success)
     .catch(fail);
 }
+
 function fetchMyChallengePageCnt(success, fail) {
   api
     .get(`/member/sum/my-chl-list?size=6&sort=id,DESC`)
+    .then(success)
+    .catch(fail);
+}
+
+function fetchMyChallengeCalendarList(page, success, fail) {
+  api
+    .get(`/member/my-chl-list?page=${page - 1}&size=1&sort=id,DESC`)
+    .then(success)
+    .catch(fail);
+}
+
+function fetchMyChallengeCalendarPageCnt(success, fail) {
+  api
+    .get(`/member/sum/my-chl-list?size=1&sort=id,DESC`)
     .then(success)
     .catch(fail);
 }
@@ -70,4 +85,6 @@ export {
   requestUserInfo,
   fetchMyChallengeList,
   fetchMyChallengePageCnt,
+  fetchMyChallengeCalendarList,
+  fetchMyChallengeCalendarPageCnt,
 };

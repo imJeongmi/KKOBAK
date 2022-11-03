@@ -6,14 +6,62 @@ import MainCalendar from "component/atom/MainCalendar";
 import Text from "component/atom/Text";
 import SideBar from "component/atom/SideBar";
 import MainBox from "component/atom/MainBox";
-import { requestUserInfo } from "api/userApi";
+import {
+  requestUserInfo,
+  fetchMyChallengeCalendarList,
+  fetchMyChallengeCalendarPageCnt,
+} from "api/userApi";
+
+import Pagination from "@mui/material/Pagination";
+import Stack from "@mui/material/Stack";
 
 export default function Main() {
   const [user, setUser] = useState([]);
+  const [MyChallengeList, setMyChallengeList] = useState([]);
+  const [TotalMyPage, setMyPageNation] = useState([]);
+  const [page, setPage] = useState(1);
+
+  const handlePage = (event) => {
+    const nowPageInt = parseInt(event.target.outerText);
+    setPage(nowPageInt);
+  };
+
+  function fetchMyChallengeListSuccess(res) {
+    setMyChallengeList(res.data);
+    console.log(res.data);
+  }
+
+  function fetchMyChallengeListFail(err) {
+    setMyChallengeList([]);
+  }
+
+  useEffect(() => {
+    fetchMyChallengeCalendarList(
+      page,
+      fetchMyChallengeListSuccess,
+      fetchMyChallengeListFail
+    );
+  }, [page]);
+
+  function fetchChallengePageCntSuccess(res) {
+    setMyPageNation(res.data);
+    // console.log(res.data);
+  }
+
+  function fetchChallengePageCntFail(res) {
+    setMyPageNation([]);
+  }
+
+  useEffect(() => {
+    fetchMyChallengeCalendarPageCnt(
+      fetchChallengePageCntSuccess,
+      fetchChallengePageCntFail
+    );
+  }, []);
 
   function requestUserInfoSuccess(res) {
     setUser(res.data);
-    console.log(res.data);
+    // console.log(res.data);
     // console.log(user.nickName);
   }
 
@@ -25,7 +73,11 @@ export default function Main() {
     requestUserInfo(requestUserInfoSuccess, requestUserInfoFail);
   }, []);
 
-  return (
+  return MyChallengeList.length === 0 ? (
+    <Box>
+      <Text> 생성된 챌린지가 없어요</Text>
+    </Box>
+  ) : (
     <Box
       sx={{
         display: "flex",
@@ -37,8 +89,31 @@ export default function Main() {
           안녕하세요,
           {user.nickName} 님
         </Text>
+        <Box sx={{ margin: "10px auto" }}>
+          <Stack spacing={2}>
+            <Pagination
+              count={3}
+              defaultPage={1}
+              shape="rounded"
+              onChange={(e) => handlePage(e)}
+              hidePrevButton
+              hideNextButton
+            />
+          </Stack>
+        </Box>
         <MainBox>
-          <MainCalendar />
+          {MyChallengeList.map((item) => {
+            return (
+              <Box>
+                <Box>{item.title}</Box>
+                <MainCalendar
+                  key={item.id}
+                  startTime={item.startTime}
+                  endTime={item.endTime}
+                ></MainCalendar>
+              </Box>
+            );
+          })}
         </MainBox>
       </Box>
       <SideBar>
