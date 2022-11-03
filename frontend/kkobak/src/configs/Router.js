@@ -1,8 +1,8 @@
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Main from "../component/page/Main";
-import Challenge from "../component/page/Challenge";
 import MyChallenge from "../component/page/MyChallenge";
+import Statistics from "../component/page/Statistics";
 import Setting from "component/page/Setting";
 import storage from "../helper/storage";
 import LoginModal from "component/module/LoginModal";
@@ -29,18 +29,18 @@ export default function RouterConfiguration() {
       />
 
       <Route
-        path="/challenge"
-        element={
-          <CheckAuth>
-            <Challenge />
-          </CheckAuth>
-        }
-      />
-      <Route
         path="/myChallenge"
         element={
           <CheckAuth>
             <MyChallenge />
+          </CheckAuth>
+        }
+      />
+      <Route
+        path="/Statistics"
+        element={
+          <CheckAuth>
+            <Statistics />
           </CheckAuth>
         }
       />
