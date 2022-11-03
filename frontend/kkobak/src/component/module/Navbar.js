@@ -67,38 +67,38 @@ export default function SelectedListItem() {
         </ListItemButton>
 
         <ListItemButton
-          href="/challenge"
+          href="/myChallenge"
           // selected={selectedIndex === 2}
           onClick={(event) => handleListItemClick(event, 2)}
-          sx={{ paddingLeft: "20px", marginBottom: "30px", color: "gray" }}
+          sx={{ paddingLeft: "14px", marginBottom: "30px", color: "gray" }}
         >
           <Box>
-            <ListItemIcon sx={{ marginLeft: "4px" }}>
+            <ListItemIcon sx={{ paddingLeft: "8px" }}>
               <img src={Flag} width={28} height={28} />
             </ListItemIcon>
             <ListItemText
-              primary="챌린지"
+              primary="내챌린지"
               primaryTypographyProps={{ fontSize: "12px" }}
             />
           </Box>
         </ListItemButton>
         <ListItemButton
-          href="/myChallenge"
+          href="/Statistics"
           // selected={selectedIndex === 3}
           onClick={(event) => handleListItemClick(event, 3)}
           sx={{
-            paddingLeft: "14px",
+            paddingLeft: "24px",
             paddingRight: "4px",
             marginBottom: "30px",
             color: "gray",
           }}
         >
           <Box>
-            <ListItemIcon sx={{ paddingLeft: "8px" }}>
+            <ListItemIcon sx={{ marginLeft: "-2px" }}>
               <img src={User} width={28} height={28} />
             </ListItemIcon>
             <ListItemText
-              primary="내챌린지"
+              primary="통계"
               primaryTypographyProps={{ fontSize: "12px" }}
             />
           </Box>
