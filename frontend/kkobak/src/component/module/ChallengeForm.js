@@ -2,7 +2,7 @@ import { Box } from '@mui/system';
 import Input from 'component/atom/Input';
 import Text from 'component/atom/Text';
 import Textarea from 'component/atom/Textarea';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useRef } from 'react';
 
 import Radio from '@mui/material/Radio';
@@ -66,9 +66,9 @@ export default function ChallengeBasicForm(
     if (!e.target.files) {
       return;
     }
-
+    console.log(e.target.files[0])
     const formData = new FormData();
-    formData.append('image', e.target.files[0]);
+    formData.set('file', e.target.files[0]);
     uploadPhoto(formData, uploadSuccess, uploadFail)
   }
 
@@ -79,7 +79,7 @@ export default function ChallengeBasicForm(
   function uploadFail(err) {
     console.log(err)
   }
-  
+
   const imgDivClick = (e) => {
     e.preventDefault();
     challengeImgInput.current.click();
