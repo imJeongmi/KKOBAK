@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,6 +82,7 @@ public class HeartrateActivity extends Activity implements SensorEventListener {
             System.out.println(integer);
         }
 
+        sensorManager.unregisterListener(this);
         super.onDestroy();
     }
 }
