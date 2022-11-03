@@ -47,6 +47,19 @@ function requestUserInfo(success, fail) {
   api.get("member/my-info").then(success).catch(fail);
 }
 
+function fetchMyChallengeList(page, success, fail) {
+  api
+    .get(`/member/my-chl-list?page=${page - 1}&size=6&sort=id,DESC`)
+    .then(success)
+    .catch(fail);
+}
+function fetchMyChallengePageCnt(success, fail) {
+  api
+    .get(`/member/sum/my-chl-list?size=6&sort=id,DESC`)
+    .then(success)
+    .catch(fail);
+}
+
 export {
   requestJoin,
   requestEmailCheck,
@@ -55,4 +68,6 @@ export {
   requestPasswdCheck,
   requestLogin,
   requestUserInfo,
+  fetchMyChallengeList,
+  fetchMyChallengePageCnt,
 };
