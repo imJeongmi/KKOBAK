@@ -75,6 +75,13 @@ function fetchMyChallengeCalendarPageCnt(success, fail) {
     .catch(fail);
 }
 
+function requestCalendarCheck(chlId, year, month, success, fail) {
+  api
+    .get(`/member/month-info/${chlId}/${year}/${month}`)
+    .then(success)
+    .catch(fail);
+}
+
 export {
   requestJoin,
   requestEmailCheck,
@@ -87,4 +94,5 @@ export {
   fetchMyChallengePageCnt,
   fetchMyChallengeCalendarList,
   fetchMyChallengeCalendarPageCnt,
+  requestCalendarCheck,
 };

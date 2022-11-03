@@ -28,7 +28,7 @@ export default function Main() {
 
   function fetchMyChallengeListSuccess(res) {
     setMyChallengeList(res.data);
-    console.log(res.data);
+    // console.log(res.data);
   }
 
   function fetchMyChallengeListFail(err) {
