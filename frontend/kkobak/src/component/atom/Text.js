@@ -4,12 +4,14 @@ import { Box } from "@mui/material";
 import { NearbyError } from "@mui/icons-material";
 
 const TextBox = styled(Box)(
-  ({ size, color, weight, my, mx, mt }) => `
+  ({ size, color, weight, my, mx, mt, py, px }) => `
   font-size: ${getSize(size)};
   color: ${getColor(color)};
-  margin: ${getMarginTop(mt, my)}px ${getMarginX(mx)}px ${getMarginY(my)}px ${getMarginX(mx)}px;
+  margin: ${getMarginTop(mt, my)}px ${getMarginX(mx)}px ${getMarginY(
+    my
+  )}px ${getMarginX(mx)}px;
   font-family: ${getWeight(weight)};
-  padding: 0;
+  padding: ${getPaddingY(py)}px ${getPaddingX(px)}px;
   `
 );
 
@@ -69,33 +71,52 @@ function getWeight(weight) {
 }
 
 function getMarginY(my) {
-  if (!!my) {
-    return my;
-  } else {
-    return 0;
-  }
+  if (!!my) return my;
+  return 0;
 }
 
 function getMarginX(mx) {
-  if (!!mx) {
-    return mx;
-  } else {
-    return 0;
-  }
+  if (!!mx) return mx;
+  return 0;
 }
 
 function getMarginTop(mt, my) {
-  if (!!mt) {
-    return mt;
-  }
-  else {
-    return my;
-  }
+  if (!!mt) return mt;
+  return my;
 }
 
-export default function Text({ children, size, color, weight, my, mx, mt }) {
+function getPaddingY(py) {
+  if (!!py) return py;
+  return 0;
+}
+
+function getPaddingX(px) {
+  if (!!px) return px;
+  return 0;
+}
+
+export default function Text({
+  children,
+  size,
+  color,
+  weight,
+  my,
+  mx,
+  mt,
+  py,
+  px,
+}) {
   return (
-    <TextBox size={size} color={color} weight={weight} my={my} mx={mx} mt={mt}>
+    <TextBox
+      size={size}
+      color={color}
+      weight={weight}
+      my={my}
+      mx={mx}
+      mt={mt}
+      py={py}
+      px={px}
+    >
       {children}
     </TextBox>
   );
