@@ -4,7 +4,7 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
 
-import com.example.kkobak.room.db.AccessToken;
+import com.example.kkobak.room.data.AccessToken;
 
 import java.util.List;
 
