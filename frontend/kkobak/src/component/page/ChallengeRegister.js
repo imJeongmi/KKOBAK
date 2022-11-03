@@ -1,31 +1,42 @@
-import { Box } from "@mui/material";
-import ChallengeCategory from "component/module/ChallengeCategory";
-import ChallengeBasicForm from "component/module/ChallengeForm";
 import React, { useEffect } from "react";
 import { useState } from "react";
+import { Box } from "@mui/material";
+
+import { getDetailCategoryList } from "api/Category";
+import ChallengeBasicForm from "component/module/ChallengeForm";
 
 import initial from "../../static/initial.png"
 
 export default function ChallengeRegister() {
-  const [page, setPage] = useState(2);
+  const [category, setCategory] = useState(1);
+  const [detailCategory, setDetailCategory] = useState(1);
+  const [detailCategoryList, setDetailCategoryList] = useState([]);
   const [imgSrc, setImgSrc] = useState(initial);
-  const [watch, setWatch] = useState('');
+  const [watch, setWatch] = useState(true);
   const [startTime, setStartTime] = useState(new Date());
   const [endTime, setEndTime] = useState(new Date());
-  const [alarm, setAlarm] = useState(0);
+  const [alarm, setAlarm] = useState('00:00');
   const [title, setTitle] = useState('');
   const [contents, setContents] = useState('');
   
+  function getDetailCategoryListSuccess(res) {
+    setDetailCategoryList(res.data)
+  }
+
+  function getDetailCategoryListFail(err) {
+  }
+  
   useEffect(() => {
-    console.log(title.data)
-  }, [title])
+    getDetailCategoryList(category, getDetailCategoryListSuccess, getDetailCategoryListFail)
+  }, [category])
 
   return (
     <Box>
-      {(page === 1 ? <ChallengeCategory /> 
-      :
-        <ChallengeBasicForm 
+      <ChallengeBasicForm
         imgSrc={imgSrc}
+        category={category}
+        detailCategory={detailCategory}
+        detailCategoryList={detailCategoryList}
         title={title}
         contents={contents}
         startTime={startTime}
@@ -34,12 +45,13 @@ export default function ChallengeRegister() {
         watch={watch}
         setImgSrc={setImgSrc}
         setTitle={setTitle}
+        setCategory={setCategory}
+        setDetailCategory={setDetailCategory}
         setContents={setContents}
         setStartTime={setStartTime}
         setEndTime={setEndTime}
         setAlarm={setAlarm}
-        setWatch={setWatch} /> )}
-
+        setWatch={setWatch} />
     </Box>
   );
 }

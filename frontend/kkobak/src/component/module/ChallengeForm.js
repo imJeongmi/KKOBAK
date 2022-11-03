@@ -2,7 +2,7 @@ import { Box } from '@mui/system';
 import Input from 'component/atom/Input';
 import Text from 'component/atom/Text';
 import Textarea from 'component/atom/Textarea';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useRef } from 'react';
 
 import Radio from '@mui/material/Radio';
@@ -29,7 +29,6 @@ const CardStyle = {
   minHeight: "80vh",
   backgroundColor: "#F5F5F5",
   textAlign: "center",
-  // display: "flex",
   justifyContent: "center",
   borderRadius: "20px",
 };
@@ -42,22 +41,25 @@ const inputStyle = {
 export default function ChallengeBasicForm(
   { imgSrc,
     title,
+    detailCategoryList,
     contents,
     startTime,
     endTime,
     alarm,
     watch,
     setImgSrc,
-    setTitle, 
+    setTitle,
+    setCategory,
+    setDetailCategory,
     setContents,
     setStartTime,
     setEndTime,
     setAlarm,
     setWatch
   }
-  ) {
+) {
   const challengeImgInput = useRef();
-  
+
   function onImgChange(e) {
     e.preventDefault()
   }
@@ -74,6 +76,33 @@ export default function ChallengeBasicForm(
           <img onClick={imgDivClick} alt="img" src={imgSrc}></img>
         </Box>
         <Box sx={{ margin: "auto" }}>
+          <Box sx={{ width: "80%", margin: "auto", display: "flex", alignItems: "center" }}>
+
+            <Text weight="bold">카테고리</Text>
+            <FormControl sx={{ marginLeft: "15%" }}>
+              <RadioGroup
+                row
+                aria-labelledby="demo-row-controlled-radio-buttons-group"
+                name="controlled-radio-buttons-group"
+                onChange={(e) => setCategory(e.target.value)}
+              >
+                <FormControlLabel value={1} control={<Radio />} label="운동" />
+                <FormControlLabel value={2} control={<Radio />} label="생활습관" />
+              </RadioGroup>
+            </FormControl>
+          </Box>
+          <Box sx={{ width: "80%", margin: "auto", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+
+            <Text weight="bold">상세 카테고리</Text>
+            <Box sx={{ width: "90%" }}>
+              <select onChange={(e) => setDetailCategory(e.target.value)}>
+                <option value={0}>선택 안함</option>
+                {detailCategoryList?.map((item) => {
+                  return (<option key={item.detailId} value={item.detailId}>{item.detailName}</option>)
+                })}
+              </select>
+            </Box>
+          </Box>
           <Box sx={{ width: "80%", margin: "auto", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
 
             <Text weight="bold">제목</Text>
@@ -110,9 +139,10 @@ export default function ChallengeBasicForm(
                 row
                 aria-labelledby="demo-row-controlled-radio-buttons-group"
                 name="controlled-radio-buttons-group"
+                onChange={(e) => setWatch(e.target.value)}
               >
-                <FormControlLabel onSelect={(e) => setWatch(e.target.value)} value={true} control={<Radio />} label="사용" />
-                <FormControlLabel onSelect={(e) => setWatch(e.target.value)} value={false} control={<Radio />} label="사용 안함" />
+                <FormControlLabel value={true} control={<Radio />} label="사용" />
+                <FormControlLabel value={false} control={<Radio />} label="사용 안함" />
               </RadioGroup>
             </FormControl>
           </Box>
