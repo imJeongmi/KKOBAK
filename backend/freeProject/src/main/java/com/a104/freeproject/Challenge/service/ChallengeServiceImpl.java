@@ -72,7 +72,7 @@ public class ChallengeServiceImpl implements ChallengeService{
 
         if(category.getName().equals("기타")){ // 세부 카테고리가 없음
             challenge = Challenge.builder().title(input.getTitle()).contents(input.getContents()).imgurl(input.getImgurl()).
-                    isWatch(input.isWatch()).roomtype(input.getRoomtype()).password(input.getPassword()).writer(member.getId())
+                    watch(input.isWatch()).roomtype(input.getRoomtype()).password(input.getPassword()).writer(member.getId())
                     .limitPeople(input.getLimitPeople()).alarm(input.getAlarm())
                     .goal(input.getGoal()).unit(input.getUnit()).category(category)
                     .build();
@@ -82,7 +82,7 @@ public class ChallengeServiceImpl implements ChallengeService{
             DetailCategory detail = detailRepository.findById(input.getDetailCategoryId()).get();
 
             challenge = Challenge.builder().title(input.getTitle()).contents(input.getContents()).imgurl(input.getImgurl()).
-                    isWatch(input.isWatch()).roomtype(input.getRoomtype()).password(input.getPassword()).writer(member.getId())
+                    watch(input.isWatch()).roomtype(input.getRoomtype()).password(input.getPassword()).writer(member.getId())
                     .limitPeople(input.getLimitPeople()).alarm(input.getAlarm())
                     .goal(input.getGoal()).unit(input.getUnit()).category(category).detailCategory(detail)
                     .build();
@@ -219,7 +219,7 @@ public class ChallengeServiceImpl implements ChallengeService{
                 .title(c.getTitle())
                 .contents(c.getContents())
                 .imgurl(c.getImgurl())
-                .isWatch(c.isWatch())
+                .watch(c.isWatch())
                 .roomtype(c.getRoomtype())
                 .password(c.getPassword())
                 .limitPeolple(c.getLimitPeople())
@@ -272,7 +272,7 @@ public class ChallengeServiceImpl implements ChallengeService{
                     .title(c.getTitle())
                     .contents(c.getContents())
                     .imgurl(c.getImgurl())
-                    .isWatch(c.isWatch())
+                    .watch(c.isWatch())
                     .roomtype(c.getRoomtype())
                     .password(c.getPassword())
                     .limitPeolple(c.getLimitPeople())

@@ -17,7 +17,7 @@ public class registerRequest {
     private String title;
     private String contents;
     private String imgurl;
-    private boolean isWatch;
+    private boolean watch;
     private int roomtype;
     private String password;
     private int limitPeople;
