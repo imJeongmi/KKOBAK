@@ -1,17 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Text from "component/atom/Text";
 import Box from "@mui/material/Box";
 import ChallengeCardList from "component/module/ChallengeCardList";
 import SideBar from "component/atom/SideBar";
 import CategoryToggle from "component/atom/CategoryToggle";
 import MyChallengeCarousel from "component/module/MyChallengeCarousel";
+import { requestUserInfo } from "api/userApi";
 
 export default function Challenge() {
+  const [user, setUser] = useState([]);
+  function requestUserInfoSuccess(res) {
+    setUser(res.data);
+  }
+
+  function requestUserInfoFail(res) {
+    setUser([]);
+  }
+
+  useEffect(() => {
+    requestUserInfo(requestUserInfoSuccess, requestUserInfoFail);
+  }, []);
   return (
     <Box sx={{ display: "flex", justifyContent: "space-between" }}>
       <Box sx={{ margin: "0 auto" }}>
         <Text size="l" weight="bold" mt="30" my="15">
-          경원님의 챌린지리스트
+          {user.nickName}님의 챌린지리스트
         </Text>
         <ChallengeCardList />
       </Box>
