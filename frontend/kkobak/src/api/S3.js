@@ -1,7 +1,7 @@
-import api from "api/api.js";
+import apiS3 from "api/apiS3.js";
 
 function uploadPhoto(formdata, success, fail) {
-  api.post('/s3/file', formdata).then(success).catch(fail)
+  apiS3.post('/s3/file', formdata).then(success).catch(fail)
 }
 
 export {
