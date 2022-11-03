@@ -2,7 +2,7 @@ import { Box } from '@mui/system';
 import Input from 'component/atom/Input';
 import Text from 'component/atom/Text';
 import Textarea from 'component/atom/Textarea';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useRef } from 'react';
 
 import Radio from '@mui/material/Radio';
@@ -13,6 +13,7 @@ import DatePicker from "react-date-picker";
 import "../atom/DatePicker.scss"
 import TimePicker from 'react-time-picker';
 import "../atom/TimePicker.scss"
+import { uploadPhoto } from 'api/S3';
 
 const BoxStyle = {
   height: "100vh",
@@ -62,7 +63,23 @@ export default function ChallengeBasicForm(
 
   function onImgChange(e) {
     e.preventDefault()
+    if (!e.target.files) {
+      return;
+    }
+    console.log(e.target.files[0])
+    const formData = new FormData();
+    formData.set('file', e.target.files[0]);
+    uploadPhoto(formData, uploadSuccess, uploadFail)
   }
+
+  function uploadSuccess(res) {
+    setImgSrc(res.data)
+  }
+
+  function uploadFail(err) {
+    console.log(err)
+  }
+
   const imgDivClick = (e) => {
     e.preventDefault();
     challengeImgInput.current.click();
