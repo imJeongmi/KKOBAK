@@ -2,14 +2,13 @@ import React, { useState } from "react";
 import { styled } from "@mui/system";
 import { Box } from "@mui/material";
 
-import "./TodolistItem.scss";
-
+import Text from "component/atom/Text";
 import CheckImage from "static/check.png";
 
-const TodoItemBox = styled(Box)(
+const TodolistItemBox = styled(Box)(
   () => `
     width: 278px;
-    height: 25px;
+    height: 30px;
     display: flex;
     align-items: center;
     `
@@ -26,37 +25,19 @@ const CheckBox = styled(Box)(
     `
 );
 
-export default function TodolistItem() {
-  const [text, setText] = useState("");
-  const [isClicked, setIsClicked] = useState(0);
-  const [isHovering, setIsHovering] = useState(0);
-
+export default function TodolistItem({ item }) {
   return (
-    <TodoItemBox>
-      <CheckBox
-        onClick={() => setIsClicked(1)}
-        onMouseOver={() => setIsHovering(1)}
-        onMouseOut={() => setIsHovering(0)}
-      >
-        {isHovering && !isClicked ? (
-          <Box sx={{ opacity: 0.5 }}>
-            <img src={CheckImage} width="20px" />
-          </Box>
-        ) : (
-          ""
-        )}
-        {isClicked && !text ? setIsClicked(0) : ""}
-        {isClicked && text ? <img src={CheckImage} width="20px" /> : ""}
+    <TodolistItemBox>
+      <CheckBox>
+        <Box sx={{ opacity: 0.5 }}>
+          <img src={CheckImage} width="20px" />
+        </Box>
       </CheckBox>
-
-      <input
-        onKeyPress={(e) => {
-          if (e.key == "Enter") {
-            setText(e.target.value);
-          }
-        }}
-        placeholder="오늘 할 일을 기록하세요"
-      />
-    </TodoItemBox>
+      <Box sx={{ height: "18px" }}>
+        <Text size="14px" weight="medium" py="1" px="2">
+          {item}
+        </Text>
+      </Box>
+    </TodolistItemBox>
   );
 }
