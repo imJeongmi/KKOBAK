@@ -99,11 +99,16 @@ export default function ChallengeCardList() {
           return (
             <ChallengeCard
               key={item.id}
+              id={item.id}
               imgurl={item.imgurl}
               tagList={item.tagList}
               title={item.title}
+              contents={item.contents}
               startTime={item.startTime}
               endTime={item.endTime}
+              categoryId={item.categoryId}
+              alarm={item.alarm}
+              watch={item.watch}
             ></ChallengeCard>
           );
         })}

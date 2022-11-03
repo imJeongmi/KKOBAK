@@ -5,6 +5,7 @@ import { styled } from "@mui/system";
 import Text from "component/atom/Text";
 import TagLabel from "component/atom/TagLabel";
 import WatchImg from "static/watch.svg";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const CardBox = styled(Box)(
   () => `
@@ -46,21 +47,42 @@ const TextBox = styled(Box)(
 );
 
 export default function ChallengeCard({
+  id,
   imgurl,
   tagList,
   title,
+  contents,
+  categoryId,
   startTime,
   endTime,
+  alarm,
   watch,
 }) {
+  const navigate = useNavigate();
+
+  function onClickCard() {
+    navigate(`/myChallenge/${id}`, {
+      state: {
+        imgurl: imgurl,
+        title: title,
+        contents: contents,
+        startTime: startTime,
+        endTime: endTime,
+        categoryId: categoryId,
+        alarm: alarm,
+        watch: watch,
+      },
+    });
+  }
+
   return (
-    <CardBox>
+    <CardBox onClick={onClickCard}>
       <ImageBox>
         {/* <img src={props.src} width="100%" height="100%" /> */}
         <img src={imgurl} width="100%" height="100%" />
       </ImageBox>
       <FilterBox>
-        <TagLabel>{tagList[0]}</TagLabel>
+        {/* <TagLabel>{tagList[0]}</TagLabel> */}
         <img src={WatchImg} width="25px" />
       </FilterBox>
       <TextBox>
