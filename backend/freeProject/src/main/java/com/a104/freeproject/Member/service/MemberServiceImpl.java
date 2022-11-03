@@ -392,6 +392,8 @@ public class MemberServiceImpl implements MemberService{
             System.out.println("chlList 시작");
             for(PrtChl p : chlList){
                 System.out.println(p.getId());
+                if(p.is_fin()) continue;
+                if(p.getChallenge().isFin()) continue;
                 Log log = logRepository.findByPrtChlAndDate(p,today);
                 System.out.println("log 정보");
                 System.out.println(log.getDate());
