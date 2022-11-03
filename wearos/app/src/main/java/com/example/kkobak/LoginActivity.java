@@ -12,8 +12,8 @@ import com.example.kkobak.repository.request.LoginRequest;
 import com.example.kkobak.repository.response.TokenResponse;
 import com.example.kkobak.repository.util.RetrofitClient;
 import com.example.kkobak.room.dao.AccessTokenDao;
-import com.example.kkobak.room.db.AccessToken;
-import com.example.kkobak.room.db.AccessTokenDatabase;
+import com.example.kkobak.room.data.AccessToken;
+import com.example.kkobak.room.db.AppDatabase;
 
 import java.util.List;
 
@@ -38,7 +38,7 @@ public class LoginActivity extends Activity {
         btn_loginchk = findViewById(R.id.btn_loginchk);
 
         // Room 관련 코드
-        AccessTokenDatabase database = AccessTokenDatabase.getInstance(getApplicationContext());
+        AppDatabase database = AppDatabase.getInstance(getApplicationContext());
 
         tokenDao = database.tokenDao();
 
@@ -67,7 +67,6 @@ public class LoginActivity extends Activity {
                 }
                 else{
                     TokenResponse token = response.body();
-                    System.out.println(token.getAccessToken());
                     Log.d("연결이 성공적 : ", response.body().toString());
 
                     List<AccessToken> tokenList = tokenDao.getTokenAll();
