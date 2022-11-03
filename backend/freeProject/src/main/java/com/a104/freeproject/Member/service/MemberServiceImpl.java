@@ -383,16 +383,20 @@ public class MemberServiceImpl implements MemberService{
         try{
             member = findEmailbyToken(req);
             List<PrtChl> chlList = member.getChallenges();
+            System.out.println("chlList.size(): "+chlList.size());
             List<TodoListInfoResponse> todoListInfo = new LinkedList<>();
 
             LocalDate today = LocalDate.now(ZoneId.of("Asia/Seoul"));
+            System.out.println("today = " + today);
 
             for(PrtChl p : chlList){
                 Log log = logRepository.findByPrtChlAndDate(p,today);
+                System.out.println(log.getPrtChl().getChallenge().getId()+": 오늘 했냐 >> "+log.isFin());
                 Challenge c = p.getChallenge();
                 todoListInfo.add(TodoListInfoResponse.builder().chlId(c.getId())
                         .title(c.getTitle()).isDone(log.isFin()).build());
             }
+            System.out.println("서비스 잘 끝남");
             return todoListInfo;
         } catch (Exception e){
             throw e;
