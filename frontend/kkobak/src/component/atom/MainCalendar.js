@@ -23,6 +23,22 @@ const CalendarBox = {
 };
 
 export default function MainCalendar({ id, startTime, endTime }) {
+  const [mark, setMark] = useState([]);
+
+  function clickDay(e) {
+    console.log(e);
+    // onChange(e.target.value);
+  }
+
+  function isDone(date) {}
+
+  const isSameDate = (date1, date2) => {
+    return (
+      date1.getFullYear() === date2.getFullYear() &&
+      date1.getMonth() === date2.getMonth() &&
+      date1.getDate() === date2.getDate()
+    );
+  };
   const [value, onChange] = useState(new Date());
   return (
     <Box
@@ -36,7 +52,7 @@ export default function MainCalendar({ id, startTime, endTime }) {
       }}
     >
       <Text my="5" size="12px" color="grey">
-        {startTime.substr(0, 10)} - {endTime.substr(0, 10)}
+        {startTime} - {endTime}
       </Text>
       <Box sx={CalendarBox}>
         <Calendar
@@ -47,28 +63,39 @@ export default function MainCalendar({ id, startTime, endTime }) {
           showNeighboringMonth={false}
           minDetail="month"
           onChange={onChange}
+          minDate={new Date(startTime)}
+          maxDate={new Date(endTime)}
           value={value}
           formatDay={(locale, date) =>
             date.toLocaleString("en", { day: "numeric" })
           }
           tileContent={({ date, view }) => {
-            return (
-              <Box
-                sx={{
-                  // textAlign: "center",
-                  left: "50%",
-                  transform: "translate(-50%)",
-                  width: "8vw",
-                  height: "8vh",
-                }}
-              >
-                {false ? (
-                  <img object-fit="cover" src={smile} />
-                ) : (
-                  <img object-fit="cover" src={cry} />
-                )}
-              </Box>
-            );
+            if (
+              // 챌린지 기간 내인지?
+              (isSameDate(new Date(startTime), date) ||
+                new Date(startTime) <= date) &&
+              date < new Date(endTime)
+            ) {
+              if (date < new Date()) {
+                return (
+                  <Box
+                    sx={{
+                      // textAlign: "center",
+                      left: "50%",
+                      transform: "translate(-50%)",
+                      width: "8vw",
+                      height: "8vh",
+                    }}
+                  >
+                    {isDone(date) ? (
+                      <img object-fit="cover" src={smile} />
+                    ) : (
+                      <img object-fit="cover" src={cry} />
+                    )}
+                  </Box>
+                );
+              }
+            }
           }}
         />
       </Box>
