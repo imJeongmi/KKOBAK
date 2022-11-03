@@ -8,9 +8,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import androidx.room.Room;
+
 import com.example.kkobak.repository.request.LoginRequest;
 import com.example.kkobak.repository.response.TokenResponse;
 import com.example.kkobak.repository.util.RetrofitClient;
+import com.example.kkobak.room.dao.AccessTokenDao;
+import com.example.kkobak.room.db.AccessToken;
+import com.example.kkobak.room.db.AccessTokenDatabase;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -21,6 +28,7 @@ public class LoginActivity extends Activity {
     private EditText et_email;
     private EditText et_pw;
     private Button btn_loginchk;
+    private AccessTokenDao tokenDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,14 +39,20 @@ public class LoginActivity extends Activity {
         et_pw = findViewById(R.id.et_pw);
         btn_loginchk = findViewById(R.id.btn_loginchk);
 
+        // Room 관련 코드
+        AccessTokenDatabase database = Room.databaseBuilder(getApplicationContext(), AccessTokenDatabase.class, "kkobak_db")
+                        .fallbackToDestructiveMigration()       // 스키마 버전 변경 가능
+                        .allowMainThreadQueries()               // Main Thread에서 DB에 IO 가능하게 함.
+                        .build();
 
+        tokenDao = database.tokenDao();
 
+        // btn listener
         btn_loginchk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 System.out.println(et_email.getText());
                 System.out.println(et_pw.getText());
-
                 callPhoneAlreadyCheck(et_email.getText().toString(),et_pw.getText().toString());
             }
         });
@@ -61,7 +75,19 @@ public class LoginActivity extends Activity {
                     System.out.println(token.getAccessToken());
                     Log.d("연결이 성공적 : ", response.body().toString());
 
-                    Intent intent = new Intent(LoginActivity.this, HeartrateActivity.class);
+                    List<AccessToken> tokenList = tokenDao.getTokenAll();
+                    if(tokenList.size()!=0){
+                        for(int i=tokenList.size();i>0;i--){
+                            AccessToken at = tokenList.get(i-1);
+                            tokenDao.setDeleteToken(at.getId());
+                        }
+                    }
+
+                    AccessToken accessToken = new AccessToken(); // 객체 인스턴스 생성
+                    accessToken.setAccessToken(token.getAccessToken());
+                    tokenDao.setInsertToken(accessToken);
+
+                    Intent intent = new Intent(LoginActivity.this, ListActivity.class);
                     startActivity(intent);
                 }
             }
