@@ -11,14 +11,10 @@ import { Box } from "@mui/system";
 import TutorialButton from "component/atom/TutorialButton";
 
 const CalendarBox = {
-  // margin: "auto",
-  // marginLeft: "20px",
   width: "100%",
   minHeight: "80vh",
-  backgroundColor: "#F5F5F5",
   textAlign: "center",
   display: "flex",
-  // alignItems: "center",
   justifyContent: "center",
 };
 
@@ -30,7 +26,6 @@ export default function MainCalendar() {
         height: "85vh",
         width: "60vw",
         display: "flex",
-        // alignItems: "center"
         flexDirection: "column",
         justifyContent: "center",
       }}
@@ -52,7 +47,6 @@ export default function MainCalendar() {
             return (
               <Box
                 sx={{
-                  // textAlign: "center",
                   left: "50%",
                   transform: "translate(-50%)",
                   width: "8vw",
