@@ -11,7 +11,7 @@ import com.example.kkobak.room.dao.TodoDao;
 import com.example.kkobak.room.data.AccessToken;
 import com.example.kkobak.room.data.Todo;
 
-@Database(entities = {AccessToken.class, Todo.class}, version = 1)
+@Database(entities = {AccessToken.class, Todo.class}, version = 1, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static AppDatabase database;

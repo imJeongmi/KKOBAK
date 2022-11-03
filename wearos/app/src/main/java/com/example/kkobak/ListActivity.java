@@ -3,13 +3,18 @@ package com.example.kkobak;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.wear.widget.WearableRecyclerView;
 
 import com.example.kkobak.repository.response.TodoListResponse;
 import com.example.kkobak.repository.util.RetrofitClient;
+import com.example.kkobak.room.adapter.TodoAdapter;
 import com.example.kkobak.room.dao.AccessTokenDao;
 import com.example.kkobak.room.dao.TodoDao;
-import com.example.kkobak.room.data.Todo;
 import com.example.kkobak.room.data.AccessToken;
+import com.example.kkobak.room.data.Todo;
 import com.example.kkobak.room.db.AppDatabase;
 
 import java.util.List;
@@ -23,6 +28,8 @@ public class ListActivity extends Activity {
     private AccessTokenDao tokenDao;
     private TodoDao todoDao;
     private String accessToken;
+    private WearableRecyclerView rv;
+    private LinearLayoutManager linearLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +45,37 @@ public class ListActivity extends Activity {
 
         getTodoList(accessToken);
 
+        // WearableRecyclerView ------------------------------------
+
+        rv = (WearableRecyclerView) findViewById(R.id.rv);
+        linearLayoutManager = new LinearLayoutManager(this);
+
+        List<Todo> todoList = todoDao.getListAll();
+
+        rv.setHasFixedSize(true);
+        rv.setLayoutManager(linearLayoutManager);
+
+        TodoAdapter todoAdapter = new TodoAdapter(getApplication(), todoList);
+
+
+        todoAdapter.setOnItemClickListener(new TodoAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int pos) {
+                Toast.makeText(getApplicationContext(), "onItemClick position : " + pos, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        todoAdapter.setOnLongItemClickListener(new TodoAdapter.OnLongItemClickListener() {
+            @Override
+            public void onLongItemClick(int pos) {
+                Toast.makeText(getApplicationContext(), "onLongItemClick position : " + pos, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+        rv.setAdapter(todoAdapter);
+
+        // ---------------------------------------------------------
     }
 
     public void getTodoList(String accessToken){
@@ -64,8 +102,6 @@ public class ListActivity extends Activity {
                         Todo todo = new Todo(res.getChlId(), res.isDone(), res.getTitle());
                         todoDao.setInsertTodo(todo);
                     }
-
-                    System.out.println("TODO SIZE: "+todoList.size());
                 }
             }
 
