@@ -33,7 +33,9 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_register);
 
-        binding.setMember(new Member("testEmail@naver.com", "01012341234", "testNick", "qwer123!"));
+        binding.setMember(new Member("", "", "", ""));
+
+//        binding.setMember(new Member("testEmail@naver.com", "01012341234", "testNick", "qwer123!"));
 
 //        binding.getMember().setNickname(new ObservableField<String>( "나는바뀐 닉네임"));
 
@@ -66,21 +68,21 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<RegisterRes> call, Response<RegisterRes> response) {
                 if (response.code() == 200) {
-                    Toast.makeText(RegisterActivity.this, "success: " + response.body().getAccessToken(), Toast.LENGTH_LONG).show();
+//                    Toast.makeText(RegisterActivity.this, "success: " + response.body().getAccessToken(), Toast.LENGTH_LONG).show();
 
                     new InsertAsyncTask(db.accessTokenDao()).execute(new AccessToken(response.body().getAccessToken()));
 
                     Intent intent = new Intent();
-                    intent.putExtra("accessToken", response.body().getAccessToken());
+//                    intent.putExtra("accessToken", response.body().getAccessToken());
+                    intent.putExtra("email", binding.getMember().email.get());
+                    intent.putExtra("password", binding.getMember().password.get());
                     setResult(RESULT_OK, intent);
 
                     finish();
 
                 }
                 else {
-                    Toast.makeText(RegisterActivity.this, "fail", Toast.LENGTH_LONG).show();
-
-                    finish();
+                    Toast.makeText(RegisterActivity.this, "회원가입 실패", Toast.LENGTH_LONG).show();
                 }
 
             }

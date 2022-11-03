@@ -21,10 +21,6 @@ public class AccessToken {
         return accessToken;
     }
 
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
-    }
-
     public AccessToken(String accessToken) {
         this.accessToken = accessToken;
     }

@@ -3,9 +3,8 @@ package com.example.kkobak.ui.login;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -41,20 +40,14 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         db = AccessTokenDatabase.getAppDatabase(this);
+        new confirmAsyncTask(db.accessTokenDao()).execute();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-//        Toast.makeText(this, "Run onResume", Toast.LENGTH_SHORT).show();
-
-        new confirmAsyncTask(db.accessTokenDao()).execute();
-
-        if (list.size() == 1) {
-            Toast.makeText(this, "AccessToken 존재: " + list.get(0).getAccessToken(), Toast.LENGTH_LONG).show();
-
-            //토큰 값을 가지고 있으니 로그인 완료
+        if (list.size() == 1) { //토큰 값을 가지고 있으니 로그인 완료
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             finish();
@@ -62,25 +55,22 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void tryLogin(View v) {
-        String email = ((TextView) findViewById(R.id.loginEmail)).getText().toString();
-        String password = ((TextView) findViewById(R.id.loginPassword)).getText().toString();
-
-        Log.v("email", email);
-        Log.v("password", password);
+        String email = ((EditText) findViewById(R.id.loginEmail)).getText().toString();
+        String password = ((EditText) findViewById(R.id.loginPassword)).getText().toString();
 
         call = LoginApi.doLoginService().doLogin(new LoginReq(email, password));
         call.enqueue(new Callback<LoginRes>() {
             @Override
             public void onResponse(Call<LoginRes> call, Response<LoginRes> response) {
                 if (response.code() == 200) {
-                    Toast.makeText(LoginActivity.this, "success: " + response.body().getAccessToken(), Toast.LENGTH_SHORT).show();
+                   new LoginAsyncTask(db.accessTokenDao()).execute(new AccessToken(response.body().getAccessToken()));
 
-                    new LoginAsyncTask(db.accessTokenDao()).execute(new AccessToken(response.body().getAccessToken()));
-
-
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
                 }
                 else {
-                    Toast.makeText(LoginActivity.this, "fail", Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginActivity.this, "Login Fail", Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -89,11 +79,6 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
-    }
-
-    public void moveMainPage(View v) {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
     }
 
     public void moveTestConfig(View v){
@@ -136,6 +121,7 @@ public class LoginActivity extends AppCompatActivity {
         protected Void doInBackground(AccessToken... accessTokens) {
             accessTokenDao.deleteAll();
             accessTokenDao.insert(accessTokens[0]);
+
             return null;
         }
     }
@@ -146,15 +132,23 @@ public class LoginActivity extends AppCompatActivity {
 
         if (requestCode == REGISTER_PAGE) {
             if (resultCode == RESULT_OK) {
-                Toast.makeText(this, "회원가입 완료: " + data.getStringExtra("accessToken"), Toast.LENGTH_SHORT).show();
 
-                Intent intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
+                String email = data.getStringExtra("email");
+                String password = data.getStringExtra("password");
 
-                finish();
+                EditText etEmail = (EditText) findViewById(R.id.loginEmail);
+                EditText etPassword = (EditText) findViewById(R.id.loginPassword);
+
+                etEmail.setText(email);
+                etPassword.setText(password);
+
+//                Intent intent = new Intent(this, MainActivity.class);
+//                startActivity(intent);
+
+//                finish();
             }
             else {
-                Toast.makeText(this, "회원가입 실패", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "회원가입 실패", Toast.LENGTH_SHORT).show();
             }
         }
     }
