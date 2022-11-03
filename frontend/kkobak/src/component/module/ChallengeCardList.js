@@ -99,6 +99,7 @@ export default function ChallengeCardList() {
           return (
             <ChallengeCard
               key={item.id}
+              id={item.id}
               imgurl={item.imgurl}
               tagList={item.tagList}
               title={item.title}

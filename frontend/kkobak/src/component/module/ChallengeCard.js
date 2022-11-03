@@ -5,6 +5,7 @@ import { styled } from "@mui/system";
 import Text from "component/atom/Text";
 import TagLabel from "component/atom/TagLabel";
 import WatchImg from "static/watch.svg";
+import { useNavigate } from "react-router-dom";
 
 const CardBox = styled(Box)(
   () => `
@@ -46,6 +47,7 @@ const TextBox = styled(Box)(
 );
 
 export default function ChallengeCard({
+  id,
   imgurl,
   tagList,
   title,
@@ -53,8 +55,14 @@ export default function ChallengeCard({
   endTime,
   watch,
 }) {
+  const navigate = useNavigate();
+
+  function onClickCard() {
+    navigate(`/myChallenge/${id}`);
+  }
+
   return (
-    <CardBox>
+    <CardBox onClick={onClickCard}>
       <ImageBox>
         {/* <img src={props.src} width="100%" height="100%" /> */}
         <img src={imgurl} width="100%" height="100%" />
