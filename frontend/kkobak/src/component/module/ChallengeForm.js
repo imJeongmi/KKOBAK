@@ -9,8 +9,10 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
-import DatePick from 'component/atom/DatePicker';
-import TimePick from 'component/atom/TimePicker';
+import DatePicker from "react-date-picker";
+import "../atom/DatePicker.scss"
+import TimePicker from 'react-time-picker';
+import "../atom/TimePicker.scss"
 
 const BoxStyle = {
   height: "100vh",
@@ -84,19 +86,20 @@ export default function ChallengeBasicForm(
 
             <Text weight="bold">상세 설명</Text>
             <Box sx={{ width: "90%" }}>
-              <Textarea value={contents} onChange={setContents}></Textarea>
+              <Textarea value={contents} onChange={(e) => setContents(e.target.value)}></Textarea>
             </Box>
           </Box>
           <Box sx={{ width: "80%", margin: "auto", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
             <Text weight="bold" >기간ㅤㅤㅤ</Text>
             <Box sx={{ marginLeft: "8%", width: "30%" }}>
-              <DatePick onChange={setStartTime} value={startTime}></DatePick>
+              <DatePicker calendarAriaLabel="calendar" locale="ko-KR" onChange={setStartTime} value={startTime} minDate={new Date()} calendarType="US" />
             </Box>
             <Box sx={{ width: "30%" }}>
-              <DatePick onChange={setEndTime} value={endTime}></DatePick>
+              <DatePicker calendarAriaLabel="calendar" locale="ko-KR" onChange={setEndTime} value={endTime} minDate={new Date()} calendarType="US" />
+
             </Box>
             <Box sx={{ width: "30%" }}>
-              <TimePick value={alarm} onChange={setAlarm}></TimePick>
+              <TimePicker format="HH:mm" onChange={setAlarm} value={alarm} />
             </Box>
           </Box>
           <Box sx={{ width: "80%", margin: "auto", display: "flex", alignItems: "center" }}>
@@ -107,11 +110,9 @@ export default function ChallengeBasicForm(
                 row
                 aria-labelledby="demo-row-controlled-radio-buttons-group"
                 name="controlled-radio-buttons-group"
-                value={watch}
-                
               >
-                <FormControlLabel onSelect={(e) => setWatch(e.target.value)} value="true" control={<Radio />} label="사용" />
-                <FormControlLabel onSelect={(e) => setWatch(e.target.value)} value="false" control={<Radio />} label="사용 안함" />
+                <FormControlLabel onSelect={(e) => setWatch(e.target.value)} value={true} control={<Radio />} label="사용" />
+                <FormControlLabel onSelect={(e) => setWatch(e.target.value)} value={false} control={<Radio />} label="사용 안함" />
               </RadioGroup>
             </FormControl>
           </Box>
