@@ -103,10 +103,12 @@ export default function Main() {
         </Box>
         <MainBox>
           {MyChallengeList.map((item) => {
+            console.log(item);
             return (
               <Box>
                 <Box>{item.title}</Box>
                 <MainCalendar
+                  chlId={item.chlId}
                   key={item.id}
                   startTime={item.startTime}
                   endTime={item.endTime}
