@@ -28,11 +28,11 @@ export default function MainCalendar({ startTime, endTime }) {
   const [chlId, setchlId] = useState(81);
   const [year, setYear] = useState(2022);
   const [month, setMonth] = useState(11);
-  const day = 1;
+  const day = 4;
 
   // >>>>>>>>>>>>>>로그 월별로 조회 부분
   function requestCalendarCheckSuccess(res) {
-    setMark(res.data);
+    // setMark(res.data);
     // console.log(res.data);
     // console.log(user.nickName);
   }
@@ -58,22 +58,24 @@ export default function MainCalendar({ startTime, endTime }) {
   }
 
   function logControllerFail(err) {
-    setchlId([]);
+    setchlId(0);
   }
 
-  useEffect(() => {
-    logController(chlId, day, logControllerSuccess, logControllerFail);
-  }, []);
+  // useEffect(() => {
+  //   logController(chlId, day, logControllerSuccess, logControllerFail);
+  // }, []);
   // >>>>>>>>>>>>>>
 
   function clickDay(e) {
-    // console.log(e);
-    onChange(e.target.value);
+    if (isSameDate(e, new Date())) {
+      const day = moment(e).format("YYYY-MM-DD");
+      logController(chlId, day, logControllerSuccess, logControllerFail);
+    }
   }
 
   function isDone(date) {
     // console.log(date);
-    mark.find((x) => x === moment(date).format("YYYY-MM-DD"));
+    return mark.find((x) => x === moment(date).format("YYYY-MM-DD"));
     // 해당 날짜까지의 값이랑 월별로 갖고 온 날짜의 done을 비교해서 true false 판단
   }
 
@@ -108,6 +110,7 @@ export default function MainCalendar({ startTime, endTime }) {
           showNeighboringMonth={false}
           minDetail="month"
           onChange={onChange}
+          onClickDay={clickDay}
           minDate={new Date(startTime)}
           maxDate={new Date(endTime)}
           value={value}
@@ -122,7 +125,7 @@ export default function MainCalendar({ startTime, endTime }) {
                 new Date(startTime) <= date) &&
               date < new Date(endTime)
             ) {
-              if (date < new Date()) {
+              if (date <= new Date()) {
                 return (
                   <Box
                     sx={{
@@ -138,7 +141,7 @@ export default function MainCalendar({ startTime, endTime }) {
                       <img object-fit="cover" src={cry} />
                     )}
 
-                    <div className="dot"></div>
+                    {/* <div className="dot"></div> */}
                   </Box>
                 );
               }
