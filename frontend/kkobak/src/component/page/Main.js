@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
-// import MainCarousel from "component/module/MainCarousel";
+import MainCarousel from "component/module/MainCarousel";
 import Todolist from "component/module/Todolist";
 import MainCalendar from "component/atom/MainCalendar";
 import Text from "component/atom/Text";
@@ -120,7 +120,7 @@ export default function Main() {
       </Box>
       <SideBar>
         <Box sx={{ paddingY: "30px", marginLeft: "20px" }}>
-          {/* <MainCarousel /> */}
+          <MainCarousel />
         </Box>
 
         <Box sx={{ marginTop: "30px", marginLeft: "30px" }}>
