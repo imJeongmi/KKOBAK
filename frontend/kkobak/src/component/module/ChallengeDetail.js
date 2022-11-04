@@ -1,15 +1,16 @@
-import React from "react";
-import { useLocation } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 import { Box } from "@mui/system";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import FormControl from "@mui/material/FormControl";
 
 import MainBox from "component/atom/MainBox";
 import SideBar from "component/atom/SideBar";
 import Text from "component/atom/Text";
+
+import { requestMyChallengeDetail } from "api/userApi";
 
 const CardStyle = {
   width: "70%",
@@ -30,17 +31,39 @@ const ImageStyle = {
 };
 
 export default function ChallengeDetail() {
-  const location = useLocation();
+  const chlId = Number(useParams().chlId);
 
-  const imgurl = location?.state?.imgurl;
-  const title = location?.state?.title;
-  const contents = location?.state?.contents;
-  const startTime = location?.state?.startTime;
-  const endTime = location?.state?.endTime;
-  const categoryId = location?.state?.categoryId;
-  const alarm = location?.state?.alarm;
-  const watch = location?.state?.watch;
-  // const watch = true;
+  const [imgurl, setImgurl] = useState("");
+  const [title, setTitle] = useState("");
+  const [contents, setContents] = useState("");
+  const [categoryId, setCategoryId] = useState("");
+  const [startTime, setStartTime] = useState("");
+  const [endTime, setEndTime] = useState("");
+  const [alarm, setAlarm] = useState("");
+  const [watch, setWatch] = useState("");
+  const [kkobakChallenge, setKkobakChallenge] = useState("");
+
+  function requestMyChallengeDetailSuccess(res) {
+    setImgurl(res.data.imgurl);
+    setTitle(res.data.title);
+    setContents(res.data.contents);
+    setCategoryId(res.data.categoryId);
+    setStartTime(res.data.startTime);
+    setEndTime(res.data.endTime);
+    setAlarm(res.data.alarm);
+    setWatch(res.data.watch);
+    setKkobakChallenge(res.data.roomtype);
+  }
+
+  function requestMyChallengeDetailFail(res) {}
+
+  useEffect(() => {
+    requestMyChallengeDetail(
+      chlId,
+      requestMyChallengeDetailSuccess,
+      requestMyChallengeDetailFail
+    );
+  }, []);
 
   return (
     <Box
@@ -97,8 +120,11 @@ export default function ChallengeDetail() {
                   <Text size="14px" weight="semibold" my="10">
                     알림
                   </Text>
-                  <Text size="14px" weight="semibold" my="10">
-                    워치 사용 여부
+                  <Text size="14px" weight="semibold" my="12">
+                    워치 사용
+                  </Text>
+                  <Text size="14px" weight="semibold" my="12">
+                    꼬박챌린지 설정
                   </Text>
                 </Box>
 
@@ -136,6 +162,25 @@ export default function ChallengeDetail() {
                         value="false"
                         control={<Radio />}
                         label="사용 안함"
+                      />
+                    </RadioGroup>
+                  </Box>
+                  <Box sx={{ mx: "8px" }}>
+                    <RadioGroup
+                      row
+                      aria-labelledby="demo-row-controlled-radio-buttons-group"
+                      name="controlled-radio-buttons-group"
+                      value={kkobakChallenge}
+                    >
+                      <FormControlLabel
+                        value="true"
+                        control={<Radio />}
+                        label="설정"
+                      />
+                      <FormControlLabel
+                        value="false"
+                        control={<Radio />}
+                        label="설정 안함"
                       />
                     </RadioGroup>
                   </Box>
