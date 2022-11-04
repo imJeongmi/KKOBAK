@@ -71,7 +71,6 @@ public class ListActivity extends Activity {
         todoAdapter.setOnLongItemClickListener(new TodoAdapter.OnLongItemClickListener() {
             @Override
             public void onLongItemClick(int pos) {
-                System.out.println("꾹 눌렀습니다");
                 Toast.makeText(getApplicationContext(), "임시적으로 GPS로 연결", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(ListActivity.this, GpsActivity.class);
                 startActivity(intent);

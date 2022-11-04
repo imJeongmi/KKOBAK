@@ -76,7 +76,6 @@ public class GpsActivity extends Activity {
 
         String locationProvider = LocationManager.GPS_PROVIDER;
         Location lastKnownLocation = locationManager.getLastKnownLocation(locationProvider);
-        System.out.println("출력");
         if (lastKnownLocation != null) {
             double lng = lastKnownLocation.getLatitude();
             double lat = lastKnownLocation.getLatitude();
@@ -94,11 +93,10 @@ public class GpsActivity extends Activity {
     }
 
     private void updateMap(Location location) {
-        System.out.println("위치가 변경되었습니다!!!!!");
         double lat = location.getLatitude();
         double lng = location.getLongitude();
-        System.out.println("당신의 위치는 lat: "+ lat +" , "+" lng: "+ lng);
-        textView.setText("당신의 위치는 lat: "+ lat +" , "+" lng: "+ lng);
+        System.out.println("lat: "+ lat +" ,\n "+" lng: "+ lng);
+        textView.setText("lat: "+ lat +" ,\n "+" lng: "+ lng);
 
     }
 
