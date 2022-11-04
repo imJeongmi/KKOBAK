@@ -1,11 +1,10 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
 import { styled } from "@mui/system";
 
 import Text from "component/atom/Text";
-import TagLabel from "component/atom/TagLabel";
 import WatchImg from "static/watch.svg";
-import { useNavigate, useLocation } from "react-router-dom";
 
 const CardBox = styled(Box)(
   () => `
@@ -49,6 +48,7 @@ const TextBox = styled(Box)(
 export default function ChallengeCard({
   chlId,
   imgurl,
+  tagList,
   title,
   contents,
   categoryId,
@@ -60,18 +60,7 @@ export default function ChallengeCard({
   const navigate = useNavigate();
 
   function onClickCard() {
-    navigate(`/myChallenge/${chlId}`, {
-      state: {
-        imgurl: imgurl,
-        title: title,
-        contents: contents,
-        startTime: startTime,
-        endTime: endTime,
-        categoryId: categoryId,
-        alarm: alarm,
-        watch: watch,
-      },
-    });
+    navigate(`/myChallenge/${chlId}`);
   }
 
   return (
