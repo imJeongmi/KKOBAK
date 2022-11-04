@@ -2,12 +2,13 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import { Box } from "@mui/material";
 
-import { getDetailCategoryList } from "api/Category";
+import SideBarChallengeCreate from "component/atom/SideBarChallengeCreate";
 import ChallengeBasicForm from "component/module/ChallengeForm";
 
+import { getDetailCategoryList } from "api/Category";
 import { registerChallenge } from "api/Challenge";
-
-import SideBarChallengeCreate from "component/atom/SideBarChallengeCreate";
+import MainBox from "component/atom/MainBox";
+import Text from "component/atom/Text"
 
 export default function ChallengeRegister() {
   const [category, setCategory] = useState(1);
@@ -78,28 +79,33 @@ export default function ChallengeRegister() {
       }}
     >
       <Box sx={{ margin: "0 auto" }}>
-        <ChallengeBasicForm
-          imgSrc={imgSrc}
-          category={category}
-          detailCategory={detailCategory}
-          detailCategoryList={detailCategoryList}
-          title={title}
-          contents={contents}
-          startTime={startTime}
-          endTime={endTime}
-          alarm={alarm}
-          watch={watch}
-          setImgSrc={setImgSrc}
-          setTitle={setTitle}
-          setCategory={setCategory}
-          setDetailCategory={setDetailCategory}
-          setContents={setContents}
-          setStartTime={setStartTime}
-          setEndTime={setEndTime}
-          setAlarm={setAlarm}
-          setWatch={setWatch}
-          register={register}
-        ></ChallengeBasicForm>
+        <Text size="l" weight="bold" mt="30" my="15">
+          새 챌린지 등록
+        </Text>
+        <MainBox>
+          <ChallengeBasicForm
+            imgSrc={imgSrc}
+            category={category}
+            detailCategory={detailCategory}
+            detailCategoryList={detailCategoryList}
+            title={title}
+            contents={contents}
+            startTime={startTime}
+            endTime={endTime}
+            alarm={alarm}
+            watch={watch}
+            setImgSrc={setImgSrc}
+            setTitle={setTitle}
+            setCategory={setCategory}
+            setDetailCategory={setDetailCategory}
+            setContents={setContents}
+            setStartTime={setStartTime}
+            setEndTime={setEndTime}
+            setAlarm={setAlarm}
+            setWatch={setWatch}
+            register={register}
+          ></ChallengeBasicForm>
+        </MainBox>
       </Box>
       <SideBarChallengeCreate />
     </Box>

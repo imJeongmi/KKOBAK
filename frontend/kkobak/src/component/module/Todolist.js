@@ -119,9 +119,7 @@ export default function Todolist() {
       })}
 
       <TodolistInput>
-        <CheckBox>
-          <img src={CheckImage} width="20px" />
-        </CheckBox>
+        <CheckBox />
         <input
           autoFocus
           onKeyPress={onKeyPress}

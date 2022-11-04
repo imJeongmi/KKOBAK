@@ -20,6 +20,7 @@ export default function Challenge() {
   useEffect(() => {
     requestUserInfo(requestUserInfoSuccess, requestUserInfoFail);
   }, []);
+  
   return (
     <Box sx={{ display: "flex", justifyContent: "space-between" }}>
       <Box sx={{ margin: "0 auto" }}>
