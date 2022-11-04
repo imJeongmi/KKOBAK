@@ -55,8 +55,13 @@ export default function MainCalendar({ chlId, startTime, endTime }) {
 
   // >>>>>>>>>>>>>>로그 찍는 부분
   function logControllerSuccess(res) {
-    // setchlId(res.data);
-    // window.location.reload();
+    const today = moment(new Date()).format("YYYY-MM-DD");
+    if (mark.find((x) => x === today)) {
+      let filtered = mark.filter((element) => element !== today);
+      setMark(filtered);
+    } else {
+      setMark([...mark, today]);
+    }
   }
 
   function logControllerFail(err) {}
@@ -143,9 +148,9 @@ export default function MainCalendar({ chlId, startTime, endTime }) {
                     }}
                   >
                     {isDone(date) ? (
-                      <img object-fit="cover" src={smile} />
+                      <img object-fit="cover" src={smile} alt="smile" />
                     ) : (
-                      <img object-fit="cover" src={cry} />
+                      <img object-fit="cover" src={cry} alt="cry" />
                     )}
 
                     {/* <div className="dot"></div> */}
