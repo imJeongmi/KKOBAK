@@ -10,7 +10,8 @@ import MainBox from "component/atom/MainBox";
 import SideBar from "component/atom/SideBar";
 import Text from "component/atom/Text";
 
-import { requestMyChallengeDetail } from "api/userApi";
+import { requestUserInfo, requestMyChallengeDetail } from "api/userApi";
+import { styled } from "@mui/material";
 
 const CardStyle = {
   width: "70%",
@@ -30,7 +31,17 @@ const ImageStyle = {
   overflow: "hidden",
 };
 
+const SettingTitleBox = styled (Box)(
+  () => `
+  width: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  `
+);
+
 export default function ChallengeDetail() {
+  const [user, setUser] = useState([]);
   const chlId = Number(useParams().chlId);
 
   const [imgurl, setImgurl] = useState("");
@@ -42,6 +53,14 @@ export default function ChallengeDetail() {
   const [alarm, setAlarm] = useState("");
   const [watch, setWatch] = useState("");
   const [kkobakChallenge, setKkobakChallenge] = useState("");
+
+  function requestUserInfoSuccess(res) {
+    setUser(res.data);
+  }
+
+  function requestUserInfoFail(res) {
+    setUser([]);
+  }
 
   function requestMyChallengeDetailSuccess(res) {
     setImgurl(res.data.imgurl);
@@ -58,6 +77,7 @@ export default function ChallengeDetail() {
   function requestMyChallengeDetailFail(res) {}
 
   useEffect(() => {
+    requestUserInfo(requestUserInfoSuccess, requestUserInfoFail);
     requestMyChallengeDetail(
       chlId,
       requestMyChallengeDetailSuccess,
@@ -74,7 +94,7 @@ export default function ChallengeDetail() {
     >
       <Box sx={{ margin: "0 auto" }}>
         <Text size="l" weight="bold" mt="30" my="15">
-          경원님의 챌린지리스트
+          {user.nickName}님의 챌린지리스트
         </Text>
         <MainBox flexDir="col">
           <Box

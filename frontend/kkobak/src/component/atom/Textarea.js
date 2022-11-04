@@ -8,7 +8,7 @@ const textAreaStyle = {
 export default function Textarea({ type, placeholder, onChange }) {
   return (
     <label className="label">
-      <textarea className="textarea" style={textAreaStyle} rows="5" type={type} placeholder={placeholder} onChange={onChange} />
+      <textarea className="textarea" style={textAreaStyle} rows="4" type={type} placeholder={placeholder} onChange={onChange} />
     </label>
   );
 }
