@@ -97,7 +97,6 @@ function getPaddingX(px) {
 }
 
 function getStyle(done) {
-  console.log("style");
   if (!!done) return "line-through";
   return "none";
 }
