@@ -8,7 +8,7 @@ import { Box } from "@mui/system";
 import Text from "component/atom/Text";
 
 import moment from "moment";
-import { requestCalendarCheck } from "api/userApi";
+import { requestCalendarCheckChallenge } from "api/Challenge";
 import { logController } from "api/log";
 
 const CalendarBox = {
@@ -23,17 +23,18 @@ const CalendarBox = {
   justifyContent: "center",
 };
 
-export default function MainCalendar({ startTime, endTime }) {
+// year, month, chlId 수정하기
+// 달력 클릭시 바로 수정되기!(현재는 클릭하고 새롣고침 해야함)
+
+export default function MainCalendar({ chlId, startTime, endTime }) {
   const [mark, setMark] = useState([]);
-  const [chlId, setchlId] = useState(81);
-  const [year, setYear] = useState(2022);
-  const [month, setMonth] = useState(11);
-  const day = 4;
+  const [year, setYear] = useState(new Date().getFullYear());
+  const [month, setMonth] = useState(new Date().getMonth() + 1);
 
   // >>>>>>>>>>>>>>로그 월별로 조회 부분
   function requestCalendarCheckSuccess(res) {
-    // setMark(res.data);
-    // console.log(res.data);
+    setMark(res.data);
+    console.log(res.data);
     // console.log(user.nickName);
   }
 
@@ -42,24 +43,23 @@ export default function MainCalendar({ startTime, endTime }) {
   }
 
   useEffect(() => {
-    requestCalendarCheck(
+    requestCalendarCheckChallenge(
       chlId,
       year,
       month,
       requestCalendarCheckSuccess,
       requestCalendarCheckFail
     );
-  }, []);
+  }, [chlId, year, month]);
   // >>>>>>>>>>>>>>
 
   // >>>>>>>>>>>>>>로그 찍는 부분
   function logControllerSuccess(res) {
-    setchlId(res.data);
+    // setchlId(res.data);
+    // window.location.reload();
   }
 
-  function logControllerFail(err) {
-    setchlId(0);
-  }
+  function logControllerFail(err) {}
 
   // useEffect(() => {
   //   logController(chlId, day, logControllerSuccess, logControllerFail);
@@ -86,7 +86,14 @@ export default function MainCalendar({ startTime, endTime }) {
       date1.getDate() === date2.getDate()
     );
   };
-  const [value, onChange] = useState(new Date());
+
+  function onDateChange(e) {
+    setValue(e);
+    setYear(e.getFullYear());
+    setMonth(e.getMonth() + 1);
+  }
+
+  const [value, setValue] = useState(new Date());
   return (
     <Box
       sx={{
@@ -109,7 +116,7 @@ export default function MainCalendar({ startTime, endTime }) {
           locale="en-US"
           showNeighboringMonth={false}
           minDetail="month"
-          onChange={onChange}
+          onChange={onDateChange}
           onClickDay={clickDay}
           minDate={new Date(startTime)}
           maxDate={new Date(endTime)}

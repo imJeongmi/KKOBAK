@@ -103,6 +103,13 @@ function registerChallenge(
     .catch(fail);
 }
 
+function requestCalendarCheckChallenge(chlId, year, month, success, fail) {
+  api
+    .get(`/challenge/check-done-date/${chlId}/${year}/${month}`)
+    .then(success)
+    .catch(fail);
+}
+
 export {
   getChallengeDetail,
   checkChallengePassword,
@@ -114,4 +121,5 @@ export {
   searchChallengeListWithTag,
   searchChallengeListWithTitle,
   registerChallenge,
+  requestCalendarCheckChallenge,
 };
