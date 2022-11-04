@@ -17,6 +17,7 @@ const CalendarBox = {
   width: "100%",
   minHeight: "80vh",
   backgroundColor: "#F5F5F5",
+  borderRadius: "20px",
   textAlign: "center",
   display: "flex",
   // alignItems: "center",
