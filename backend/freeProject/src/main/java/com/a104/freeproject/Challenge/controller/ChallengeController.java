@@ -109,7 +109,7 @@ public class ChallengeController {
     ///check-done-date/챌린지id/월
     @GetMapping("check-done-date/{chlId}/{year}/{month}")
     @ApiOperation(value="챌린지 별 월 단위 done: true 날짜만 보내주는 api", notes ="'/api/challenge/check-done-date/1/2022/11' 형식으로 사용" )
-    public ResponseEntity<List<DateResponse>> findDoneDate(@PathVariable("chlId") long chlId, @PathVariable("year") int year, @PathVariable("month") int month, HttpServletRequest req) throws NotFoundException{
+    public ResponseEntity<List<String>> findDoneDate(@PathVariable("chlId") long chlId, @PathVariable("year") int year, @PathVariable("month") int month, HttpServletRequest req) throws NotFoundException{
         return ResponseEntity.ok().body(challengeService.findDoneDate(chlId, year, month, req));
     }
 }

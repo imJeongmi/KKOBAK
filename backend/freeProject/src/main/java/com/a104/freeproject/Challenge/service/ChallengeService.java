@@ -37,5 +37,5 @@ public interface ChallengeService {
 
     int getChallengePageCnt(Pageable pageable);
 
-    List<DateResponse> findDoneDate(long chlId, int year, int month, HttpServletRequest req) throws NotFoundException;
+    List<String> findDoneDate(long chlId, int year, int month, HttpServletRequest req) throws NotFoundException;
 }

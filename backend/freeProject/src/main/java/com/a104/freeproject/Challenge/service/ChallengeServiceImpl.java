@@ -263,7 +263,7 @@ public class ChallengeServiceImpl implements ChallengeService{
     }
 
     @Override
-    public List<DateResponse> findDoneDate(long chlId, int year, int month, HttpServletRequest req) throws NotFoundException {
+    public List<String> findDoneDate(long chlId, int year, int month, HttpServletRequest req) throws NotFoundException {
 
         Member m = memberService.findEmailbyToken(req);
         Challenge c = challengeRepository.findById(chlId).get();
@@ -284,11 +284,12 @@ public class ChallengeServiceImpl implements ChallengeService{
         TimeZone tz = TimeZone.getTimeZone("Asia/Seoul");
         sdf.setTimeZone(tz);
 
-        List<DateResponse> output = new LinkedList<>();
+        List<String> output = new LinkedList<>();
         for (Log log: logs){
             LocalDate date = log.getDate();
             if (date.compareTo(st) >= 0 && date.compareTo(ed) <= 0 && log.isFin()) {
-                output.add(DateResponse.builder().date(log.getDate()).build());
+                String successDate = log.getDate().toString();
+                output.add(successDate);
             }
         }
 
