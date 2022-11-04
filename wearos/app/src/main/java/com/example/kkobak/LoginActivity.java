@@ -46,8 +46,6 @@ public class LoginActivity extends Activity {
         btn_loginchk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println(et_email.getText());
-                System.out.println(et_pw.getText());
                 getToken(et_email.getText().toString(),et_pw.getText().toString());
             }
         });

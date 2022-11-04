@@ -22,4 +22,10 @@ public interface RetrofitAPI {
     @GET("member/watch/today-list")
     Call<List<TodoListResponse>> getTodoList(@Header("Authorization") String authorization);
 
+    @POST("heart/list")
+    Call<Boolean> sendHeartList(@Body List<Integer> list);
+
+    @POST("heart/one")
+    Call<Boolean> sendHeartOne(@Body Integer heart);
+
 }
