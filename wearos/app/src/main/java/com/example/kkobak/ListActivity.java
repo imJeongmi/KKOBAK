@@ -74,7 +74,7 @@ public class ListActivity extends Activity {
                 System.out.println("꾹 눌렀습니다");
                 Toast.makeText(getApplicationContext(), "임시적으로 GPS로 연결", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(ListActivity.this, GpsActivity.class);
-//                startActivity(intent);
+                startActivity(intent);
             }
         });
 
