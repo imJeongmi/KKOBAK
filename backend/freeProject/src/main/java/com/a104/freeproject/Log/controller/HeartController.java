@@ -20,8 +20,8 @@ public class HeartController {
 
     @PostMapping("/one")
     @ApiOperation(value = "심장 한개만 받아보기")
-    public boolean printOne(@RequestBody HeartRateReq heartRateReq){
-        System.out.println("심장이 뛴다: "+heartRateReq.getHeartRate());
+    public boolean printOne(@RequestBody int heartRateReq){
+        System.out.println("심장이 뛴다: "+heartRateReq);
         return true;
     }
 
