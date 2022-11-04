@@ -11,6 +11,7 @@ import MainBox from "component/atom/MainBox";
 import WatchToggle from "component/atom/WatchToggle";
 
 import { fetchMyChallengeList, fetchMyChallengePageCnt } from "api/userApi";
+import { useNavigate } from "react-router-dom";
 
 const WatchToggleBox = styled(Box)(
   () => `
@@ -49,7 +50,7 @@ export default function MyChallengeCardList() {
   const [MyChallengeList, setMyChallengeList] = useState([]);
   const [TotalMyPage, setMyPageNation] = useState([]);
   const [page, setPage] = useState(1);
-
+  const navigate = useNavigate();
   const handlePage = (event) => {
     const nowPageInt = parseInt(event.target.outerText);
     setPage(nowPageInt);
@@ -85,7 +86,10 @@ export default function MyChallengeCardList() {
       fetchChallengePageCntFail
     );
   }, []);
-
+  function moveToRegister(e) {
+    e.preventDefault()
+    navigate('/register')
+  }
   return MyChallengeList.length === 0 ? (
     <MainBox>
       <Text> 생성된 챌린지가 없어요 </Text>
@@ -119,7 +123,7 @@ export default function MyChallengeCardList() {
       </ChallengeListBox>
 
       <ButtonBox>
-        <Button size="ss" my="0">
+        <Button size="ss" my="0" onClick={moveToRegister}>
           챌린지 생성
         </Button>
       </ButtonBox>
