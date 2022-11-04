@@ -87,11 +87,12 @@ export default function Todolist() {
   }
 
   const [todolist, setTodolist] = useState([]);
+  const [text, setText] = useState("");
 
   function onKeyPress(e) {
-    if (e.key == "Enter") {
+    if (e.key == "Enter" && e.target.value) {
       setTodolist((todolist) => [...todolist, e.target.value]);
-      console.log("todolist: ", todolist);
+      setText("");
     }
   }
 
@@ -113,9 +114,9 @@ export default function Todolist() {
         </Box>
       </DateBox>
 
-      {/* todolist 배열 추가될 때마다 목록 띄우기 (TodolistItem 형태로) */}
-      <TodolistItem item="하루 8잔 물 마시기"/>
-      <TodolistItem item="1시간마다 일어서기"/>
+      {todolist.map((item, index) => {
+        return <TodolistItem item={item} />;
+      })}
 
       <TodolistInput>
         <CheckBox>
@@ -124,17 +125,11 @@ export default function Todolist() {
         <input
           autoFocus
           onKeyPress={onKeyPress}
+          onChange={(e) => setText(e.target.value)}
+          value={text}
           placeholder="오늘 할 일을 기록하세요"
         />
       </TodolistInput>
-
-      {/* <TodolistItem setTodolist={setTodolist} /> */}
-      {/* {console.log("todolist: ", todolist)} */}
-      {/* {useEffect(() => {
-        todolist.map((index, item) => {
-          <Text>{item}</Text>;
-        });
-      }, todolist)} */}
     </TodolistBox>
   );
 }
