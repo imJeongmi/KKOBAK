@@ -18,17 +18,17 @@ public class HeartController {
 
     @PostMapping("/one")
     @ApiOperation(value = "심장 한개만 받아보기")
-    public ResponseEntity<Boolean> printOne(@RequestBody HeartRateReq heartRateReq){
+    public boolean printOne(@RequestBody HeartRateReq heartRateReq){
         System.out.println("심장이 뛴다: "+heartRateReq.getHeartRate());
-        return ResponseEntity.ok().body(true);
+        return true;
     }
 
     @PostMapping("/list")
     @ApiOperation(value = "심장 여러개 받아보기")
-    public ResponseEntity<Boolean> printList(@RequestBody HeartRateListReq heartRateListReq){
+    public boolean printList(@RequestBody HeartRateListReq heartRateListReq){
         for (int a : heartRateListReq.getHeartRateList()) {
             System.out.println("심장이 뛴다: "+a);
         }
-        return ResponseEntity.ok().body(true);
+        return true;
     }
 }
