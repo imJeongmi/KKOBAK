@@ -10,18 +10,25 @@ import com.a104.freeproject.Challenge.request.registerRequest;
 import com.a104.freeproject.Challenge.response.ChallengeListResponse;
 import com.a104.freeproject.Challenge.response.ChlUserNameResponse;
 import com.a104.freeproject.Challenge.response.ChlUserSimpleStatResponse;
+import com.a104.freeproject.Challenge.response.DateResponse;
 import com.a104.freeproject.HashTag.entity.ChlTag;
 import com.a104.freeproject.HashTag.repository.HashtagRepository;
 import com.a104.freeproject.HashTag.service.ChltagServiceImpl;
+import com.a104.freeproject.Log.entity.Log;
+import com.a104.freeproject.Log.repository.LogRepository;
 import com.a104.freeproject.Member.entity.Member;
 import com.a104.freeproject.Member.repository.MemberRepository;
+import com.a104.freeproject.Member.response.MonthChlResponse;
 import com.a104.freeproject.Member.service.MemberServiceImpl;
 import com.a104.freeproject.PrtChl.entity.PrtChl;
+import com.a104.freeproject.PrtChl.repository.PrtChlRepository;
 import com.a104.freeproject.PrtChl.service.PrtChlServiceImpl;
 import com.a104.freeproject.advice.exceptions.NotFoundException;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +36,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.*;
 
 @Service
@@ -42,14 +50,15 @@ public class ChallengeServiceImpl implements ChallengeService{
     private  final MemberRepository memberRepository;
     private final HashtagRepository hashtagRepository;
     private final ChltagServiceImpl chltagService;
+    private final PrtChlRepository prtChlRepository;
     private final MemberServiceImpl memberService;
     private final ChlTimeServiceImpl chlTimeService;
     private final PrtChlServiceImpl prtChlService;
+    private final LogRepository logRepository;
 
     @Override
     public boolean register(registerRequest input, HttpServletRequest req) throws NotFoundException {
 
-        System.out.println("처음 들어온 값 service >> "+input.getStartTime());
         Member member;
 
         try{
@@ -64,13 +73,15 @@ public class ChallengeServiceImpl implements ChallengeService{
         input.setStartTime(Timestamp.valueOf(sdf.format(input.getStartTime())));
         input.setEndTime(Timestamp.valueOf(sdf.format(input.getEndTime())));
 
+        System.out.println("input.isWatch() = "+input.isWatch());
+
         if(!categoryRepository.existsById(input.getCategoryId())) throw new NotFoundException("카테고리를 다시 입력해주세요.");
         Category category = categoryRepository.findById(input.getCategoryId()).get();
         Challenge challenge;
 
         if(category.getName().equals("기타")){ // 세부 카테고리가 없음
             challenge = Challenge.builder().title(input.getTitle()).contents(input.getContents()).imgurl(input.getImgurl()).
-                    isWatch(input.isWatch()).roomtype(input.getRoomtype()).password(input.getPassword()).writer(member.getId())
+                    watch(input.isWatch()).roomtype(input.getRoomtype()).password(input.getPassword()).writer(member.getId())
                     .limitPeople(input.getLimitPeople()).alarm(input.getAlarm())
                     .goal(input.getGoal()).unit(input.getUnit()).category(category)
                     .build();
@@ -80,7 +91,7 @@ public class ChallengeServiceImpl implements ChallengeService{
             DetailCategory detail = detailRepository.findById(input.getDetailCategoryId()).get();
 
             challenge = Challenge.builder().title(input.getTitle()).contents(input.getContents()).imgurl(input.getImgurl()).
-                    isWatch(input.isWatch()).roomtype(input.getRoomtype()).password(input.getPassword()).writer(member.getId())
+                    watch(input.isWatch()).roomtype(input.getRoomtype()).password(input.getPassword()).writer(member.getId())
                     .limitPeople(input.getLimitPeople()).alarm(input.getAlarm())
                     .goal(input.getGoal()).unit(input.getUnit()).category(category).detailCategory(detail)
                     .build();
@@ -142,7 +153,7 @@ public class ChallengeServiceImpl implements ChallengeService{
     @Override
     public List<ChallengeListResponse> getChallengePageList(int page) throws NotFoundException{
         PageRequest pageRequest = PageRequest.of(page-1,6, Sort.Direction.DESC, "id");
-        Page<Challenge> challengePage = challengeRepository.findAll(pageRequest);
+        Page<Challenge> challengePage = challengeRepository.findAllChallenge(pageRequest);
         List<Challenge> content = challengePage.getContent();
 
         return makeResponse(content);
@@ -155,7 +166,6 @@ public class ChallengeServiceImpl implements ChallengeService{
 
         return makeResponse(content);
     }
-
 
     @Override
     public List<ChallengeListResponse> getChallengePageListByDetailCategory(int page, Long id) throws NotFoundException{
@@ -217,7 +227,7 @@ public class ChallengeServiceImpl implements ChallengeService{
                 .title(c.getTitle())
                 .contents(c.getContents())
                 .imgurl(c.getImgurl())
-                .isWatch(c.isWatch())
+                .watch(c.isWatch())
                 .roomtype(c.getRoomtype())
                 .password(c.getPassword())
                 .limitPeolple(c.getLimitPeople())
@@ -246,7 +256,45 @@ public class ChallengeServiceImpl implements ChallengeService{
         return false;
      }
 
+    @Override
+    public int getChallengePageCnt(Pageable pageable) {
+        Page<Challenge> page = challengeRepository.findAllChallengeSet(pageable);
+        return page.getTotalPages();
+    }
 
+    @Override
+    public List<String> findDoneDate(long chlId, int year, int month, HttpServletRequest req) throws NotFoundException {
+
+        Member m = memberService.findEmailbyToken(req);
+        Challenge c = challengeRepository.findById(chlId).get();
+        PrtChl p;
+        try{
+            p = prtChlRepository.findByChallengeAndMember(c,m);
+        }catch (Exception e){
+            throw e;
+        }
+
+        LocalDate st = LocalDate.parse(year+"-"+month+"-01");
+        System.out.println("startDay : "+st);
+        LocalDate ed = st.withDayOfMonth(st.lengthOfMonth());
+        System.out.println("EndDay : "+ed);
+        List<Log> logs = p.getLogs();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:00");
+        TimeZone tz = TimeZone.getTimeZone("Asia/Seoul");
+        sdf.setTimeZone(tz);
+
+        List<String> output = new LinkedList<>();
+        for (Log log: logs){
+            LocalDate date = log.getDate();
+            if (date.compareTo(st) >= 0 && date.compareTo(ed) <= 0 && log.isFin()) {
+                String successDate = log.getDate().toString();
+                output.add(successDate);
+            }
+        }
+
+        return output;
+    }
 
     public List<ChallengeListResponse> makeResponse(List<Challenge> content) {
         List<ChallengeListResponse> result = new ArrayList<>();
@@ -265,7 +313,7 @@ public class ChallengeServiceImpl implements ChallengeService{
                     .title(c.getTitle())
                     .contents(c.getContents())
                     .imgurl(c.getImgurl())
-                    .isWatch(c.isWatch())
+                    .watch(c.isWatch())
                     .roomtype(c.getRoomtype())
                     .password(c.getPassword())
                     .limitPeolple(c.getLimitPeople())
@@ -285,6 +333,7 @@ public class ChallengeServiceImpl implements ChallengeService{
 
         return result;
     }
+
 
 
 }

@@ -165,4 +165,10 @@ public class MemberController {
     public ResponseEntity<List<TodoListInfoResponse>> getTodoListInfo (@RequestBody DayRequest day,HttpServletRequest req) throws NotFoundException {
         return ResponseEntity.ok().body(memberService.getTodoListInfo(day, req));
     }
+
+    @GetMapping("/watch/today-list")
+    @ApiOperation(value = "(워치용) 오늘 챌린지 목록 + 실행여부 가져오기")
+    public ResponseEntity<List<TodoListInfoResponse>> getTodayTodoList(HttpServletRequest req) throws NotFoundException {
+        return ResponseEntity.ok().body(memberService.getTodayListInfo(req));
+    }
 }

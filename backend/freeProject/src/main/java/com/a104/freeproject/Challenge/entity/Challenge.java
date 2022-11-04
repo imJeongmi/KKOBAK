@@ -40,9 +40,9 @@ public class Challenge implements Serializable {
     private String imgurl;
 
     @Setter
-    @Column(name = "is_watch", nullable = false)
+    @Column(name = "watch", nullable = false)
     @ColumnDefault("false")
-    private boolean isWatch;
+    private boolean watch;
 
     @Setter
     @Column(name = "password")

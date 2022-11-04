@@ -34,7 +34,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.*;
 import java.util.regex.Pattern;
 
@@ -102,6 +104,9 @@ public class MemberServiceImpl implements MemberService{
 
     @Override
     public TokenResponse login(LoginRequest input) {
+
+        input.setEmail(input.getEmail().replaceAll(" ",""));
+
         // 1. Login ID/PW 를 기반으로 AuthenticationToken 생성
         UsernamePasswordAuthenticationToken authenticationToken = input.toAuthentication();
 
@@ -339,13 +344,15 @@ public class MemberServiceImpl implements MemberService{
 
             PrtChl p = prtChlRepository.findByChallengeAndMember(c,member);
             LocalDate st = LocalDate.parse(year+"-"+month+"-01");
+            System.out.println("startDay : "+st);
             LocalDate ed = st.withDayOfMonth(st.lengthOfMonth());
+            System.out.println("EndDay : "+ed);
             List<Log> logs = p.getLogs();
 
             List<MonthChlResponse> output = new LinkedList<>();
             for (Log log: logs){
                 LocalDate date = log.getDate();
-                if (date.compareTo(st) >= 0 || date.compareTo(ed) <= 0) {
+                if (date.compareTo(st) >= 0 && date.compareTo(ed) <= 0) {
                     output.add(MonthChlResponse.builder().date(date).isDone(log.isFin()).build());
                 }
             }
@@ -364,11 +371,46 @@ public class MemberServiceImpl implements MemberService{
             List<PrtChl> chlList = member.getChallenges();
             List<TodoListInfoResponse> todoListInfo = new LinkedList<>();
             for(PrtChl p : chlList){
+                if(p.is_fin()) continue;
+                if(p.getChallenge().isFin()) continue;
                 Log log = logRepository.findByPrtChlAndDate(p,day.getDay());
                 Challenge c = p.getChallenge();
                 todoListInfo.add(TodoListInfoResponse.builder().chlId(c.getId())
                         .title(c.getTitle()).isDone(log.isFin()).build());
             }
+            return todoListInfo;
+        } catch (Exception e){
+            throw e;
+        }
+    }
+
+    @Override
+    public List<TodoListInfoResponse> getTodayListInfo(HttpServletRequest req) throws NotFoundException {
+        Member member;
+        try{
+            member = findEmailbyToken(req);
+            List<PrtChl> chlList = member.getChallenges();
+            System.out.println("chlList.size(): "+chlList.size());
+            List<TodoListInfoResponse> todoListInfo = new LinkedList<>();
+
+            LocalDate today = LocalDate.now(ZoneId.of("Asia/Seoul"));
+            System.out.println("today = " + today);
+
+            System.out.println("chlList 시작");
+            for(PrtChl p : chlList){
+                System.out.println(p.getId());
+                if(p.is_fin()) continue;
+                if(p.getChallenge().isFin()) continue;
+                Log log = logRepository.findByPrtChlAndDate(p,today);
+                System.out.println("log 정보");
+                System.out.println(log.getDate());
+                System.out.println(log.isFin());
+                System.out.println(log.getPrtChl().getChallenge().getId()+": 오늘 했냐 >> "+log.isFin());
+                Challenge c = p.getChallenge();
+                todoListInfo.add(TodoListInfoResponse.builder().chlId(c.getId())
+                        .title(c.getTitle()).isDone(log.isFin()).build());
+            }
+            System.out.println("서비스 잘 끝남");
             return todoListInfo;
         } catch (Exception e){
             throw e;
