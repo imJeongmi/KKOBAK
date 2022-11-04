@@ -1,36 +1,44 @@
 .react-calendar {
   width: 90%;
   height: 90%;
-  border-color: #CCCCCC;
+  border-color: #cccccc;
   margin: auto;
 }
 
 .react-calendar__tile--now {
-  border: solid
+  border: solid;
 }
 
-.react-calendar__month-view__weekdays__weekday >abbr {
+.react-calendar__month-view__weekdays__weekday > abbr {
   font-family: "SUIT-SemiBold";
   font-size: 0.75rem;
   font-weight: 800;
   text-decoration: none !important;
-
 }
 
 .react-calendar__navigation__label {
   background-color: white;
 }
 
-.react-calendar__navigation__label>span {
+.react-calendar__navigation__label > span {
   font-size: 15px;
   font-weight: bold;
   color: black;
 }
 
 .react-calendar__tile {
-  border-color: #CCCCCC !important;
+  border-color: #cccccc !important;
   width: 10vw;
   height: 10vh;
   text-align: right;
   vertical-align: super;
+}
+
+.dot {
+  height: 8px;
+  width: 8px;
+  background-color: #f87171;
+  border-radius: 50%;
+  display: flex;
+  margin-left: 1px;
 }
