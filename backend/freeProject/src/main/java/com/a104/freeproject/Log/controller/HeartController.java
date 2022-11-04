@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/heart")
 @RequiredArgsConstructor
@@ -25,8 +27,8 @@ public class HeartController {
 
     @PostMapping("/list")
     @ApiOperation(value = "심장 여러개 받아보기")
-    public boolean printList(@RequestBody HeartRateListReq heartRateListReq){
-        for (int a : heartRateListReq.getHeartRateList()) {
+    public boolean printList(@RequestBody List<Integer> heartRateListReq){
+        for (int a : heartRateListReq) {
             System.out.println("심장이 뛴다: "+a);
         }
         return true;
