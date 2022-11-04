@@ -1,6 +1,7 @@
 package com.example.kkobak.ui.test;
 
 import android.annotation.SuppressLint;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -14,9 +15,13 @@ import com.example.kkobak.data.retrofit.api.MyChallengeApi;
 import com.example.kkobak.data.retrofit.api.test_api;
 import com.example.kkobak.data.retrofit.model.MyChallengeRes;
 import com.example.kkobak.data.retrofit.model.test_model;
+import com.example.kkobak.data.room.dao.AccessTokenDao;
+import com.example.kkobak.data.room.database.AccessTokenDatabase;
+import com.example.kkobak.data.room.entity.AccessToken;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -27,6 +32,8 @@ public class TestActivity extends AppCompatActivity {
     Call<List<MyChallengeRes>> call2;
     TextView tv;
     int id;
+    AccessTokenDatabase db;
+    String accessToken;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -36,6 +43,13 @@ public class TestActivity extends AppCompatActivity {
 
         tv = findViewById(R.id.tv_test1);
         id = 1;
+
+        db = AccessTokenDatabase.getAppDatabase(this);
+        try {
+            accessToken = new getAccessTokenAsyncTask(db.accessTokenDao()).execute().get().getAccessToken();
+        } catch (Exception e) {
+            Toast.makeText(this, "에러 발생", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void runTest2(View v) {
@@ -82,5 +96,22 @@ public class TestActivity extends AppCompatActivity {
             public void onFailure(Call<test_model> call, Throwable t) {
             }
         });
+    }
+
+    public static class getAccessTokenAsyncTask extends AsyncTask<Void, Void, AccessToken> {
+        private final AccessTokenDao accessTokenDao;
+
+        public getAccessTokenAsyncTask(AccessTokenDao accessTokenDao) {
+            this.accessTokenDao = accessTokenDao;
+        }
+
+        @Override
+        protected AccessToken doInBackground(Void... voids) {
+            List<AccessToken> tokens = accessTokenDao.getAll();
+            if (tokens == null || tokens.size() == 0)
+                return (null);
+            else
+                return (tokens.get(0));
+        }
     }
 }

@@ -3,22 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:layout_marginLeft="10dp"
     android:layout_marginEnd="10dp"
     android:layout_marginRight="10dp"
     tools:context=".ui.notifications.NotificationsFragment">
-
-    <ImageView
-        android:id="@+id/tmpImg"
-        android:layout_width="42dp"
-        android:layout_height="77dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.044"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:src="@tools:sample/avatars" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -29,25 +18,41 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="20dp"
-            android:gravity="center"
-            android:text="내 정보"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:onClick="moveMyInfo"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="testEmail@naver.com" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="right"
+                android:text="박세현님"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                tools:layout_editor_absoluteX="118dp"
+                tools:layout_editor_absoluteY="29dp" />
+
+        </LinearLayout>
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="53dp"
+            android:layout_width="49dp"
             android:layout_height="50dp"
             android:layout_weight="1"
             android:src="@drawable/human" />
     </LinearLayout>
 
     <GridView
+        android:id="@+id/myChallengeGV"
         android:layout_width="400dp"
         android:layout_height="636dp"
         android:layout_marginLeft="5dp"

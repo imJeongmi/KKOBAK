@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,16 +14,27 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.kkobak.R;
+import com.example.kkobak.data.retrofit.api.MyChallengeApi;
+import com.example.kkobak.data.retrofit.model.MyChallengeRes;
 import com.example.kkobak.data.room.dao.AccessTokenDao;
 import com.example.kkobak.data.room.database.AccessTokenDatabase;
+import com.example.kkobak.data.room.entity.AccessToken;
 import com.example.kkobak.databinding.ActivityMainBinding;
 import com.example.kkobak.ui.login.LoginActivity;
+import com.example.kkobak.ui.test.TestActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
 
     AccessTokenDatabase db;
+    String accessToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,17 +54,11 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(binding.navView, navController);
 
         db = AccessTokenDatabase.getAppDatabase(this);
-
-    }
-
-    public void doLogout(View v) {
-        Toast.makeText(this, "do Logout", Toast.LENGTH_SHORT).show();
-
-        new LogoutAsyncTask(db.accessTokenDao()).execute();
-
-        Intent intent = new Intent(this, LoginActivity.class);
-        startActivity(intent);
-        finish();
+        try {
+            accessToken = new TestActivity.getAccessTokenAsyncTask(db.accessTokenDao()).execute().get().getAccessToken();
+       } catch (Exception e) {
+            Toast.makeText(this, "에러 발생", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public static class LogoutAsyncTask extends AsyncTask<Void, Void, Void> {
@@ -70,31 +76,36 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-//    private class ImgAsyncTask extends AsyncTask<String, Void, Bitmap> {
-//        @Override
-//        protected Bitmap doInBackground(String... strings) {
-//            Bitmap bmp = null;
-//
-//            String imgUrl = strings[0];
-//            try {
-//                URL url = new URL(imgUrl);
-//                bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-//            } catch (MalformedURLException e) {
-//                e.printStackTrace();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//            return (bmp);
-//        }
-//
-//        @Override
-//        protected void onPreExecute() {
-//            super.onPreExecute();
-//        }
-//
-//        @Override
-//        protected void onPostExecute(Bitmap bitmap) {
-//            iv.setImageBitmap(bitmap);
-//        }
-//    }
+    public static class getAccessTokenAsyncTask extends AsyncTask<Void, Void, AccessToken> {
+        private final AccessTokenDao accessTokenDao;
+
+        public getAccessTokenAsyncTask(AccessTokenDao accessTokenDao) {
+            this.accessTokenDao = accessTokenDao;
+        }
+
+        @Override
+        protected AccessToken doInBackground(Void... voids) {
+            List<AccessToken> tokens = accessTokenDao.getAll();
+            if (tokens == null || tokens.size() == 0)
+                return (null);
+            else
+                return (tokens.get(0));
+        }
+    }
+
+    public void doLogout(View v) {
+        Toast.makeText(this, "do Logout", Toast.LENGTH_SHORT).show();
+
+        new LogoutAsyncTask(db.accessTokenDao()).execute();
+
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    public void moveMyInfo(View v) {
+        Toast.makeText(this, "내 정보 클릭", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, TestActivity.class);
+        startActivity(intent);
+    }
 }
