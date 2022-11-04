@@ -287,7 +287,7 @@ public class ChallengeServiceImpl implements ChallengeService{
         List<DateResponse> output = new LinkedList<>();
         for (Log log: logs){
             LocalDate date = log.getDate();
-            if (date.compareTo(st) >= 0 && date.compareTo(ed) <= 0) {
+            if (date.compareTo(st) >= 0 && date.compareTo(ed) <= 0 && log.isFin()) {
                 output.add(DateResponse.builder().date(log.getDate()).build());
             }
         }
