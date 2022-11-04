@@ -14,6 +14,8 @@ import "../atom/DatePicker.scss"
 import TimePicker from 'react-time-picker';
 import "../atom/TimePicker.scss"
 import { uploadPhoto } from 'api/S3';
+import styled from "@emotion/styled";
+import Button from "component/atom/TextButton";
 
 const BoxStyle = {
   height: "100vh",
@@ -38,6 +40,13 @@ const inputStyle = {
   display: "none",
 };
 
+const ButtonBox = styled(Box)(
+  () => `
+  width: 95%;
+  display: flex;
+  justify-content: end;
+  `
+);
 
 export default function ChallengeBasicForm(
   { imgSrc,
@@ -56,7 +65,8 @@ export default function ChallengeBasicForm(
     setStartTime,
     setEndTime,
     setAlarm,
-    setWatch
+    setWatch,
+    register
   }
 ) {
   const challengeImgInput = useRef();
@@ -163,6 +173,11 @@ export default function ChallengeBasicForm(
               </RadioGroup>
             </FormControl>
           </Box>
+          <ButtonBox>
+            <Button size="ss" my="0" onClick={register}>
+              챌린지 등록
+            </Button>
+          </ButtonBox>
         </Box>
 
       </Box>
