@@ -104,6 +104,9 @@ public class MemberServiceImpl implements MemberService{
 
     @Override
     public TokenResponse login(LoginRequest input) {
+
+        input.setEmail(input.getEmail().replaceAll(" ",""));
+
         // 1. Login ID/PW 를 기반으로 AuthenticationToken 생성
         UsernamePasswordAuthenticationToken authenticationToken = input.toAuthentication();
 
