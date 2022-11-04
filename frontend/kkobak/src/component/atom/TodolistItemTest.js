@@ -34,7 +34,6 @@ export default function TodolistItemTest(props) {
   function onKeyPress(e) {
     if (e.key == "Enter") {
       setText((text) => [...text, e.target.value]);
-      console.log("text: ", text);
       props.setTodolist(text)
     }
   }
