@@ -341,13 +341,15 @@ public class MemberServiceImpl implements MemberService{
 
             PrtChl p = prtChlRepository.findByChallengeAndMember(c,member);
             LocalDate st = LocalDate.parse(year+"-"+month+"-01");
+            System.out.println("startDay : "+st);
             LocalDate ed = st.withDayOfMonth(st.lengthOfMonth());
+            System.out.println("EndDay : "+ed);
             List<Log> logs = p.getLogs();
 
             List<MonthChlResponse> output = new LinkedList<>();
             for (Log log: logs){
                 LocalDate date = log.getDate();
-                if (date.compareTo(st) >= 0 || date.compareTo(ed) <= 0) {
+                if (date.compareTo(st) >= 0 && date.compareTo(ed) <= 0) {
                     output.add(MonthChlResponse.builder().date(date).isDone(log.isFin()).build());
                 }
             }

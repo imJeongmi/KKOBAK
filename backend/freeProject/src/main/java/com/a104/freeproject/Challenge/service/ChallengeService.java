@@ -4,6 +4,7 @@ import com.a104.freeproject.Challenge.request.registerRequest;
 import com.a104.freeproject.Challenge.response.ChallengeListResponse;
 import com.a104.freeproject.Challenge.response.ChlUserNameResponse;
 import com.a104.freeproject.Challenge.response.ChlUserSimpleStatResponse;
+import com.a104.freeproject.Challenge.response.DateResponse;
 import com.a104.freeproject.HashTag.entity.ChlTag;
 import com.a104.freeproject.advice.exceptions.NotFoundException;
 import org.springframework.data.domain.Pageable;
@@ -35,4 +36,6 @@ public interface ChallengeService {
     boolean checkPassword(Long id, String password) throws NotFoundException;
 
     int getChallengePageCnt(Pageable pageable);
+
+    List<DateResponse> findDoneDate(long chlId, int year, int month, HttpServletRequest req) throws NotFoundException;
 }

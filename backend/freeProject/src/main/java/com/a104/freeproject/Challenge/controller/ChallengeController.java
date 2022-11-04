@@ -4,6 +4,7 @@ import com.a104.freeproject.Challenge.request.*;
 import com.a104.freeproject.Challenge.response.ChallengeListResponse;
 import com.a104.freeproject.Challenge.response.ChlUserNameResponse;
 import com.a104.freeproject.Challenge.response.ChlUserSimpleStatResponse;
+import com.a104.freeproject.Challenge.response.DateResponse;
 import com.a104.freeproject.Challenge.service.ChallengeServiceImpl;
 import com.a104.freeproject.Member.request.NickRequest;
 import com.a104.freeproject.advice.exceptions.NotFoundException;
@@ -102,5 +103,13 @@ public class ChallengeController {
     @ApiOperation(value="챌린지 방 비밀번호 체크", notes = "챌린지 아이디를 넘겨주세요")
     public boolean pwCheck(@RequestBody passCheckRequest input) throws NotFoundException{
         return challengeService.checkPassword(input.getId(), input.getPassword());
+    }
+
+    //[”2022-11-04”, “2022-11-05”] 이런 형식으로 보내주시면 감사용
+    ///check-done-date/챌린지id/월
+    @GetMapping("check-done-date/{chlId}/{year}/{month}")
+    @ApiOperation(value="챌린지 별 월 단위 done: true 날짜만 보내주는 api", notes ="'/api/challenge/check-done-date/1/2022/11' 형식으로 사용" )
+    public ResponseEntity<List<DateResponse>> findDoneDate(@PathVariable("chlId") long chlId, @PathVariable("year") int year, @PathVariable("month") int month, HttpServletRequest req) throws NotFoundException{
+        return ResponseEntity.ok().body(challengeService.findDoneDate(chlId, year, month, req));
     }
 }
