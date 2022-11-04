@@ -25,16 +25,36 @@ const CheckBox = styled(Box)(
     `
 );
 
-export default function TodolistItem({ item }) {
+export default function TodolistItem({ item, done }) {
+  const [check, setCheck] = useState(done);
+  const [hover, setHover] = useState(false);
+  const [cancelText, setCancelText] = useState(done);
+  
+  function onClickCheckBox() {
+    setCheck(!check);
+    setHover(false);
+    setCancelText(!cancelText);
+  }
+
   return (
     <TodolistItemBox>
-      <CheckBox>
-        <Box sx={{ opacity: 0.5 }}>
+      <CheckBox
+        onClick={onClickCheckBox}
+        onMouseOver={() => setHover(true)}
+        onMouseOut={() => setHover(false)}
+      >
+        {check ? (
           <img src={CheckImage} width="20px" />
-        </Box>
+        ) : (hover) ? (
+          <Box sx={{ opacity: 0.5 }}>
+            <img src={CheckImage} width="20px" />
+          </Box>
+        ) : (
+          ""
+        )}
       </CheckBox>
       <Box sx={{ height: "18px" }}>
-        <Text size="14px" weight="medium" py="1" px="2">
+        <Text size="14px" weight="medium" py="1" px="2" done={cancelText}>
           {item}
         </Text>
       </Box>

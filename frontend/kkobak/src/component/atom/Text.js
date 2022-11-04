@@ -4,7 +4,7 @@ import { Box } from "@mui/material";
 import { NearbyError } from "@mui/icons-material";
 
 const TextBox = styled(Box)(
-  ({ size, color, weight, my, mx, mt, py, px }) => `
+  ({ size, color, weight, my, mx, mt, py, px, done }) => `
   font-size: ${getSize(size)};
   color: ${getColor(color)};
   margin: ${getMarginTop(mt, my)}px ${getMarginX(mx)}px ${getMarginY(
@@ -12,6 +12,7 @@ const TextBox = styled(Box)(
   )}px ${getMarginX(mx)}px;
   font-family: ${getWeight(weight)};
   padding: ${getPaddingY(py)}px ${getPaddingX(px)}px;
+  text-decoration: ${getStyle(done)};
   `
 );
 
@@ -95,6 +96,12 @@ function getPaddingX(px) {
   return 0;
 }
 
+function getStyle(done) {
+  console.log("style");
+  if (!!done) return "line-through";
+  return "none";
+}
+
 export default function Text({
   children,
   size,
@@ -105,6 +112,7 @@ export default function Text({
   mt,
   py,
   px,
+  done,
 }) {
   return (
     <TextBox
@@ -116,6 +124,7 @@ export default function Text({
       mt={mt}
       py={py}
       px={px}
+      done={done}
     >
       {children}
     </TextBox>
