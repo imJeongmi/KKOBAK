@@ -46,7 +46,7 @@ export default function RouterConfiguration() {
         }
       />
       <Route
-        path="/myChallenge/:challengeid"
+        path="/myChallenge/:chlId"
         element={
           <CheckAuth>
             <ChallengeDetail />
