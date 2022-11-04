@@ -5,8 +5,6 @@ import { Box } from "@mui/material";
 import { getDetailCategoryList } from "api/Category";
 import ChallengeBasicForm from "component/module/ChallengeForm";
 
-import initial from "../../static/initial.png"
-import TextButton from "component/atom/TextButton";
 import { registerChallenge } from "api/Challenge";
 
 export default function ChallengeRegister() {
@@ -72,9 +70,10 @@ export default function ChallengeRegister() {
         setStartTime={setStartTime}
         setEndTime={setEndTime}
         setAlarm={setAlarm}
-        setWatch={setWatch}>
+        setWatch={setWatch}
+        register={register}>
       </ChallengeBasicForm>
-      <TextButton onClick={register}>등록</TextButton>
+      
 
     </Box>
   );

@@ -7,6 +7,7 @@ import Setting from "component/page/Setting";
 import storage from "../helper/storage";
 import LoginModal from "component/module/LoginModal";
 import ChallengeDetail from "component/module/ChallengeDetail";
+import ChallengeRegister from "component/page/ChallengeRegister";
 
 function checkAuth() {
   return !!storage.get("accessToken");
@@ -33,6 +34,14 @@ export default function RouterConfiguration() {
         element={
           <CheckAuth>
             <MyChallenge />
+          </CheckAuth>
+        }
+      />
+      <Route
+        path="/register"
+        element={
+          <CheckAuth>
+            <ChallengeRegister />
           </CheckAuth>
         }
       />
