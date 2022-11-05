@@ -184,6 +184,7 @@ public class ChallengeServiceImpl implements ChallengeService{
     @Override
     public List<ChallengeListResponse> getChallengePageListByNickName(int page, String nickName) throws NotFoundException{
         PageRequest pageRequest = PageRequest.of(page-1,6, Sort.Direction.DESC, "id");
+        if(!memberRepository.existsByNickname(nickName)) return new LinkedList<ChallengeListResponse>();
         Long writerId = memberRepository.findByNickname(nickName).getId();
         Page<Challenge> challengePage = challengeRepository.findByWriter(writerId, pageRequest);
         List<Challenge> content = challengePage.getContent();
