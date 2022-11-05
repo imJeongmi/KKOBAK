@@ -68,12 +68,9 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<RegisterRes> call, Response<RegisterRes> response) {
                 if (response.code() == 200) {
-//                    Toast.makeText(RegisterActivity.this, "success: " + response.body().getAccessToken(), Toast.LENGTH_LONG).show();
-
                     new InsertAsyncTask(db.accessTokenDao()).execute(new AccessToken(response.body().getAccessToken()));
 
                     Intent intent = new Intent();
-//                    intent.putExtra("accessToken", response.body().getAccessToken());
                     intent.putExtra("email", binding.getMember().email.get());
                     intent.putExtra("password", binding.getMember().password.get());
                     setResult(RESULT_OK, intent);
