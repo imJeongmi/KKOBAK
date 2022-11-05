@@ -2,6 +2,8 @@ package com.a104.freeproject.Member.entity;
 
 import com.a104.freeproject.Log.entity.Log;
 import com.a104.freeproject.PrtChl.entity.PrtChl;
+import com.a104.freeproject.Todolist.entity.Todolist;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
@@ -80,6 +82,10 @@ public class Member implements Serializable {
     @Builder.Default
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<PrtChl> challenges = new LinkedList<>();
+
+    @Builder.Default
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<Todolist> todolists = new LinkedList<>();
 
     @PrePersist
     public void test() {
