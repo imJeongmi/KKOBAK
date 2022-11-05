@@ -20,7 +20,7 @@ public class useWatchResponse {
     private String imgurl;
     private int roomtype;
     private String password;
-    private int limitPeolple;
+    private int limitPeople;
     private int currentNum;
     private String alarm;
     private int goal;

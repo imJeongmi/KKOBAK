@@ -314,7 +314,7 @@ public class ChallengeServiceImpl implements ChallengeService{
                     .detailCategoryId(c.getDetailCategory().getId())
                     .writer(c.getWriter()).title(c.getTitle()).contents(c.getContents()).imgurl(c.getImgurl())
                     .roomtype(c.getRoomtype()).password(c.getPassword())
-                    .limitPeolple(c.getLimitPeople()).currentNum(c.getCurrentNum()).alarm(c.getAlarm())
+                    .limitPeople(c.getLimitPeople()).currentNum(c.getCurrentNum()).alarm(c.getAlarm())
                     .goal(c.getGoal()).unit(c.getUnit())
                     .startTime(c.getChlTime().getStartTime())
                     .endTime(c.getChlTime().getEndTime()).tagList(tagList).build());
