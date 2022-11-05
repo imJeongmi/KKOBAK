@@ -70,8 +70,6 @@ public class ChallengeServiceImpl implements ChallengeService{
         input.setStartTime(Timestamp.valueOf(sdf.format(input.getStartTime())));
         input.setEndTime(Timestamp.valueOf(sdf.format(input.getEndTime())));
 
-        System.out.println("input.isWatch() = "+input.isWatch());
-
         if(!categoryRepository.existsById(input.getCategoryId())) throw new NotFoundException("카테고리를 다시 입력해주세요.");
         Category category = categoryRepository.findById(input.getCategoryId()).get();
         Challenge challenge;
@@ -195,6 +193,7 @@ public class ChallengeServiceImpl implements ChallengeService{
     @Override
     public List<ChallengeListResponse> getChallengePageListByTag(int page, String tag) throws NotFoundException{
         PageRequest pageRequest = PageRequest.of(page-1,6, Sort.Direction.DESC, "id");
+        if(!hashtagRepository.existsByName(tag)) return new LinkedList<ChallengeListResponse>();
         List<ChlTag> chlTags= hashtagRepository.findByName(tag).getChlTags();
         //페이지네이션용
         List<Long> challengeIdList = new ArrayList<>();
@@ -209,6 +208,7 @@ public class ChallengeServiceImpl implements ChallengeService{
 
     @Override
     public ChallengeListResponse getChallenge(Long id) throws NotFoundException{
+        if(!challengeRepository.existsById(id)) throw new NotFoundException("존재하지 않는 챌린지 입니다.");
         Challenge c = challengeRepository.findById(id).get();
         List<ChlTag> tagList= c.getTagList();
         List<String> tagListName = new ArrayList<>();
@@ -239,7 +239,6 @@ public class ChallengeServiceImpl implements ChallengeService{
                 .endTime(c.getChlTime().getEndTime())
                 .tagList(tagListName)
                 .build();
-        System.out.println("time zone : "+result.getStartTime());
 
         return result;
     }
@@ -273,9 +272,7 @@ public class ChallengeServiceImpl implements ChallengeService{
         }
 
         LocalDate st = LocalDate.parse(year+"-"+month+"-01");
-        System.out.println("startDay : "+st);
         LocalDate ed = st.withDayOfMonth(st.lengthOfMonth());
-        System.out.println("EndDay : "+ed);
         List<Log> logs = p.getLogs();
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:00");
