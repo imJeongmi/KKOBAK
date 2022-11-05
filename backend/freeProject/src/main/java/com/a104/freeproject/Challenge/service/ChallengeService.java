@@ -36,4 +36,6 @@ public interface ChallengeService {
 
     List<String> findDoneDate(long chlId, int year, int month, HttpServletRequest req) throws NotFoundException;
     List<useWatchResponse> findWatchUse(boolean useWatch, Pageable pageable) throws NotFoundException;
+
+    boolean participateChl(Long chlId, int alarmType, HttpServletRequest req) throws NotFoundException;
 }
