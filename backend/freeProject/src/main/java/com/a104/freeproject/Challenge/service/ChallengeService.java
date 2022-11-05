@@ -1,10 +1,7 @@
 package com.a104.freeproject.Challenge.service;
 
 import com.a104.freeproject.Challenge.request.registerRequest;
-import com.a104.freeproject.Challenge.response.ChallengeListResponse;
-import com.a104.freeproject.Challenge.response.ChlUserNameResponse;
-import com.a104.freeproject.Challenge.response.ChlUserSimpleStatResponse;
-import com.a104.freeproject.Challenge.response.DateResponse;
+import com.a104.freeproject.Challenge.response.*;
 import com.a104.freeproject.HashTag.entity.ChlTag;
 import com.a104.freeproject.advice.exceptions.NotFoundException;
 import org.springframework.data.domain.Pageable;
@@ -38,4 +35,5 @@ public interface ChallengeService {
     int getChallengePageCnt(Pageable pageable);
 
     List<String> findDoneDate(long chlId, int year, int month, HttpServletRequest req) throws NotFoundException;
+    List<useWatchResponse> findWatchUse(boolean useWatch, Pageable pageable) throws NotFoundException;
 }

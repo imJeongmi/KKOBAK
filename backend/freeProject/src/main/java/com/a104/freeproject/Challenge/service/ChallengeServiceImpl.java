@@ -7,10 +7,7 @@ import com.a104.freeproject.Category.repository.DetailCategoryRepository;
 import com.a104.freeproject.Challenge.entity.Challenge;
 import com.a104.freeproject.Challenge.repository.ChallengeRepository;
 import com.a104.freeproject.Challenge.request.registerRequest;
-import com.a104.freeproject.Challenge.response.ChallengeListResponse;
-import com.a104.freeproject.Challenge.response.ChlUserNameResponse;
-import com.a104.freeproject.Challenge.response.ChlUserSimpleStatResponse;
-import com.a104.freeproject.Challenge.response.DateResponse;
+import com.a104.freeproject.Challenge.response.*;
 import com.a104.freeproject.HashTag.entity.ChlTag;
 import com.a104.freeproject.HashTag.repository.HashtagRepository;
 import com.a104.freeproject.HashTag.service.ChltagServiceImpl;
@@ -291,6 +288,36 @@ public class ChallengeServiceImpl implements ChallengeService{
                 String successDate = log.getDate().toString();
                 output.add(successDate);
             }
+        }
+
+        return output;
+    }
+
+    @Override
+    public List<useWatchResponse> findWatchUse(boolean useWatch, Pageable pageable) throws NotFoundException {
+        List<Challenge> chlList = challengeRepository.findAllByWatch(useWatch, pageable);
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:00");
+        TimeZone tz = TimeZone.getTimeZone("Asia/Seoul");
+        sdf.setTimeZone(tz);
+
+        List<useWatchResponse> output = new LinkedList<>();
+        for(Challenge c : chlList){
+
+            List<String> tagList = new LinkedList<>();
+            for(ChlTag tag : c.getTagList()){
+                tagList.add(tag.getHashtag().getName());
+            }
+
+            output.add(useWatchResponse.builder()
+                    .id(c.getId()).categoryId(c.getCategory().getId())
+                    .detailCategoryId(c.getDetailCategory().getId())
+                    .writer(c.getWriter()).title(c.getTitle()).contents(c.getContents()).imgurl(c.getImgurl())
+                    .roomtype(c.getRoomtype()).password(c.getPassword())
+                    .limitPeolple(c.getLimitPeople()).currentNum(c.getCurrentNum()).alarm(c.getAlarm())
+                    .goal(c.getGoal()).unit(c.getUnit())
+                    .startTime(c.getChlTime().getStartTime())
+                    .endTime(c.getChlTime().getEndTime()).tagList(tagList).build());
         }
 
         return output;
