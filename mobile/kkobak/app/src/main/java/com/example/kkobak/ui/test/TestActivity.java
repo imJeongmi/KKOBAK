@@ -79,18 +79,30 @@ public class TestActivity extends AppCompatActivity {
         }
     }
 
-    public void runTest4(View v) {
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
 
+        if (gpsTracker != null)
+            gpsTracker.stopUsingGPS();
     }
 
     public void runTest3(View v) {
-        gpsTracker = new GpsTracker(this);
+        gpsTracker = new GpsTracker(this, tv);
+    }
 
-        double latitude = gpsTracker.getLatitude();
-        double longitude = gpsTracker.getLongitude();
+    public void runTest4(View v) {
+        GpsTracker gpsTracker2 = new GpsTracker(this, tv);
+
+        double latitude = gpsTracker2.getLatitude();
+        double longitude = gpsTracker2.getLongitude();
+
 
         String address = getCurrentAddress(latitude, longitude) + "\n[현재위치]\n위도: " + latitude + "\n경도: " + longitude + "\n------------------\n";
         addr.setText(address);
+
+        gpsTracker2.stopUsingGPS();
+
     }
 
     public void runTest2(View v) {
@@ -207,7 +219,6 @@ public class TestActivity extends AppCompatActivity {
     }
 
     void checkRunTimePermission(){
-
         //런타임 퍼미션 처리
         // 1. 위치 퍼미션을 가지고 있는지 체크합니다.
         int hasFineLocationPermission = ContextCompat.checkSelfPermission(this,
@@ -252,14 +263,12 @@ public class TestActivity extends AppCompatActivity {
 
 
     public String getCurrentAddress( double latitude, double longitude) {
-
         //지오코더... GPS를 주소로 변환
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
 
         List<Address> addresses;
 
         try {
-
             addresses = geocoder.getFromLocation(
                     latitude,
                     longitude,

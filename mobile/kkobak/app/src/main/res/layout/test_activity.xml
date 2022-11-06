@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="44dp"
         android:onClick="runTest3"
-        android:text="주소"
+        android:text="GPS Tracking"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.253"
         app:layout_constraintStart_toStartOf="parent"
@@ -53,8 +53,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
         android:layout_marginTop="44dp"
-        android:text="GPS"
-        android:onClick="runTest5"
+        android:text="주소확인"
+        android:onClick="runTest4"
         app:layout_constraintStart_toEndOf="@+id/button4"
         app:layout_constraintTop_toTopOf="parent" />
 
