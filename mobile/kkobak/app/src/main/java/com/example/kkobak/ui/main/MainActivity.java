@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,21 +13,16 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.kkobak.R;
-import com.example.kkobak.data.retrofit.api.MyChallengeApi;
-import com.example.kkobak.data.retrofit.model.MyChallengeRes;
 import com.example.kkobak.data.room.dao.AccessTokenDao;
 import com.example.kkobak.data.room.database.AccessTokenDatabase;
 import com.example.kkobak.data.room.entity.AccessToken;
 import com.example.kkobak.databinding.ActivityMainBinding;
 import com.example.kkobak.ui.login.LoginActivity;
+import com.example.kkobak.ui.test.SpeedActivity;
 import com.example.kkobak.ui.test.TestActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
@@ -106,6 +100,11 @@ public class MainActivity extends AppCompatActivity {
     public void moveMyInfo(View v) {
         Toast.makeText(this, "내 정보 클릭", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, TestActivity.class);
+        startActivity(intent);
+    }
+
+    public void moveSpeed(View v) {
+        Intent intent = new Intent(this, SpeedActivity.class);
         startActivity(intent);
     }
 }

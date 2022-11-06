@@ -48,6 +48,8 @@
             android:layout_width="49dp"
             android:layout_height="50dp"
             android:layout_weight="1"
+            android:clickable="true"
+            android:onClick="moveSpeed"
             android:src="@drawable/human" />
     </LinearLayout>
 

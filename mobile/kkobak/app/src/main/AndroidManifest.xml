@@ -46,6 +46,8 @@
         <activity android:name=".ui.register.RegisterActivity" />
 
         <activity android:name=".ui.myChallengeDetail.MyChallengeDetailActivity" />
+
+        <activity android:name=".ui.test.SpeedActivity" />
     </application>
 
 </manifest>
