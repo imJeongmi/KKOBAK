@@ -1,21 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Logo from "../../static/Logo.png";
-import Home from "../../static/home.svg";
-import Flag from "../../static/flag.svg";
-import User from "../../static/user.svg";
-import Settings from "../../static/settings.svg";
+import Home from "@mui/icons-material/Home";
+import Flag from "@mui/icons-material/Flag";
+import Person from "@mui/icons-material/Person";
+import Settings from "@mui/icons-material/Settings";
 import AppBar from "@mui/material/AppBar";
+import { Link } from "react-router-dom";
 
 export default function SelectedListItem() {
-  const [selectedIndex, setSelectedIndex] = React.useState(0);
+  const [selectedIndex, setSelectedIndex] = useState(1);
 
   const handleListItemClick = (event, index) => {
     setSelectedIndex(index);
+    console.log(index);
   };
 
   return (
@@ -31,12 +33,33 @@ export default function SelectedListItem() {
         left: 0,
       }}
     >
-      {/* 로고 위치 */}
-      <List component="nav" aria-label="main" sx={{ flex: 1 }}>
+      {/* 로고 위치 sx={{ flex: 1 }} */}
+      <List
+        component="nav"
+        aria-label="main"
+        sx={{
+          flex: 1,
+          "&& .Mui-selected, && .Mui-selected:hover": {
+            bgcolor: "white",
+            "&, & .MuiListItemIcon-root": {
+              color: "#F17E7F",
+            },
+          },
+          // hover states
+          "& .MuiListItemButton-root:hover": {
+            bgcolor: "white",
+            "&, & .MuiListItemIcon-root": {
+              color: "#F17E7F",
+            },
+          },
+        }}
+      >
         <ListItemButton
-          href="/setting"
+          component={Link}
+          to="/setting"
+          // href="/setting"
           sx={{ paddingLeft: "21px" }}
-          // selected={selectedIndex === 0}
+          selected={selectedIndex === 0}
           onClick={(event) => handleListItemClick(event, 0)}
         >
           <ListItemIcon>
@@ -47,16 +70,38 @@ export default function SelectedListItem() {
       <Box sx={{ flex: 2 }} />
 
       {/* 화면 이동 nav 메인, 챌린지, 나의챌린지, 통계 등 */}
-      <List component="nav" aria-label="secondary" sx={{ flex: 10 }}>
+      <List
+        component="nav"
+        aria-label="secondary"
+        sx={{
+          flex: 10, // selected and (selected + hover) states
+          "&& .Mui-selected, && .Mui-selected:hover": {
+            bgcolor: "white",
+            "&, & .MuiListItemIcon-root": {
+              color: "#F17E7F",
+            },
+          },
+          // hover states
+          "& .MuiListItemButton-root:hover": {
+            bgcolor: "white",
+            "&, & .MuiListItemIcon-root": {
+              color: "#F17E7F",
+            },
+          },
+        }}
+      >
         <ListItemButton
-          href="/"
-          // selected={selectedIndex === 1}
+          component={Link}
+          to="/"
+          // href="/"
+          selected={selectedIndex === 1}
           onClick={(event) => handleListItemClick(event, 1)}
-          sx={{ paddingLeft: "21px", marginBottom: "30px", color: "gray" }}
+          sx={{ paddingLeft: "21px", marginBottom: "30px", color: "white" }}
         >
           <Box>
             <ListItemIcon sx={{ marginLeft: "3px" }}>
-              <img src={Home} width={28} height={28} />
+              {/* <img src={Home} width={28} height={28} /> */}
+              <Home></Home>
             </ListItemIcon>
             <ListItemText
               sx={{ paddingLeft: "5px" }}
@@ -67,14 +112,16 @@ export default function SelectedListItem() {
         </ListItemButton>
 
         <ListItemButton
-          href="/myChallenge"
-          // selected={selectedIndex === 2}
+          component={Link}
+          to="/myChallenge"
+          // href="/myChallenge"
+          selected={selectedIndex === 2}
           onClick={(event) => handleListItemClick(event, 2)}
-          sx={{ paddingLeft: "14px", marginBottom: "30px", color: "gray" }}
+          sx={{ paddingLeft: "14px", marginBottom: "30px", color: "white" }}
         >
           <Box>
             <ListItemIcon sx={{ paddingLeft: "8px" }}>
-              <img src={Flag} width={28} height={28} />
+              <Flag />
             </ListItemIcon>
             <ListItemText
               primary="내챌린지"
@@ -83,19 +130,21 @@ export default function SelectedListItem() {
           </Box>
         </ListItemButton>
         <ListItemButton
-          href="/Statistics"
-          // selected={selectedIndex === 3}
+          component={Link}
+          to="/Statistics"
+          // href="/Statistics"
+          selected={selectedIndex === 3}
           onClick={(event) => handleListItemClick(event, 3)}
           sx={{
             paddingLeft: "24px",
             paddingRight: "4px",
             marginBottom: "30px",
-            color: "gray",
+            color: "white",
           }}
         >
           <Box>
             <ListItemIcon sx={{ marginLeft: "-2px" }}>
-              <img src={User} width={28} height={28} />
+              <Person />
             </ListItemIcon>
             <ListItemText
               primary="통계"
@@ -105,15 +154,36 @@ export default function SelectedListItem() {
         </ListItemButton>
       </List>
       {/* 세팅 위치 */}
-      <List component="nav" aria-label="last" sx={{ flex: 1 }}>
+      <List
+        component="nav"
+        aria-label="last"
+        sx={{
+          flex: 1,
+          "&& .Mui-selected, && .Mui-selected:hover": {
+            bgcolor: "white",
+            "&, & .MuiListItemIcon-root": {
+              color: "#F17E7F",
+            },
+          },
+          // hover states
+          "& .MuiListItemButton-root:hover": {
+            bgcolor: "white",
+            "&, & .MuiListItemIcon-root": {
+              color: "#F17E7F",
+            },
+          },
+        }}
+      >
         <ListItemButton
-          href="/setting"
+          component={Link}
+          to="/setting"
+          // href="/setting"
           sx={{ paddingLeft: "24px" }}
-          // selected={selectedIndex === 4}
+          selected={selectedIndex === 4}
           onClick={(event) => handleListItemClick(event, 4)}
         >
           <ListItemIcon>
-            <img src={Settings} width={28} height={28} />
+            <Settings />
           </ListItemIcon>
         </ListItemButton>
       </List>
