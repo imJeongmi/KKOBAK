@@ -35,7 +35,7 @@ export default function MainCalendar({ chlId, startTime, endTime, title }) {
   // >>>>>>>>>>>>>>로그 월별로 조회 부분
   function requestCalendarCheckSuccess(res) {
     setMark(res.data);
-    console.log(res.data);
+    // console.log(res.data);
     // console.log(user.nickName);
   }
 

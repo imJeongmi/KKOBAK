@@ -69,7 +69,7 @@ const ButtonBox = styled(Box)(
   `
 );
 
-export default function ChallengeBasicForm({
+export default function ChallengeForm({
   imgSrc,
   title,
   detailCategoryList,
@@ -156,8 +156,11 @@ export default function ChallengeBasicForm({
           <Text size="15px" weight="bold" my="17">
             상세 설명
           </Text>
-          <Text size="15px" weight="bold" my="13" mt="70">
+          <Text size="15px" weight="bold" my="15" mt="75">
             기간
+          </Text>
+          <Text size="15px" weight="bold" my="15">
+            알림
           </Text>
           <Text size="15px" weight="bold" my="12">
             워치 사용
@@ -225,15 +228,15 @@ export default function ChallengeBasicForm({
           </Box>
           <Box
             sx={{
-              width: "80%",
-              height: "50px",
-              paddingX: "40px",
+              width: "60%",
+              height: "55px",
+              paddingX: "35px",
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
             }}
           >
-            <Box sx={{ width: "25%" }}>
+            <Box sx={{ width: "155px" }}>
               <DatePicker
                 calendarAriaLabel="calendar"
                 locale="ko-KR"
@@ -243,7 +246,7 @@ export default function ChallengeBasicForm({
                 calendarType="US"
               />
             </Box>
-            <Box sx={{ width: "25%" }}>
+            <Box sx={{ width: "155px" }}>
               <DatePicker
                 calendarAriaLabel="calendar"
                 locale="ko-KR"
@@ -253,13 +256,24 @@ export default function ChallengeBasicForm({
                 calendarType="US"
               />
             </Box>
-            <Box sx={{ width: "25%" }}>
+          </Box>
+          <Box
+            sx={{
+              width: "60%",
+              height: "50px",
+              paddingX: "35px",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <Box sx={{ width: "155px" }}>
               <TimePicker format="HH:mm" onChange={setAlarm} value={alarm} />
             </Box>
           </Box>
           <Box
             sx={{
-              height: "44px",
+              height: "45px",
               paddingX: "55px",
               display: "flex",
               alignItems: "center",
@@ -287,7 +301,7 @@ export default function ChallengeBasicForm({
           </Box>
           <Box
             sx={{
-              height: "44px",
+              height: "45px",
               paddingX: "55px",
               display: "flex",
               alignItems: "center",
@@ -308,7 +322,7 @@ export default function ChallengeBasicForm({
                 <FormControlLabel
                   value={false}
                   control={<Radio />}
-                  label="사용 안함"
+                  label="설정 안함"
                 />
               </RadioGroup>
             </FormControl>
