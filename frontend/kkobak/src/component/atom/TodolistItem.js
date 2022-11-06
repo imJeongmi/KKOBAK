@@ -2,9 +2,12 @@ import React, { useState } from "react";
 import { styled } from "@mui/system";
 import { Box } from "@mui/material";
 
+import moment from "moment";
 import Text from "component/atom/Text";
 import CheckImage from "static/check.png";
 import DeleteImage from "static/delete.png";
+
+import { deleteTodolist, updateTodolistStatus } from "api/todolistApi";
 
 const TodolistItemBox = styled(Box)(
   () => `
@@ -27,19 +30,40 @@ const CheckBox = styled(Box)(
     `
 );
 
-export default function TodolistItem({ item, done }) {
+export default function TodolistItem({ nowDate, id, contents, done }) {
+  const today = moment().format("YYYY.MM.DD");
+
   const [check, setCheck] = useState(done);
   const [hover, setHover] = useState(false);
   const [cancelText, setCancelText] = useState(done);
 
+  function updateTodolistStatusSuccess(res) {}
+
+  function updateTodolistStatusFail(res) {}
+
+  function deleteTodolistSuccess(res) {
+    // 새로고침 안되게 코드 수정
+    // window.location.replace("/");
+    window.location.reload();
+  }
+
+  function deleteTodolistFail(res) {}
+
   function onClickCheckBox() {
-    setCheck(!check);
     setHover(false);
-    setCancelText(!cancelText);
+    if (nowDate === today) {
+      setCheck(!check);
+      setCancelText(!cancelText);
+      updateTodolistStatus(
+        id,
+        updateTodolistStatusSuccess,
+        updateTodolistStatusFail
+      );
+    }
   }
 
   function onClickDelete() {
-    console.log("투두리스트 삭제");
+    deleteTodolist(id, deleteTodolistSuccess, deleteTodolistFail);
   }
 
   return (
@@ -61,7 +85,7 @@ export default function TodolistItem({ item, done }) {
       </CheckBox>
       <Box sx={{ width: "170px" }}>
         <Text size="14px" weight="medium" py="1" px="2" done={cancelText}>
-          {item}
+          {contents}
         </Text>
       </Box>
       <Box
