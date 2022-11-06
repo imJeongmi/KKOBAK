@@ -7,18 +7,23 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class GpsActivity extends Activity {
 
     LocationManager locationManager;
     LocationListener locationListener;
-
+//    Timer timer;
+    String str;
     private TextView textView;
 
     private static final String TAG = "____Main___";
@@ -28,11 +33,14 @@ public class GpsActivity extends Activity {
         setContentView(R.layout.activity_gps);
 
         textView = findViewById(R.id.txt_gps);
-
+        str ="";
+        textView.setMovementMethod(new ScrollingMovementMethod());
+        System.out.println("시작");
         locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(@NonNull Location location) {
                 System.out.println("호출됩니다");
+                System.out.println(LocalDateTime.now());
                 updateMap(location);
             }
 
@@ -56,12 +64,12 @@ public class GpsActivity extends Activity {
                 System.out.println("제공안됨");
             }
         };
-
+        System.out.println("리스너 등록 완료");
         locationManager = (LocationManager) this.getSystemService(LOCATION_SERVICE);
-
+        System.out.println("매니저");
         List<String> l = locationManager.getAllProviders();
 
-//        System.out.println(l.size());
+        System.out.println(l.size());
         for (String s : l) {
 
             System.out.println(s);
@@ -71,21 +79,36 @@ public class GpsActivity extends Activity {
 
 
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,locationListener);
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+//        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
 
 
         String locationProvider = LocationManager.GPS_PROVIDER;
         Location lastKnownLocation = locationManager.getLastKnownLocation(locationProvider);
         if (lastKnownLocation != null) {
             double lng = lastKnownLocation.getLatitude();
-            double lat = lastKnownLocation.getLatitude();
+            double lat = lastKnownLocation.getLongitude();
             System.out.println("longtitude=" + lng + ", latitude=" + lat);
         }
+//        timer = new Timer();
+//        TimerTask TT = new TimerTask() {
+//            @Override
+//            public void run() {
+//                double lng = lastKnownLocation.getLatitude();
+//                double lat = lastKnownLocation.getLongitude();
+//                System.out.println("longtitude=" + lng + ", latitude=" + lat);
+//            }
+//
+//        };
+//
+//
+//
+//        timer.schedule(TT, 0, 1000); //Timer 실행
 
     }
 
     @Override
     protected void onDestroy() {
+//        timer.cancel();//타이머 종료
         super.onDestroy();
         if(locationManager != null){
             locationManager.removeUpdates(locationListener);
@@ -95,8 +118,9 @@ public class GpsActivity extends Activity {
     private void updateMap(Location location) {
         double lat = location.getLatitude();
         double lng = location.getLongitude();
+        str += "lat: "+ lat +" ,\n "+" lng: "+ lng+ "\n";
         System.out.println("lat: "+ lat +" ,\n "+" lng: "+ lng);
-        textView.setText("lat: "+ lat +" ,\n "+" lng: "+ lng);
+        textView.setText(str);
 
     }
 
