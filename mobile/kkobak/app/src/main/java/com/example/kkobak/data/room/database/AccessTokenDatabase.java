@@ -16,7 +16,7 @@ public abstract class AccessTokenDatabase extends RoomDatabase {
 
     public static AccessTokenDatabase getAppDatabase(Context context) {
         if (instance == null) {
-            instance = Room.databaseBuilder(context, AccessTokenDatabase.class, "accessToken-db").build();
+            instance = Room.databaseBuilder(context, AccessTokenDatabase.class, "kkobak-db").build();
         }
         return (instance);
     }

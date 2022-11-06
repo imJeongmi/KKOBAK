@@ -11,11 +11,11 @@
         android:id="@+id/button4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:onClick="runTest2"
-        android:text="API호출"
+        android:layout_marginTop="44dp"
+        android:onClick="runTest3"
+        android:text="주소"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.253"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -32,11 +32,30 @@
             android:orientation="vertical" >
 
             <TextView
-                android:id="@+id/tv_test1"
+                android:id="@+id/test_address"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:hint="test"></TextView>
+                android:hint="address" />
+
+            <TextView
+                android:id="@+id/test_gps"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:hint="gps"></TextView>
         </LinearLayout>
     </ScrollView>
+
+    <Button
+        android:id="@+id/button7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="44dp"
+        android:text="GPS"
+        android:onClick="runTest5"
+        app:layout_constraintStart_toEndOf="@+id/button4"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
