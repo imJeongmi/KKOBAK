@@ -27,7 +27,7 @@ const CalendarBox = {
 // year, month, chlId 수정하기
 // 달력 클릭시 바로 수정되기!(현재는 클릭하고 새롣고침 해야함)
 
-export default function MainCalendar({ chlId, startTime, endTime }) {
+export default function MainCalendar({ chlId, startTime, endTime, title }) {
   const [mark, setMark] = useState([]);
   const [year, setYear] = useState(new Date().getFullYear());
   const [month, setMonth] = useState(new Date().getMonth() + 1);
@@ -35,7 +35,7 @@ export default function MainCalendar({ chlId, startTime, endTime }) {
   // >>>>>>>>>>>>>>로그 월별로 조회 부분
   function requestCalendarCheckSuccess(res) {
     setMark(res.data);
-    console.log(res.data);
+    // console.log(res.data);
     // console.log(user.nickName);
   }
 
@@ -111,9 +111,10 @@ export default function MainCalendar({ chlId, startTime, endTime }) {
         justifyContent: "center",
       }}
     >
+      {/* <Box>{title}</Box>
       <Text my="5" size="12px" color="grey">
         {startTime} - {endTime}
-      </Text>
+      </Text> */}
       <Box sx={CalendarBox}>
         <Calendar
           next2Label={null}

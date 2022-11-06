@@ -1,112 +1,185 @@
-import { Box } from '@mui/system';
-import Input from 'component/atom/Input';
-import Text from 'component/atom/Text';
-import Textarea from 'component/atom/Textarea';
-import React from 'react';
-import { useRef } from 'react';
+import React, { useRef } from "react";
+import { Box, styled } from "@mui/system";
+import DatePicker from "react-time-picker";
+import TimePicker from "react-time-picker";
 
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormControl from '@mui/material/FormControl';
-import DatePicker from "react-date-picker";
-import "../atom/DatePicker.scss"
-import TimePicker from 'react-time-picker';
-import "../atom/TimePicker.scss"
-import { uploadPhoto } from 'api/S3';
-import styled from "@emotion/styled";
+import Input from "component/atom/Input";
+import Text from "component/atom/Text";
+import Textarea from "component/atom/Textarea";
 import Button from "component/atom/TextButton";
 
-const BoxStyle = {
-  height: "100vh",
-  width: "70vw",
-  display: "flex",
-  // alignItems: "center"
-  flexDirection: "column",
-  justifyContent: "center",
-};
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormControl from "@mui/material/FormControl";
 
-const CardStyle = {
-  width: "95%",
-  margin: "auto",
-  minHeight: "80vh",
-  backgroundColor: "#F5F5F5",
-  textAlign: "center",
-  justifyContent: "center",
-  borderRadius: "20px",
-};
+import { uploadPhoto } from "api/S3";
+
+import "../atom/DatePicker.scss";
+import "../atom/TimePicker.scss";
 
 const inputStyle = {
   display: "none",
 };
 
+const ImageBox = styled(Box)(
+  () => `
+  width: 50%;
+  height: 20vh;
+  margin: 20px auto 20px auto;
+  border-radius: 20px;
+  background-size: cover;
+  overflow: hidden;
+  background-color: grey;
+  `
+);
+
+const SettingBox = styled(Box)(
+  () => `
+  width: 50vw;
+  display: flex;
+  justify-content: center;
+  `
+);
+
+const SettingTitleBox = styled(Box)(
+  () => `
+  width: 130px;
+  margin: 0 50px 20px 35px;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  `
+);
+
+const SettingContentBox = styled(Box)(
+  () => `
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  `
+);
+
 const ButtonBox = styled(Box)(
   () => `
-  width: 95%;
+  width: 100%;
   display: flex;
   justify-content: end;
   `
 );
 
-export default function ChallengeBasicForm(
-  { imgSrc,
-    title,
-    detailCategoryList,
-    contents,
-    startTime,
-    endTime,
-    alarm,
-    watch,
-    setImgSrc,
-    setTitle,
-    setCategory,
-    setDetailCategory,
-    setContents,
-    setStartTime,
-    setEndTime,
-    setAlarm,
-    setWatch,
-    register
-  }
-) {
+export default function ChallengeForm({
+  imgSrc,
+  title,
+  detailCategoryList,
+  contents,
+  startTime,
+  endTime,
+  alarm,
+  watch,
+  setImgSrc,
+  setTitle,
+  setCategory,
+  setDetailCategory,
+  setContents,
+  setStartTime,
+  setEndTime,
+  setAlarm,
+  setWatch,
+  register,
+}) {
   const challengeImgInput = useRef();
 
   function onImgChange(e) {
-    e.preventDefault()
+    e.preventDefault();
     if (!e.target.files) {
       return;
     }
-    console.log(e.target.files[0])
+    console.log(e.target.files[0]);
     const formData = new FormData();
-    formData.set('file', e.target.files[0]);
-    uploadPhoto(formData, uploadSuccess, uploadFail)
+    formData.set("file", e.target.files[0]);
+    uploadPhoto(formData, uploadSuccess, uploadFail);
   }
 
   function uploadSuccess(res) {
-    setImgSrc(res.data)
+    setImgSrc(res.data);
   }
 
   function uploadFail(err) {
-    console.log(err)
+    console.log(err);
   }
 
   const imgDivClick = (e) => {
     e.preventDefault();
     challengeImgInput.current.click();
-  }
+  };
 
   return (
-    <Box sx={BoxStyle}>
-      <Box sx={CardStyle}>
-        <Box sx={{ my: 2 }}>
-          <input style={inputStyle} id='challengeImg' ref={challengeImgInput} type='file' accept='image/*' onChange={onImgChange} />
-          <img onClick={imgDivClick} alt="img" src={imgSrc}></img>
-        </Box>
-        <Box sx={{ margin: "auto" }}>
-          <Box sx={{ width: "80%", margin: "auto", display: "flex", alignItems: "center" }}>
+    <Box
+      sx={{
+        height: "80vh",
+        display: "flex",
+        flexDirection: "column",
+        alignContent: "center",
+      }}
+    >
+      <ImageBox>
+        <input
+          style={inputStyle}
+          id="challengeImg"
+          ref={challengeImgInput}
+          type="file"
+          accept="image/*"
+          onChange={onImgChange}
+        />
+        <img
+          onClick={imgDivClick}
+          alt="img"
+          src={imgSrc}
+          width="100%"
+          height="100%"
+        ></img>
+      </ImageBox>
 
-            <Text weight="bold">카테고리</Text>
-            <FormControl sx={{ marginLeft: "15%" }}>
+      <SettingBox>
+        <SettingTitleBox>
+          <Text size="15px" weight="bold" my="12">
+            카테고리
+          </Text>
+          <Text size="15px" weight="bold" my="13">
+            상세 카테고리
+          </Text>
+          <Text size="15px" weight="bold" my="14">
+            제목
+          </Text>
+          <Text size="15px" weight="bold" my="17">
+            상세 설명
+          </Text>
+          <Text size="15px" weight="bold" my="15" mt="75">
+            기간
+          </Text>
+          <Text size="15px" weight="bold" my="15">
+            알림
+          </Text>
+          <Text size="15px" weight="bold" my="12">
+            워치 사용
+          </Text>
+          <Text size="15px" weight="bold" my="12">
+            꼬박챌린지 설정
+          </Text>
+        </SettingTitleBox>
+
+        <SettingContentBox>
+          <Box
+            sx={{
+              height: "44px",
+              paddingX: "55px",
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <FormControl>
               <RadioGroup
                 row
                 aria-labelledby="demo-row-controlled-radio-buttons-group"
@@ -114,77 +187,153 @@ export default function ChallengeBasicForm(
                 onChange={(e) => setCategory(e.target.value)}
               >
                 <FormControlLabel value={1} control={<Radio />} label="운동" />
-                <FormControlLabel value={2} control={<Radio />} label="생활습관" />
+                <FormControlLabel
+                  value={2}
+                  control={<Radio />}
+                  label="생활습관"
+                />
               </RadioGroup>
             </FormControl>
           </Box>
-          <Box sx={{ width: "80%", margin: "auto", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-
-            <Text weight="bold">상세 카테고리</Text>
-            <Box sx={{ width: "90%" }}>
-              <select onChange={(e) => setDetailCategory(e.target.value)}>
-                <option value={0}>선택 안함</option>
-                {detailCategoryList?.map((item) => {
-                  return (<option key={item.detailId} value={item.detailId}>{item.detailName}</option>)
-                })}
-              </select>
+          <Box
+            sx={{
+              height: "44px",
+              paddingX: "55px",
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <select onChange={(e) => setDetailCategory(e.target.value)}>
+              <option value={0}>선택 안함</option>
+              {detailCategoryList?.map((item) => {
+                return (
+                  <option key={item.detailId} value={item.detailId}>
+                    {item.detailName}
+                  </option>
+                );
+              })}
+            </select>
+          </Box>
+          <Box sx={{ width: "80%", height: "50px" }}>
+            <Input
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            ></Input>
+          </Box>
+          <Box sx={{ width: "80%", height: "100px" }}>
+            <Textarea
+              value={contents}
+              onChange={(e) => setContents(e.target.value)}
+            ></Textarea>
+          </Box>
+          <Box
+            sx={{
+              width: "60%",
+              height: "55px",
+              paddingX: "35px",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <Box sx={{ width: "155px" }}>
+              <DatePicker
+                calendarAriaLabel="calendar"
+                locale="ko-KR"
+                onChange={setStartTime}
+                value={startTime}
+                minDate={new Date()}
+                calendarType="US"
+              />
+            </Box>
+            <Box sx={{ width: "155px" }}>
+              <DatePicker
+                calendarAriaLabel="calendar"
+                locale="ko-KR"
+                onChange={setEndTime}
+                value={endTime}
+                minDate={new Date()}
+                calendarType="US"
+              />
             </Box>
           </Box>
-          <Box sx={{ width: "80%", margin: "auto", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-
-            <Text weight="bold">제목</Text>
-            <Box sx={{ width: "90%" }}>
-              <Input value={title} onChange={(e) => setTitle(e.target.value)}></Input>
-            </Box>
-          </Box>
-
-          <Box sx={{ width: "80%", margin: "auto", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-
-            <Text weight="bold">상세 설명</Text>
-            <Box sx={{ width: "90%" }}>
-              <Textarea value={contents} onChange={(e) => setContents(e.target.value)}></Textarea>
-            </Box>
-          </Box>
-          <Box sx={{ width: "80%", margin: "auto", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <Text weight="bold" >기간ㅤㅤㅤ</Text>
-            <Box sx={{ marginLeft: "8%", width: "30%" }}>
-              <DatePicker calendarAriaLabel="calendar" locale="ko-KR" onChange={setStartTime} value={startTime} minDate={new Date()} calendarType="US" />
-            </Box>
-            <Box sx={{ width: "30%" }}>
-              <DatePicker calendarAriaLabel="calendar" locale="ko-KR" onChange={setEndTime} value={endTime} minDate={new Date()} calendarType="US" />
-
-            </Box>
-            <Box sx={{ width: "30%" }}>
+          <Box
+            sx={{
+              width: "60%",
+              height: "50px",
+              paddingX: "35px",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <Box sx={{ width: "155px" }}>
               <TimePicker format="HH:mm" onChange={setAlarm} value={alarm} />
             </Box>
           </Box>
-          <Box sx={{ width: "80%", margin: "auto", display: "flex", alignItems: "center" }}>
-
-            <Text weight="bold">워치 사용</Text>
-            <FormControl sx={{ marginLeft: "15%" }}>
+          <Box
+            sx={{
+              height: "45px",
+              paddingX: "55px",
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <FormControl>
               <RadioGroup
                 row
                 aria-labelledby="demo-row-controlled-radio-buttons-group"
                 name="controlled-radio-buttons-group"
                 onChange={(e) => setWatch(e.target.value)}
               >
-                <FormControlLabel value={true} control={<Radio />} label="사용" />
-                <FormControlLabel value={false} control={<Radio />} label="사용 안함" />
+                <FormControlLabel
+                  value={true}
+                  control={<Radio />}
+                  label="사용"
+                />
+                <FormControlLabel
+                  value={false}
+                  control={<Radio />}
+                  label="사용 안함"
+                />
               </RadioGroup>
             </FormControl>
           </Box>
-          <ButtonBox>
-            <Button size="ss" my="0" onClick={register}>
-              챌린지 등록
-            </Button>
-          </ButtonBox>
-        </Box>
-
-      </Box>
+          <Box
+            sx={{
+              height: "45px",
+              paddingX: "55px",
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <FormControl>
+              <RadioGroup
+                row
+                aria-labelledby="demo-row-controlled-radio-buttons-group"
+                name="controlled-radio-buttons-group"
+                onChange={(e) => setWatch(e.target.value)}
+              >
+                <FormControlLabel
+                  value={true}
+                  control={<Radio />}
+                  label="사용"
+                />
+                <FormControlLabel
+                  value={false}
+                  control={<Radio />}
+                  label="설정 안함"
+                />
+              </RadioGroup>
+            </FormControl>
+          </Box>
+        </SettingContentBox>
+      </SettingBox>
+      <ButtonBox>
+        <Button size="ss" my="0" onClick={register}>
+          챌린지 등록
+        </Button>
+      </ButtonBox>
     </Box>
-
-
-
-
-  )
+  );
 }

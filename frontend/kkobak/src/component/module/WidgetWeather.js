@@ -1,10 +1,10 @@
-import React from "react";
+import React, { Component } from "react";
 import axios from "axios";
 import ReactDOM from "react-dom";
 import "./WidgetWeather.css";
 // import Box from "@mui/material/Box";
 
-export default class WidgetWeather extends React.Component {
+export default class WidgetWeather extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -23,7 +23,7 @@ export default class WidgetWeather extends React.Component {
 
   fetchData = () => {
     const url = this.buildUrlApi();
-    console.log("api", url);
+    // console.log("api", url);
 
     axios.get(url).then((response) => {
       this.setState({

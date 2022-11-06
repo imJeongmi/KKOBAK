@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
-// import MainCarousel from "component/module/MainCarousel";
+import MainCarousel from "component/module/MainCarousel";
 import Todolist from "component/module/Todolist";
 import MainCalendar from "component/atom/MainCalendar";
 import Text from "component/atom/Text";
@@ -14,6 +14,8 @@ import {
 
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
+
+import moment from "moment";
 
 export default function Main() {
   const [user, setUser] = useState([]);
@@ -85,34 +87,79 @@ export default function Main() {
       }}
     >
       <Box sx={{ margin: "0 auto" }}>
-        <Text size="l" weight="bold" mt="30" my="15">
-          안녕하세요,
-          {user.nickName} 님
-        </Text>
-        <Box sx={{ margin: "10px auto" }}>
-          <Stack spacing={2}>
-            <Pagination
-              count={3}
-              defaultPage={1}
-              shape="rounded"
-              onChange={(e) => handlePage(e)}
-              hidePrevButton
-              hideNextButton
-            />
-          </Stack>
+        <Box sx={{ flex: 1, display: "flex", marginBottom: "10px" }}>
+          <Box sx={{ float: "left", flex: 1, display: "flex" }}>
+            <Box sx={{ float: "left" }}>
+              <Text size="m" weight="semibold" mt="30" my="15">
+                안녕하세요,
+              </Text>
+            </Box>
+            <Box>
+              <Text size="m" weight="bold" mt="30" my="15" color="red">
+                {user.nickName}
+              </Text>
+            </Box>
+            <Box>
+              <Text size="m" weight="semibold" mt="30" my="15">
+                님
+              </Text>
+            </Box>
+          </Box>
+          <Box sx={{ marginTop: "40px" }}>
+            <Stack spacing={2}>
+              <Pagination
+                count={3}
+                defaultPage={1}
+                shape="rounded"
+                onChange={(e) => handlePage(e)}
+                hidePrevButton
+                hideNextButton
+              />
+            </Stack>
+          </Box>
         </Box>
         <MainBox>
           {MyChallengeList.map((item) => {
+            const startTimeCheck = moment(item.startTime).format("YYYY/MM/DD");
+            const endTimeCheck = moment(item.endTime).format("YYYY/MM/DD");
             console.log(item);
             return (
               <Box>
-                <Box>{item.title}</Box>
-                <MainCalendar
-                  chlId={item.chlId}
-                  key={item.id}
-                  startTime={item.startTime}
-                  endTime={item.endTime}
-                ></MainCalendar>
+                <Box
+                  sx={{ float: "left", marginLeft: "45px", marginTop: "20px" }}
+                >
+                  <Text size="l" weight="bold">
+                    {item.title}
+                  </Text>
+                </Box>
+                <Box sx={{ float: "right", marginRight: "45px" }}>
+                  <Box sx={{ flex: 1, display: "flex" }}>
+                    <Box sx={{ float: "left" }}>
+                      <Text weight="semibold" mt="30" my="15">
+                        {startTimeCheck}
+                      </Text>
+                    </Box>
+                    <Box>
+                      <Text weight="semibold" mt="30" my="15">
+                        &nbsp;&nbsp;-&nbsp;&nbsp;
+                      </Text>
+                    </Box>
+                    <Box>
+                      <Text weight="semibold" mt="30" my="15">
+                        {endTimeCheck}
+                      </Text>
+                    </Box>
+                  </Box>
+                </Box>
+                <Box>
+                  <MainCalendar
+                    title={item.title}
+                    chlId={item.chlId}
+                    key={item.id}
+                    startTime={item.startTime}
+                    endTime={item.endTime}
+                  ></MainCalendar>
+                </Box>
               </Box>
             );
           })}
@@ -120,7 +167,7 @@ export default function Main() {
       </Box>
       <SideBar>
         <Box sx={{ paddingY: "30px", marginLeft: "20px" }}>
-          {/* <MainCarousel /> */}
+          <MainCarousel />
         </Box>
 
         <Box sx={{ marginTop: "30px", marginLeft: "30px" }}>

@@ -6,7 +6,7 @@ import moment from "moment";
 import Text from "component/atom/Text";
 import TodolistItem from "component/atom/TodolistItem";
 
-import CheckImage from "static/check.png";
+import { getTodolist, registerTodolist } from "api/todolistApi";
 
 import "./Todolist.scss";
 
@@ -21,7 +21,7 @@ const TodolistBox = styled(Box)(
 
 const DateBox = styled(Box)(
   () => `
-    padding: 25px 35px 35px 35px;
+    padding: 25px 35px 25px 35px;
     display: flex;
     justify-content: space-around;
     `
@@ -86,12 +86,39 @@ export default function Todolist() {
     setFormedNowDay(getDay(nowDate.day()));
   }
 
-  const [todolist, setTodolist] = useState([]);
   const [text, setText] = useState("");
+  const [todolist, setTodolist] = useState([]);
+
+  useEffect(() => {
+    getTodolist(formedNowDate, getTodolistSuccess, getTodolistFail);
+  }, []);
+
+  useEffect(() => {
+    getTodolist(formedNowDate, getTodolistSuccess, getTodolistFail);
+  }, formedNowDate);
+
+  function getTodolistSuccess(res) {
+    setTodolist(res.data);
+  }
+
+  function getTodolistFail(res) {}
+
+  function registerTodolistSuccess(res) {
+    console.log("todoId: ", res.data);
+    getTodolist(formedNowDate, getTodolistSuccess, getTodolistFail);
+  }
+
+  function registerTodolistFail(res) {}
 
   function onKeyPress(e) {
-    if (e.key == "Enter" && e.target.value) {
-      setTodolist((todolist) => [...todolist, e.target.value]);
+    const newTodolist = e.target.value;
+    if (e.key == "Enter" && newTodolist) {
+      registerTodolist(
+        newTodolist,
+        nowDate.format("YYYY-MM-DD"),
+        registerTodolistSuccess,
+        registerTodolistFail
+      );
       setText("");
     }
   }
@@ -115,13 +142,18 @@ export default function Todolist() {
       </DateBox>
 
       {todolist.map((item, index) => {
-        return <TodolistItem item={item} />;
+        return (
+          <TodolistItem
+            nowDate={formedNowDate}
+            id={item.todoId}
+            contents={item.contents}
+            done={item.done}
+          />
+        );
       })}
 
       <TodolistInput>
-        <CheckBox>
-          <img src={CheckImage} width="20px" />
-        </CheckBox>
+        <CheckBox />
         <input
           autoFocus
           onKeyPress={onKeyPress}

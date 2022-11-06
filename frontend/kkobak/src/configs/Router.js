@@ -6,7 +6,7 @@ import Statistics from "../component/page/Statistics";
 import Setting from "component/page/Setting";
 import storage from "../helper/storage";
 import LoginModal from "component/module/LoginModal";
-import ChallengeDetail from "component/module/ChallengeDetail";
+import ChallengeDetail from "component/page/ChallengeDetail";
 import ChallengeRegister from "component/page/ChallengeRegister";
 
 function checkAuth() {
@@ -46,7 +46,7 @@ export default function RouterConfiguration() {
         }
       />
       <Route
-        path="/myChallenge/:challengeid"
+        path="/myChallenge/:chlId"
         element={
           <CheckAuth>
             <ChallengeDetail />
