@@ -17,7 +17,7 @@ export default function SelectedListItem() {
 
   const handleListItemClick = (event, index) => {
     setSelectedIndex(index);
-    console.log(index);
+    // console.log(index);
   };
 
   return (

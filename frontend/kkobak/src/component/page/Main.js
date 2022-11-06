@@ -103,7 +103,7 @@ export default function Main() {
         </Box>
         <MainBox>
           {MyChallengeList.map((item) => {
-            console.log(item);
+            // console.log(item);
             return (
               <Box>
                 <Box>{item.title}</Box>
