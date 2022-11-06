@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Box } from "@mui/material";
 
 import SideBarChallengeCreate from "component/atom/SideBarChallengeCreate";
-import ChallengeBasicForm from "component/module/ChallengeForm";
+import ChallengeForm from "component/module/ChallengeForm";
 
 import { getDetailCategoryList } from "api/Category";
 import { registerChallenge } from "api/Challenge";
@@ -83,7 +83,7 @@ export default function ChallengeRegister() {
           새 챌린지 등록
         </Text>
         <MainBox>
-          <ChallengeBasicForm
+          <ChallengeForm
             imgSrc={imgSrc}
             category={category}
             detailCategory={detailCategory}
@@ -104,7 +104,7 @@ export default function ChallengeRegister() {
             setAlarm={setAlarm}
             setWatch={setWatch}
             register={register}
-          ></ChallengeBasicForm>
+          ></ChallengeForm>
         </MainBox>
       </Box>
       <SideBarChallengeCreate />
