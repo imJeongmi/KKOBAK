@@ -1,7 +1,7 @@
 .weather-widget {
   width: 280px;
   height: 140px;
-  background-color: #b7cfe5;
+  background-color: #C5DAED;
   border-radius: 20px;
 }
 
@@ -47,6 +47,6 @@
 }
 
 .selected {
-  color: #fff;
+  color: #ffffff;
   transition: all 0.3s ease-in-out;
 }
