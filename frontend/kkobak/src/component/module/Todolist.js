@@ -33,6 +33,7 @@ const TodolistInput = styled(Box)(
     height: 30px;
     display: flex;
     align-items: center;
+    margin: 5px 0;
     `
 );
 
@@ -126,7 +127,12 @@ export default function Todolist() {
   return (
     <TodolistBox>
       <DateBox>
-        <Box onClick={onClickPrevDay}>
+        <Box
+          onClick={onClickPrevDay}
+          sx={{
+            cursor: "pointer",
+          }}
+        >
           <Text color="blue" weight="bold">
             &lt;
           </Text>
@@ -134,7 +140,12 @@ export default function Todolist() {
         <Box sx={{ width: "140px", textAlign: "center" }}>
           <Text weight="semibold">{`${formedNowDate} (${formedNowDay})`}</Text>
         </Box>
-        <Box onClick={onClickNextDay}>
+        <Box
+          onClick={onClickNextDay}
+          sx={{
+            cursor: "pointer",
+          }}
+        >
           <Text color="blue" weight="bold">
             &gt;
           </Text>

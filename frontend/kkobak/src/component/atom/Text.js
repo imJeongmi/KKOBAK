@@ -7,9 +7,7 @@ const TextBox = styled(Box)(
   ({ size, color, weight, my, mx, mt, py, px, done }) => `
   font-size: ${getSize(size)};
   color: ${getColor(color)};
-  margin: ${getMarginTop(mt, my)}px ${getMarginX(mx)}px ${getMarginY(
-    my
-  )}px ${getMarginX(mx)}px;
+  margin: ${getMarginTop(mt, my)}px ${getMarginX(mx)}px ${getMarginY(my)}px ${getMarginX(mx)}px;
   font-family: ${getWeight(weight)};
   padding: ${getPaddingY(py)}px ${getPaddingX(px)}px;
   text-decoration: ${getStyle(done)};
