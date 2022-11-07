@@ -129,7 +129,7 @@ export default function SelectedListItem() {
             />
           </Box>
         </ListItemButton>
-        <ListItemButton
+        {/* <ListItemButton
           component={Link}
           to="/Statistics"
           // href="/Statistics"
@@ -151,7 +151,7 @@ export default function SelectedListItem() {
               primaryTypographyProps={{ fontSize: "12px" }}
             />
           </Box>
-        </ListItemButton>
+        </ListItemButton> */}
       </List>
       {/* 세팅 위치 */}
       <List
