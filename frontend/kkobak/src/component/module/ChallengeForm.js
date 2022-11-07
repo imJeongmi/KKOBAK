@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import { Box, styled } from "@mui/system";
-import DatePicker from "react-time-picker";
+import DatePicker from "react-date-picker";
 import TimePicker from "react-time-picker";
 
 import Input from "component/atom/Input";
