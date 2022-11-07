@@ -35,6 +35,7 @@ public class StatgpsServiceImpl implements StatgpsService{
     private final PrtChlRepository prtChlRepository;
     private final StatgpsRepository statgpsRepository;
     private final LogRepository logRepository;
+    private final static int  EARTH_RADIUS = 6371;
 
     @Override
     public boolean addData(GpsInputRequest input, HttpServletRequest req) throws NotFoundException {
@@ -124,6 +125,23 @@ public class StatgpsServiceImpl implements StatgpsService{
                 .gpsList(output)
                 .total_dist(dist)
                 .build();
+    }
+    
+    //거리 계산용 함수
+    public static double getDistance(String lat1_s, String lng1_s, String lat2_s, String lng2_s) {
+
+        double lat1 = Double.parseDouble(lat1_s);
+        double lng1 = Double.parseDouble(lng1_s);
+        double lat2 = Double.parseDouble(lat2_s);
+        double lng2 = Double.parseDouble(lng2_s);
+
+        double dLat = Math.toRadians(lat2 - lat1);
+        double dLon = Math.toRadians(lng2 - lng1);
+
+        double a = Math.sin(dLat/2)* Math.sin(dLat/2)+ Math.cos(Math.toRadians(lat1))* Math.cos(Math.toRadians(lat2))* Math.sin(dLon/2)* Math.sin(dLon/2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        double d = EARTH_RADIUS * c * 1000;    // 미터로 바꾸기
+        return d;
     }
 
 }
