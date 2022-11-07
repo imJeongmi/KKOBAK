@@ -33,6 +33,7 @@ const TodolistInput = styled(Box)(
     height: 30px;
     display: flex;
     align-items: center;
+    margin: 5px 0;
     `
 );
 
