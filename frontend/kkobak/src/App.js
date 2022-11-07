@@ -1,7 +1,8 @@
 import "./App.css";
-import Nav from "./component/module/Navbar";
 
-import RouterConfiguration from "./configs/Router";
+// import RouterConfiguration from "./configs/Router";
+
+import Main from "component/page/Main";
 
 import { Box } from "@mui/material";
 
@@ -17,17 +18,17 @@ function App() {
           float: "left",
         }}
       >
-        <Box
+        {/* <Box
           sx={{
             width: "80px",
             height: "100vh",
             backgroundColor: "black",
           }}
-        ></Box>
-        <Nav />
+        ></Box> */}
       </Box>
       <Box>
-        <RouterConfiguration />
+        <Main></Main>
+        {/* <RouterConfiguration /> */}
       </Box>
     </Box>
   );

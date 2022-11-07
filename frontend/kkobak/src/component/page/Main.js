@@ -15,6 +15,8 @@ import {
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 
+import LoginModal from "component/module/LoginModal";
+
 import moment from "moment";
 
 export default function Main() {
@@ -77,7 +79,7 @@ export default function Main() {
 
   return MyChallengeList.length === 0 ? (
     <Box>
-      <Text> 생성된 챌린지가 없어요</Text>
+      <LoginModal></LoginModal>
     </Box>
   ) : (
     <Box
