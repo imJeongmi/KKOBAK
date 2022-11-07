@@ -9,6 +9,9 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import MainBox from "component/atom/MainBox";
 import SideBar from "component/atom/SideBar";
 import Text from "component/atom/Text";
+import Button from "component/atom/TextButton";
+
+import { useNavigate } from "react-router-dom";
 
 import { requestUserInfo, requestMyChallengeDetail } from "api/userApi";
 import { styled } from "@mui/material";
@@ -31,12 +34,20 @@ const ImageStyle = {
   overflow: "hidden",
 };
 
-const SettingTitleBox = styled (Box)(
+const SettingTitleBox = styled(Box)(
   () => `
   width: 100px;
   display: flex;
   flex-direction: column;
   align-items: start;
+  `
+);
+
+const ButtonBox = styled(Box)(
+  () => `
+  width: 95%;
+  display: flex;
+  justify-content: end;
   `
 );
 
@@ -53,6 +64,8 @@ export default function ChallengeDetail() {
   const [alarm, setAlarm] = useState("");
   const [watch, setWatch] = useState("");
   const [kkobakChallenge, setKkobakChallenge] = useState("");
+
+  const navigate = useNavigate();
 
   function requestUserInfoSuccess(res) {
     setUser(res.data);
@@ -84,6 +97,11 @@ export default function ChallengeDetail() {
       requestMyChallengeDetailFail
     );
   }, []);
+
+  function moveToStats(e) {
+    e.preventDefault();
+    navigate("/Statistics/:chlId");
+  }
 
   return (
     <Box
@@ -208,6 +226,11 @@ export default function ChallengeDetail() {
               </Box>
             </Box>
           </Box>
+          <ButtonBox>
+            <Button size="ss" my="0" onClick={moveToStats}>
+              통계 확인
+            </Button>
+          </ButtonBox>
         </MainBox>
       </Box>
       <SideBar />
