@@ -108,10 +108,21 @@ public class StatgpsServiceImpl implements StatgpsService{
                     .build());
         }
 
+        double dist=0;
+
+        // =============================================================
+
+        // 성영이 오빠가 하면 됨
+        // OUTPUT이 LAT, LNG, TIME(LOCALDATETIME) 으로 되어있는 list. 순서대로 나옴 걱정 ㄴㄴ
+        // 거리만 바꿔서 dist에 넣어주면 됨. 밑에서 알아서 넣어줌. ex) dist = 123;
+
+        // =============================================================
+
+
         return ResultResponse.builder()
                 .flag(flag)
                 .gpsList(output)
-                .total_dist(0)
+                .total_dist(dist)
                 .build();
     }
 

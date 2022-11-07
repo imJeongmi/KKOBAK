@@ -27,7 +27,8 @@ public class StatgpsController {
     }
 
     @GetMapping("/list/{year}/{month}/{day}/{cid}")
-    @ApiOperation(value="데이터 시도 목록 반환", notes = "'/api/gps/list/2022/11/07/1' 형식으로 사용")
+    @ApiOperation(value="데이터 시도 목록 반환", notes = "'/api/gps/list/2022/11/07/1' 형식으로 사용"
+            +"거리는 미터(m) 단위로 보내용 프론트에서 마음껏 변형해서 사용하시면 될듯..")
     public ResponseEntity<ResultResponse> addData(@PathVariable("year") String year, @PathVariable("month") String month,
                                                         @PathVariable("day") String day, @PathVariable("cid") Long cid, HttpServletRequest req) throws NotFoundException {
         return ResponseEntity.ok().body(statgpsService.getTryList(year, month, day, cid, req));

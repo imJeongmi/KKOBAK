@@ -19,6 +19,6 @@ public interface StatgpsRepository extends JpaRepository<Statgps,Long> {
     @Query(value="select count(*) from statgps where prt_chl_id=:p and date_format(chk, '%Y-%m-%d')=:date group by chk order by chk", nativeQuery = true)
     boolean existsByChkAndPrtChl(@Param("p") PrtChl p, @Param("date") String date);
 
-    @Query(value="select * from statgps where prt_chl_id=:p and chk=:date", nativeQuery = true)
+    @Query(value="select * from statgps where prt_chl_id=:p and chk=:date order by time", nativeQuery = true)
     List<Statgps> findByChkTimeAndPrtChl(@Param("p") PrtChl p, @Param("date") LocalDateTime date);
 }
