@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+
 import WidgetTime from "./WidgetTime";
 import WidgetWeather from "./WidgetWeather";
 
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 export default class VerticalMode extends Component {
   render() {
     const settings = {
@@ -19,17 +20,12 @@ export default class VerticalMode extends Component {
       autospeed: 500,
       arrows: false,
     };
+
     return (
-      <div style={{ width: "280px" }}>
-        <Slider {...settings}>
-          <div>
-            <WidgetTime />
-          </div>
-          <div>
-            <WidgetWeather />
-          </div>
-        </Slider>
-      </div>
+      <Slider {...settings}>
+        <WidgetTime />
+        <WidgetWeather />
+      </Slider>
     );
   }
 }
