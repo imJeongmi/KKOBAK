@@ -4,6 +4,7 @@ import com.a104.freeproject.Challenge.entity.Challenge;
 import com.a104.freeproject.Log.entity.Log;
 import com.a104.freeproject.Member.entity.Member;
 import com.a104.freeproject.Statbpm.entity.Statbpm;
+import com.a104.freeproject.Statgps.entity.Statgps;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
@@ -71,5 +72,9 @@ public class PrtChl implements Serializable {
     @Builder.Default
     @OneToMany(mappedBy = "prtChl", cascade = CascadeType.ALL)
     private List<Statbpm> statbpmList = new LinkedList<>();
+
+    @Builder.Default
+    @OneToMany(mappedBy = "prtChl", cascade = CascadeType.ALL)
+    private List<Statgps> statgpsList = new LinkedList<>();
 
 }
