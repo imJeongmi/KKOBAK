@@ -158,7 +158,7 @@ export default function Main() {
                     key={item.id}
                     startTime={item.startTime}
                     endTime={item.endTime}
-                  ></MainCalendar>
+                  />
                 </Box>
               </Box>
             );
@@ -166,7 +166,7 @@ export default function Main() {
         </MainBox>
       </Box>
       <SideBar>
-        <Box sx={{ paddingY: "30px", marginLeft: "20px" }}>
+        <Box sx={{ margin: "40px 30px 50px 30px" }}>
           <MainCarousel />
         </Box>
 

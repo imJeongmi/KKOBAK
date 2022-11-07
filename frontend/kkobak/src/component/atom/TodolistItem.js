@@ -37,7 +37,8 @@ export default function TodolistItem({ nowDate, id, contents, done }) {
   const [hover, setHover] = useState(false);
   const [cancelText, setCancelText] = useState(done);
 
-  function updateTodolistStatusSuccess(res) {}
+  function updateTodolistStatusSuccess(res) {
+    window.location.reload();}
 
   function updateTodolistStatusFail(res) {}
 
