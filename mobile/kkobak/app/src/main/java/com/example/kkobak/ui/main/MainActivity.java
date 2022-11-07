@@ -20,6 +20,7 @@ import com.example.kkobak.databinding.ActivityMainBinding;
 import com.example.kkobak.ui.login.LoginActivity;
 import com.example.kkobak.ui.test.SpeedActivity;
 import com.example.kkobak.ui.test.TestActivity;
+import com.example.kkobak.ui.test.TimerActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.List;
@@ -105,6 +106,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void moveSpeed(View v) {
         Intent intent = new Intent(this, SpeedActivity.class);
+        startActivity(intent);
+    }
+
+    public void moveTimer(View v) {
+        Intent intent = new Intent(this, TimerActivity.class);
         startActivity(intent);
     }
 }

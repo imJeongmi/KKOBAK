@@ -10,6 +10,8 @@
     <!-- 속도 데이터를 사용하기 위한 허가 -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!-- 진동 울리기 위한 허가 -->
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:allowBackup="true"
@@ -48,6 +50,8 @@
         <activity android:name=".ui.myChallengeDetail.MyChallengeDetailActivity" />
 
         <activity android:name=".ui.test.SpeedActivity" />
+
+        <activity android:name=".ui.test.TimerActivity" />
     </application>
 
 </manifest>
