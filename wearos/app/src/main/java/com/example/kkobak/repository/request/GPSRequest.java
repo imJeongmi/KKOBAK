@@ -10,14 +10,14 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class GPSRequest {
-    @SerializedName("chlId") private Long chiId;
+    @SerializedName("chlId") private Long chlId;
     @SerializedName("time") private LocalDateTime time;
     @SerializedName("lat") private String lat;
     @SerializedName("lng") private String lng;
     @SerializedName("chk") private LocalDateTime chk;
 
     public GPSRequest(long chiId, LocalDateTime time, String lat, String lng, LocalDateTime chk){
-        this.chiId = chiId;
+        this.chlId = chiId;
         this.time = time;
         this.lat = lat;
         this.lng = lng;

@@ -79,6 +79,7 @@ public class HeartrateActivity extends Activity implements SensorEventListener {
             @Override
             public void onClick(View view) {
                 sensorManager.registerListener(registerListener, hr, SensorManager.SENSOR_DELAY_NORMAL);
+                chk = LocalDateTime.now();
             }
         });
         btn_end = findViewById(R.id.btn_end);

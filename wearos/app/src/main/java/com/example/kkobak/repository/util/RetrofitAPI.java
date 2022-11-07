@@ -31,6 +31,6 @@ public interface RetrofitAPI {
     Call<Boolean> sendHeartOne(@Body HeartRequest heartrequest, @Header("Authorization") String authorization);
 
     @POST("gps/add")
-    Call<Boolean> sendGPSOne(@Body GPSRequest gpsRequest);
+    Call<Boolean> sendGPSOne(@Body GPSRequest gpsRequest, @Header("Authorization") String authorization);
 
 }

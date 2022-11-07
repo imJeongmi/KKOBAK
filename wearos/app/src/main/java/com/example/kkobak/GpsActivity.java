@@ -62,6 +62,7 @@ public class GpsActivity extends Activity {
             public void onLocationChanged(@NonNull Location location) {
                 System.out.println("호출됩니다");
                 System.out.println(LocalDateTime.now());
+//                location.distanceTo()
                 updateMap(location);
                 sendOne(location.getLatitude(), location.getLongitude(), LocalDateTime.now());
             }
