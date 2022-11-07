@@ -14,9 +14,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.kkobak.repository.request.HeartRequest;
 import com.example.kkobak.repository.util.RetrofitClient;
+import com.example.kkobak.room.dao.AccessTokenDao;
+import com.example.kkobak.room.dao.TodoDao;
+import com.example.kkobak.room.data.AccessToken;
 import com.example.kkobak.room.db.AppDatabase;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +41,15 @@ public class HeartrateActivity extends Activity implements SensorEventListener {
     private Button btn_end;
     private SensorEventListener registerListener;
 
+    // intent로 넘어온 chlId 저장 (Create 시)
+    private long chlId = 1;
+    // startTime 저장용
+    private LocalDateTime chk;
+    // 토큰
+    private String accessToken;
+    private AccessTokenDao tokenDao;
+    private TodoDao todoDao;
+
     private static final String TAG = "____Main___";
 
     private List<Integer> heartRate = new ArrayList<>();
@@ -52,6 +67,10 @@ public class HeartrateActivity extends Activity implements SensorEventListener {
 
         // Room 관련 코드
         AppDatabase database = AppDatabase.getInstance(getApplicationContext());
+        tokenDao = database.tokenDao();
+        todoDao = database.todoDao();
+        List<AccessToken> tokenList = tokenDao.getTokenAll();
+        accessToken = tokenList.get(0).getAccessToken();
 
         checkPermission();
 
@@ -87,7 +106,7 @@ public class HeartrateActivity extends Activity implements SensorEventListener {
             textView.setText(heartValue+"");
 //            System.out.println(sensorEvent.values[0]);
             heartRate.add(heartValue);
-            sendOne(heartValue);
+            sendOne(heartValue,LocalDateTime.now());
         }
     }
 
@@ -148,9 +167,10 @@ public class HeartrateActivity extends Activity implements SensorEventListener {
         });
     }
 
-    public void sendOne(int heartValue) {
+    public void sendOne(int heartValue, LocalDateTime time) {
+        HeartRequest heartRequest = new HeartRequest(chlId, time, heartValue, chk);
         //Retrofit 호출
-        Call<Boolean> call = RetrofitClient.getApiService().sendHeartOne(heartValue);
+        Call<Boolean> call = RetrofitClient.getApiService().sendHeartOne(heartRequest,accessToken);
         call.enqueue(new Callback<Boolean>() {
             @Override
             public void onResponse(Call<Boolean> call, Response<Boolean> response) {

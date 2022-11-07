@@ -1,6 +1,7 @@
 package com.example.kkobak.repository.util;
 
 import com.example.kkobak.repository.request.GPSRequest;
+import com.example.kkobak.repository.request.HeartRequest;
 import com.example.kkobak.repository.request.LoginRequest;
 import com.example.kkobak.repository.response.TodoListResponse;
 import com.example.kkobak.repository.response.TokenResponse;
@@ -27,7 +28,7 @@ public interface RetrofitAPI {
     Call<Boolean> sendHeartList(@Body List<Integer> list);
 
     @POST("bpm/add")
-    Call<Boolean> sendHeartOne(@Body HeartRequest heartrequest);
+    Call<Boolean> sendHeartOne(@Body HeartRequest heartrequest, @Header("Authorization") String authorization);
 
     @POST("gps/add")
     Call<Boolean> sendGPSOne(@Body GPSRequest gpsRequest);

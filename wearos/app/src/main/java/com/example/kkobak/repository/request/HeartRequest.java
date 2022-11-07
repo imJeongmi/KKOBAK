@@ -10,16 +10,15 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class HeartRequest {
-    @SerializedName("chlId") private Long chiId;
+    @SerializedName("chlId") private Long chlId;
     @SerializedName("time") private LocalDateTime time;
-    @SerializedName("bpm") private String bpm;
+    @SerializedName("bpm") private int bpm;
     @SerializedName("chk") private LocalDateTime chk;
 
-    public GPSRequest(long chiId, LocalDateTime time, String lng, LocalDateTime chk){
-        this.chiId = chiId;
+    public HeartRequest(long chlId, LocalDateTime time, int bpm, LocalDateTime chk){
+        this.chlId = chlId;
         this.time = time;
-        this.lat = lat;
-        this.lng = lng;
+        this.bpm = bpm;
         this.chk = chk;
     }
 }
