@@ -317,7 +317,7 @@ export default function ChallengeForm({
                 <FormControlLabel
                   value={true}
                   control={<Radio />}
-                  label="사용"
+                  label="설정"
                 />
                 <FormControlLabel
                   value={false}
