@@ -19,12 +19,30 @@ public class MainActivity extends Activity {
     private ActivityMainBinding binding;
     private Button btn_login;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        // 파이어베이스 토큰 확인 및 출력용
+        FirebaseMessaging.getInstance().getToken()
+        .addOnCompleteListener(new OnCompleteListener<String>() {
+            @Override
+            public void onComplete(@NonNull Task<String> task) {
+                if (!task.isSuccessful()) {
+                    System.out.println( task.getException());
+                    return;
+                }
+
+                // Get new FCM registration token
+                String token = task.getResult();
+
+                System.out.println("FCM 토큰입니다!!!! : "+ token);
+            }
+        });
 
         btn_login = findViewById(R.id.btn_login);
         btn_login.setOnClickListener(new View.OnClickListener() {

@@ -14,7 +14,7 @@ import com.google.firebase.messaging.RemoteMessage;
 public class MyFirebaseMessageService extends FirebaseMessagingService {
     @Override
     public void onNewToken(@NonNull String s) {
-        super.onNewToken(s);
+            super.onNewToken(s);
         System.out.println("파이어베이스 토큰 호출: "+s);
     }
 
