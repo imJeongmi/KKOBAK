@@ -1,9 +1,16 @@
 import React, { Component } from "react";
-import axios from "axios";
 import ReactDOM from "react-dom";
-import "./WidgetWeather.css";
-// import Box from "@mui/material/Box";
+import axios from "axios";
 
+import Text from "component/atom/Text";
+import SunIcon from "static/weather/sunIcon.png";
+import CloudIcon from "static/weather/cloudIcon.png";
+import SnowIcon from "static/weather/snowIcon.png";
+import RainIcon from "static/weather/rainIcon.png";
+import DrizzleIcon from "static/weather/drizzleIcon.png";
+import ThunderIcon from "static/weather/thunderIcon.png";
+
+import "./WidgetWeather.css";
 export default class WidgetWeather extends Component {
   constructor(props) {
     super(props);
@@ -23,7 +30,6 @@ export default class WidgetWeather extends Component {
 
   fetchData = () => {
     const url = this.buildUrlApi();
-    // console.log("api", url);
 
     axios.get(url).then((response) => {
       this.setState({
@@ -60,6 +66,7 @@ export default class WidgetWeather extends Component {
       const maxTemps = [];
       const weather = [];
       const icons = [];
+
       for (let i = 0; i < this.state.data.list.length; i = i + 8) {
         let date = new Date(this.state.data.list[i].dt_txt);
         let day = dayOfWeek[date.getDay()];
@@ -120,19 +127,19 @@ export default class WidgetWeather extends Component {
   convertWeatherIcons = (weather) => {
     switch (weather) {
       case "Clear":
-        return "circle-outline";
+        return SunIcon;
       case "Clouds":
-        return "weather-cloudy";
+        return CloudIcon;
       case "Snow":
-        return "weather-snowy";
+        return SnowIcon;
       case "Rain":
-        return "weather-pouring";
+        return RainIcon;
       case "Drizzle":
-        return "weather-pouring";
+        return DrizzleIcon;
       case "Thunderstorm":
-        return "weather-lightning-rainy";
+        return ThunderIcon;
       default:
-        return "weather-cloudy";
+        return SunIcon;
     }
   };
 
@@ -176,122 +183,87 @@ export default class WidgetWeather extends Component {
       displayIndex,
     } = this.state;
 
-    let background = "";
+    let imgSrc = "";
     switch (weather[displayIndex]) {
       case "Clear":
-        background = "clear";
+        imgSrc = SunIcon;
         break;
       case "Cloudy":
-        background = "cloudy";
+        imgSrc = CloudIcon;
         break;
       case "Snow":
-        background = "snow";
+        imgSrc = SnowIcon;
         break;
       case "Rain":
-        background = "rain";
+        imgSrc = RainIcon;
         break;
       case "Drizzle":
-        background = "rain";
+        imgSrc = DrizzleIcon;
         break;
       case "Thunderstorm":
-        background = "thunderstorm";
+        imgSrc = ThunderIcon;
         break;
       default:
-        background = "cloudy";
+        imgSrc = SunIcon;
     }
 
     return (
-      <div className={"widget ".concat(...background)}>
+      <div className="weather-widget">
         <form onSubmit={this.changeLocation}>
-          <div className="inline-input">
-            <i className="mdi mdi-magnify"></i>
-            <input
-              className="location-input"
-              defaultValue={location}
-              type="text"
-              onFocus={this.handleFocus}
-              ref={(input) => (this.locationInput = input)}
-            />
-          </div>
+          <input
+            className="location-display"
+            defaultValue={location}
+            type="text"
+            onFocus={this.handleFocus}
+            ref={(input) => (this.locationInput = input)}
+          />
         </form>
 
         <div className="main-display">
-          <div className="main-info">
-            <div className="temp-measurement">{temps[displayIndex]}</div>
-            <div className="temp-unit">°C</div>
-          </div>
-
+          <Text size="xl" weight="medium">{`${temps[displayIndex]}°`}</Text>
           <div className="sub-info">
-            <div className="sub-info-title">{daysFull[displayIndex]}</div>
-
-            <div className="sub-info-text">{weather[displayIndex]}</div>
-
-            <div className="sub-info-text">
-              <span className="max-temp">
-                <i className="mdi mdi-arrow-up" />
-                {maxTemps[displayIndex]}
-                °C
-              </span>
-              <span className="min-temp">
-                <i className="mdi mdi-arrow-down" />
-                {minTemps[displayIndex]}
-                °C
-              </span>
+            <div className="weather-display">
+              {/* 날씨 이모지 추가하기*/}
+              <img src={imgSrc} width="30px" />                               
+              <Text
+                weight="semibold"
+                size="18px"
+                color="white"
+                mx="10px"
+              >{`${weather[displayIndex]}`}</Text>
             </div>
+            <Text
+              weight="semibold"
+              size="15px"
+              mt="3"
+            >{`최고: ${maxTemps[displayIndex]}°  최저: ${minTemps[displayIndex]}°`}</Text>
           </div>
         </div>
 
-        <div className="selection-panel">
-          <div className="selection-row">
-            {icons.map((item, index) => {
-              if (displayIndex === index) {
-                return (
-                  <div
-                    className="selection-icons selected"
-                    key={index + 1}
-                    onClick={() => this.setIndex(index)}
-                  >
-                    <i className={"mdi mdi-".concat(item)} />
-                  </div>
-                );
-              } else {
-                return (
-                  <div
-                    className="selection-icons"
-                    key={index + 1}
-                    onClick={() => this.setIndex(index)}
-                  >
-                    <i className={"mdi mdi-".concat(item)} />
-                  </div>
-                );
-              }
-            })}
-          </div>
-          <div className="selection-row">
-            {days.map((item, index) => {
-              if (displayIndex === index) {
-                return (
-                  <div
-                    className="selection-days selected"
-                    key={index + 1}
-                    onClick={() => this.setIndex(index)}
-                  >
-                    {item}
-                  </div>
-                );
-              } else {
-                return (
-                  <div
-                    className="selection-days"
-                    key={index + 1}
-                    onClick={() => this.setIndex(index)}
-                  >
-                    {item}
-                  </div>
-                );
-              }
-            })}
-          </div>
+        <div className="day-display">
+          {days.map((item, index) => {
+            if (displayIndex === index) {
+              return (
+                <div
+                  className="selection-days selected"
+                  key={index + 1}
+                  onClick={() => this.setIndex(index)}
+                >
+                  {item}
+                </div>
+              );
+            } else {
+              return (
+                <div
+                  className="selection-days"
+                  key={index + 1}
+                  onClick={() => this.setIndex(index)}
+                >
+                  {item}
+                </div>
+              );
+            }
+          })}
         </div>
       </div>
     );
