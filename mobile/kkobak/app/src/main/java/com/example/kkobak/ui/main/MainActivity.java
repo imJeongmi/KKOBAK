@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -21,7 +22,10 @@ import com.example.kkobak.ui.login.LoginActivity;
 import com.example.kkobak.ui.test.SpeedActivity;
 import com.example.kkobak.ui.test.TestActivity;
 import com.example.kkobak.ui.test.TimerActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.List;
 
@@ -54,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
        } catch (Exception e) {
             Toast.makeText(this, "에러 발생", Toast.LENGTH_SHORT).show();
         }
+
     }
 
     public static class LogoutAsyncTask extends AsyncTask<Void, Void, Void> {

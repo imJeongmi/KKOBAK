@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -20,6 +21,9 @@ import com.example.kkobak.data.room.entity.AccessToken;
 import com.example.kkobak.ui.main.MainActivity;
 import com.example.kkobak.ui.register.RegisterActivity;
 import com.example.kkobak.ui.test.TestActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.LinkedList;
 import java.util.List;
