@@ -122,7 +122,7 @@ export default function Main() {
           {MyChallengeList.map((item) => {
             const startTimeCheck = moment(item.startTime).format("YYYY/MM/DD");
             const endTimeCheck = moment(item.endTime).format("YYYY/MM/DD");
-            console.log(item);
+            // console.log(item);
             return (
               <Box>
                 <Box
