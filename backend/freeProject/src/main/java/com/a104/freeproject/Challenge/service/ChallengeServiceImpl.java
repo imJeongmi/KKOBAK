@@ -34,6 +34,7 @@ import javax.transaction.Transactional;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.*;
 
 @Service
@@ -334,6 +335,30 @@ public class ChallengeServiceImpl implements ChallengeService{
 
         prtChlService.participate(chlId,req,alarmType);
         return true;
+    }
+
+    @Override
+    public boolean findChlDone(Long chlId, HttpServletRequest req) throws NotFoundException {
+
+        Member member = memberService.findEmailbyToken(req);
+        if(!challengeRepository.existsById(chlId)) throw new NotFoundException("존재하지 않는 챌린지입니다.");
+        Challenge c = challengeRepository.findById(chlId).get();
+
+        if(c.isFin()||c.getStatus()==2) throw new NotFoundException("종료된 챌린지입니다.");
+
+        if(!prtChlRepository.existsByChallengeAndMember(c,member))
+            throw new NotFoundException("참여하지 않은 챌린지 입니다.");
+
+        PrtChl p = prtChlRepository.findByChallengeAndMember(c,member);
+        if(p.is_fin()) throw new NotFoundException("종료된 챌린지입니다.");
+
+        LocalDate now = LocalDate.now(ZoneId.of("Asia/Seoul"));
+
+        if(!logRepository.existsByPrtChlAndDate(p,now))
+            throw new NotFoundException("해당 챌린지의 당일 로그가 존재하지 않습니다.");
+        Log log = logRepository.findByPrtChlAndDate(p,now);
+
+        return log.isFin();
     }
 
     public List<ChallengeListResponse> makeResponse(List<Challenge> content) {

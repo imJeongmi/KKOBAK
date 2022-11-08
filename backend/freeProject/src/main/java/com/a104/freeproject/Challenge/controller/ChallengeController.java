@@ -117,4 +117,10 @@ public class ChallengeController {
         return ResponseEntity.ok().body(challengeService.participateChl(chlId, alarmType, req));
     }
 
+    @GetMapping("/done/{cid}")
+    @ApiOperation(value="[확인] 챌린지 별 오늘 참여 여부 return", notes="'/api/challenge/done/1' 형식으로 사용")
+    public ResponseEntity<Boolean> findChlDone(@PathVariable("cid") Long cid, HttpServletRequest req) throws NotFoundException{
+        return ResponseEntity.ok().body(challengeService.findChlDone(cid, req));
+    }
+
 }

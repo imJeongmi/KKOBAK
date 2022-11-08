@@ -51,7 +51,6 @@ public class LogServiceImpl implements LogService {
     @Override
     @Scheduled(cron = "0 0 0 * * ?") // 매일 0시 0분에 실행
     public void updateDayLog() {
-        System.out.println("0시 0분 >> log create");
         List<PrtChl> prtList = prtChlRepository.findAll();
         LocalDate today = LocalDate.now(ZoneId.of("Asia/Seoul"));
 
@@ -62,6 +61,9 @@ public class LogServiceImpl implements LogService {
 
             logRepository.save(Log.builder()
                     .prtChl(p).date(today).build());
+
+            p.setFailDay(p.getFailDay()+1);
+            prtChlRepository.save(p);
         }
     }
 

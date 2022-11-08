@@ -5,6 +5,7 @@ import com.a104.freeproject.Challenge.response.*;
 import com.a104.freeproject.HashTag.entity.ChlTag;
 import com.a104.freeproject.advice.exceptions.NotFoundException;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -38,4 +39,6 @@ public interface ChallengeService {
     List<useWatchResponse> findWatchUse(boolean useWatch, Pageable pageable) throws NotFoundException;
 
     boolean participateChl(Long chlId, int alarmType, HttpServletRequest req) throws NotFoundException;
+
+    boolean findChlDone(Long chlId, HttpServletRequest req) throws NotFoundException;
 }
