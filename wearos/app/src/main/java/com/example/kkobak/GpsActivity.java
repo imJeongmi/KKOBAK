@@ -18,9 +18,18 @@ import androidx.annotation.NonNull;
 
 import com.example.kkobak.repository.request.GPSRequest;
 import com.example.kkobak.repository.util.RetrofitClient;
+import com.example.kkobak.room.dao.AccessTokenDao;
+import com.example.kkobak.room.dao.TodoDao;
+import com.example.kkobak.room.data.AccessToken;
+import com.example.kkobak.room.db.AppDatabase;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -31,16 +40,29 @@ import retrofit2.Response;
 public class GpsActivity extends Activity {
 
     LocationManager locationManager;
+
+    //로케이션 리스너 선언 및 설정
     LocationListener locationListener;
 //    Timer timer;
     String str;
     private TextView textView;
 
     private Button btn_gps_start;
+    private Button btn_gps_stop;
     private Button btn_gps_end;
-    
+    // 리스트에서 넘어온 데이터
+    private Long chlId = 1L;
+
+    // 토큰
+    private String accessToken;
+    private AccessTokenDao tokenDao;
+    private TodoDao todoDao;
+
     // 시작 시간 저장용
     LocalDateTime chk;
+
+    //시간 데이터 포맷
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     private static final String TAG = "____GPS____";
 
@@ -52,19 +74,29 @@ public class GpsActivity extends Activity {
         textView = findViewById(R.id.txt_gps);
         str ="";
         textView.setMovementMethod(new ScrollingMovementMethod());
-        
+
+        // 토큰 세팅
+        AppDatabase database = AppDatabase.getInstance(getApplicationContext());
+        tokenDao = database.tokenDao();
+        todoDao = database.todoDao();
+        List<AccessToken> tokenList = tokenDao.getTokenAll();
+        accessToken = tokenList.get(0).getAccessToken();
+
+        //데이터 포맷터 세팅
+
+//        LocalDateTime dateTime = LocalDateTime.parse(str, formatter);
+
         // 권한 확인
         checkPermission();
 
-        //로케이션 리스너 설정
         locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(@NonNull Location location) {
                 System.out.println("호출됩니다");
-                System.out.println(LocalDateTime.now());
+                System.out.println(LocalDateTime.now().withNano(0));
 //                location.distanceTo()
                 updateMap(location);
-                sendOne(location.getLatitude(), location.getLongitude(), LocalDateTime.now());
+                sendOne(location.getLatitude(), location.getLongitude(), LocalDateTime.now().withNano(0));
             }
 
             @Override
@@ -87,8 +119,7 @@ public class GpsActivity extends Activity {
                 System.out.println("제공안됨");
             }
         };
-
-        System.out.println("리스너 등록 완료");
+        System.out.println("리스너 설정 완료");
 
         locationManager = (LocationManager) this.getSystemService(LOCATION_SERVICE);
         System.out.println("매니저");
@@ -115,18 +146,21 @@ public class GpsActivity extends Activity {
             System.out.println("longtitude=" + lng + ", latitude=" + lat);
         }
 
-
+        //시작 버튼
         btn_gps_start = findViewById(R.id.button_gps_start);
         btn_gps_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // 권한 확인
                 checkPermission();
+                // 클릭하면 센서를 로케이션 리스너에 등록
                 locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,3000,0,locationListener);
-                chk = LocalDateTime.now();
+                // 시작 시간 등록
+                chk = LocalDateTime.now(). withNano(0);
             }
         });
 
+        // 종료 버튼
         btn_gps_end = findViewById(R.id.button_gps_end);
         btn_gps_end.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -155,7 +189,6 @@ public class GpsActivity extends Activity {
         System.out.println("lat: "+ lat +" ,\n "+" lng: "+ lng);
         textView.setText(str);
 
-
     }
 
     private void checkPermission() { // step 3 started (according to content detail)
@@ -173,8 +206,8 @@ public class GpsActivity extends Activity {
 
     public void sendOne(double lat, double lng, LocalDateTime time) {
         //Retrofit 호출
-        GPSRequest gpsRequest = new GPSRequest(1L, time, Double.toString(lat), Double.toString(lng), chk);
-        Call<Boolean> call = RetrofitClient.getApiService().sendGPSOne(gpsRequest);
+        GPSRequest gpsRequest = new GPSRequest( chlId, time.toString(), Double.toString(lat), Double.toString(lng), chk.toString());
+        Call<Boolean> call = RetrofitClient.getApiService().sendGPSOne(gpsRequest, accessToken);
         call.enqueue(new Callback<Boolean>() {
             @Override
             public void onResponse(Call<Boolean> call, Response<Boolean> response) {

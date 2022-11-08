@@ -42,7 +42,7 @@ public class HeartrateActivity extends Activity implements SensorEventListener {
     private SensorEventListener registerListener;
 
     // intent로 넘어온 chlId 저장 (Create 시)
-    private long chlId = 1;
+    private long chlId = 91;
     // startTime 저장용
     private LocalDateTime chk;
     // 토큰
@@ -65,7 +65,7 @@ public class HeartrateActivity extends Activity implements SensorEventListener {
 
         textView = findViewById(R.id.txt_heartrate);
 
-        // Room 관련 코드
+        // Room 관련 코드(토큰 세팅)
         AppDatabase database = AppDatabase.getInstance(getApplicationContext());
         tokenDao = database.tokenDao();
         todoDao = database.todoDao();
@@ -79,7 +79,7 @@ public class HeartrateActivity extends Activity implements SensorEventListener {
             @Override
             public void onClick(View view) {
                 sensorManager.registerListener(registerListener, hr, SensorManager.SENSOR_DELAY_NORMAL);
-                chk = LocalDateTime.now();
+                chk = LocalDateTime.now().withNano(0);
             }
         });
         btn_end = findViewById(R.id.btn_end);
@@ -107,7 +107,9 @@ public class HeartrateActivity extends Activity implements SensorEventListener {
             textView.setText(heartValue+"");
 //            System.out.println(sensorEvent.values[0]);
             heartRate.add(heartValue);
-            sendOne(heartValue,LocalDateTime.now());
+            if(heartValue!=0) {
+                sendOne(heartValue, LocalDateTime.now().withNano(0));
+            }
         }
     }
 
@@ -169,9 +171,9 @@ public class HeartrateActivity extends Activity implements SensorEventListener {
     }
 
     public void sendOne(int heartValue, LocalDateTime time) {
-        HeartRequest heartRequest = new HeartRequest(chlId, time, heartValue, chk);
+        HeartRequest heartRequest = new HeartRequest(chlId, time.withNano(0).toString(), heartValue, chk.toString());
         //Retrofit 호출
-        Call<Boolean> call = RetrofitClient.getApiService().sendHeartOne(heartRequest,accessToken);
+        Call<Boolean> call = RetrofitClient.getApiService().sendHeartOne(heartRequest, accessToken);
         call.enqueue(new Callback<Boolean>() {
             @Override
             public void onResponse(Call<Boolean> call, Response<Boolean> response) {

@@ -47,13 +47,15 @@ public class LoginActivity extends Activity {
         btn_loginchk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                System.out.println("로그인 버튼 클릭");
                 getToken(et_email.getText().toString(),et_pw.getText().toString());
             }
         });
     }
 
     public void getToken(String email, String pw){
-
+        System.out.println(email);
+        System.out.println(pw);
         //Retrofit 호출
         LoginRequest loginRequest = new LoginRequest(et_email.getText().toString(),et_pw.getText().toString());
         Call<TokenResponse> call = RetrofitClient.getApiService().login(loginRequest);
