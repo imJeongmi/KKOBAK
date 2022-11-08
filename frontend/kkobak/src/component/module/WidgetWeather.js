@@ -143,7 +143,7 @@ export default function WidgetWeather() {
       <div className="day-display">
         {days &&
           days.map((item, index) => {
-            if (index == currentDayIdx) {
+            if (index === currentDayIdx) {
               return (
                 <div
                   onClick={() => {
