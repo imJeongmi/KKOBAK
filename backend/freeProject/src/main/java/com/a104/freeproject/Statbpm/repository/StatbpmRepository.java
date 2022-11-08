@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface StatbpmRepository extends JpaRepository<Statbpm,Long> {
-    @Query(value="select * from statbpm where prt_chl_id=:p and date_format(chk, '%Y-%m-%d')=:date group by chk order by chk", nativeQuery = true)
+    @Query(value="select chk, success from statbpm where prt_chl_id=:p and date_format(chk, '%Y-%m-%d')=:date group by date_format(chk, '%Y-%m-%d'), success order by chk", nativeQuery = true)
     List<TestInterface> findByChkAndPrtChlJPQL(@Param("date") String date, @Param("p") PrtChl p);
 
     @Query(value="select count(*) from statbpm where prt_chl_id=:p and date_format(chk, '%Y-%m-%d')=:date group by chk order by chk", nativeQuery = true)

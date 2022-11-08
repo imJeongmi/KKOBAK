@@ -87,16 +87,25 @@ public class StatbpmServiceImpl implements StatbpmService{
         System.out.println("로그 존재함.");
         Log log = logRepository.findByPrtChlAndDate(p,date);
         List<TestInterface> statbpmList = statbpmRepository.findByChkAndPrtChlJPQL(date.toString(),p);
-        System.out.println(statbpmList.size());
+        
+        for(TestInterface test : statbpmList){
+            System.out.println("test.getSuccess() = " + test.getSuccess());
+            System.out.println("test.getChk() = " + test.getChk());
+        }
+        
         if(statbpmList.size()==0)
             return BpmResultResponse.builder()
                     .flag(false)
                     .bpmList(new LinkedList<BpmListResponse>())
                     .maxBpm(0).minBpm(0).avgBpm(0)
                     .build();
-
+        
+        System.out.println("size 0 아님");
+        
         boolean flag = statbpmList.get(statbpmList.size()-1).getSuccess();
         LocalDateTime sendTime = statbpmList.get(statbpmList.size()-1).getChk();
+        System.out.println("sendTime = " + sendTime);
+        
         if(!flag){
             for(int i = statbpmList.size()-2;i>=0;i--){
                 if(flag) {
@@ -108,6 +117,9 @@ public class StatbpmServiceImpl implements StatbpmService{
         }
 
         List<Statbpm> list = statbpmRepository.findByChkTimeAndPrtChl(p,sendTime);
+
+        System.out.println("list.size() = " + list.size());
+        
         List<BpmListResponse> output = new LinkedList<>();
         int maxbpm=list.get(0).getBpm();
         int minbpm=list.get(0).getBpm();
@@ -121,6 +133,8 @@ public class StatbpmServiceImpl implements StatbpmService{
                     .bpm(statbpm.getBpm()).time(statbpm.getTime())
                     .build());
         }
+
+        System.out.println("output.size() = " + output.size());
 
         int avgbpm=sumbpm/list.size();
 
