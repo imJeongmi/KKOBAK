@@ -45,8 +45,6 @@ export default function Statistics() {
               <Box sx={{ float: "left", flex: 1, display: "flex" }}>
                 <Box sx={{ float: "left" }}>
                   <Text size="m" weight="bold" mt="30" my="15" color="red">
-                    {/* {item.title} */}
-
                     {title}
                   </Text>
                 </Box>
@@ -95,7 +93,7 @@ export default function Statistics() {
                 width: "60vw",
                 height: "200px",
                 borderRadius: "20px",
-                backgroundColor: "gray",
+                backgroundColor: "#F7F7F7",
                 textAlign: "center",
                 display: "flex",
                 justifyContent: "center",
