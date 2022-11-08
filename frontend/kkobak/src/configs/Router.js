@@ -2,12 +2,13 @@ import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Main from "../component/page/Main";
 import MyChallenge from "../component/page/MyChallenge";
-import Statistics from "../component/page/Statistics";
 import Setting from "component/page/Setting";
 import storage from "../helper/storage";
 import LoginModal from "component/module/LoginModal";
+import SignupModal from "component/module/SignupModal";
 import ChallengeDetail from "component/page/ChallengeDetail";
 import ChallengeRegister from "component/page/ChallengeRegister";
+import Statistics from "component/page/Statistics";
 
 function checkAuth() {
   return !!storage.get("accessToken");
@@ -54,7 +55,7 @@ export default function RouterConfiguration() {
         }
       />
       <Route
-        path="/Statistics"
+        path="/Statistics/:chlId"
         element={
           <CheckAuth>
             <Statistics />
@@ -62,6 +63,7 @@ export default function RouterConfiguration() {
         }
       />
       <Route path="/Setting" element={<Setting />} />
+      <Route path="/signup" element={<SignupModal />} />
     </Routes>
   );
 }

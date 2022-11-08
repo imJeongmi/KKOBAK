@@ -105,64 +105,82 @@ export default function Main() {
               </Text>
             </Box>
           </Box>
-          <Box sx={{ marginTop: "40px" }}>
-            <Stack spacing={2}>
-              <Pagination
-                count={3}
-                defaultPage={1}
-                shape="rounded"
-                onChange={(e) => handlePage(e)}
-                hidePrevButton
-                hideNextButton
-              />
-            </Stack>
-          </Box>
         </Box>
         <MainBox>
-          {MyChallengeList.map((item) => {
-            const startTimeCheck = moment(item.startTime).format("YYYY/MM/DD");
-            const endTimeCheck = moment(item.endTime).format("YYYY/MM/DD");
-            // console.log(item);
-            return (
-              <Box>
-                <Box
-                  sx={{ float: "left", marginLeft: "45px", marginTop: "20px" }}
-                >
-                  <Text size="l" weight="bold">
-                    {item.title}
-                  </Text>
-                </Box>
-                <Box sx={{ float: "right", marginRight: "45px" }}>
-                  <Box sx={{ flex: 1, display: "flex" }}>
-                    <Box sx={{ float: "left" }}>
-                      <Text weight="semibold" mt="30" my="15">
-                        {startTimeCheck}
+          <Box sx={{ display: "flex", flexDirection: "column" }}>
+            {MyChallengeList.map((item) => {
+              const startTimeCheck = moment(item.startTime).format(
+                "YYYY/MM/DD"
+              );
+              const endTimeCheck = moment(item.endTime).format("YYYY/MM/DD");
+              // console.log(item);
+              return (
+                <Box>
+                  <Box sx={{ display: "flex" }}>
+                    <Box
+                      sx={{
+                        float: "left",
+                        marginTop: "20px",
+                        marginLeft: "40px",
+                      }}
+                    >
+                      <Stack spacing={2}>
+                        <Pagination
+                          count={3}
+                          defaultPage={1}
+                          shape="rounded"
+                          onChange={(e) => handlePage(e)}
+                          hidePrevButton
+                          hideNextButton
+                        />
+                      </Stack>
+                    </Box>
+                    <Box sx={{ flex: 1 }}></Box>
+                    <Box
+                      sx={{
+                        float: "right",
+                        marginLeft: "50px",
+                        marginTop: "20px",
+                      }}
+                    >
+                      <Text size="l" weight="bold">
+                        {item.title}
                       </Text>
                     </Box>
-                    <Box>
-                      <Text weight="semibold" mt="30" my="15">
-                        &nbsp;&nbsp;-&nbsp;&nbsp;
-                      </Text>
-                    </Box>
-                    <Box>
-                      <Text weight="semibold" mt="30" my="15">
-                        {endTimeCheck}
-                      </Text>
+                    <Box sx={{ flex: 1 }}></Box>
+                    <Box sx={{ float: "right", marginRight: "45px" }}>
+                      <Box sx={{ flex: 1, display: "flex" }}>
+                        <Box sx={{ float: "left" }}>
+                          <Text weight="semibold" mt="30" my="15">
+                            {startTimeCheck}
+                          </Text>
+                        </Box>
+                        <Box>
+                          <Text weight="semibold" mt="30" my="15">
+                            &nbsp;&nbsp;-&nbsp;&nbsp;
+                          </Text>
+                        </Box>
+                        <Box>
+                          <Text weight="semibold" mt="30" my="15">
+                            {endTimeCheck}
+                          </Text>
+                        </Box>
+                      </Box>
                     </Box>
                   </Box>
+                  <Box>
+                    <MainCalendar
+                      title={item.title}
+                      chlId={item.chlId}
+                      key={item.id}
+                      startTime={item.startTime}
+                      endTime={item.endTime}
+                    />
+                  </Box>
                 </Box>
-                <Box>
-                  <MainCalendar
-                    title={item.title}
-                    chlId={item.chlId}
-                    key={item.id}
-                    startTime={item.startTime}
-                    endTime={item.endTime}
-                  />
-                </Box>
-              </Box>
-            );
-          })}
+              );
+            })}
+          </Box>
         </MainBox>
       </Box>
       <SideBar>

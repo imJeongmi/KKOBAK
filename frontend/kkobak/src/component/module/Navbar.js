@@ -11,6 +11,8 @@ import Person from "@mui/icons-material/Person";
 import Settings from "@mui/icons-material/Settings";
 import AppBar from "@mui/material/AppBar";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import storage from "helper/storage";
 
 export default function SelectedListItem() {
   const [selectedIndex, setSelectedIndex] = useState(1);
@@ -18,6 +20,13 @@ export default function SelectedListItem() {
   const handleListItemClick = (event, index) => {
     setSelectedIndex(index);
     // console.log(index);
+  };
+
+  const navigate = useNavigate();
+  const onClickHandler = () => {
+    storage.remove("accessToken");
+    navigate("/");
+    window.location.reload();
   };
 
   return (
@@ -129,7 +138,7 @@ export default function SelectedListItem() {
             />
           </Box>
         </ListItemButton>
-        <ListItemButton
+        {/* <ListItemButton
           component={Link}
           to="/Statistics"
           // href="/Statistics"
@@ -151,7 +160,7 @@ export default function SelectedListItem() {
               primaryTypographyProps={{ fontSize: "12px" }}
             />
           </Box>
-        </ListItemButton>
+        </ListItemButton> */}
       </List>
       {/* 세팅 위치 */}
       <List
@@ -180,7 +189,8 @@ export default function SelectedListItem() {
           // href="/setting"
           sx={{ paddingLeft: "24px" }}
           selected={selectedIndex === 4}
-          onClick={(event) => handleListItemClick(event, 4)}
+          // onClick={(event) => handleListItemClick(event, 4)}
+          onClick={onClickHandler}
         >
           <ListItemIcon>
             <Settings />
