@@ -111,14 +111,26 @@ public class StatgpsServiceImpl implements StatgpsService{
 
         double dist=0;
 
+        long beforeTime = System.currentTimeMillis(); //코드 실행 전에 시간 받아오기
+
         // =============================================================
 
         // 성영이 오빠가 하면 됨
         // OUTPUT이 LAT, LNG, TIME(LOCALDATETIME) 으로 되어있는 list. 순서대로 나옴 걱정 ㄴㄴ
         // 거리만 바꿔서 dist에 넣어주면 됨. 밑에서 알아서 넣어줌. ex) dist = 123;
-
+        // 효정아 고마워
         // =============================================================
+        System.out.println();
+        for (int i=0; i< output.size()-1; i++){
+            GpsResultResponse now = output.get(i);
+            GpsResultResponse next = output.get(i+1);
+            dist += getDistance(now.getLat(), now.getLng(), next.getLat(), next.getLng());
+        }
 
+        //시간 테스트용 코드 나중에 삭제
+        long afterTime = System.currentTimeMillis(); // 코드 실행 후에 시간 받아오기
+        long secDiffTime = (afterTime - beforeTime)/1000; //두 시간에 차 계산
+        System.out.println("GPS 계산 시간 : "+secDiffTime);
 
         return ResultResponse.builder()
                 .flag(flag)
@@ -127,7 +139,7 @@ public class StatgpsServiceImpl implements StatgpsService{
                 .build();
     }
     
-    //거리 계산용 함수
+    //gps 거리 계산용 함수
     public static double getDistance(String lat1_s, String lng1_s, String lat2_s, String lng2_s) {
 
         double lat1 = Double.parseDouble(lat1_s);

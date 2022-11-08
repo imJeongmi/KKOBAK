@@ -7,14 +7,12 @@ import com.a104.freeproject.Todolist.repository.TodolistRepository;
 import com.a104.freeproject.Todolist.request.TodolistRequest;
 import com.a104.freeproject.Todolist.response.TodolistResponse;
 import com.a104.freeproject.advice.exceptions.NotFoundException;
-import com.sun.tools.javac.comp.Todo;
-import jdk.vm.ci.meta.Local;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
-import java.sql.Timestamp;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
