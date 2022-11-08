@@ -64,28 +64,29 @@ public class StatbpmServiceImpl implements StatbpmService{
     @Override
     public BpmResultResponse getTryList(String year, String month, String day, Long cid, HttpServletRequest req) throws NotFoundException {
         Member member = memberService.findEmailbyToken(req);
-
+        System.out.println("member 찾음");
         if(!challengeRepository.existsById(cid))
             throw new NotFoundException("해당 챌린지가 존재하지 않습니다.");
         Challenge c = challengeRepository.findById(cid).get();
         if(c.isFin()) throw new NotFoundException("이미 종료한 챌린지입니다.");
+        System.out.println("챌린지 찾음");
 
         if(!prtChlRepository.existsByChallengeAndMember(c,member))
             throw new NotFoundException("참여하지 않은 챌린지입니다.");
         PrtChl p = prtChlRepository.findByChallengeAndMember(c,member);
         if(p.is_fin()) throw new NotFoundException("이미 끝낸 챌린지 입니다.");
-
+        System.out.println("p 찾음");
         LocalDate date = LocalDate.of(Integer.parseInt(year),Integer.parseInt(month),Integer.parseInt(day));
+        System.out.println("date = " + date);
 
-//        if(!logRepository.existsByPrtChlAndDate(p,date))
-//            throw new NotFoundException("오늘 해당 챌린지의 로그가 존재하지 않습니다.");
-//        Log log = logRepository.findByPrtChlAndDate(p,date);
         if(!logRepository.existsByPrtChlAndDate(p,date))
             return BpmResultResponse.builder()
                 .flag(false)
                 .bpmList(new LinkedList<BpmListResponse>())
                 .maxBpm(0).minBpm(0).avgBpm(0)
                 .build();
+        System.out.println("로그 존재함.");
+        Log log = logRepository.findByPrtChlAndDate(p,date);
         List<Statbpm> statbpmList = statbpmRepository.findByChkAndPrtChl(date.toString(),p);
         if(statbpmList.size()==0)
             return BpmResultResponse.builder()
