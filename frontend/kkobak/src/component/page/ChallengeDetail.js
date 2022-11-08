@@ -100,7 +100,7 @@ export default function ChallengeDetail() {
 
   function moveToStats(e) {
     e.preventDefault();
-    navigate("/Statistics/:chlId");
+    navigate(`/Statistics/${chlId}`);
   }
 
   return (
