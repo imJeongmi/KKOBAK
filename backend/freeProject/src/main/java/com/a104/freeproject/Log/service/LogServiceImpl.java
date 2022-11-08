@@ -39,8 +39,11 @@ public class LogServiceImpl implements LogService {
 
         if(!prtChlRepository.existsById(prtChl.getId()))
             throw new NotFoundException("해당 유저는 해당 챌린지에 참여하지 않습니다.");
+
         logRepository.save(Log.builder()
-                .prtChl(prtChl).date(LocalDate.now(ZoneId.of("Asia/Seoul"))).build());
+                .prtChl(prtChl)
+                .date(LocalDate.now(ZoneId.of("Asia/Seoul")))
+                .build());
 
         return true;
     }

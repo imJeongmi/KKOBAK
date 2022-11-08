@@ -34,6 +34,11 @@ public class Log {
     @Setter
     private Timestamp completeTime;
 
+    @Setter
+    @NotNull
+    @Builder.Default
+    private int cnt = 0;
+
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     private PrtChl prtChl;

@@ -29,7 +29,6 @@ public class ChallengeController {
             +"startTime, endTime 걍 스웨거 무시하시고 \"startTime\": \"2022-10-22T22:37\" 형식으로 입력해주시면 됩니당\n"
             +"알람시간은 24시간 표시 형식으로 >> 14:25 이렇게 보내주세용")
     public ResponseEntity<Boolean> register(@RequestBody registerRequest input, HttpServletRequest req) throws NotFoundException{
-        System.out.println("처음 들어온 값 controller >> "+input.getStartTime());
         return ResponseEntity.ok().body(challengeService.register(input, req));
     }
 
@@ -113,7 +112,7 @@ public class ChallengeController {
     }
 
     @GetMapping("/participate/{chlId}/{alarmType}")
-    @ApiOperation(value="챌린지 참여", notes ="'/api/challenge/participate/1/1' 형식으로 사용" )
+    @ApiOperation(value="[확인] 챌린지 참여", notes ="'/api/challenge/participate/1/1' 형식으로 사용" )
     public ResponseEntity<Boolean> participateChl(@PathVariable("chlId") Long chlId,@PathVariable("alarmType") int alarmType, HttpServletRequest req) throws NotFoundException{
         return ResponseEntity.ok().body(challengeService.participateChl(chlId, alarmType, req));
     }
