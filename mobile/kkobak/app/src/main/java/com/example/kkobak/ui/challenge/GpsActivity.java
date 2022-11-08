@@ -100,12 +100,11 @@ public class GpsActivity extends AppCompatActivity {
     }
 
     private void destroyTimer() {
-        startBtn.setClickable(true);
-        stopBtn.setClickable(false);
+        startBtn.setClickable(true); 
+        stopBtn.setClickable(false); 
 
-        if (timer != null) {
+        if (timer != null)
             timer.cancel();
-        }
     }
 
     public void startLogic(View v) {
