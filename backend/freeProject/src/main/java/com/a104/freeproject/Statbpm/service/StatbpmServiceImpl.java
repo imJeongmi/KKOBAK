@@ -80,7 +80,12 @@ public class StatbpmServiceImpl implements StatbpmService{
 //        if(!logRepository.existsByPrtChlAndDate(p,date))
 //            throw new NotFoundException("오늘 해당 챌린지의 로그가 존재하지 않습니다.");
 //        Log log = logRepository.findByPrtChlAndDate(p,date);
-
+        if(!logRepository.existsByPrtChlAndDate(p,date))
+            return BpmResultResponse.builder()
+                .flag(false)
+                .bpmList(new LinkedList<BpmListResponse>())
+                .maxBpm(0).minBpm(0).avgBpm(0)
+                .build();
         List<Statbpm> statbpmList = statbpmRepository.findByChkAndPrtChl(date.toString(),p);
         if(statbpmList.size()==0)
             return BpmResultResponse.builder()
