@@ -18,6 +18,8 @@ import com.example.kkobak.data.room.dao.AccessTokenDao;
 import com.example.kkobak.data.room.database.AccessTokenDatabase;
 import com.example.kkobak.data.room.entity.AccessToken;
 import com.example.kkobak.databinding.ActivityMainBinding;
+import com.example.kkobak.ui.challenge.GpsActivity;
+import com.example.kkobak.ui.challenge.WaterActivity;
 import com.example.kkobak.ui.login.LoginActivity;
 import com.example.kkobak.ui.test.SpeedActivity;
 import com.example.kkobak.ui.test.TestActivity;
@@ -116,6 +118,16 @@ public class MainActivity extends AppCompatActivity {
 
     public void moveTimer(View v) {
         Intent intent = new Intent(this, TimerActivity.class);
+        startActivity(intent);
+    }
+
+    public void moveWater(View v) {
+        Intent intent = new Intent(this, WaterActivity.class);
+        startActivity(intent);
+    }
+
+    public void moveGps(View v) {
+        Intent intent = new Intent(this, GpsActivity.class);
         startActivity(intent);
     }
 }

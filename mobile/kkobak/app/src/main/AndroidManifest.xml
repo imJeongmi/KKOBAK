@@ -53,6 +53,10 @@
 
         <activity android:name=".ui.test.TimerActivity" />
 
+        <activity android:name=".ui.challenge.WaterActivity" />
+
+        <activity android:name=".ui.challenge.GpsActivity" />
+
         <service android:name=".ui.test.FirebaseMsgService"
             android:exported="true">
             <intent-filter>
