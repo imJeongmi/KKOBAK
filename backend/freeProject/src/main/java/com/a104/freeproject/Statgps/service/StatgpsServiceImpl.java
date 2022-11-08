@@ -8,9 +8,12 @@ import com.a104.freeproject.Member.entity.Member;
 import com.a104.freeproject.Member.service.MemberServiceImpl;
 import com.a104.freeproject.PrtChl.entity.PrtChl;
 import com.a104.freeproject.PrtChl.repository.PrtChlRepository;
+import com.a104.freeproject.Statbpm.response.BpmListResponse;
+import com.a104.freeproject.Statbpm.response.BpmResultResponse;
 import com.a104.freeproject.Statgps.entity.Statgps;
 import com.a104.freeproject.Statgps.repository.StatgpsRepository;
 import com.a104.freeproject.Statgps.request.GpsInputRequest;
+import com.a104.freeproject.Statgps.response.GpsMiddleInterface;
 import com.a104.freeproject.Statgps.response.GpsResultResponse;
 import com.a104.freeproject.Statgps.response.ResultResponse;
 import com.a104.freeproject.advice.exceptions.NotFoundException;
@@ -66,22 +69,29 @@ public class StatgpsServiceImpl implements StatgpsService{
     public ResultResponse getTryList(String year, String month, String day, Long cid, HttpServletRequest req) throws NotFoundException {
 
         Member member = memberService.findEmailbyToken(req);
-        
+
         if(!challengeRepository.existsById(cid))
             throw new NotFoundException("해당 챌린지가 존재하지 않습니다.");
         Challenge c = challengeRepository.findById(cid).get();
+        if(c.isFin()) throw new NotFoundException("이미 종료한 챌린지입니다.");
 
         if(!prtChlRepository.existsByChallengeAndMember(c,member))
             throw new NotFoundException("참여하지 않은 챌린지입니다.");
         PrtChl p = prtChlRepository.findByChallengeAndMember(c,member);
+        if(p.is_fin()) throw new NotFoundException("이미 끝낸 챌린지 입니다.");
 
         LocalDate date = LocalDate.of(Integer.parseInt(year),Integer.parseInt(month),Integer.parseInt(day));
-        
-        if(!logRepository.existsByPrtChlAndDate(p,date))
-            throw new NotFoundException("오늘 해당 챌린지의 로그가 존재하지 않습니다.");
-        Log log = logRepository.findByPrtChlAndDate(p,date);
 
-        List<Statgps> statgpsList = statgpsRepository.findByChkAndPrtChl(date.toString(),p);
+        if(!logRepository.existsByPrtChlAndDate(p,date))
+            return ResultResponse.builder()
+                    .flag(false)
+                    .gpsList(new LinkedList<GpsResultResponse>())
+                    .total_dist(0)
+                    .build();
+
+        Log log = logRepository.findByPrtChlAndDate(p,date);
+        List<GpsMiddleInterface> statgpsList = statgpsRepository.findByChkAndPrtChl(date.toString(),p);
+
         if(statgpsList.size()==0)
             return ResultResponse.builder()
                     .flag(false)
@@ -89,12 +99,12 @@ public class StatgpsServiceImpl implements StatgpsService{
                     .total_dist(0)
                     .build();
 
-        boolean flag = statgpsList.get(statgpsList.size()-1).isSuccess();
+        boolean flag = statgpsList.get(statgpsList.size()-1).getSuccess();
         LocalDateTime sendTime = statgpsList.get(statgpsList.size()-1).getChk();
         if(!flag){
             for(int i = statgpsList.size()-2;i>=0;i--){
                 if(flag) {
-                    flag = statgpsList.get(statgpsList.size()-1).isSuccess();
+                    flag = statgpsList.get(statgpsList.size()-1).getSuccess();
                     sendTime = statgpsList.get(statgpsList.size()-1).getChk();
                     break;
                 }

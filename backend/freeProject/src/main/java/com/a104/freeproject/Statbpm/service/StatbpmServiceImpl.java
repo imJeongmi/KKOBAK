@@ -2,7 +2,6 @@ package com.a104.freeproject.Statbpm.service;
 
 import com.a104.freeproject.Challenge.entity.Challenge;
 import com.a104.freeproject.Challenge.repository.ChallengeRepository;
-import com.a104.freeproject.Challenge.service.ChallengeServiceImpl;
 import com.a104.freeproject.Log.entity.Log;
 import com.a104.freeproject.Log.repository.LogRepository;
 import com.a104.freeproject.Member.entity.Member;
@@ -14,7 +13,7 @@ import com.a104.freeproject.Statbpm.repository.StatbpmRepository;
 import com.a104.freeproject.Statbpm.request.BpmInputRequest;
 import com.a104.freeproject.Statbpm.response.BpmListResponse;
 import com.a104.freeproject.Statbpm.response.BpmResultResponse;
-import com.a104.freeproject.Statbpm.response.TestInterface;
+import com.a104.freeproject.Statbpm.response.BpmMiddleInterface;
 import com.a104.freeproject.advice.exceptions.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -84,14 +83,9 @@ public class StatbpmServiceImpl implements StatbpmService{
                 .bpmList(new LinkedList<BpmListResponse>())
                 .maxBpm(0).minBpm(0).avgBpm(0)
                 .build();
-        System.out.println("로그 존재함.");
+
         Log log = logRepository.findByPrtChlAndDate(p,date);
-        List<TestInterface> statbpmList = statbpmRepository.findByChkAndPrtChlJPQL(date.toString(),p);
-        
-        for(TestInterface test : statbpmList){
-            System.out.println("test.getSuccess() = " + test.getSuccess());
-            System.out.println("test.getChk() = " + test.getChk());
-        }
+        List<BpmMiddleInterface> statbpmList = statbpmRepository.findByChkAndPrtChlJPQL(date.toString(),p);
         
         if(statbpmList.size()==0)
             return BpmResultResponse.builder()
@@ -117,9 +111,6 @@ public class StatbpmServiceImpl implements StatbpmService{
         }
 
         List<Statbpm> list = statbpmRepository.findByChkTimeAndPrtChl(p,sendTime);
-
-        System.out.println("list.size() = " + list.size());
-        
         List<BpmListResponse> output = new LinkedList<>();
         int maxbpm=list.get(0).getBpm();
         int minbpm=list.get(0).getBpm();
@@ -133,8 +124,6 @@ public class StatbpmServiceImpl implements StatbpmService{
                     .bpm(statbpm.getBpm()).time(statbpm.getTime())
                     .build());
         }
-
-        System.out.println("output.size() = " + output.size());
 
         int avgbpm=sumbpm/list.size();
 

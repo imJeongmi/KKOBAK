@@ -1,8 +1,8 @@
-package com.a104.freeproject.Statbpm.response;
+package com.a104.freeproject.Statgps.response;
 
 import java.time.LocalDateTime;
 
-public interface TestInterface {
+public interface GpsMiddleInterface {
     boolean getSuccess();
     LocalDateTime getChk();
 }
