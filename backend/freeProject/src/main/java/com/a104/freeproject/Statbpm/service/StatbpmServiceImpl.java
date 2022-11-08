@@ -14,9 +14,6 @@ import com.a104.freeproject.Statbpm.repository.StatbpmRepository;
 import com.a104.freeproject.Statbpm.request.BpmInputRequest;
 import com.a104.freeproject.Statbpm.response.BpmListResponse;
 import com.a104.freeproject.Statbpm.response.BpmResultResponse;
-import com.a104.freeproject.Statgps.entity.Statgps;
-import com.a104.freeproject.Statgps.response.GpsResultResponse;
-import com.a104.freeproject.Statgps.response.ResultResponse;
 import com.a104.freeproject.advice.exceptions.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -71,16 +68,18 @@ public class StatbpmServiceImpl implements StatbpmService{
         if(!challengeRepository.existsById(cid))
             throw new NotFoundException("해당 챌린지가 존재하지 않습니다.");
         Challenge c = challengeRepository.findById(cid).get();
+        if(c.isFin()) throw new NotFoundException("이미 종료한 챌린지입니다.");
 
         if(!prtChlRepository.existsByChallengeAndMember(c,member))
             throw new NotFoundException("참여하지 않은 챌린지입니다.");
         PrtChl p = prtChlRepository.findByChallengeAndMember(c,member);
+        if(p.is_fin()) throw new NotFoundException("이미 끝낸 챌린지 입니다.");
 
         LocalDate date = LocalDate.of(Integer.parseInt(year),Integer.parseInt(month),Integer.parseInt(day));
 
-        if(!logRepository.existsByPrtChlAndDate(p,date))
-            throw new NotFoundException("오늘 해당 챌린지의 로그가 존재하지 않습니다.");
-        Log log = logRepository.findByPrtChlAndDate(p,date);
+//        if(!logRepository.existsByPrtChlAndDate(p,date))
+//            throw new NotFoundException("오늘 해당 챌린지의 로그가 존재하지 않습니다.");
+//        Log log = logRepository.findByPrtChlAndDate(p,date);
 
         List<Statbpm> statbpmList = statbpmRepository.findByChkAndPrtChl(date.toString(),p);
         if(statbpmList.size()==0)
