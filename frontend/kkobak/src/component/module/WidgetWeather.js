@@ -30,7 +30,7 @@ export default function WidgetWeather() {
 
   function getCurrentTempSuccess(res) {
     const data = res.data;
-    console.log(data);
+    // console.log(data);
 
     setCurrentTemp(Math.round(data.current.temp));
     setCurrentMaxTemp(Math.round(data.daily[currentDayIdx].temp.max));

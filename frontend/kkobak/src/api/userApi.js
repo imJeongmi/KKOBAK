@@ -89,6 +89,10 @@ function requestMyChallengeStatistics(success, fail) {
   api.get(`member/chl-info`).then(success).catch(fail);
 }
 
+function requestMychallenges(success, fail) {
+  api.get(`/member/my-chl-list?page=0&size=1000&sort=id`).then(success).catch(fail);
+}
+
 export {
   requestJoin,
   requestEmailCheck,
@@ -104,4 +108,5 @@ export {
   requestCalendarCheck,
   requestMyChallengeDetail,
   requestMyChallengeStatistics,
+  requestMychallenges,
 };
