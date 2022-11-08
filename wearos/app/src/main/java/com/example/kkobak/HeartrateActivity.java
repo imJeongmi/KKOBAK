@@ -150,7 +150,7 @@ public class HeartrateActivity extends Activity implements SensorEventListener {
 //        sensorManager.unregisterListener(this);
         super.onDestroy();
     }
-
+    //리스트로 보내는 함수 (안씀)
     public void sendData() {
         //Retrofit 호출
         Call<Boolean> call = RetrofitClient.getApiService().sendHeartList(heartRate);

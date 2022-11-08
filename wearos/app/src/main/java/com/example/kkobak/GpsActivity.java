@@ -2,6 +2,7 @@ package com.example.kkobak;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.SensorManager;
 import android.location.Location;
@@ -51,7 +52,8 @@ public class GpsActivity extends Activity {
     private Button btn_gps_stop;
     private Button btn_gps_end;
     // 리스트에서 넘어온 데이터
-    private Long chlId = 1L;
+    Intent intent;
+    private Long chlId;
 
     // 토큰
     private String accessToken;
@@ -82,9 +84,9 @@ public class GpsActivity extends Activity {
         List<AccessToken> tokenList = tokenDao.getTokenAll();
         accessToken = tokenList.get(0).getAccessToken();
 
-        //데이터 포맷터 세팅
-
-//        LocalDateTime dateTime = LocalDateTime.parse(str, formatter);
+        //챌린지 아이디 세팅
+        intent = getIntent();
+        chlId = intent.getLongExtra("chlId",1);
 
         // 권한 확인
         checkPermission();
