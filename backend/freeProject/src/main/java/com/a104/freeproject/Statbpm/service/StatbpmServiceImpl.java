@@ -14,6 +14,7 @@ import com.a104.freeproject.Statbpm.repository.StatbpmRepository;
 import com.a104.freeproject.Statbpm.request.BpmInputRequest;
 import com.a104.freeproject.Statbpm.response.BpmListResponse;
 import com.a104.freeproject.Statbpm.response.BpmResultResponse;
+import com.a104.freeproject.Statbpm.response.TestInterface;
 import com.a104.freeproject.advice.exceptions.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -64,20 +65,18 @@ public class StatbpmServiceImpl implements StatbpmService{
     @Override
     public BpmResultResponse getTryList(String year, String month, String day, Long cid, HttpServletRequest req) throws NotFoundException {
         Member member = memberService.findEmailbyToken(req);
-        System.out.println("member 찾음");
+
         if(!challengeRepository.existsById(cid))
             throw new NotFoundException("해당 챌린지가 존재하지 않습니다.");
         Challenge c = challengeRepository.findById(cid).get();
         if(c.isFin()) throw new NotFoundException("이미 종료한 챌린지입니다.");
-        System.out.println("챌린지 찾음");
 
         if(!prtChlRepository.existsByChallengeAndMember(c,member))
             throw new NotFoundException("참여하지 않은 챌린지입니다.");
         PrtChl p = prtChlRepository.findByChallengeAndMember(c,member);
         if(p.is_fin()) throw new NotFoundException("이미 끝낸 챌린지 입니다.");
-        System.out.println("p 찾음");
+
         LocalDate date = LocalDate.of(Integer.parseInt(year),Integer.parseInt(month),Integer.parseInt(day));
-        System.out.println("date = " + date);
 
         if(!logRepository.existsByPrtChlAndDate(p,date))
             return BpmResultResponse.builder()
@@ -87,7 +86,8 @@ public class StatbpmServiceImpl implements StatbpmService{
                 .build();
         System.out.println("로그 존재함.");
         Log log = logRepository.findByPrtChlAndDate(p,date);
-        List<Statbpm> statbpmList = statbpmRepository.findByChkAndPrtChl(date.toString(),p);
+        List<TestInterface> statbpmList = statbpmRepository.findByChkAndPrtChlJPQL(date.toString(),p);
+        System.out.println(statbpmList.size());
         if(statbpmList.size()==0)
             return BpmResultResponse.builder()
                     .flag(false)
@@ -95,12 +95,12 @@ public class StatbpmServiceImpl implements StatbpmService{
                     .maxBpm(0).minBpm(0).avgBpm(0)
                     .build();
 
-        boolean flag = statbpmList.get(statbpmList.size()-1).isSuccess();
+        boolean flag = statbpmList.get(statbpmList.size()-1).getSuccess();
         LocalDateTime sendTime = statbpmList.get(statbpmList.size()-1).getChk();
         if(!flag){
             for(int i = statbpmList.size()-2;i>=0;i--){
                 if(flag) {
-                    flag = statbpmList.get(statbpmList.size()-1).isSuccess();
+                    flag = statbpmList.get(statbpmList.size()-1).getSuccess();
                     sendTime = statbpmList.get(statbpmList.size()-1).getChk();
                     break;
                 }
