@@ -50,7 +50,7 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder>{
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         TextView textView;
-        int chlId;
+        Long chlId;
         boolean done;
 
         public ViewHolder(View itemView){

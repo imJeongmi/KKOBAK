@@ -3,6 +3,7 @@ package com.example.kkobak;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -21,7 +22,6 @@ import com.example.kkobak.room.dao.TodoDao;
 import com.example.kkobak.room.data.AccessToken;
 import com.example.kkobak.room.db.AppDatabase;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,9 +40,10 @@ public class HeartrateActivity extends Activity implements SensorEventListener {
     private Button btn_start;
     private Button btn_end;
     private SensorEventListener registerListener;
+    private Intent intent;
 
     // intent로 넘어온 chlId 저장 (Create 시)
-    private long chlId = 91;
+    private long chlId;
     // startTime 저장용
     private LocalDateTime chk;
     // 토큰
@@ -59,6 +60,8 @@ public class HeartrateActivity extends Activity implements SensorEventListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_heartrate);
         registerListener = this;
+        intent = getIntent();
+        chlId = intent.getLongExtra("chlId",1);
 
         sensorManager = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
         hr = sensorManager.getDefaultSensor(Sensor.TYPE_HEART_RATE);

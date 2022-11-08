@@ -6,12 +6,12 @@ import androidx.room.PrimaryKey;
 @Entity
 public class Todo {
     @PrimaryKey(autoGenerate = true)
-    private int id;
-    private int chlId;
+    private long id;
+    private long chlId;
     private Boolean done;
     private String title;
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -19,7 +19,7 @@ public class Todo {
         this.id = id;
     }
 
-    public int getChlId() {
+    public long getChlId() {
         return chlId;
     }
 
@@ -43,7 +43,7 @@ public class Todo {
         this.title = title;
     }
 
-    public Todo(int chlId, Boolean done, String title) {
+    public Todo(long chlId, Boolean done, String title) {
         this.chlId = chlId;
         this.done = done;
         this.title = title;

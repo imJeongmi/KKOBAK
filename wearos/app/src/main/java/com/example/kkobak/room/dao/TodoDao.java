@@ -15,10 +15,10 @@ public interface TodoDao {
     void setInsertTodo(Todo todo);
 
     @Query("update Todo set done=:d where id=:id")
-    void changeTodoStatus(int id, boolean d);
+    void changeTodoStatus(Long id, boolean d);
 
     @Query("delete from Todo where id=:id")
-    void deleteTodo(int id);
+    void deleteTodo(Long id);
 
     @Query("select * from Todo")
     List<Todo> getListAll();

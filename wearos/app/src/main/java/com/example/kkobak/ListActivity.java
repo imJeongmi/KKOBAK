@@ -63,8 +63,9 @@ public class ListActivity extends Activity {
             @Override
             public void onItemClick(int pos) {
                 Toast.makeText(getApplicationContext(), "임시적으로 HEART로 연결" + pos, Toast.LENGTH_SHORT).show();
+                Todo clickTodo = todoList.get(pos);
                 Intent intent = new Intent(ListActivity.this, HeartrateActivity.class);
-//                intent.putExtra("chlId",)
+                intent.putExtra("chlId",clickTodo.getChlId());
                 startActivity(intent);
             }
         });
