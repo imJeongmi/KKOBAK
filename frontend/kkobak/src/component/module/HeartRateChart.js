@@ -4,41 +4,31 @@ import { requestStatBpm } from "api/statbpm";
 
 import { LineChart, Line } from "recharts";
 import moment from "moment";
+import { useParams } from "react-router-dom";
 
 export default function LineChartPage() {
-  const data = [
-    { name: "Page D", uv: 250, pv: 2400, amt: 2400 },
-    { name: "Page D", uv: 200, pv: 2400, amt: 2400 },
-    { name: "Page D", uv: 300, pv: 2400, amt: 2400 },
-    { name: "Page D", uv: 500, pv: 2400, amt: 2400 },
-    { name: "Page D", uv: 200, pv: 2400, amt: 2400 },
-    { name: "Page D", uv: 200, pv: 2400, amt: 2400 },
-    { name: "Page D", uv: 300, pv: 2400, amt: 2400 },
-    { name: "Page D", uv: 200, pv: 2400, amt: 2400 },
-    { name: "Page D", uv: 100, pv: 2400, amt: 2400 },
-    { name: "Page D", uv: 200, pv: 2400, amt: 2400 },
-    { name: "Page D", uv: 500, pv: 2400, amt: 2400 },
-  ];
-
   const [year, setYear] = useState(new Date().getFullYear());
   const [month, setMonth] = useState(new Date().getMonth() + 1);
   const [day, setDay] = useState(moment(new Date()).format("DD"));
 
-  const cid = 83;
+  const cid = Number(useParams().chlId);
 
-  const [bpm, setBpm] = useState("");
-  // 현재 data를 직접 작성했지만 api 갖고오면
-  // const data = bpm.bpmList
-  // 사용하기
+  // 갖고오는 거 maxBpm, minBpm, avgBpm 있음.
+  // 심박수 더 변화 심하게 만들기
+  // 챌린지 생성에서 심박수 측정인 챌린지 인 경우에만 뜨도록 하기
+  // 현재는 stat화면 다 똑같은데(id 만 다르게 같은 화면이지만 다른 아이디 갖은 상태로)
+  // 카테고리별로 보여지는 화면 달라야 함.
+
+  const [bpm, setBpm] = useState([]);
 
   function requestStatBpmSuccess(res) {
-    setBpm(res.data);
-    console.log(res.data);
+    setBpm(res.data.bpmList);
+    console.log(res.data.bpmList);
   }
 
   function requestStatBpmFail(err) {
     setBpm([]);
-    console.log(err.data);
+    // console.log(err.data);
   }
 
   useEffect(() => {
@@ -55,8 +45,8 @@ export default function LineChartPage() {
   return (
     <Box>
       <Box>심박수</Box>
-      <LineChart width={600} height={200} data={data}>
-        <Line type="monotone" dataKey="uv" stroke="white" />
+      <LineChart width={600} height={200} data={bpm}>
+        <Line type="monotone" dataKey="bpm" stroke="white" />
       </LineChart>
     </Box>
   );
