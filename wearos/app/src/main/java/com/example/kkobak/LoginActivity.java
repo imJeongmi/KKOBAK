@@ -82,6 +82,10 @@ public class LoginActivity extends Activity {
                     accessToken.setAccessToken(token.getAccessToken());
                     tokenDao.setInsertToken(accessToken);
 
+                    // 전역변수로 액세스 토큰 저장
+                    ((KkobakApp)getApplication()).setAccessToken(token.getAccessToken());
+                    System.out.println("전역 토큰의 내용: "+((KkobakApp)getApplication()).getAccessToken());
+
                     Intent intent = new Intent(LoginActivity.this, ListActivity.class);
                     startActivity(intent);
                 }
