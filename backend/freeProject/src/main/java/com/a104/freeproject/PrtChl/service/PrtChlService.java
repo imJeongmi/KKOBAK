@@ -1,6 +1,7 @@
 package com.a104.freeproject.PrtChl.service;
 
 import com.a104.freeproject.PrtChl.request.ChlRequest;
+import com.a104.freeproject.PrtChl.response.MyChallengeDetailResponse;
 import com.a104.freeproject.advice.exceptions.NotFoundException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,4 +11,6 @@ public interface PrtChlService {
     boolean dropChl(Long cid, HttpServletRequest req) throws NotFoundException;
 
     boolean changeKkobak(ChlRequest chlRequest, HttpServletRequest req) throws NotFoundException;
+
+    MyChallengeDetailResponse getPtrChlDetail(Long cid, HttpServletRequest req) throws NotFoundException;
 }

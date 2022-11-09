@@ -2,6 +2,7 @@ package com.a104.freeproject.PrtChl.controller;
 
 import com.a104.freeproject.Challenge.request.registerRequest;
 import com.a104.freeproject.PrtChl.request.ChlRequest;
+import com.a104.freeproject.PrtChl.response.MyChallengeDetailResponse;
 import com.a104.freeproject.PrtChl.service.PrtChlServiceImpl;
 import com.a104.freeproject.advice.exceptions.NotFoundException;
 import io.swagger.annotations.ApiOperation;
@@ -41,6 +42,11 @@ public class PrtChlController {
         return ResponseEntity.ok().body(prtChlService.changeKkobak(chlRequest,req));
     }
 
+    @GetMapping("/detail/{chlId}")
+    @ApiOperation(value = "내가 참가한 특정 챌린지의 상세 정보를 반환")
+    public ResponseEntity<MyChallengeDetailResponse> getPtrChlDetail(@PathVariable("chlId")Long cid, HttpServletRequest req) throws NotFoundException{
+        return ResponseEntity.ok().body(prtChlService.getPtrChlDetail(cid,req));
+    }
     // 스케줄러 돌려서 알람 보내는거 작성
 
 }
