@@ -20,6 +20,7 @@ export default function ChallengeRegister() {
     "https://initpjtbucket.s3.ap-northeast-2.amazonaws.com/images/cdd6bd23-f356-4073-91b9-ee89d9542c58.png"
   );
   const [watch, setWatch] = useState(true);
+  const [kkobak, setKkobak] = useState(0);
   const [startTime, setStartTime] = useState(new Date());
   const [endTime, setEndTime] = useState(new Date());
   const [alarm, setAlarm] = useState("00:00");
@@ -52,20 +53,22 @@ export default function ChallengeRegister() {
     e.preventDefault();
     registerChallenge(
       alarm,
+      0,
       category,
       contents,
       detailCategory,
       endTime,
       1,
       imgSrc,
+      kkobak,
       1,
+      "",
       1,
       startTime,
       [],
       title,
       "회",
       watch,
-      "",
       registerSuccess,
       registerFail
     );
@@ -94,6 +97,7 @@ export default function ChallengeRegister() {
             endTime={endTime}
             alarm={alarm}
             watch={watch}
+            kkobak={kkobak}
             setImgSrc={setImgSrc}
             setTitle={setTitle}
             setCategory={setCategory}
@@ -103,6 +107,7 @@ export default function ChallengeRegister() {
             setEndTime={setEndTime}
             setAlarm={setAlarm}
             setWatch={setWatch}
+            setKkobak={setKkobak}
             register={register}
           ></ChallengeForm>
         </MainBox>

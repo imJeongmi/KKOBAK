@@ -93,7 +93,11 @@ export default function Todolist() {
   const [kkobaklist, setKkobaklist] = useState([]);
 
   useEffect(() => {
-    requestMychallenges(requestMychallengesSuccess, requestMychallengesFail);
+    requestMychallenges(
+      nowDate.format("YYYY-MM-DD"),
+      requestMychallengesSuccess,
+      requestMychallengesFail
+    );
     getTodolist(formedNowDate, getTodolistSuccess, getTodolistFail);
   }, []);
 
@@ -118,14 +122,16 @@ export default function Todolist() {
     const data = res.data;
     const list = [];
     data.map((item, index) => {
-      if (item.roomtype === 1) {
+      if (item.kkobak === 1) {
         list.push(item);
       }
     });
-    setKkobaklist(list)
+    setKkobaklist(list);
   }
 
-  function requestMychallengesFail(res) {}
+  function requestMychallengesFail(res) {
+    console.log(res.data);
+  }
 
   function onKeyPress(e) {
     const newTodolist = e.target.value;
@@ -173,10 +179,12 @@ export default function Todolist() {
           <TodolistItem
             nowDate={formedNowDate}
             id={item.chlId}
-            contents={item.title}          
-            done={false}
+            contents={item.title}
+            done={item.done}
             chlId={item.chlId}
             dashedNowDate={nowDate.format("YYYY-MM-DD")}
+            weight="semibold"
+            color="blue"
           />
         );
       })}
@@ -189,6 +197,7 @@ export default function Todolist() {
             contents={item.contents}
             done={item.done}
             chlId={false}
+            weight="medium"
           />
         );
       })}
