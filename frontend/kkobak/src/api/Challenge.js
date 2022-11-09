@@ -64,32 +64,36 @@ function searchChallengeListWithTitle(word, page, success, fail) {
 
 function registerChallenge(
   alarm,
+  alramDir,
   categoryId,
   contents,
   detailCategoryId,
   endTime,
   goal,
   imgurl,
+  kkobak,
   limitpeople,
+  password,
   roomtype,
   startTime,
   tagList,
   title,
   unit,
   watch,
-  password,
   success,
   fail
 ) {
   api
     .post("challenge/register", {
       alarm: alarm,
+      alramDir: alramDir,
       categoryId: categoryId,
-      detailCategoryId: detailCategoryId,
       contents: contents,
+      detailCategoryId: detailCategoryId,
       endTime: endTime,
       goal: goal,
       imgurl: imgurl,
+      kkobak: kkobak,
       limitpeople: limitpeople,
       password: password,
       roomtype: roomtype,

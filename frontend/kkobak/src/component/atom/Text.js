@@ -17,7 +17,7 @@ const TextBox = styled(Box)(
 function getSize(size) {
   switch (size) {
     case "xl":
-      return "50px";
+      return "55px";
     case "l":
       return "25px";
     case "m":

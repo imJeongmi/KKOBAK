@@ -85,7 +85,7 @@ export default function ChallengeDetail() {
     setEndTime(res.data.endTime);
     setAlarm(res.data.alarm);
     setWatch(res.data.watch);
-    setKkobakChallenge(res.data.roomtype);
+    setKkobakChallenge(res.data.kkobak);
     setDetailCategoryId(res.data.detailCategoryId);
   }
 
@@ -346,12 +346,12 @@ export default function ChallengeDetail() {
                       value={kkobakChallenge}
                     >
                       <FormControlLabel
-                        value="true"
+                        value={1}
                         control={<Radio />}
                         label="설정"
                       />
                       <FormControlLabel
-                        value="false"
+                        value={0}
                         control={<Radio />}
                         label="설정 안함"
                       />
