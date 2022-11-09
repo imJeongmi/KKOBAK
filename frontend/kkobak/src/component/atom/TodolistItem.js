@@ -8,6 +8,7 @@ import CheckImage from "static/check.png";
 import DeleteImage from "static/delete.png";
 
 import { deleteTodolist, updateTodolistStatus } from "api/todolistApi";
+import { logController } from "api/log";
 
 const TodolistItemBox = styled(Box)(
   () => `
@@ -30,7 +31,14 @@ const CheckBox = styled(Box)(
     `
 );
 
-export default function TodolistItem({ nowDate, id, contents, done }) {
+export default function TodolistItem({
+  nowDate,
+  id,
+  contents,
+  done,
+  chlId,
+  dashedNowDate,
+}) {
   const today = moment().format("YYYY.MM.DD");
 
   const [check, setCheck] = useState(done);
@@ -38,28 +46,47 @@ export default function TodolistItem({ nowDate, id, contents, done }) {
   const [cancelText, setCancelText] = useState(done);
 
   function updateTodolistStatusSuccess(res) {
-    window.location.reload();}
+    // 새로고침 안되게 코드 수정
+    window.location.reload();
+  }
 
   function updateTodolistStatusFail(res) {}
 
   function deleteTodolistSuccess(res) {
     // 새로고침 안되게 코드 수정
-    // window.location.replace("/");
     window.location.reload();
   }
 
   function deleteTodolistFail(res) {}
+
+  function changeKkobakChallengeDoneSuccess(res) {
+    console.log("success");
+  }
+
+  function changeKkobakChallengeDoneFail(res) {
+    console.log("fail");
+  }
 
   function onClickCheckBox() {
     setHover(false);
     if (nowDate === today) {
       setCheck(!check);
       setCancelText(!cancelText);
-      updateTodolistStatus(
-        id,
-        updateTodolistStatusSuccess,
-        updateTodolistStatusFail
-      );
+      if (!!chlId) {
+        logController(
+          chlId,
+          dashedNowDate,
+          changeKkobakChallengeDoneSuccess,
+          changeKkobakChallengeDoneFail
+        );
+        // 캘린더 새로고침 되게 수정
+      } else {
+        updateTodolistStatus(
+          id,
+          updateTodolistStatusSuccess,
+          updateTodolistStatusFail
+        );
+      }
     }
   }
 

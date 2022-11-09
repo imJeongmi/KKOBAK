@@ -8,9 +8,12 @@ import Logo from "../../static/Logo.png";
 import Home from "@mui/icons-material/Home";
 import Flag from "@mui/icons-material/Flag";
 import Person from "@mui/icons-material/Person";
-import Settings from "@mui/icons-material/Settings";
+// import Settings from "@mui/icons-material/Settings";
+import LogoutIcon from "@mui/icons-material/Logout";
 import AppBar from "@mui/material/AppBar";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import storage from "helper/storage";
 
 export default function SelectedListItem() {
   const [selectedIndex, setSelectedIndex] = useState(1);
@@ -18,6 +21,13 @@ export default function SelectedListItem() {
   const handleListItemClick = (event, index) => {
     setSelectedIndex(index);
     // console.log(index);
+  };
+
+  const navigate = useNavigate();
+  const onClickHandler = () => {
+    storage.remove("accessToken");
+    navigate("/");
+    window.location.reload();
   };
 
   return (
@@ -178,13 +188,20 @@ export default function SelectedListItem() {
           component={Link}
           to="/setting"
           // href="/setting"
-          sx={{ paddingLeft: "24px" }}
+          sx={{ paddingLeft: "16px" }}
           selected={selectedIndex === 4}
-          onClick={(event) => handleListItemClick(event, 4)}
+          // onClick={(event) => handleListItemClick(event, 4)}
+          onClick={onClickHandler}
         >
-          <ListItemIcon>
-            <Settings />
-          </ListItemIcon>
+          <Box>
+            <ListItemIcon sx={{ paddingLeft: "8px" }}>
+              <LogoutIcon />
+            </ListItemIcon>
+            <ListItemText
+              primary="로그아웃"
+              primaryTypographyProps={{ fontSize: "12px" }}
+            />
+          </Box>
         </ListItemButton>
       </List>
     </AppBar>
