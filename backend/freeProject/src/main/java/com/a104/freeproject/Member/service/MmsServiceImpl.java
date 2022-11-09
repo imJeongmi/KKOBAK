@@ -68,7 +68,7 @@ public class MmsServiceImpl implements MmsService{
 
         // sms 보내기
         try{
-            SMSResponse response = sendSMS(list);
+//            SMSResponse response = sendSMS(list);
             return AuthNumResponse.builder().authNum(numStr).build();
         }catch (Exception e){
             return AuthNumResponse.builder().authNum("").build();
