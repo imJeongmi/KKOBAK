@@ -1,6 +1,7 @@
 package com.a104.freeproject.PrtChl.controller;
 
 import com.a104.freeproject.Challenge.request.registerRequest;
+import com.a104.freeproject.PrtChl.request.ChlRequest;
 import com.a104.freeproject.PrtChl.service.PrtChlServiceImpl;
 import com.a104.freeproject.advice.exceptions.NotFoundException;
 import io.swagger.annotations.ApiOperation;
@@ -34,6 +35,11 @@ public class PrtChlController {
         return ResponseEntity.ok().body(prtChlService.dropChl(cid, req));
     }
 
+    @PatchMapping("/change/kkobak")
+    @ApiOperation(value = "참여한 꼬박 챌린지 상태 변경")
+    public ResponseEntity<Boolean> changeKkobak(@RequestBody ChlRequest chlRequest, HttpServletRequest req) throws NotFoundException{
+        return ResponseEntity.ok().body(prtChlService.changeKkobak(chlRequest,req));
+    }
 
     // 스케줄러 돌려서 알람 보내는거 작성
 

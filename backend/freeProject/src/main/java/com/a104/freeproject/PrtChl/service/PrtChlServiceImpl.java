@@ -9,6 +9,7 @@ import com.a104.freeproject.Member.entity.Member;
 import com.a104.freeproject.Member.service.MemberServiceImpl;
 import com.a104.freeproject.PrtChl.entity.PrtChl;
 import com.a104.freeproject.PrtChl.repository.PrtChlRepository;
+import com.a104.freeproject.PrtChl.request.ChlRequest;
 import com.a104.freeproject.advice.exceptions.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -72,6 +73,26 @@ public class PrtChlServiceImpl implements PrtChlService{
         p.set_fin(true);
         prtChlRepository.save(p);
 
+        return true;
+    }
+
+    public boolean changeKkobak(ChlRequest chlRequest, HttpServletRequest req) throws NotFoundException{
+        long cid = chlRequest.getChlId();
+        if(!challengeRepository.existsById(cid)) throw new NotFoundException("존재하지 않는 챌린지입니다.");
+        Challenge c = challengeRepository.findById(cid).get();
+        Member member = memberService.findEmailbyToken(req);
+        if(!prtChlRepository.existsByChallengeAndMember(c,member))
+            throw new NotFoundException("가입하지 않은 챌린지입니다.");
+        PrtChl p = prtChlRepository.findByChallengeAndMember(c,member);
+
+        if(p.getKkobak()==0){
+            p.setKkobak(1);
+        }
+        else if(p.getKkobak()==1){
+            p.setKkobak(0);
+        }
+
+//        prtChlRepository.save(p);
         return true;
     }
 }
