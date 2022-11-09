@@ -13,7 +13,7 @@ import ThunderIcon from "static/weather/thunderIcon.png";
 import "./WidgetWeather.css";
 
 export default function WidgetWeather() {
-  const apiKey = "fb1158dc7dfef5f0967ceac8f71ee3a6";
+  const apiKey = process.env.REACT_APP_OPENWEATHERMAP_API;
 
   const dayOfWeek = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
   const [days, setDays] = useState();
