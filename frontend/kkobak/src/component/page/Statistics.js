@@ -7,6 +7,8 @@ import { useParams } from "react-router-dom";
 import HeartRateChart from "component/module/HeartRateChart";
 import { requestMyChallengeDetail } from "api/userApi";
 
+import CheckDayForm from "component/module/CheckDayForm";
+
 import moment from "moment";
 
 export default function Statistics() {
@@ -14,6 +16,8 @@ export default function Statistics() {
   const [title, setTitle] = useState("");
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
+
+  const [findTime, setFindTime] = useState(new Date());
 
   function requestMyChallengeDetailSuccess(res) {
     setTitle(res.data.title);
@@ -45,8 +49,6 @@ export default function Statistics() {
               <Box sx={{ float: "left", flex: 1, display: "flex" }}>
                 <Box sx={{ float: "left" }}>
                   <Text size="m" weight="bold" mt="30" my="15" color="red">
-                    {/* {item.title} */}
-
                     {title}
                   </Text>
                 </Box>
@@ -95,7 +97,7 @@ export default function Statistics() {
                 width: "60vw",
                 height: "200px",
                 borderRadius: "20px",
-                backgroundColor: "gray",
+                backgroundColor: "#F7F7F7",
                 textAlign: "center",
                 display: "flex",
                 justifyContent: "center",
@@ -103,7 +105,7 @@ export default function Statistics() {
             >
               <Box sx={{ display: "flex", flexDirection: "column" }}>
                 {/* <Box>심박수 위치</Box> */}
-                <HeartRateChart />
+                <HeartRateChart findTime={findTime} setFindTime={setFindTime} />
               </Box>
             </Box>
           </Box>
@@ -111,7 +113,11 @@ export default function Statistics() {
       </Box>
       <SideBar>
         <Box sx={{ paddingY: "30px", marginLeft: "20px" }}>
-          달력 위젯이 들어갈 자리입니다.
+          해당 날짜 챌린지 조회하기
+          <CheckDayForm
+            findTime={findTime}
+            setFindTime={setFindTime}
+          ></CheckDayForm>
         </Box>
       </SideBar>
     </Box>
