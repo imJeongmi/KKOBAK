@@ -19,6 +19,7 @@ import com.example.kkobak.data.room.database.AccessTokenDatabase;
 import com.example.kkobak.data.room.entity.AccessToken;
 import com.example.kkobak.databinding.ActivityMainBinding;
 import com.example.kkobak.ui.challenge.GpsActivity;
+import com.example.kkobak.ui.challenge.MeditationActivity;
 import com.example.kkobak.ui.challenge.WaterActivity;
 import com.example.kkobak.ui.login.LoginActivity;
 import com.example.kkobak.ui.test.SpeedActivity;
@@ -128,6 +129,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void moveGps(View v) {
         Intent intent = new Intent(this, GpsActivity.class);
+        startActivity(intent);
+    }
+
+    public void moveMeditation(View v) {
+        Intent intent = new Intent(this, MeditationActivity.class);
         startActivity(intent);
     }
 }

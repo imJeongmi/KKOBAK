@@ -12,6 +12,8 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <!-- 진동 울리기 위한 허가 -->
     <uses-permission android:name="android.permission.VIBRATE" />
+    <!-- 심박수 사용을 위한 허가  -->
+    <uses-permission android:name="android.permission.BODY_SENSORS" />
 
     <application
         android:allowBackup="true"
@@ -56,6 +58,8 @@
         <activity android:name=".ui.challenge.WaterActivity" />
 
         <activity android:name=".ui.challenge.GpsActivity" />
+
+        <activity android:name=".ui.challenge.MeditationActivity" />
 
         <service android:name=".ui.test.FirebaseMsgService"
             android:exported="true">
