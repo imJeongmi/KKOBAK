@@ -7,8 +7,10 @@ import Text from "component/atom/Text";
 
 const TimeBox = styled(Box)(
   () => `
+  // width: 280px;
   height: 140px;
-  border-radius: 20px;
+  background-color: #F8F0EE;
+  border-radius: 30px;
   display: flex;
   flex-direction: column;
   align-items: center;
