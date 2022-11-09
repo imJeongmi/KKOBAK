@@ -9,7 +9,7 @@ const TimeBox = styled(Box)(
   () => `
   // width: 280px;
   height: 140px;
-  background-color: #F8F0EE;
+  background-color: #F0F6FB;
   border-radius: 30px;
   display: flex;
   flex-direction: column;
