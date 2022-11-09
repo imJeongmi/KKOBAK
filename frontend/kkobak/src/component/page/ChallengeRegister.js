@@ -26,12 +26,16 @@ export default function ChallengeRegister() {
   const [alarm, setAlarm] = useState("00:00");
   const [title, setTitle] = useState("");
   const [contents, setContents] = useState("");
+  const [roomtype, setRoomtype] = useState(0);
+  const [unit, setUnit] = useState('')
+
+  const [goal, setGoal] = useState('')
 
   function getDetailCategoryListSuccess(res) {
     setDetailCategoryList(res.data);
   }
 
-  function getDetailCategoryListFail(err) {}
+  function getDetailCategoryListFail(err) { }
 
   useEffect(() => {
     getDetailCategoryList(
@@ -49,6 +53,21 @@ export default function ChallengeRegister() {
     console.log(err);
   }
 
+  function changeUnit(category, detailCategory) {
+    if (category === "2" && detailCategory === "7") {
+      setUnit('위도/경도')
+    } else if (category === "2") {
+      setUnit('회')
+    } else if (category === "1" && detailCategory === "1") {
+      setUnit('Km')
+    } else if (category === "1" && detailCategory === "2") {
+      setUnit('Km')
+    } else if (category === "1" && detailCategory === "3") {
+      setUnit('분')
+    }
+  }
+
+
   function register(e) {
     e.preventDefault();
     registerChallenge(
@@ -58,16 +77,17 @@ export default function ChallengeRegister() {
       contents,
       detailCategory,
       endTime,
-      1,
+      goal,
       imgSrc,
       kkobak,
       1,
+      roomtype,
       "",
       1,
       startTime,
       [],
       title,
-      "회",
+      `${changeUnit(category, detailCategory)}`,
       watch,
       registerSuccess,
       registerFail
@@ -97,6 +117,8 @@ export default function ChallengeRegister() {
             endTime={endTime}
             alarm={alarm}
             watch={watch}
+            goal={goal}
+            unit={unit}
             kkobak={kkobak}
             setImgSrc={setImgSrc}
             setTitle={setTitle}
@@ -107,8 +129,12 @@ export default function ChallengeRegister() {
             setEndTime={setEndTime}
             setAlarm={setAlarm}
             setWatch={setWatch}
+            setGoal={setGoal}
             setKkobak={setKkobak}
             register={register}
+            setUnit={setUnit}
+            setRoomtype={setRoomtype}
+            changeUnit={changeUnit}
           ></ChallengeForm>
         </MainBox>
       </Box>
