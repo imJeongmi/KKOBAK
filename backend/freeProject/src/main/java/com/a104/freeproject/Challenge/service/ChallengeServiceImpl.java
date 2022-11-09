@@ -111,6 +111,12 @@ public class ChallengeServiceImpl implements ChallengeService{
         //PrtChl 추가
         prtChlService.participate(c.getId(),req, input.getAlarmDir());
 
+        //kkobak 값 업데이트(임시로 만들었어요)
+        PrtChl ptrChl = prtChlRepository.findByChallengeAndMember(challenge,member);
+        if(input.getKkobak()==0||input.getKkobak()==1) {
+            ptrChl.setKkobak(input.getKkobak());
+        }
+        
         return true;
     }
 

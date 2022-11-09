@@ -34,4 +34,5 @@ public class registerRequest {
     @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm", timezone = "Asia/Seoul")
     private Timestamp endTime;
     private List<String> tagList;
+    private int kkobak;
 }
