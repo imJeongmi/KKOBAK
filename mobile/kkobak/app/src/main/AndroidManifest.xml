@@ -61,6 +61,8 @@
 
         <activity android:name=".ui.challenge.MeditationActivity" />
 
+        <activity android:name=".ui.challenge.AttendActivity" />
+
         <service android:name=".ui.test.FirebaseMsgService"
             android:exported="true">
             <intent-filter>

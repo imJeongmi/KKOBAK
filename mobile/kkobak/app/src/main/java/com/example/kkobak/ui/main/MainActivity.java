@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -18,6 +17,7 @@ import com.example.kkobak.data.room.dao.AccessTokenDao;
 import com.example.kkobak.data.room.database.AccessTokenDatabase;
 import com.example.kkobak.data.room.entity.AccessToken;
 import com.example.kkobak.databinding.ActivityMainBinding;
+import com.example.kkobak.ui.challenge.AttendActivity;
 import com.example.kkobak.ui.challenge.GpsActivity;
 import com.example.kkobak.ui.challenge.MeditationActivity;
 import com.example.kkobak.ui.challenge.WaterActivity;
@@ -25,10 +25,7 @@ import com.example.kkobak.ui.login.LoginActivity;
 import com.example.kkobak.ui.test.SpeedActivity;
 import com.example.kkobak.ui.test.TestActivity;
 import com.example.kkobak.ui.test.TimerActivity;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.List;
 
@@ -134,6 +131,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void moveMeditation(View v) {
         Intent intent = new Intent(this, MeditationActivity.class);
+        startActivity(intent);
+    }
+
+    public void moveAttend(View v) {
+        Intent intent = new Intent(this, AttendActivity.class);
         startActivity(intent);
     }
 }
