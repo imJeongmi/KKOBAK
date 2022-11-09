@@ -18,16 +18,90 @@
         android:scrollbars="vertical"
         android:text="GPS" />
 
-    <Button
-        android:id="@+id/button_gps_start"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="GPS 시작" />
+    <LinearLayout
+        android:layout_width="184dp"
+        android:layout_height="47dp"
+        android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/button_gps_end"
-        android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/gps_hour"
+            android:layout_width="44dp"
+            android:layout_height="match_parent"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:textColor="#000000"
+            android:text="00" />
+
+        <TextView
+            android:id="@+id/gps_colon1"
+            android:layout_width="19dp"
+            android:layout_height="match_parent"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:textColor="#000000"
+            android:text=":" />
+
+        <TextView
+            android:id="@+id/gps_minute"
+            android:layout_width="51dp"
+            android:layout_height="match_parent"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:textColor="#000000"
+            android:text="00" />
+
+        <TextView
+            android:id="@+id/gps_colon2"
+            android:layout_width="17dp"
+            android:layout_height="match_parent"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:textColor="#000000"
+            android:text=":" />
+
+        <TextView
+            android:id="@+id/gps_second"
+            android:layout_width="53dp"
+            android:layout_height="match_parent"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:textColor="#000000"
+            android:text="00" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/gps_distance"
+        android:layout_width="160dp"
+        android:layout_height="33dp"
+        android:textAlignment="center"
+        android:text="이동거리:"
+        android:textColor="#000000" />
+
+    <TextView
+        android:id="@+id/gps_speed"
+        android:layout_width="159dp"
+        android:layout_height="33dp"
+        android:text="현재 속도:"
+        android:textAlignment="center"
+        android:textColor="#000000" />
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="GPS 끝" />
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/button_gps_start"
+            android:layout_width="73dp"
+            android:layout_height="wrap_content"
+            android:text="GPS 시작" />
+
+        <Button
+            android:id="@+id/button_gps_end"
+            android:layout_width="71dp"
+            android:layout_height="wrap_content"
+            android:text="GPS 끝" />
+
+    </LinearLayout>
+
 
 </LinearLayout>

@@ -40,17 +40,19 @@ import retrofit2.Response;
 
 public class GpsActivity extends Activity {
 
-    LocationManager locationManager;
-
     //로케이션 리스너 선언 및 설정
     LocationListener locationListener;
-//    Timer timer;
+    LocationManager locationManager;
+
+    // 출력용 뷰
     String str;
     private TextView textView;
+    TextView hour, minute, second, gpsSpeed, gpsDistance;
 
     private Button btn_gps_start;
     private Button btn_gps_stop;
     private Button btn_gps_end;
+
     // 리스트에서 넘어온 데이터
     Intent intent;
     private Long chlId;
@@ -63,8 +65,9 @@ public class GpsActivity extends Activity {
     // 시작 시간 저장용
     LocalDateTime chk;
 
-    //시간 데이터 포맷
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    // 타이머
+    int _hour, _minute, _second;
+    Timer timer;
 
     private static final String TAG = "____GPS____";
 
@@ -72,10 +75,19 @@ public class GpsActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gps);
-
+        // 뷰 연결
         textView = findViewById(R.id.txt_gps);
+        hour = findViewById(R.id.gps_hour);
+        minute = findViewById(R.id.gps_minute);
+        second = findViewById(R.id.gps_second);
+
+        gpsSpeed = findViewById(R.id.gps_speed);
+        gpsDistance = findViewById(R.id.gps_distance);
+
+
+
         str ="";
-        textView.setMovementMethod(new ScrollingMovementMethod());
+//        textView.setMovementMethod(new ScrollingMovementMethod());
 
         // 토큰 세팅
         AppDatabase database = AppDatabase.getInstance(getApplicationContext());
@@ -173,6 +185,7 @@ public class GpsActivity extends Activity {
             }
         });
 
+        btn_gps_end.setClickable(false);
     }
 
     @Override
