@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
-import Text from "component/atom/Text";
 import Box from "@mui/material/Box";
-import MyChallengeCardList from "component/module/MyChallengeCardList";
+
+import Text from "component/atom/Text";
 import SideBar from "component/atom/SideBar";
-import MyChallengeCarousel from "component/module/MyChallengeCarousel";
-import { requestUserInfo } from "api/userApi";
 import Todolist from "component/module/Todolist";
+import MyChallengeCardList from "component/module/MyChallengeCardList";
+import MyChallengeCarousel from "component/module/MyChallengeCarousel";
+
+import { requestUserInfo } from "api/userApi";
 
 export default function Challenge() {
   const [user, setUser] = useState([]);
@@ -35,19 +37,14 @@ export default function Challenge() {
           </Box>
           <Box sx={{ marginTop: "6px" }}>
             <Text size="m" weight="semibold" mt="30" my="15">
-              님의 챌린지 리스트
+              {"님의 챌린지 리스트"}
             </Text>
           </Box>
         </Box>
         <MyChallengeCardList />
       </Box>
       <SideBar>
-        <Box sx={{ marginBottom: "-30px", marginLeft: "20px" }}>
-          <Text size="m" weight="semibold" mt="30" my="15">
-            챌린지 현황
-          </Text>
-        </Box>
-        <Box sx={{ paddingY: "30px", marginLeft: "20px" }}>
+        <Box sx={{ margin: "40px 30px 50px 30px" }}>
           <MyChallengeCarousel />
         </Box>
         <Box sx={{ marginTop: "30px", marginLeft: "30px" }}>
