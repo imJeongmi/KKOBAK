@@ -238,10 +238,10 @@ export default function SignupModal() {
     console.log("인증번호 : " + res.data.authNum);
   }
   function sendAuthNumFail(res) {
-    console.log("Send AuthNum Fail", res);
+    setSignupMessage(res.response.data.message);
   }
   function onClickSendAuthNum() {
-    requestAuthNum(Number(phoneNum), sendAuthNumSuccess, sendAuthNumFail);
+    requestAuthNum(phoneNum, sendAuthNumSuccess, sendAuthNumFail);
   }
 
   // 인증번호 확인
