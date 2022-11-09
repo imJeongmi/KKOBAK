@@ -14,10 +14,10 @@ import {
 import moment from "moment";
 import { useParams } from "react-router-dom";
 
-export default function LineChartPage() {
-  const year = new Date().getFullYear();
-  const month = new Date().getMonth() + 1;
-  const day = moment(new Date()).format("DD");
+export default function LineChartPage({ findTime }) {
+  const year = findTime.getFullYear();
+  const month = findTime.getMonth() + 1;
+  const day = moment(findTime).format("DD");
   const cid = Number(useParams().chlId);
 
   const [bpm, setBpm] = useState([]);
@@ -66,6 +66,9 @@ export default function LineChartPage() {
       <Box>
         <LineChart width={600} height={180} data={bpm}>
           <XAxis />
+          {/* 데이터 타임 오는 시간 오후 4시가 16시가 아니라 04시로 옴. 
+          time이 현재 2022-11-08 04:28:43으로 오는데 x축에 표시하기 위해 16:28:43 이렇게 객체 안에 하나 더 추가해줘도 좋음. checktime이런거 하나 추가해서*/}
+          {/* <XAxis dataKey="time" /> */}
           <YAxis domain={[60, 160]} />
           {/* <Tooltip  /> */}
           {/* <Legend /> */}
@@ -73,7 +76,7 @@ export default function LineChartPage() {
             type="monotone"
             dataKey="bpm"
             stroke="black"
-            // activeDot={{ r: 3 }}
+            // activeDot={{ r: 1 }}
           />
         </LineChart>
       </Box>
