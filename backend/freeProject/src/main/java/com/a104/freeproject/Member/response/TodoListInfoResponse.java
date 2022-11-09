@@ -14,4 +14,5 @@ public class TodoListInfoResponse {
     private Long chlId;
     private String title;
     private boolean isDone;
+    private int kkobak;
 }

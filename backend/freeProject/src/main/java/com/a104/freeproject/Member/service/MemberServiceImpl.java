@@ -374,7 +374,9 @@ public class MemberServiceImpl implements MemberService{
                 Log log = logRepository.findByPrtChlAndDate(p,day.getDay());
                 Challenge c = p.getChallenge();
                 todoListInfo.add(TodoListInfoResponse.builder().chlId(c.getId())
-                        .title(c.getTitle()).isDone(log.isFin()).build());
+                        .title(c.getTitle()).isDone(log.isFin())
+                        .kkobak(p.getKkobak())
+                        .build());
             }
             return todoListInfo;
         } catch (Exception e){

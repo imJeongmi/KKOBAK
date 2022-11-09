@@ -77,4 +77,7 @@ public class PrtChl implements Serializable {
     @OneToMany(mappedBy = "prtChl", cascade = CascadeType.ALL)
     private List<Statgps> statgpsList = new LinkedList<>();
 
+    @ColumnDefault("0")
+    @Setter
+    private int kkobak;
 }
