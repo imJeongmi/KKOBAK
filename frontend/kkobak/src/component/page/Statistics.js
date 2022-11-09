@@ -5,6 +5,8 @@ import SideBar from "component/atom/SideBar";
 import { useParams } from "react-router-dom";
 
 import HeartRateChart from "component/module/HeartRateChart";
+import ChallengeMap from "component/atom/ChallengeMap";
+
 import { requestMyChallengeDetail } from "api/userApi";
 
 import CheckDayForm from "component/module/CheckDayForm";
@@ -94,6 +96,10 @@ export default function Statistics() {
                 >
                   <Box sx={{ display: "flex", flexDirection: "column" }}>
                     <Box>지도 위치</Box>
+                    <ChallengeMap
+                      findTime={findTime}
+                      setFindTime={setFindTime}
+                    />
                   </Box>
                 </Box>
                 <Box
@@ -226,6 +232,10 @@ export default function Statistics() {
                 >
                   <Box sx={{ display: "flex", flexDirection: "column" }}>
                     <Box>지도 위치</Box>
+                    <ChallengeMap
+                      findTime={findTime}
+                      setFindTime={setFindTime}
+                    />
                   </Box>
                 </Box>
               </Box>
