@@ -9,6 +9,7 @@ import Button from "component/atom/TextButton";
 import Text from "component/atom/Text";
 import MainBox from "component/atom/MainBox";
 import WatchToggle from "component/atom/WatchToggle";
+import EmptyChallenge from "component/page/EmptyChallenge";
 
 import { fetchMyChallengeList, fetchMyChallengePageCnt } from "api/userApi";
 import { useNavigate } from "react-router-dom";
@@ -87,13 +88,13 @@ export default function MyChallengeCardList() {
     );
   }, []);
   function moveToRegister(e) {
-    e.preventDefault()
-    navigate('/register')
+    e.preventDefault();
+    navigate("/register");
   }
   return MyChallengeList.length === 0 ? (
-    <MainBox>
-      <Text> 생성된 챌린지가 없어요 </Text>
-    </MainBox>
+    <Box>
+      <EmptyChallenge />
+    </Box>
   ) : (
     <MainBox flexDir="col">
       <WatchToggleBox>

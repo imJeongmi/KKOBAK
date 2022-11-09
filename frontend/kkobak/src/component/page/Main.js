@@ -6,6 +6,7 @@ import MainCalendar from "component/atom/MainCalendar";
 import Text from "component/atom/Text";
 import SideBar from "component/atom/SideBar";
 import MainBox from "component/atom/MainBox";
+import EmptyChallenge from "component/page/EmptyChallenge";
 import {
   requestUserInfo,
   fetchMyChallengeCalendarList,
@@ -76,8 +77,34 @@ export default function Main() {
   }, []);
 
   return MyChallengeList.length === 0 ? (
-    <Box>
-      <Text> 생성된 챌린지가 없어요</Text>
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "space-between",
+      }}
+    >
+      <Box sx={{ margin: "0 auto" }}>
+        <Box
+          sx={{
+            flex: 1,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            marginTop: "200px",
+          }}
+        >
+          <EmptyChallenge />
+        </Box>
+      </Box>
+      <SideBar>
+        <Box sx={{ margin: "40px 30px 50px 30px" }}>
+          <MainCarousel />
+        </Box>
+
+        <Box sx={{ marginTop: "30px", marginLeft: "30px" }}>
+          <Todolist />
+        </Box>
+      </SideBar>
     </Box>
   ) : (
     <Box
@@ -91,12 +118,12 @@ export default function Main() {
           <Box sx={{ float: "left", flex: 1, display: "flex" }}>
             <Box sx={{ float: "left" }}>
               <Text size="m" weight="semibold" mt="30" my="15">
-                안녕하세요,
+                {"안녕하세요," + "\u00A0"}
               </Text>
             </Box>
             <Box>
-              <Text size="m" weight="bold" mt="30" my="15" color="red">
-                {user.nickName}
+              <Text size="m" weight="bold" mt="30" my="15" color="blue">
+                {` ${user.nickName}`}
               </Text>
             </Box>
             <Box>

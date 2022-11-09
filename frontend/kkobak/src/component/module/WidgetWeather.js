@@ -13,12 +13,13 @@ import ThunderIcon from "static/weather/thunderIcon.png";
 import "./WidgetWeather.css";
 
 export default function WidgetWeather() {
-  const apiKey = "ac3a633db731957bdc0275cb9385edb5";
+  const apiKey = process.env.REACT_APP_OPENWEATHERMAP_API;
 
   const dayOfWeek = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
   const [days, setDays] = useState();
 
   const [location, setLocation] = useState("Seoul");
+  // const [location, setLocation] = useState();
   const [currentLat, setCurrentLat] = useState(37.5);
   const [currentLon, setCurrentLon] = useState(127.03);
   const [currentDayIdx, setCurrentDayIdx] = useState(0);
@@ -62,16 +63,18 @@ export default function WidgetWeather() {
 
   useEffect(() => {
     pushDays();
-    getCurrentTemp();
+    console.log("hi");
+    // getCurrentTemp();
   }, []);
 
   useEffect(() => {
     getCurrentTemp();
-  }, [currentLat, currentDayIdx]);
+    // }, [currentLat, currentDayIdx]);
+  }, [currentDayIdx]);
 
-  useEffect(() => {
-    getLocationTemp();
-  }, [location]);
+  // useEffect(() => {
+  //   getLocationTemp();
+  // }, [location]);
 
   useEffect(() => {
     switch (currentWeather) {
@@ -104,7 +107,11 @@ export default function WidgetWeather() {
     const dayOffset = moment().day();
     const pushedDays = ["TODAY"];
     for (let i = dayOffset + 1; i < dayOffset + 5; i++) {
-      pushedDays.push(dayOfWeek[i]);
+      if (i > 6) {
+        pushedDays.push(dayOfWeek[i - 7]);
+      } else {
+        pushedDays.push(dayOfWeek[i]);
+      }
     }
     setDays(pushedDays);
   }
@@ -112,7 +119,7 @@ export default function WidgetWeather() {
   function onSubmit(e) {
     e.preventDefault();
     const newLocation = e.target[0].value;
-    setLocation(newLocation);
+    // setLocation(newLocation);
   }
 
   return (
@@ -150,7 +157,7 @@ export default function WidgetWeather() {
                     setCurrentDayIdx(index);
                   }}
                 >
-                  <Text weight="bold" mx="4px">
+                  <Text weight="bold" mx="4px" size="13px">
                     {item}
                   </Text>
                 </div>
@@ -162,7 +169,7 @@ export default function WidgetWeather() {
                     setCurrentDayIdx(index);
                   }}
                 >
-                  <Text weight="medium" color="white" mx="4px">
+                  <Text weight="medium" color="white" mx="4px" size="13px">
                     {item}
                   </Text>
                 </div>

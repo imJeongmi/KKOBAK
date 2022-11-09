@@ -64,6 +64,7 @@ export default function ChallengeDetail() {
   const [alarm, setAlarm] = useState("");
   const [watch, setWatch] = useState("");
   const [kkobakChallenge, setKkobakChallenge] = useState("");
+  const [detailCategoryId, setDetailCategoryId] = useState("");
 
   const navigate = useNavigate();
 
@@ -84,7 +85,8 @@ export default function ChallengeDetail() {
     setEndTime(res.data.endTime);
     setAlarm(res.data.alarm);
     setWatch(res.data.watch);
-    setKkobakChallenge(res.data.roomtype);
+    setKkobakChallenge(res.data.kkobak);
+    setDetailCategoryId(res.data.detailCategoryId);
   }
 
   function requestMyChallengeDetailFail(res) {}
@@ -103,7 +105,9 @@ export default function ChallengeDetail() {
     navigate(`/Statistics/${chlId}`);
   }
 
-  return (
+  return detailCategoryId === 6 ||
+    detailCategoryId === 5 ||
+    detailCategoryId === 4 ? (
     <Box
       sx={{
         display: "flex",
@@ -178,6 +182,7 @@ export default function ChallengeDetail() {
                   <Text size="14px" color="grey" my="10" mx="10">
                     {categoryId}
                   </Text>
+
                   <Text size="14px" color="grey" my="10" mx="10">
                     {startTime.substr(0, 10)} - {endTime.substr(0, 10)}
                   </Text>
@@ -217,6 +222,133 @@ export default function ChallengeDetail() {
                       />
                       <FormControlLabel
                         value="false"
+                        control={<Radio />}
+                        label="설정 안함"
+                      />
+                    </RadioGroup>
+                  </Box>
+                </Box>
+              </Box>
+            </Box>
+          </Box>
+        </MainBox>
+      </Box>
+      <SideBar />
+    </Box>
+  ) : (
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "space-between",
+      }}
+    >
+      <Box sx={{ margin: "0 auto" }}>
+        <Text size="l" weight="bold" mt="30" my="15">
+          {user.nickName}님의 챌린지리스트
+        </Text>
+        <MainBox flexDir="col">
+          <Box
+            sx={{
+              width: "100%",
+              minHeight: "80vh",
+              display: "flex",
+              flexWrap: "wrap",
+              justifyContent: "center",
+            }}
+          >
+            <Box sx={CardStyle}>
+              <Box sx={ImageStyle}>
+                {<img src={imgurl} alt="img" width="100%" height="100%" />}
+              </Box>
+              <Text size="20px" weight="bold" mt="10">
+                {title}
+              </Text>
+              <Box sx={{}}>
+                <Text size="13px" color="grey" my="10">
+                  {contents}
+                </Text>
+              </Box>
+
+              {/* 스크롤 */}
+              <Box sx={{ display: "flex" }}>
+                <Box
+                  sx={{
+                    width: "100px",
+                    my: "30px",
+                    mx: "80px",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "start",
+                  }}
+                >
+                  <Text size="14px" weight="semibold" my="10">
+                    상세 카테고리
+                  </Text>
+                  <Text size="14px" weight="semibold" my="10">
+                    기간
+                  </Text>
+                  <Text size="14px" weight="semibold" my="10">
+                    알림
+                  </Text>
+                  <Text size="14px" weight="semibold" my="12">
+                    워치 사용
+                  </Text>
+                  <Text size="14px" weight="semibold" my="12">
+                    꼬박챌린지 설정
+                  </Text>
+                </Box>
+
+                <Box
+                  sx={{
+                    width: "400px",
+                    my: "30px",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "start",
+                  }}
+                >                  
+                  <Text size="14px" color="grey" my="10" mx="10">
+                    {detailCategoryId}
+                  </Text>
+                  <Text size="14px" color="grey" my="10" mx="10">
+                    {startTime.substr(0, 10)} - {endTime.substr(0, 10)}
+                  </Text>
+                  <Text size="14px" color="grey" my="10" mx="10">
+                    {alarm}
+                  </Text>
+                  <Box sx={{ mx: "8px" }}>
+                    <RadioGroup
+                      row
+                      aria-labelledby="demo-row-controlled-radio-buttons-group"
+                      name="controlled-radio-buttons-group"
+                      value={watch}
+                    >
+                      <FormControlLabel
+                        value="true"
+                        control={<Radio />}
+                        label="사용"
+                      />
+                      <FormControlLabel
+                        value="false"
+                        control={<Radio />}
+                        label="사용 안함"
+                      />
+                    </RadioGroup>
+                  </Box>
+                  <Box sx={{ mx: "8px" }}>
+                    <RadioGroup
+                      row
+                      aria-labelledby="demo-row-controlled-radio-buttons-group"
+                      name="controlled-radio-buttons-group"
+                      value={kkobakChallenge}
+                    >
+                      <FormControlLabel
+                        value={1}
+                        control={<Radio />}
+                        label="설정"
+                      />
+                      <FormControlLabel
+                        value={0}
                         control={<Radio />}
                         label="설정 안함"
                       />

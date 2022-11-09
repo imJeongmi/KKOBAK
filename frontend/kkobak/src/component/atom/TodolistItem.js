@@ -32,12 +32,16 @@ const CheckBox = styled(Box)(
 );
 
 export default function TodolistItem({
+  refresh,
+  setRefresh,
   nowDate,
   id,
   contents,
   done,
   chlId,
   dashedNowDate,
+  weight,
+  color,
 }) {
   const today = moment().format("YYYY.MM.DD");
 
@@ -46,25 +50,24 @@ export default function TodolistItem({
   const [cancelText, setCancelText] = useState(done);
 
   function updateTodolistStatusSuccess(res) {
-    // 새로고침 안되게 코드 수정
-    window.location.reload();
+    setRefresh(!refresh);
   }
 
   function updateTodolistStatusFail(res) {}
 
   function deleteTodolistSuccess(res) {
-    // 새로고침 안되게 코드 수정
-    window.location.reload();
+    setRefresh(!refresh);
   }
 
   function deleteTodolistFail(res) {}
 
   function changeKkobakChallengeDoneSuccess(res) {
+    // 캘린더 새로고침 연결
     console.log("success");
   }
 
   function changeKkobakChallengeDoneFail(res) {
-    console.log("fail");
+    console.log(res);
   }
 
   function onClickCheckBox() {
@@ -79,7 +82,6 @@ export default function TodolistItem({
           changeKkobakChallengeDoneSuccess,
           changeKkobakChallengeDoneFail
         );
-        // 캘린더 새로고침 되게 수정
       } else {
         updateTodolistStatus(
           id,
@@ -101,7 +103,7 @@ export default function TodolistItem({
         onMouseOver={() => setHover(true)}
         onMouseOut={() => setHover(false)}
       >
-        {check ? (
+        {(check && done) ? (
           <img src={CheckImage} width="20px" />
         ) : hover ? (
           <Box sx={{ opacity: 0.5 }}>
@@ -112,7 +114,14 @@ export default function TodolistItem({
         )}
       </CheckBox>
       <Box sx={{ width: "170px" }}>
-        <Text size="14px" weight="medium" py="1" px="2" done={cancelText}>
+        <Text
+          size="14px"
+          color={color}
+          weight={weight}
+          py="1"
+          px="2"
+          done={cancelText && done} // 이 부분 테스트 필요
+        >
           {contents}
         </Text>
       </Box>
@@ -120,7 +129,7 @@ export default function TodolistItem({
         onClick={onClickDelete}
         sx={{ width: "30px", textAlign: "center", opacity: "0.6" }}
       >
-        <img src={DeleteImage} alt="img" width="20px" />
+        {!chlId ? <img src={DeleteImage} alt="img" width="20px" /> : ""}
       </Box>
     </TodolistItemBox>
   );

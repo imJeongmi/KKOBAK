@@ -20,6 +20,7 @@ export default function ChallengeRegister() {
     "https://initpjtbucket.s3.ap-northeast-2.amazonaws.com/images/cdd6bd23-f356-4073-91b9-ee89d9542c58.png"
   );
   const [watch, setWatch] = useState(true);
+  const [kkobak, setKkobak] = useState(0);
   const [startTime, setStartTime] = useState(new Date());
   const [endTime, setEndTime] = useState(new Date());
   const [alarm, setAlarm] = useState("00:00");
@@ -71,20 +72,23 @@ export default function ChallengeRegister() {
     e.preventDefault();
     registerChallenge(
       alarm,
+      0,
       category,
       contents,
       detailCategory,
       endTime,
       goal,
       imgSrc,
+      kkobak,
       1,
       roomtype,
+      "",
+      1,
       startTime,
       [],
       title,
       `${changeUnit(category, detailCategory)}`,
       watch,
-      "",
       registerSuccess,
       registerFail
     );
@@ -115,6 +119,7 @@ export default function ChallengeRegister() {
             watch={watch}
             goal={goal}
             unit={unit}
+            kkobak={kkobak}
             setImgSrc={setImgSrc}
             setTitle={setTitle}
             setCategory={setCategory}
@@ -125,6 +130,7 @@ export default function ChallengeRegister() {
             setAlarm={setAlarm}
             setWatch={setWatch}
             setGoal={setGoal}
+            setKkobak={setKkobak}
             register={register}
             setUnit={setUnit}
             setRoomtype={setRoomtype}

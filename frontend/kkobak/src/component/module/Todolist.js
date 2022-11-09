@@ -6,7 +6,7 @@ import moment from "moment";
 import Text from "component/atom/Text";
 import TodolistItem from "component/atom/TodolistItem";
 
-import { requestMychallenges } from "api/userApi";
+import { getKkobakChallengeList } from "api/userApi";
 import { getTodolist, registerTodolist } from "api/todolistApi";
 
 import "./Todolist.scss";
@@ -89,43 +89,58 @@ export default function Todolist() {
   }
 
   const [text, setText] = useState("");
+  const [refresh, setRefresh] = useState(true);
   const [todolist, setTodolist] = useState([]);
   const [kkobaklist, setKkobaklist] = useState([]);
 
   useEffect(() => {
-    requestMychallenges(requestMychallengesSuccess, requestMychallengesFail);
+    getKkobakChallengeList(
+      nowDate.format("YYYY-MM-DD"),
+      getKkobakChallengeListSuccess,
+      getKkobakChallengeListFail
+    );
     getTodolist(formedNowDate, getTodolistSuccess, getTodolistFail);
   }, []);
 
   useEffect(() => {
+    getKkobakChallengeList(
+      nowDate.format("YYYY-MM-DD"),
+      getKkobakChallengeListSuccess,
+      getKkobakChallengeListFail
+    );
     getTodolist(formedNowDate, getTodolistSuccess, getTodolistFail);
-  }, formedNowDate);
+  }, [formedNowDate, refresh]);
+
+  function getKkobakChallengeListSuccess(res) {
+    const data = res.data;
+    const list = [];
+    data.map((item, index) => {
+      if (item.kkobak === 1) {
+        list.push(item);
+      }
+    });
+    setKkobaklist(list);
+  }
+
+  function getKkobakChallengeListFail(res) {
+    console.log(res);
+  }
 
   function getTodolistSuccess(res) {
     setTodolist(res.data);
   }
 
-  function getTodolistFail(res) {}
+  function getTodolistFail(res) {
+    console.log(res);
+  }
 
   function registerTodolistSuccess(res) {
-    console.log("todoId: ", res.data);
     getTodolist(formedNowDate, getTodolistSuccess, getTodolistFail);
   }
 
-  function registerTodolistFail(res) {}
-
-  function requestMychallengesSuccess(res) {
-    const data = res.data;
-    const list = [];
-    data.map((item, index) => {
-      if (item.roomtype === 1) {
-        list.push(item);
-      }
-    });
-    setKkobaklist(list)
+  function registerTodolistFail(res) {
+    console.log(res);
   }
-
-  function requestMychallengesFail(res) {}
 
   function onKeyPress(e) {
     const newTodolist = e.target.value;
@@ -171,12 +186,16 @@ export default function Todolist() {
       {kkobaklist.map((item, index) => {
         return (
           <TodolistItem
+            refresh={refresh}
+            setRefresh={setRefresh}
             nowDate={formedNowDate}
             id={item.chlId}
-            contents={item.title}          
-            done={false}
+            contents={item.title}
+            done={item.done}
             chlId={item.chlId}
             dashedNowDate={nowDate.format("YYYY-MM-DD")}
+            weight="semibold"
+            color="blue"
           />
         );
       })}
@@ -184,11 +203,14 @@ export default function Todolist() {
       {todolist.map((item, index) => {
         return (
           <TodolistItem
+            refresh={refresh}
+            setRefresh={setRefresh}
             nowDate={formedNowDate}
             id={item.todoId}
             contents={item.contents}
             done={item.done}
             chlId={false}
+            weight="medium"
           />
         );
       })}

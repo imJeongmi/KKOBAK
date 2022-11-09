@@ -81,16 +81,21 @@ function requestCalendarCheck(chlId, year, month, success, fail) {
     .catch(fail);
 }
 
-function requestMyChallengeDetail(id, success, fail) {
-  api.get(`/challenge/${id}`).then(success).catch(fail);
+function requestMyChallengeDetail(chlId, success, fail) {
+  api.get(`/participate/detail/${chlId}`).then(success).catch(fail);
 }
 
 function requestMyChallengeStatistics(success, fail) {
   api.get(`member/chl-info`).then(success).catch(fail);
 }
 
-function requestMychallenges(success, fail) {
-  api.get(`/member/my-chl-list?page=0&size=1000&sort=id`).then(success).catch(fail);
+function getKkobakChallengeList(day, success, fail) {
+  api
+    .post(`/member/todo-list/info`, {
+      day: day,
+    })
+    .then(success)
+    .catch(fail);
 }
 
 export {
@@ -108,5 +113,5 @@ export {
   requestCalendarCheck,
   requestMyChallengeDetail,
   requestMyChallengeStatistics,
-  requestMychallenges,
+  getKkobakChallengeList,
 };
