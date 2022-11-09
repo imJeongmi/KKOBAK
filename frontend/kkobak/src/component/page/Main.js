@@ -1,22 +1,23 @@
 import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
-import MainCarousel from "component/module/MainCarousel";
-import Todolist from "component/module/Todolist";
-import MainCalendar from "component/atom/MainCalendar";
-import Text from "component/atom/Text";
-import SideBar from "component/atom/SideBar";
+import moment from "moment";
+
+import Stack from "@mui/material/Stack";
+import Pagination from "@mui/material/Pagination";
+
 import MainBox from "component/atom/MainBox";
+import SideBar from "component/atom/SideBar";
+import Text from "component/atom/Text";
+import Todolist from "component/module/Todolist";
+import MainCarousel from "component/module/MainCarousel";
+import MainCalendar from "component/atom/MainCalendar";
 import EmptyChallenge from "component/page/EmptyChallenge";
+
 import {
   requestUserInfo,
   fetchMyChallengeCalendarList,
   fetchMyChallengeCalendarPageCnt,
 } from "api/userApi";
-
-import Pagination from "@mui/material/Pagination";
-import Stack from "@mui/material/Stack";
-
-import moment from "moment";
 
 export default function Main() {
   const [user, setUser] = useState([]);

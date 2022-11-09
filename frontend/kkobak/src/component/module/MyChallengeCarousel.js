@@ -21,16 +21,10 @@ export default class VerticalMode extends Component {
     };
 
     return (
-      <div style={{ width: "280px" }}>
         <Slider {...settings}>
-          <div>
             <WidgetStatisticsRlt />
-          </div>
-          <div>
             <WidgetStatisticsIng />
-          </div>
         </Slider>
-      </div>
     );
   }
 }
