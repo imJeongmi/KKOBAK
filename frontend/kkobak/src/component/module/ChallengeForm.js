@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { Box, styled } from "@mui/system";
 import DatePicker from "react-date-picker";
 import TimePicker from "react-time-picker";
@@ -66,18 +66,23 @@ const ButtonBox = styled(Box)(
   width: 100%;
   display: flex;
   justify-content: end;
+  margin-bottom: 10px;
   `
 );
 
 export default function ChallengeForm({
   imgSrc,
   title,
+  category,
+  detailCategory,
   detailCategoryList,
   contents,
   startTime,
   endTime,
   alarm,
   watch,
+  goal,
+  unit,
   setImgSrc,
   setTitle,
   setCategory,
@@ -87,16 +92,42 @@ export default function ChallengeForm({
   setEndTime,
   setAlarm,
   setWatch,
+  setRoomtype,
+  setGoal,
+  changeUnit,
   register,
 }) {
   const challengeImgInput = useRef();
+  const [showunit, setShowUnit] = useState("");
+
+
+  function changeDetailCategory(e) {
+    e.preventDefault()
+    setDetailCategory(e.target.value)
+    changeUnit(category, e.target.value)
+    showUnit(category, e.target.value)
+  }
+
+  function showUnit(category, detailCategory) {
+    if (category === "2" && detailCategory === "7") {
+      setShowUnit('위도/경도')
+    } else if (category === "2") {
+      setShowUnit('회')
+    } else if (category === "1" && detailCategory === "1") {
+      setShowUnit('Km')
+    } else if (category === "1" && detailCategory === "2") {
+      setShowUnit('Km')
+    } else if (category === "1" && detailCategory === "3") {
+      setShowUnit('분')
+    }
+  }
 
   function onImgChange(e) {
     e.preventDefault();
     if (!e.target.files) {
       return;
     }
-    console.log(e.target.files[0]);
+    // console.log(e.target.files[0]);
     const formData = new FormData();
     formData.set("file", e.target.files[0]);
     uploadPhoto(formData, uploadSuccess, uploadFail);
@@ -156,17 +187,20 @@ export default function ChallengeForm({
           <Text size="15px" weight="bold" my="17">
             상세 설명
           </Text>
-          <Text size="15px" weight="bold" my="15" mt="75">
+          <Text size="15px" weight="bold" mt="65">
+            목표
+          </Text>
+          <Text size="15px" weight="bold" my="15" mt="35">
             기간
           </Text>
           <Text size="15px" weight="bold" my="15">
             알림
           </Text>
-          <Text size="15px" weight="bold" my="12">
-            워치 사용
-          </Text>
-          <Text size="15px" weight="bold" my="12">
+          <Text size="15px" weight="bold" my="15">
             꼬박챌린지 설정
+          </Text>
+          <Text size="15px" weight="bold" my="15">
+            워치 사용
           </Text>
         </SettingTitleBox>
 
@@ -203,7 +237,7 @@ export default function ChallengeForm({
               alignItems: "center",
             }}
           >
-            <select onChange={(e) => setDetailCategory(e.target.value)}>
+            <select onChange={changeDetailCategory}>
               <option value={0}>선택 안함</option>
               {detailCategoryList?.map((item) => {
                 return (
@@ -225,6 +259,15 @@ export default function ChallengeForm({
               value={contents}
               onChange={(e) => setContents(e.target.value)}
             ></Textarea>
+          </Box>
+          <Box sx={{ ml: "40px", width: "30%", height: "50px", display: "flex", verticalAlign: "middle" }}>
+            <Input
+              value={goal}
+              onChange={(e) => setGoal(e.target.value)}
+            ></Input>
+            <Box sx={{ width: "60%", height: '50px', verticalAlign: "middle" }}>
+              <Text my="15px" size="15px">{showunit}</Text>
+            </Box>
           </Box>
           <Box
             sx={{
@@ -284,17 +327,17 @@ export default function ChallengeForm({
                 row
                 aria-labelledby="demo-row-controlled-radio-buttons-group"
                 name="controlled-radio-buttons-group"
-                onChange={(e) => setWatch(e.target.value)}
+                onChange={(e) => setRoomtype(e.target.value)}
               >
                 <FormControlLabel
-                  value={true}
+                  value={1}
                   control={<Radio />}
-                  label="사용"
+                  label="설정"
                 />
                 <FormControlLabel
-                  value={false}
+                  value={0}
                   control={<Radio />}
-                  label="사용 안함"
+                  label="설정 안함"
                 />
               </RadioGroup>
             </FormControl>
@@ -317,12 +360,12 @@ export default function ChallengeForm({
                 <FormControlLabel
                   value={true}
                   control={<Radio />}
-                  label="설정"
+                  label="사용"
                 />
                 <FormControlLabel
                   value={false}
                   control={<Radio />}
-                  label="설정 안함"
+                  label="사용 안함"
                 />
               </RadioGroup>
             </FormControl>
@@ -330,7 +373,7 @@ export default function ChallengeForm({
         </SettingContentBox>
       </SettingBox>
       <ButtonBox>
-        <Button size="ss" my="0" onClick={register}>
+        <Button size="ss" mx="1" my="2" onClick={register}>
           챌린지 등록
         </Button>
       </ButtonBox>
