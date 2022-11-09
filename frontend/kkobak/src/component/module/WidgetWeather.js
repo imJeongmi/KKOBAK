@@ -157,7 +157,7 @@ export default function WidgetWeather() {
                     setCurrentDayIdx(index);
                   }}
                 >
-                  <Text weight="bold" mx="4px">
+                  <Text weight="bold" mx="4px" size="13px">
                     {item}
                   </Text>
                 </div>
@@ -169,7 +169,7 @@ export default function WidgetWeather() {
                     setCurrentDayIdx(index);
                   }}
                 >
-                  <Text weight="medium" color="white" mx="4px">
+                  <Text weight="medium" color="white" mx="4px" size="13px">
                     {item}
                   </Text>
                 </div>
