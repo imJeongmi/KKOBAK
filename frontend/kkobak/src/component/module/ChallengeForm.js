@@ -87,6 +87,7 @@ export default function ChallengeForm({
   setEndTime,
   setAlarm,
   setWatch,
+  setKkobak,
   register,
 }) {
   const challengeImgInput = useRef();
@@ -312,15 +313,15 @@ export default function ChallengeForm({
                 row
                 aria-labelledby="demo-row-controlled-radio-buttons-group"
                 name="controlled-radio-buttons-group"
-                onChange={(e) => setWatch(e.target.value)}
+                onChange={(e) => setKkobak(e.target.value)}
               >
                 <FormControlLabel
-                  value={true}
+                  value={1}
                   control={<Radio />}
-                  label="사용"
+                  label="설정"
                 />
                 <FormControlLabel
-                  value={false}
+                  value={0}
                   control={<Radio />}
                   label="설정 안함"
                 />

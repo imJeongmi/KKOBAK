@@ -38,6 +38,8 @@ export default function TodolistItem({
   done,
   chlId,
   dashedNowDate,
+  weight,
+  color,
 }) {
   const today = moment().format("YYYY.MM.DD");
 
@@ -112,7 +114,7 @@ export default function TodolistItem({
         )}
       </CheckBox>
       <Box sx={{ width: "170px" }}>
-        <Text size="14px" weight="medium" py="1" px="2" done={cancelText}>
+        <Text size="14px" color={color} weight={weight} py="1" px="2" done={cancelText}>
           {contents}
         </Text>
       </Box>
