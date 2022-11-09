@@ -228,7 +228,11 @@ export default function SignupModal() {
     console.log("Nickname Check Fail", res);
   }
   function onClickNicknameCheck() {
-    requestNicknameCheck(nickname, nicknameCheckSuccess, nicknameCheckFail);
+    if (nickname !== "") {
+      requestNicknameCheck(nickname, nicknameCheckSuccess, nicknameCheckFail);}
+      else {
+        setSignupMessage("닉네임을 입력해주세요.")
+      }
   }
 
   // 인증번호 요청
@@ -312,7 +316,9 @@ export default function SignupModal() {
               onChange={onChangeNickname}
             ></Input>
             <Box onClick={onClickNicknameCheck} sx={{ width: "20%" }}>
-              <Text size="13px" weight="medium" color="grey">중복 확인</Text>
+              <Text size="13px" weight="medium" color="grey">
+                중복 확인
+              </Text>
             </Box>
           </Box>
 
@@ -325,7 +331,9 @@ export default function SignupModal() {
               onChange={onChangePhoneNum}
             ></Input>
             <Box onClick={onClickSendAuthNum} sx={{ width: "20%" }}>
-              <Text size="13px" weight="medium" color="grey">인증번호 받기</Text>
+              <Text size="13px" weight="medium" color="grey">
+                인증번호 받기
+              </Text>
             </Box>
           </Box>
 
@@ -340,12 +348,16 @@ export default function SignupModal() {
             <Box sx={{ width: "20%" }}></Box>
           </Box>
 
-          <Box onClick={onClickSignup} sx={{ mt: "20px"}}>
-            <TextButton size="l" my="15">회원가입</TextButton>
+          <Box onClick={onClickSignup} sx={{ mt: "20px" }}>
+            <TextButton size="l" my="15">
+              회원가입
+            </TextButton>
           </Box>
           <Box onClick={goToLogin}>
             {/* <Text size="s">로그인</Text> */}
-            <TextButton size="l" color="secondary" my="5">로그인</TextButton>
+            <TextButton size="l" color="secondary" my="5">
+              로그인
+            </TextButton>
           </Box>
 
           <Text>{signupMessage}</Text>
