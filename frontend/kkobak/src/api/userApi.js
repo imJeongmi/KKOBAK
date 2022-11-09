@@ -89,7 +89,7 @@ function requestMyChallengeStatistics(success, fail) {
   api.get(`member/chl-info`).then(success).catch(fail);
 }
 
-function requestMychallenges(day, success, fail) {
+function getKkobakChallengeList(day, success, fail) {
   api
     .post(`/member/todo-list/info`, {
       day: day,
@@ -113,5 +113,5 @@ export {
   requestCalendarCheck,
   requestMyChallengeDetail,
   requestMyChallengeStatistics,
-  requestMychallenges,
+  getKkobakChallengeList,
 };
