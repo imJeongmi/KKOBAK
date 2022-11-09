@@ -188,19 +188,19 @@ export default function ChallengeForm({
           <Text size="15px" weight="bold" my="17">
             상세 설명
           </Text>
-          <Text size="15px" weight="bold" mt="65">
+          <Text size="15px" weight="bold" mt="60">
             목표
           </Text>
-          <Text size="15px" weight="bold" my="15" mt="35">
+          <Text size="15px" weight="bold" my="15" mt="20">
             기간
           </Text>
-          <Text size="15px" weight="bold" my="15">
+          <Text size="15px" weight="bold" my="10">
             알림
           </Text>
-          <Text size="15px" weight="bold" my="15">
+          <Text size="15px" weight="bold" my="10">
             꼬박챌린지 설정
           </Text>
-          <Text size="15px" weight="bold" my="15">
+          <Text size="15px" weight="bold" my="10">
             워치 사용
           </Text>
         </SettingTitleBox>
@@ -208,7 +208,7 @@ export default function ChallengeForm({
         <SettingContentBox>
           <Box
             sx={{
-              height: "44px",
+              height: "40px",
               paddingX: "55px",
               display: "flex",
               alignItems: "center",
@@ -232,7 +232,7 @@ export default function ChallengeForm({
           </Box>
           <Box
             sx={{
-              height: "44px",
+              height: "45px",
               paddingX: "55px",
               display: "flex",
               alignItems: "center",
@@ -249,7 +249,7 @@ export default function ChallengeForm({
               })}
             </select>
           </Box>
-          <Box sx={{ width: "80%", height: "50px" }}>
+          <Box sx={{ width: "80%", height: "45px" }}>
             <Input
               value={title}
               onChange={(e) => setTitle(e.target.value)}
@@ -261,19 +261,19 @@ export default function ChallengeForm({
               onChange={(e) => setContents(e.target.value)}
             ></Textarea>
           </Box>
-          <Box sx={{ ml: "40px", width: "30%", height: "50px", display: "flex", verticalAlign: "middle" }}>
+          <Box sx={{ ml: "40px", width: "30%", height: "45px", display: "flex", verticalAlign: "middle" }}>
             <Input
               value={goal}
               onChange={(e) => setGoal(e.target.value)}
             ></Input>
-            <Box sx={{ width: "60%", height: '50px', verticalAlign: "middle" }}>
+            <Box sx={{ width: "60%", height: '45px', verticalAlign: "middle" }}>
               <Text my="15px" size="15px">{showunit}</Text>
             </Box>
           </Box>
           <Box
             sx={{
               width: "60%",
-              height: "55px",
+              height: "45px",
               paddingX: "35px",
               display: "flex",
               justifyContent: "space-between",
@@ -304,7 +304,7 @@ export default function ChallengeForm({
           <Box
             sx={{
               width: "60%",
-              height: "50px",
+              height: "45px",
               paddingX: "35px",
               display: "flex",
               justifyContent: "space-between",
@@ -317,35 +317,7 @@ export default function ChallengeForm({
           </Box>
           <Box
             sx={{
-              height: "45px",
-              paddingX: "55px",
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <FormControl>
-              <RadioGroup
-                row
-                aria-labelledby="demo-row-controlled-radio-buttons-group"
-                name="controlled-radio-buttons-group"
-                onChange={(e) => setRoomtype(e.target.value)}
-              >
-                <FormControlLabel
-                  value={1}
-                  control={<Radio />}
-                  label="설정"
-                />
-                <FormControlLabel
-                  value={0}
-                  control={<Radio />}
-                  label="설정 안함"
-                />
-              </RadioGroup>
-            </FormControl>
-          </Box>
-          <Box
-            sx={{
-              height: "45px",
+              height: "40px",
               paddingX: "55px",
               display: "flex",
               alignItems: "center",
@@ -365,6 +337,34 @@ export default function ChallengeForm({
                 />
                 <FormControlLabel
                   value={0}
+                  control={<Radio />}
+                  label="설정 안함"
+                />
+              </RadioGroup>
+            </FormControl>
+          </Box>
+          <Box
+            sx={{
+              height: "35px",
+              paddingX: "55px",
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <FormControl>
+              <RadioGroup
+                row
+                aria-labelledby="demo-row-controlled-radio-buttons-group"
+                name="controlled-radio-buttons-group"
+                onChange={(e) => setWatch(e.target.value)}
+              >
+                <FormControlLabel
+                  value={true}
+                  control={<Radio />}
+                  label="사용"
+                />
+                <FormControlLabel
+                  value={false}
                   control={<Radio />}
                   label="사용 안함"
                 />
