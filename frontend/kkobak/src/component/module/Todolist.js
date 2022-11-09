@@ -6,7 +6,7 @@ import moment from "moment";
 import Text from "component/atom/Text";
 import TodolistItem from "component/atom/TodolistItem";
 
-import { requestMychallenges } from "api/userApi";
+import { getKkobakChallengeList } from "api/userApi";
 import { getTodolist, registerTodolist } from "api/todolistApi";
 
 import "./Todolist.scss";
@@ -89,36 +89,29 @@ export default function Todolist() {
   }
 
   const [text, setText] = useState("");
+  const [refresh, setRefresh] = useState(true);
   const [todolist, setTodolist] = useState([]);
   const [kkobaklist, setKkobaklist] = useState([]);
 
   useEffect(() => {
-    requestMychallenges(
+    getKkobakChallengeList(
       nowDate.format("YYYY-MM-DD"),
-      requestMychallengesSuccess,
-      requestMychallengesFail
+      getKkobakChallengeListSuccess,
+      getKkobakChallengeListFail
     );
     getTodolist(formedNowDate, getTodolistSuccess, getTodolistFail);
   }, []);
 
   useEffect(() => {
+    getKkobakChallengeList(
+      nowDate.format("YYYY-MM-DD"),
+      getKkobakChallengeListSuccess,
+      getKkobakChallengeListFail
+    );
     getTodolist(formedNowDate, getTodolistSuccess, getTodolistFail);
-  }, formedNowDate);
+  }, [formedNowDate, refresh]);
 
-  function getTodolistSuccess(res) {
-    setTodolist(res.data);
-  }
-
-  function getTodolistFail(res) {}
-
-  function registerTodolistSuccess(res) {
-    console.log("todoId: ", res.data);
-    getTodolist(formedNowDate, getTodolistSuccess, getTodolistFail);
-  }
-
-  function registerTodolistFail(res) {}
-
-  function requestMychallengesSuccess(res) {
+  function getKkobakChallengeListSuccess(res) {
     const data = res.data;
     const list = [];
     data.map((item, index) => {
@@ -129,8 +122,24 @@ export default function Todolist() {
     setKkobaklist(list);
   }
 
-  function requestMychallengesFail(res) {
-    console.log(res.data);
+  function getKkobakChallengeListFail(res) {
+    console.log(res);
+  }
+
+  function getTodolistSuccess(res) {
+    setTodolist(res.data);
+  }
+
+  function getTodolistFail(res) {
+    console.log(res);
+  }
+
+  function registerTodolistSuccess(res) {
+    getTodolist(formedNowDate, getTodolistSuccess, getTodolistFail);
+  }
+
+  function registerTodolistFail(res) {
+    console.log(res);
   }
 
   function onKeyPress(e) {
@@ -177,6 +186,8 @@ export default function Todolist() {
       {kkobaklist.map((item, index) => {
         return (
           <TodolistItem
+            refresh={refresh}
+            setRefresh={setRefresh}
             nowDate={formedNowDate}
             id={item.chlId}
             contents={item.title}
@@ -192,6 +203,8 @@ export default function Todolist() {
       {todolist.map((item, index) => {
         return (
           <TodolistItem
+            refresh={refresh}
+            setRefresh={setRefresh}
             nowDate={formedNowDate}
             id={item.todoId}
             contents={item.contents}
