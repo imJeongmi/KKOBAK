@@ -282,7 +282,7 @@ export default function ChallengeDetail() {
                   }}
                 >
                   <Text size="14px" weight="semibold" my="10">
-                    카테고리
+                    상세 카테고리
                   </Text>
                   <Text size="14px" weight="semibold" my="10">
                     기간
@@ -306,10 +306,7 @@ export default function ChallengeDetail() {
                     flexDirection: "column",
                     alignItems: "start",
                   }}
-                >
-                  <Text size="14px" color="grey" my="10" mx="10">
-                    {categoryId}
-                  </Text>
+                >                  
                   <Text size="14px" color="grey" my="10" mx="10">
                     {detailCategoryId}
                   </Text>

@@ -118,12 +118,12 @@ export default function Main() {
           <Box sx={{ float: "left", flex: 1, display: "flex" }}>
             <Box sx={{ float: "left" }}>
               <Text size="m" weight="semibold" mt="30" my="15">
-                안녕하세요,
+                {"안녕하세요," + "\u00A0"}
               </Text>
             </Box>
             <Box>
-              <Text size="m" weight="bold" mt="30" my="15" color="red">
-                {user.nickName}
+              <Text size="m" weight="bold" mt="30" my="15" color="blue">
+                {` ${user.nickName}`}
               </Text>
             </Box>
             <Box>

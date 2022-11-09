@@ -13,7 +13,7 @@ import ThunderIcon from "static/weather/thunderIcon.png";
 import "./WidgetWeather.css";
 
 export default function WidgetWeather() {
-  const apiKey = "fb1158dc7dfef5f0967ceac8f71ee3a6";
+  const apiKey = process.env.REACT_APP_OPENWEATHERMAP_API;
 
   const dayOfWeek = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
   const [days, setDays] = useState();
@@ -157,7 +157,7 @@ export default function WidgetWeather() {
                     setCurrentDayIdx(index);
                   }}
                 >
-                  <Text weight="bold" mx="4px">
+                  <Text weight="bold" mx="4px" size="13px">
                     {item}
                   </Text>
                 </div>
@@ -169,7 +169,7 @@ export default function WidgetWeather() {
                     setCurrentDayIdx(index);
                   }}
                 >
-                  <Text weight="medium" color="white" mx="4px">
+                  <Text weight="medium" color="white" mx="4px" size="13px">
                     {item}
                   </Text>
                 </div>
