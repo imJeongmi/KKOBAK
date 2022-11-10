@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Box, styled } from "@mui/system";
 import DatePicker from "react-date-picker";
 import TimePicker from "react-time-picker";
@@ -108,12 +108,17 @@ export default function ChallengeForm({
     changeUnit(category, e.target.value)
     showUnit(category, e.target.value)
   }
+  useEffect(() => {
+    if (category && detailCategory) {
+      changeUnit(category, detailCategory)
+    }
+  }, [category, detailCategory])
 
   function showUnit(category, detailCategory) {
     if (category === "2" && detailCategory === "7") {
-      setShowUnit('위도/경도')
+      setShowUnit('주소')
     } else if (category === "2") {
-      setShowUnit('회')
+      setShowUnit('1 회')
     } else if (category === "1" && detailCategory === "1") {
       setShowUnit('Km')
     } else if (category === "1" && detailCategory === "2") {
@@ -262,10 +267,12 @@ export default function ChallengeForm({
             ></Textarea>
           </Box>
           <Box sx={{ ml: "40px", width: "30%", height: "45px", display: "flex", verticalAlign: "middle" }}>
-            <Input
-              value={goal}
-              onChange={(e) => setGoal(e.target.value)}
-            ></Input>
+            {(category === "2" && detailCategory !== "7") ? null :
+              <Input
+                value={goal}
+                onChange={(e) => setGoal(e.target.value)}
+              ></Input>}
+
             <Box sx={{ width: "60%", height: '45px', verticalAlign: "middle" }}>
               <Text my="15px" size="15px">{showunit}</Text>
             </Box>
