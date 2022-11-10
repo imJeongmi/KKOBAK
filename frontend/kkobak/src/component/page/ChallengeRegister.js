@@ -1,16 +1,37 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
-import { Box } from "@mui/material";
-import SideBarChallengeCreate from "component/atom/SideBarChallengeCreate";
+import React, { useEffect, useState } from "react";
+import { Box, styled } from "@mui/material";
+
+
+import Text from "component/atom/Text";
+import Button from "component/atom/TextButton"
+import MainBox from "component/atom/MainBox";
 import ChallengeForm from "component/module/ChallengeForm";
+import SideBarChallengeCreate from "component/atom/SideBarChallengeCreate";
+import initial from "static/initial.png";
 
 import { getDetailCategoryList } from "api/Category";
 import { registerChallenge } from "api/Challenge";
+<<<<<<< HEAD
 import MainBox from "component/atom/MainBox";
 import Text from "component/atom/Text";
 import axios from "axios";
 
 import initial from "../../static/initial.png";
+=======
+import axios from "axios";
+
+
+import { getMyKkobakList } from "api/userApi";
+
+const ButtonBox = styled(Box)(
+  () => `
+  width: 95%;
+  margin-bottom: 30px;
+  display: flex;
+  justify-content: end;
+  `
+);
+>>>>>>> 0321fd44ff8e51bbe1ed9b24cf02e147b06b4039
 
 export default function ChallengeRegister() {
   const [category, setCategory] = useState(1);
@@ -29,7 +50,23 @@ export default function ChallengeRegister() {
   const [title, setTitle] = useState("");
   const [contents, setContents] = useState("");
   const [unit, setUnit] = useState("");
+<<<<<<< HEAD
 
+=======
+  const [kkobakCount, setKkobakCount] = useState(0)
+
+  function getMyKkobakListSuccess(res) {
+    setKkobakCount(res.data.length);
+  }
+
+  function getMyKkobakListFail(err) {
+  }
+
+  useEffect(() => {
+    getMyKkobakList(getMyKkobakListSuccess, getMyKkobakListFail);
+  }, []);
+
+>>>>>>> 0321fd44ff8e51bbe1ed9b24cf02e147b06b4039
   const [goal, setGoal] = useState("");
 
   function getDetailCategoryListSuccess(res) {
@@ -88,27 +125,45 @@ export default function ChallengeRegister() {
   // 유효성 검사
   function checkAll() {
     if (imgSrc === initial) {
-      return;
-    }
-    if (!title) {
-      return;
-    }
-
-    if (!contents) {
+      alert("챌린지 이미지를 등록해주세요");
       return;
     }
 
     if (!category) {
-      return;
+      alert("챌린지 카테고리를 선택해주세요");
+      return false
     }
-
+    
     if (!detailCategory) {
-      return;
+      alert("챌린지 상세 카테고리를 선택해주세요");
+      return false
+    }
+    if (!title) {
+      alert("챌린지 제목을 입력해주세요");
+      return false
     }
 
-    if (!unit) {
-      return;
+    if (!contents) {
+      alert("챌린지 상세 설명을 입력해주세요");
+      return false
     }
+<<<<<<< HEAD
+=======
+    let check = /^[0-9]+$/;
+    if (!goal) {
+      alert("챌린지 목표를 입력해주세요");
+      return false
+    }
+    if (detailCategory !== "7" && !check.test(goal)) {
+      alert("챌린지 목표는 숫자로 입력해주세요");
+      return false;
+    }
+    console.log(kkobakCount)
+    if (kkobakCount >= 3) {
+      alert("꼬박 챌린지는 최대 3개만 생성 가능합니다");
+      return false;
+    }
+>>>>>>> 0321fd44ff8e51bbe1ed9b24cf02e147b06b4039
     return true;
   }
 
@@ -174,10 +229,10 @@ export default function ChallengeRegister() {
       }}
     >
       <Box sx={{ margin: "0 auto" }}>
-        <Text size="l" weight="bold" mt="30" my="15">
+        <Text size="m" weight="semibold" mt="30" my="15">
           새 챌린지 등록
         </Text>
-        <MainBox>
+        <MainBox flexDir="col">
           <ChallengeForm
             imgSrc={imgSrc}
             category={category}
@@ -207,6 +262,11 @@ export default function ChallengeRegister() {
             setUnit={setUnit}
             changeUnit={changeUnit}
           ></ChallengeForm>
+          <ButtonBox>
+            <Button size="ss" my="0" onClick={register}>
+              챌린지 등록
+            </Button>
+          </ButtonBox>
         </MainBox>
       </Box>
       <SideBarChallengeCreate />
