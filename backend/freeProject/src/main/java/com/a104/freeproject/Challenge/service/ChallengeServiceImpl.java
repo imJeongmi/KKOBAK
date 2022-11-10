@@ -329,6 +329,12 @@ public class ChallengeServiceImpl implements ChallengeService{
     }
 
     @Override
+    public int findWatchCnt(boolean useWatch, Pageable pageable) throws NotFoundException {
+        Page<Challenge> chlList = challengeRepository.findAllByWatch(pageable, useWatch);
+        return chlList.getTotalPages();
+    }
+
+    @Override
     public boolean participateChl(Long chlId, int alarmType, HttpServletRequest req) throws NotFoundException {
         Member member = memberService.findEmailbyToken(req);
         Challenge c = challengeRepository.findById(chlId).get();
