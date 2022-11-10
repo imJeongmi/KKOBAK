@@ -61,6 +61,7 @@ const ButtonBox = styled(Box)(
 
 const PageBox = styled(Box)(
   () => `
+  height: 35px;
   margin: 10px auto;
   `
 );

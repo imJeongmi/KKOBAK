@@ -51,6 +51,8 @@ function getColor(color) {
       return "#9A9A9A";
     case "white":
       return "#ffffff";
+    case "black":
+      return "#000000";
     default:
       return "#333333";
   }
