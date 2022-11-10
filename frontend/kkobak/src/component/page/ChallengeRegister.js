@@ -1,16 +1,26 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
-import { Box } from "@mui/material";
-import SideBarChallengeCreate from "component/atom/SideBarChallengeCreate";
+import React, { useEffect, useState } from "react";
+import { Box, styled } from "@mui/material";
+import axios from "axios";
+
+
+import Text from "component/atom/Text";
+import Button from "component/atom/TextButton"
+import MainBox from "component/atom/MainBox";
 import ChallengeForm from "component/module/ChallengeForm";
+import SideBarChallengeCreate from "component/atom/SideBarChallengeCreate";
+import initial from "static/initial.png";
 
 import { getDetailCategoryList } from "api/Category";
 import { registerChallenge } from "api/Challenge";
-import MainBox from "component/atom/MainBox";
-import Text from "component/atom/Text";
-import axios from "axios";
 
-import initial from "../../static/initial.png";
+const ButtonBox = styled(Box)(
+  () => `
+  width: 95%;
+  margin-bottom: 30px;
+  display: flex;
+  justify-content: end;
+  `
+);
 
 export default function ChallengeRegister() {
   const [category, setCategory] = useState(1);
@@ -177,7 +187,7 @@ export default function ChallengeRegister() {
         <Text size="m" weight="semibold" mt="30" my="15">
           새 챌린지 등록
         </Text>
-        <MainBox>
+        <MainBox flexDir="col">
           <ChallengeForm
             imgSrc={imgSrc}
             category={category}
@@ -207,6 +217,11 @@ export default function ChallengeRegister() {
             setUnit={setUnit}
             changeUnit={changeUnit}
           ></ChallengeForm>
+          <ButtonBox>
+            <Button size="ss" my="0" onClick={register}>
+              챌린지 등록
+            </Button>
+          </ButtonBox>
         </MainBox>
       </Box>
       <SideBarChallengeCreate />

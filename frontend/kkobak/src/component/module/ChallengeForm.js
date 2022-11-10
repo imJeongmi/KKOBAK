@@ -17,21 +17,17 @@ import { uploadPhoto } from "api/S3";
 
 import "../atom/DatePicker.scss";
 import "../atom/TimePicker.scss";
+import "component/module/ChallengeForm.css";
 
 const inputStyle = {
   display: "none",
 };
 
-function getHeight(height) {
-  if (!!height) return height;
-  return "50px";
-}
-
 const ImageBox = styled(Box)(
   () => `
-  width: 250px;
-  height: 230px;
-  margin: 20px auto;
+  width: 350px;
+  height: 200px;
+  margin: 25px auto 10px auto;
   border-radius: 20px;
   background-size: cover;
   overflow: hidden;
@@ -41,11 +37,11 @@ const ImageBox = styled(Box)(
 
 const SettingBox = styled(Box)(
   () => `
-  width: 50vw;
+  width: 35vw;
   display: flex;
   flex-direction: column;
   align-items: start;
-  // background-color: #ffffff;
+  justify-content: space-between;
   `
 );
 
@@ -57,8 +53,8 @@ const SettingItem = styled(Box)(
 
 const SettingTitleBox = styled(Box)(
   (height) => `
-  width: 130px;
-  height: ${getHeight(height)};
+  width: 200px;
+  height: 50px;
   display: flex;
   justify-content: start;
   align-items: center;
@@ -67,8 +63,8 @@ const SettingTitleBox = styled(Box)(
 
 const SettingContentBox = styled(Box)(
   (height) => `
-  width: 570px;
-  height: ${getHeight(height)};
+  width: 360px;
+  height: 50px;
   display: flex;
   justify-content: start;
   align-items: center;
@@ -77,10 +73,10 @@ const SettingContentBox = styled(Box)(
 
 const ButtonBox = styled(Box)(
   () => `
-  width: 100%;
+  // width: 100%;
   display: flex;
   justify-content: end;
-  margin-bottom: 10px;
+  margin-top: 10px;
   `
 );
 
@@ -167,7 +163,6 @@ export default function ChallengeForm({
   return (
     <Box
       sx={{
-        height: "80vh",
         display: "flex",
         flexDirection: "column",
         alignContent: "center",
@@ -194,26 +189,32 @@ export default function ChallengeForm({
       <SettingBox>
         <SettingItem>
           <SettingTitleBox>
-            <Text size="15px" weight="bold">
+            <Text size="16px" weight="bold">
               카테고리
             </Text>
           </SettingTitleBox>
           <SettingContentBox>
-            <FormControl>
-              <RadioGroup
-                row
-                aria-labelledby="demo-row-controlled-radio-buttons-group"
-                name="controlled-radio-buttons-group"
-                onChange={(e) => setCategory(e.target.value)}
-              >
-                <FormControlLabel value={1} control={<Radio />} label="운동" />
-                <FormControlLabel
-                  value={2}
-                  control={<Radio />}
-                  label="생활습관"
-                />
-              </RadioGroup>
-            </FormControl>
+            <Box sx={{ height: "50px", display: "flex", alignItems: "center" }}>
+              <FormControl>
+                <RadioGroup
+                  row
+                  aria-labelledby="demo-row-controlled-radio-buttons-group"
+                  name="controlled-radio-buttons-group"
+                  onChange={(e) => setCategory(e.target.value)}
+                >
+                  <FormControlLabel
+                    value={1}
+                    control={<Radio />}
+                    label="운동"
+                  />
+                  <FormControlLabel
+                    value={2}
+                    control={<Radio />}
+                    label="생활습관"
+                  />
+                </RadioGroup>
+              </FormControl>
+            </Box>
           </SettingContentBox>
         </SettingItem>
 
@@ -244,7 +245,14 @@ export default function ChallengeForm({
             </Text>
           </SettingTitleBox>
           <SettingContentBox>
-            <Box sx={{ width: "300px", height: "50px" }}>
+            <Box
+              sx={{
+                width: "350px",
+                height: "40px",
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
               <Input
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
@@ -254,13 +262,18 @@ export default function ChallengeForm({
         </SettingItem>
 
         <SettingItem>
-          <SettingTitleBox height="90px">
+          <SettingTitleBox sx={{ height: "90px" }}>
             <Text size="16px" weight="bold">
               상세 설명
             </Text>
           </SettingTitleBox>
-          <SettingContentBox>
-            <Box sx={{ width: "300px", height: "90px"}}>
+          <SettingContentBox sx={{ height: "90px" }}>
+            <Box
+              sx={{
+                width: "350px",
+                height: "85px",
+              }}
+            >
               <Textarea
                 value={contents}
                 onChange={(e) => setContents(e.target.value)}
@@ -276,17 +289,25 @@ export default function ChallengeForm({
             </Text>
           </SettingTitleBox>
           <SettingContentBox>
-            {category === "2" && detailCategory !== "7" ? null : (
-              <Box sx={{ width: "300px", height: "50px" }}>
-                <Input
-                  value={goal}
-                  onChange={(e) => setGoal(e.target.value)}
-                ></Input>
-              </Box>
-            )}
-            <Text my="15px" size="15px">
-              {showunit}
-            </Text>
+            <Box
+              sx={{
+                width: "120px",
+                height: "40px",
+                display: "flex",
+                alignItems: "center",
+                marginRight: "10px",
+              }}
+            >
+              <Input
+                value={goal}
+                onChange={(e) => setGoal(e.target.value)}
+              ></Input>
+            </Box>
+            <Box sx={{ width: "20px" }}>
+              <Text my="15px" size="16px" weight="medium">
+                {showunit}
+              </Text>
+            </Box>
           </SettingContentBox>
         </SettingItem>
 
@@ -296,8 +317,14 @@ export default function ChallengeForm({
               기간
             </Text>
           </SettingTitleBox>
-          <SettingContentBox>
-            <Box sx={{ width: "155px" }}>
+          <SettingContentBox
+            sx={{
+              width: "350px",
+              paddingRight: "10px",
+              justifyContent: "space-between",
+            }}
+          >
+            <Box sx={{ width: "160px", height: "40px" }}>
               <DatePicker
                 calendarAriaLabel="calendar"
                 locale="ko-KR"
@@ -307,7 +334,10 @@ export default function ChallengeForm({
                 calendarType="US"
               />
             </Box>
-            <Box sx={{ width: "155px" }}>
+            <Text size="16px" weight="semibold" color="black">
+              ~
+            </Text>
+            <Box sx={{ width: "160px", height: "40px" }}>
               <DatePicker
                 calendarAriaLabel="calendar"
                 locale="ko-KR"
@@ -326,10 +356,11 @@ export default function ChallengeForm({
               알림
             </Text>
           </SettingTitleBox>
-          <Box sx={{ width: "170px" }}>
-            <TimePicker format="HH:mm" onChange={setAlarm} value={alarm} />
-          </Box>
-          <SettingContentBox></SettingContentBox>
+          <SettingContentBox>
+            <Box sx={{ width: "160px", height: "40px" }}>
+              <TimePicker format="HH:mm" onChange={setAlarm} value={alarm} />
+            </Box>
+          </SettingContentBox>
         </SettingItem>
 
         <SettingItem>
@@ -339,21 +370,27 @@ export default function ChallengeForm({
             </Text>
           </SettingTitleBox>
           <SettingContentBox>
-            <FormControl>
-              <RadioGroup
-                row
-                aria-labelledby="demo-row-controlled-radio-buttons-group"
-                name="controlled-radio-buttons-group"
-                onChange={(e) => setKkobak(e.target.value)}
-              >
-                <FormControlLabel value={1} control={<Radio />} label="설정" />
-                <FormControlLabel
-                  value={0}
-                  control={<Radio />}
-                  label="설정 안함"
-                />
-              </RadioGroup>
-            </FormControl>
+            <Box sx={{ height: "50px", display: "flex", alignItems: "center" }}>
+              <FormControl>
+                <RadioGroup
+                  row
+                  aria-labelledby="demo-row-controlled-radio-buttons-group"
+                  name="controlled-radio-buttons-group"
+                  onChange={(e) => setKkobak(e.target.value)}
+                >
+                  <FormControlLabel
+                    value={1}
+                    control={<Radio />}
+                    label="설정"
+                  />
+                  <FormControlLabel
+                    value={0}
+                    control={<Radio />}
+                    label="설정 안함"
+                  />
+                </RadioGroup>
+              </FormControl>
+            </Box>
           </SettingContentBox>
         </SettingItem>
 
@@ -364,210 +401,36 @@ export default function ChallengeForm({
             </Text>
           </SettingTitleBox>
           <SettingContentBox>
-            <FormControl>
-              <RadioGroup
-                row
-                aria-labelledby="demo-row-controlled-radio-buttons-group"
-                name="controlled-radio-buttons-group"
-                onChange={(e) => setWatch(e.target.value)}
-              >
-                <FormControlLabel
-                  value={true}
-                  control={<Radio />}
-                  label="사용"
-                />
-                <FormControlLabel
-                  value={false}
-                  control={<Radio />}
-                  label="사용 안함"
-                />
-              </RadioGroup>
-            </FormControl>
+            <Box sx={{ height: "50px", display: "flex", alignItems: "center" }}>
+              <FormControl>
+                <RadioGroup
+                  row
+                  aria-labelledby="demo-row-controlled-radio-buttons-group"
+                  name="controlled-radio-buttons-group"
+                  onChange={(e) => setWatch(e.target.value)}
+                >
+                  <FormControlLabel
+                    value={true}
+                    control={<Radio />}
+                    label="사용"
+                  />
+                  <FormControlLabel
+                    value={false}
+                    control={<Radio />}
+                    label="사용 안함"
+                  />
+                </RadioGroup>
+              </FormControl>
+            </Box>
           </SettingContentBox>
         </SettingItem>
-
-        {/* <SettingContentBox>
-          <Box
-            sx={{
-              height: "40px",
-              paddingX: "55px",
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <FormControl>
-              <RadioGroup
-                row
-                aria-labelledby="demo-row-controlled-radio-buttons-group"
-                name="controlled-radio-buttons-group"
-                onChange={(e) => setCategory(e.target.value)}
-              >
-                <FormControlLabel value={1} control={<Radio />} label="운동" />
-                <FormControlLabel
-                  value={2}
-                  control={<Radio />}
-                  label="생활습관"
-                />
-              </RadioGroup>
-            </FormControl>
-          </Box>
-          <Box
-            sx={{
-              height: "45px",
-              paddingX: "55px",
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <select onChange={changeDetailCategory}>
-              <option value={0}>선택 안함</option>
-              {detailCategoryList?.map((item) => {
-                return (
-                  <option key={item.detailId} value={item.detailId}>
-                    {item.detailName}
-                  </option>
-                );
-              })}
-            </select>
-          </Box>
-          <Box sx={{ width: "80%", height: "45px" }}>
-            <Input
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-            ></Input>
-          </Box>
-          <Box sx={{ width: "80%", height: "100px" }}>
-            <Textarea
-              value={contents}
-              onChange={(e) => setContents(e.target.value)}
-            ></Textarea>
-          </Box>
-          <Box
-            sx={{
-              ml: "40px",
-              width: "30%",
-              height: "45px",
-              display: "flex",
-              verticalAlign: "middle",
-            }}
-          >
-            {category === "2" && detailCategory !== "7" ? null : (
-              <Input
-                value={goal}
-                onChange={(e) => setGoal(e.target.value)}
-              ></Input>
-            )}
-
-            <Box sx={{ width: "60%", height: "45px", verticalAlign: "middle" }}>
-              <Text my="15px" size="15px">
-                {showunit}
-              </Text>
-            </Box>
-          </Box>
-          <Box
-            sx={{
-              width: "60%",
-              height: "45px",
-              paddingX: "35px",
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <Box sx={{ width: "155px" }}>
-              <DatePicker
-                calendarAriaLabel="calendar"
-                locale="ko-KR"
-                onChange={setStartTime}
-                value={startTime}
-                minDate={new Date()}
-                calendarType="US"
-              />
-            </Box>
-            <Box sx={{ width: "155px" }}>
-              <DatePicker
-                calendarAriaLabel="calendar"
-                locale="ko-KR"
-                onChange={setEndTime}
-                value={endTime}
-                minDate={new Date()}
-                calendarType="US"
-              />
-            </Box>
-          </Box>
-          <Box
-            sx={{
-              width: "60%",
-              height: "45px",
-              paddingX: "35px",
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <Box sx={{ width: "155px" }}>
-              <TimePicker format="HH:mm" onChange={setAlarm} value={alarm} />
-            </Box>
-          </Box>
-          <Box
-            sx={{
-              height: "40px",
-              paddingX: "55px",
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <FormControl>
-              <RadioGroup
-                row
-                aria-labelledby="demo-row-controlled-radio-buttons-group"
-                name="controlled-radio-buttons-group"
-                onChange={(e) => setKkobak(e.target.value)}
-              >
-                <FormControlLabel value={1} control={<Radio />} label="설정" />
-                <FormControlLabel
-                  value={0}
-                  control={<Radio />}
-                  label="설정 안함"
-                />
-              </RadioGroup>
-            </FormControl>
-          </Box>
-          <Box
-            sx={{
-              height: "35px",
-              paddingX: "55px",
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <FormControl>
-              <RadioGroup
-                row
-                aria-labelledby="demo-row-controlled-radio-buttons-group"
-                name="controlled-radio-buttons-group"
-                onChange={(e) => setWatch(e.target.value)}
-              >
-                <FormControlLabel
-                  value={true}
-                  control={<Radio />}
-                  label="사용"
-                />
-                <FormControlLabel
-                  value={false}
-                  control={<Radio />}
-                  label="사용 안함"
-                />
-              </RadioGroup>
-            </FormControl>
-          </Box>
-        </SettingContentBox> */}
       </SettingBox>
-      <ButtonBox>
-        <Button size="ss" mx="1" my="2" onClick={register}>
+
+      {/* <ButtonBox>
+        <Button size="ss" onClick={register} my="5px">
           챌린지 등록
         </Button>
-      </ButtonBox>
+      </ButtonBox> */}
     </Box>
   );
 }
