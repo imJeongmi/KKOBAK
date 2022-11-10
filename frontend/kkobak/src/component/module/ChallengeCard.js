@@ -4,23 +4,24 @@ import Box from "@mui/material/Box";
 import { styled } from "@mui/system";
 
 import Text from "component/atom/Text";
+// import WatchImg from "static/watch.svg";
 import WatchImg from "static/watch.svg";
 
 const CardBox = styled(Box)(
   () => `
-  width: 260px;
-  height: 260px;
-  margin: 20px 10px;
+  width: 230px;
+  height: 210px;
+  margin: 10px 20px;
   background-color: white;
-  border-radius: 8px;
+  border-radius: 10px;
   `
 );
 
 const ImageBox = styled(Box)(
   () => `
-  width: 240px;
-  height: 140px;
-  margin: 10px;
+  width: 210px;
+  height: 130px;
+  margin: 10px 10px 5px 10px;
   border-radius: 8px;
   overflow: hidden;
   `
@@ -28,17 +29,17 @@ const ImageBox = styled(Box)(
 
 const FilterBox = styled(Box)(
   () => `
-  // width: 170px;
-  height: 30px;
-  margin: 5px 15px;
+  height: 20px;
+  margin: 0 10px;
   display: flex;
-  justify-content: space-between;
+  justify-content: end;
   `
 );
 
 const TextBox = styled(Box)(
   () => `
-  margin: 5px 15px;
+  height: 40px;
+  margin: 0 15px;
   display: flex;
   flex-direction: column;
   align-items: start;
@@ -66,18 +67,16 @@ export default function ChallengeCard({
   return watch ? (
     <CardBox onClick={onClickCard}>
       <ImageBox>
-        {/* <img src={props.src} width="100%" height="100%" /> */}
         <img src={imgurl} width="100%" height="100%" />
       </ImageBox>
       <FilterBox>
-        {/* <TagLabel>{tagList[0]}</TagLabel> */}
-        <img src={WatchImg} width="25px" />
+        <img src={WatchImg}/>
       </FilterBox>
       <TextBox>
-        <Text size="m" weight="medium">
+        <Text size="16px" weight="semibold">
           {title}
         </Text>
-        <Text my="5" size="12px" color="grey">
+        <Text my="3" size="10px" color="grey">
           {startTime.substr(0, 10)} - {endTime.substr(0, 10)}
         </Text>
       </TextBox>
@@ -85,15 +84,14 @@ export default function ChallengeCard({
   ) : (
     <CardBox onClick={onClickCard}>
       <ImageBox>
-        {/* <img src={props.src} width="100%" height="100%" /> */}
         <img src={imgurl} width="100%" height="100%" />
       </ImageBox>
-      <FilterBox>{/* <TagLabel>{tagList[0]}</TagLabel> */}</FilterBox>
+      <FilterBox />
       <TextBox>
-        <Text size="m" weight="medium">
+        <Text size="16px" weight="semibold">
           {title}
         </Text>
-        <Text my="5" size="12px" color="grey">
+        <Text my="3" size="10px" color="grey">
           {startTime.substr(0, 10)} - {endTime.substr(0, 10)}
         </Text>
       </TextBox>
