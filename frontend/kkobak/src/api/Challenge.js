@@ -114,18 +114,26 @@ function requestCalendarCheckChallenge(chlId, year, month, success, fail) {
     .catch(fail);
 }
 
-function requestChallengeUseWatch(success, fail) {
+function requestChallengeUseWatch(page, success, fail) {
   api
-    .get(`/challenge/watch/true?page=0&size=6&sort=id,DESC`)
+    .get(`/challenge/watch/true?page=${page - 1}&size=6&sort=id,DESC`)
     .then(success)
     .catch(fail);
 }
 
-function requestChallengeNoUseWatch(success, fail) {
+function requestChallengeNoUseWatch(page, success, fail) {
   api
-    .get(`/challenge/watch/false?page=0&size=6&sort=id,DESC`)
+    .get(`/challenge/watch/false?page=${page - 1}&size=6&sort=id,DESC`)
     .then(success)
     .catch(fail);
+}
+
+function fetchWatchMyChallengePageCnt(success, fail) {
+  api.get(`/challenge/watch-cnt/true?size=6`).then(success).catch(fail);
+}
+
+function fetchNoWatchMyChallengePageCnt(success, fail) {
+  api.get(`/challenge/watch-cnt/false?size=6`).then(success).catch(fail);
 }
 
 export {
@@ -142,4 +150,6 @@ export {
   requestCalendarCheckChallenge,
   requestChallengeUseWatch,
   requestChallengeNoUseWatch,
+  fetchWatchMyChallengePageCnt,
+  fetchNoWatchMyChallengePageCnt,
 };
