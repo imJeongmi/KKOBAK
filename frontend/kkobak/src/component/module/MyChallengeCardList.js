@@ -43,10 +43,11 @@ const WatchToggleBox = styled(Box)(
 
 const ChallengeListBox = styled(Box)(
   () => `
-  width: 100%;
-  height: 70vh;
+  width: 95%;
+  height: 60vh;
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   justify-content: center;
   `
 );
@@ -54,8 +55,10 @@ const ChallengeListBox = styled(Box)(
 const ButtonBox = styled(Box)(
   () => `
   width: 95%;
+  height: 35px;
   display: flex;
   justify-content: end;
+  marginTop: 15px;
   `
 );
 

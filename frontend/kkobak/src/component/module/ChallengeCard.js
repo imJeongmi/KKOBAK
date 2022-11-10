@@ -11,7 +11,7 @@ const CardBox = styled(Box)(
   () => `
   width: 230px;
   height: 210px;
-  margin: 10px 20px;
+  margin: 10px;
   background-color: white;
   border-radius: 10px;
   `
