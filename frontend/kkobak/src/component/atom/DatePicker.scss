@@ -1,22 +1,20 @@
-$ruler: 12px;
+$ruler: 13px;
 $color-bg: #ffffff;
 $color-shadow: #babecc;
 $color-white: #fff;
 
 
 .react-date-picker {
-  width: 75%;
+  width: 100%;
 }
 
 .react-date-picker__wrapper {
   font-family: "SUIT-Medium";
-  font-size: $ruler*2;
   border: 0;
   outline: 0;
   font-size: $ruler;
-  border-radius: $ruler*20;
+  border-radius: $ruler*2;
   padding: $ruler * 0.5;
-  margin-top: $ruler*0.5 ;
   background-color: $color-bg;
   text-shadow: 1px 1px 0 $color-white;
 }
