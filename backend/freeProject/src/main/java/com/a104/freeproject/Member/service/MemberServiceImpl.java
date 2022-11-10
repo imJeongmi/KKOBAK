@@ -375,7 +375,7 @@ public class MemberServiceImpl implements MemberService{
                 if(p.is_fin()) continue;
                 Challenge c = p.getChallenge();
                 if(c.isFin()) continue;
-                if(logRepository.existsByPrtChlAndDate(p,day.getDay())) continue;
+                if(!logRepository.existsByPrtChlAndDate(p,day.getDay())) continue;
                 Log log = logRepository.findByPrtChlAndDate(p,day.getDay());
                 System.out.println("로그 뽑음");
                 boolean fin = false;
