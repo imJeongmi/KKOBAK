@@ -22,7 +22,7 @@ export default function WatchToggle() {
 
   return (
     <ToggleBox
-      color="primary" 
+      color="primary"
       value={filter}
       exclusive
       onChange={handleFilter}

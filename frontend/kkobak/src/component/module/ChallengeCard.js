@@ -63,7 +63,7 @@ export default function ChallengeCard({
     navigate(`/myChallenge/${chlId}`);
   }
 
-  return (
+  return watch ? (
     <CardBox onClick={onClickCard}>
       <ImageBox>
         {/* <img src={props.src} width="100%" height="100%" /> */}
@@ -73,6 +73,22 @@ export default function ChallengeCard({
         {/* <TagLabel>{tagList[0]}</TagLabel> */}
         <img src={WatchImg} width="25px" />
       </FilterBox>
+      <TextBox>
+        <Text size="m" weight="medium">
+          {title}
+        </Text>
+        <Text my="5" size="12px" color="grey">
+          {startTime.substr(0, 10)} - {endTime.substr(0, 10)}
+        </Text>
+      </TextBox>
+    </CardBox>
+  ) : (
+    <CardBox onClick={onClickCard}>
+      <ImageBox>
+        {/* <img src={props.src} width="100%" height="100%" /> */}
+        <img src={imgurl} width="100%" height="100%" />
+      </ImageBox>
+      <FilterBox>{/* <TagLabel>{tagList[0]}</TagLabel> */}</FilterBox>
       <TextBox>
         <Text size="m" weight="medium">
           {title}

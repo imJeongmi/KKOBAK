@@ -114,6 +114,20 @@ function requestCalendarCheckChallenge(chlId, year, month, success, fail) {
     .catch(fail);
 }
 
+function requestChallengeUseWatch(success, fail) {
+  api
+    .get(`/challenge/watch/true?page=0&size=6&sort=id,DESC`)
+    .then(success)
+    .catch(fail);
+}
+
+function requestChallengeNoUseWatch(success, fail) {
+  api
+    .get(`/challenge/watch/false?page=0&size=6&sort=id,DESC`)
+    .then(success)
+    .catch(fail);
+}
+
 export {
   getChallengeDetail,
   checkChallengePassword,
@@ -126,4 +140,6 @@ export {
   searchChallengeListWithTitle,
   registerChallenge,
   requestCalendarCheckChallenge,
+  requestChallengeUseWatch,
+  requestChallengeNoUseWatch,
 };
