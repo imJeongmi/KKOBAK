@@ -377,8 +377,12 @@ public class MemberServiceImpl implements MemberService{
                 if(c.isFin()) continue;
                 Log log = logRepository.findByPrtChlAndDate(p,day.getDay());
                 System.out.println("로그 뽑음");
+                boolean fin = false;
+                if(log.isFin()) fin= true;
+                System.out.println(c.getTitle());
                 todoListInfo.add(TodoListInfoResponse.builder().chlId(c.getId())
-                        .title(c.getTitle()).isDone(log.isFin())
+                        .title(c.getTitle())
+                        .isDone(fin)
                         .kkobak(p.getKkobak())
                         .build());
             }
