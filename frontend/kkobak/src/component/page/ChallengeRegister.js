@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { Box } from "@mui/material";
-
 import SideBarChallengeCreate from "component/atom/SideBarChallengeCreate";
 import ChallengeForm from "component/module/ChallengeForm";
 
@@ -9,6 +8,9 @@ import { getDetailCategoryList } from "api/Category";
 import { registerChallenge } from "api/Challenge";
 import MainBox from "component/atom/MainBox";
 import Text from "component/atom/Text"
+import axios from "axios"
+
+import initial from '../../static/initial.png'
 
 export default function ChallengeRegister() {
   const [category, setCategory] = useState(1);
@@ -26,7 +28,6 @@ export default function ChallengeRegister() {
   const [alarm, setAlarm] = useState("00:00");
   const [title, setTitle] = useState("");
   const [contents, setContents] = useState("");
-  const [roomtype, setRoomtype] = useState(0);
   const [unit, setUnit] = useState('')
 
   const [goal, setGoal] = useState('')
@@ -47,16 +48,27 @@ export default function ChallengeRegister() {
   }, [category]);
 
   function registerSuccess() {
-    console.log("성공 야호");
+    console.log("성공");
+    console.log(unit)
   }
 
   function registerFail(err) {
     console.log(err);
   }
 
+  function changeAddressToDot(goal) {
+    axios.get(`https://dapi.kakao.com/v2/local/search/address.json?query=${goal}`, {
+      headers: { Authorization: `KakaoAK ${process.env.REACT_APP_KAKAO_REST_API}` },
+    })
+      .then(res => {
+        const location = res.data.documents[0];
+        setUnit(`${location?.address?.x},${location?.address?.y}`)
+      })
+  }
+  
   function changeUnit(category, detailCategory) {
     if (category === "2" && detailCategory === "7") {
-      setUnit('위도/경도')
+      changeAddressToDot(goal)
     } else if (category === "2") {
       setUnit('회')
     } else if (category === "1" && detailCategory === "1") {
@@ -67,32 +79,88 @@ export default function ChallengeRegister() {
       setUnit('분')
     }
   }
+  // 유효성 검사
+  function checkAll() {
+    if (imgSrc === initial) {
+      return;
+    }
+    if (!title) {
+      return;
+    }
+
+    if (!contents) {
+      return;
+    }
+
+    if (!category) {
+      return;
+    }
+
+    if (!detailCategory) {
+      return;
+    }
+
+    if (!unit) {
+      return;
+    }
+    return true
+  }
+
 
 
   function register(e) {
     e.preventDefault();
-    registerChallenge(
-      alarm,
-      0,
-      category,
-      contents,
-      detailCategory,
-      endTime,
-      goal,
-      imgSrc,
-      kkobak,
-      1,
-      roomtype,
-      "",
-      1,
-      startTime,
-      [],
-      title,
-      `${changeUnit(category, detailCategory)}`,
-      watch,
-      registerSuccess,
-      registerFail
-    );
+    if (!checkAll()) {
+      return
+    }
+    if (category === "1") {
+      changeUnit(category, detailCategory)
+      registerChallenge(
+        alarm,
+        0,
+        category,
+        contents,
+        detailCategory,
+        endTime,
+        goal,
+        imgSrc,
+        kkobak,
+        1,
+        1,
+        "",
+        1,
+        startTime,
+        [],
+        title,
+        unit,
+        watch,
+        registerSuccess,
+        registerFail
+      );
+    } else {
+      changeUnit(category, detailCategory)
+      registerChallenge(
+        alarm,
+        0,
+        category,
+        contents,
+        detailCategory,
+        endTime,
+        1,
+        imgSrc,
+        kkobak,
+        1,
+        "",
+        1,
+        startTime,
+        [],
+        title,
+        unit,
+        watch,
+        registerSuccess,
+        registerFail
+      );
+    }
   }
 
   return (
@@ -134,7 +202,6 @@ export default function ChallengeRegister() {
             setKkobak={setKkobak}
             register={register}
             setUnit={setUnit}
-            setRoomtype={setRoomtype}
             changeUnit={changeUnit}
           ></ChallengeForm>
         </MainBox>

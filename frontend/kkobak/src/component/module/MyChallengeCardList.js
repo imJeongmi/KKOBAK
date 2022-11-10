@@ -17,6 +17,8 @@ import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 import {
   requestChallengeUseWatch,
   requestChallengeNoUseWatch,
+  fetchWatchMyChallengePageCnt,
+  fetchNoWatchMyChallengePageCnt,
 } from "api/Challenge";
 
 import WatchImage from "static/watch.png";
@@ -66,12 +68,15 @@ const PageBox = styled(Box)(
 export default function MyChallengeCardList() {
   const [MyChallengeList, setMyChallengeList] = useState([]);
   const [TotalMyPage, setMyPageNation] = useState([]);
+  const [WatchTotalMyPage, setWatchTotalMyPageNation] = useState([]);
+  const [WatchNoTotalMyPage, setWatchNoTotalMyPageNation] = useState([]);
   const [page, setPage] = useState(1);
   const navigate = useNavigate();
   const handlePage = (event) => {
     const nowPageInt = parseInt(event.target.outerText);
     setPage(nowPageInt);
   };
+
   const [MyChallengeFilterList, setMyChallengeFilterList] = useState([]);
   const [MyChallengeNoFilterList, setMyChallengeNoFilterList] = useState([]);
 
@@ -81,8 +86,6 @@ export default function MyChallengeCardList() {
   const handleFilter = (event, newFilter) => {
     setFilter(newFilter);
   };
-
-  console.log(filter);
 
   function fetchMyChallengeListSuccess(res) {
     setMyChallengeList(res.data);
@@ -114,6 +117,37 @@ export default function MyChallengeCardList() {
       fetchChallengePageCntFail
     );
   }, []);
+
+  function fetchWatchChallengePageCntSuccess(res) {
+    setWatchTotalMyPageNation(res.data);
+  }
+
+  function fetchWatchChallengePageCntFail(res) {
+    setWatchTotalMyPageNation([]);
+  }
+
+  useEffect(() => {
+    fetchWatchMyChallengePageCnt(
+      fetchWatchChallengePageCntSuccess,
+      fetchWatchChallengePageCntFail
+    );
+  }, []);
+
+  function fetchNoWatchChallengePageCntSuccess(res) {
+    setWatchNoTotalMyPageNation(res.data);
+  }
+
+  function fetchNoWatchChallengePageCntFail(res) {
+    setWatchNoTotalMyPageNation([]);
+  }
+
+  useEffect(() => {
+    fetchNoWatchMyChallengePageCnt(
+      fetchNoWatchChallengePageCntSuccess,
+      fetchNoWatchChallengePageCntFail
+    );
+  }, []);
+
   function moveToRegister(e) {
     e.preventDefault();
     navigate("/register");
@@ -137,17 +171,19 @@ export default function MyChallengeCardList() {
 
   useEffect(() => {
     requestChallengeNoUseWatch(
+      page,
       requestChallengeNoUseWatchSuccess,
       requestChallengeNoUseWatchFail
     );
-  }, "no");
+  }, [page]);
 
   useEffect(() => {
     requestChallengeUseWatch(
+      page,
       requestChallengeUseWatchSuccess,
       requestChallengeUseWatchFail
     );
-  }, "yes");
+  }, [page]);
 
   {
     if (MyChallengeList.length === 0) {
@@ -273,7 +309,7 @@ export default function MyChallengeCardList() {
           <PageBox>
             <Stack spacing={2}>
               <Pagination
-                count={TotalMyPage}
+                count={WatchNoTotalMyPage}
                 defaultPage={1}
                 shape="rounded"
                 onChange={(e) => handlePage(e)}
@@ -336,7 +372,7 @@ export default function MyChallengeCardList() {
           <PageBox>
             <Stack spacing={2}>
               <Pagination
-                count={TotalMyPage}
+                count={WatchTotalMyPage}
                 defaultPage={1}
                 shape="rounded"
                 onChange={(e) => handlePage(e)}
