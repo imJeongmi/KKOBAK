@@ -32,8 +32,8 @@ public interface ChallengeService {
     boolean checkPassword(Long id, String password) throws NotFoundException;
     int getChallengePageCnt(Pageable pageable);
     List<String> findDoneDate(long chlId, int year, int month, HttpServletRequest req) throws NotFoundException;
-    List<useWatchResponse> findWatchUse(boolean useWatch, Pageable pageable) throws NotFoundException;
-    int findWatchCnt(boolean useWatch, Pageable pageable) throws NotFoundException;
+    List<useWatchResponse> findWatchUse(boolean useWatch, Pageable pageable, HttpServletRequest req) throws NotFoundException;
+    int findWatchCnt(boolean useWatch, Pageable pageable, HttpServletRequest req) throws NotFoundException;
     boolean participateChl(Long chlId, int alarmType, HttpServletRequest req) throws NotFoundException;
     boolean findChlDone(Long chlId, HttpServletRequest req) throws NotFoundException;
     boolean judgeDone(JudgeRequest input, HttpServletRequest req) throws NotFoundException;

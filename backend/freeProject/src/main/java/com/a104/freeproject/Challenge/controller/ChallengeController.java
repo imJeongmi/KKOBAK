@@ -107,14 +107,14 @@ public class ChallengeController {
 
     @GetMapping("/watch/{useWatch}")
     @ApiOperation(value="[확인] 워치 유무에 따른 미완료 챌린지 리스트 반환", notes ="'/api/challenge/watch/true?page=1&size=6&sort=id,DESC' 형식으로 사용" )
-    public ResponseEntity<List<useWatchResponse>> findWatchUse(@PathVariable("useWatch") boolean useWatch, Pageable pageable) throws NotFoundException{
-        return ResponseEntity.ok().body(challengeService.findWatchUse(useWatch, pageable));
+    public ResponseEntity<List<useWatchResponse>> findWatchUse(@PathVariable("useWatch") boolean useWatch, Pageable pageable, HttpServletRequest req) throws NotFoundException{
+        return ResponseEntity.ok().body(challengeService.findWatchUse(useWatch, pageable, req));
     }
 
     @GetMapping("/watch-cnt/{useWatch}")
     @ApiOperation(value="워치 유무에 따른 미완료 챌린지 페이지 cnt 반환", notes ="'/api/challenge/watch-cnt/true?size=6' 형식으로 사용" )
-    public ResponseEntity<Integer> findWatchCnt(@PathVariable("useWatch") boolean useWatch, Pageable pageable) throws NotFoundException{
-        return ResponseEntity.ok().body(challengeService.findWatchCnt(useWatch, pageable));
+    public ResponseEntity<Integer> findWatchCnt(@PathVariable("useWatch") boolean useWatch, Pageable pageable, HttpServletRequest req) throws NotFoundException{
+        return ResponseEntity.ok().body(challengeService.findWatchCnt(useWatch, pageable, req));
     }
 
     @GetMapping("/participate/{chlId}/{alarmType}")
