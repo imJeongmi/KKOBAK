@@ -12,18 +12,17 @@ export default function ChallengeMap({ findTime }) {
   const cid = Number(useParams().chlId);
 
   const [gps, setGps] = useState([]);
-  // const [gpsStat, setGpsStat] = useState([]);
-
-  console.log(gps[0]);
+  const [gpsStat, setGpsStat] = useState({ lat: 37.5016644, lng: 127.0396081 });
 
   function requestStatGpsSuccess(res) {
     setGps(res.data.gpsList);
-    // setGpsStat(res.data);
+    setGpsStat(res.data.gpsList[0]);
   }
 
   function requestStatGpsFail(err) {
     setGps([]);
     // console.log(err.data);
+    setGpsStat([]);
   }
 
   useEffect(() => {
@@ -38,9 +37,22 @@ export default function ChallengeMap({ findTime }) {
   }, [year, month, day, cid]);
 
   // 역삼역 위치 { lat: 37.5016644, lng: 127.0396081 }
-  return (
+  return gpsStat === undefined ? (
     <Map
       center={{ lat: 37.5016644, lng: 127.0396081 }}
+      style={{ display: "inline-block", width: "60vw", height: "250px" }}
+    >
+      <Polyline
+        path={gps}
+        strokeWeight={5} // 선의 두께 입니다
+        strokeColor={"#000000"} // 선의 색깔입니다
+        strokeOpacity={1} // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+        strokeStyle={"solid"} // 선의 스타일입니다
+      />
+    </Map>
+  ) : (
+    <Map
+      center={gpsStat}
       style={{ display: "inline-block", width: "60vw", height: "250px" }}
     >
       <Polyline
