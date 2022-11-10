@@ -22,6 +22,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.kkobak.R;
+import com.txusballesteros.SnakeView;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -40,6 +41,8 @@ public class MeditationActivity extends AppCompatActivity implements SensorEvent
     TextView timerSecond;
     LinearLayout timerLayout;
 
+    SnakeView snakeView;
+
     final int TIMER = 1;
 
     Timer timer;
@@ -54,7 +57,7 @@ public class MeditationActivity extends AppCompatActivity implements SensorEvent
 
         checkPermission();
 
-        heartRateTv = findViewById(R.id.heartRateTv);
+        heartRateTv = findViewById(R.id.hrmText);
         heartRateBtn = findViewById(R.id.heartRateBtn);
         btnState = false;
 
@@ -71,6 +74,10 @@ public class MeditationActivity extends AppCompatActivity implements SensorEvent
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_HEART_RATE);
 
         sensorManager.registerListener(sensorEventListener, sensor, SensorManager.SENSOR_DELAY_UI);
+
+        snakeView = (SnakeView)findViewById(R.id.snake);
+        snakeView.setMinValue(-20500);
+        snakeView.setMaxValue(20000);
     }
 
     @Override
@@ -85,10 +92,18 @@ public class MeditationActivity extends AppCompatActivity implements SensorEvent
     public void onSensorChanged(SensorEvent sensorEvent) {
         if (btnState) {
             float value = sensorEvent.values[0];
+            int printValue;
 
 //            if (value != 0.0) {
 //                Toast.makeText(this, sensorEvent.values[0] + "", Toast.LENGTH_SHORT).show();
-                heartRateTv.setText("" + value);
+            value *= 100;
+            snakeView.addValue(value);
+            snakeView.addValue(value - 1000);
+            snakeView.addValue(value + 1500);
+            snakeView.addValue(value * -1);
+
+            printValue = (int) (value / 100);
+            heartRateTv.setText("" + printValue);
 //            }
 
         }

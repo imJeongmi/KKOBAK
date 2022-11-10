@@ -78,7 +78,7 @@ public class GpsActivity extends AppCompatActivity implements LocationListener {
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) 
             return;
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000,1, this);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000,20, this);
 
         db = AccessTokenDatabase.getAppDatabase(this);
         try {
@@ -112,7 +112,7 @@ public class GpsActivity extends AppCompatActivity implements LocationListener {
         super.onResume();
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
             return;
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000,1, this);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000,20, this);
     }
 
     @Override
@@ -147,7 +147,7 @@ public class GpsActivity extends AppCompatActivity implements LocationListener {
     }
 
     public void sendGpsData(double lat, double lng, LocalDateTime time) {
-        int chlId = 91;
+        int chlId = 139;
         GpsDataReq gpsDataReq = new GpsDataReq(chlId, time.toString(), Double.toString(lat), Double.toString(lng), startTime.toString());
         Call<Boolean> call = GpsDataApi.sendGpsData().sendGpsData(accessToken, gpsDataReq);
         call.enqueue(new Callback<Boolean>() {

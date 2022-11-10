@@ -70,4 +70,7 @@ dependencies {
 
     //firebase message
     implementation 'com.google.firebase:firebase-messaging:21.1.0'
+
+    //Design 의존성
+    implementation 'com.txusballesteros:snake:1.0'
 }
