@@ -10,5 +10,6 @@ import java.util.List;
 
 public interface TodolistRepository extends JpaRepository<Todolist,Long> {
     boolean existsByContentsAndDate(String contents, LocalDate date);
+    boolean existsByMemberAndDate(Member member, LocalDate date);
     List<Todolist> findAllByMemberAndDate(Member member, LocalDate date);
 }
