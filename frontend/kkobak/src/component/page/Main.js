@@ -17,6 +17,7 @@ import {
   requestUserInfo,
   fetchMyChallengeCalendarList,
   fetchMyChallengeCalendarPageCnt,
+  getMyKkobakList
 } from "api/userApi";
 
 export default function Main() {
@@ -30,22 +31,20 @@ export default function Main() {
     setPage(nowPageInt);
   };
 
-  function fetchMyChallengeListSuccess(res) {
-    setMyChallengeList(res.data);
-    // console.log(res.data);
+  function getMyKkobakListSuccess(res) {
+    setMyChallengeList(res.data.reverse());
   }
 
-  function fetchMyChallengeListFail(err) {
+  function getMyKkobakListFail(err) {
     setMyChallengeList([]);
   }
 
   useEffect(() => {
-    fetchMyChallengeCalendarList(
-      page,
-      fetchMyChallengeListSuccess,
-      fetchMyChallengeListFail
+    getMyKkobakList(
+      getMyKkobakListSuccess,
+      getMyKkobakListFail
     );
-  }, [page]);
+  }, []);
 
   function fetchChallengePageCntSuccess(res) {
     setMyPageNation(res.data);
@@ -136,7 +135,7 @@ export default function Main() {
         </Box>
         <MainBox>
           <Box sx={{ display: "flex", flexDirection: "column" }}>
-            {MyChallengeList.map((item) => {
+              {MyChallengeList.slice(page-1, page).map((item) => {
               const startTimeCheck = moment(item.startTime).format(
                 "YYYY/MM/DD"
               );
