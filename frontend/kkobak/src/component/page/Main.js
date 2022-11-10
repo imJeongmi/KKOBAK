@@ -114,28 +114,20 @@ export default function Main() {
       }}
     >
       <Box sx={{ margin: "0 auto" }}>
-        <Box sx={{ flex: 1, display: "flex", marginBottom: "10px" }}>
-          <Box sx={{ float: "left", flex: 1, display: "flex" }}>
-            <Box sx={{ float: "left" }}>
-              <Text size="m" weight="semibold" mt="30" my="15">
-                {"안녕하세요," + "\u00A0"}
-              </Text>
-            </Box>
-            <Box>
-              <Text size="m" weight="bold" mt="30" my="15" color="blue">
-                {` ${user.nickName}`}
-              </Text>
-            </Box>
-            <Box>
-              <Text size="m" weight="semibold" mt="30" my="15">
-                님
-              </Text>
-            </Box>
-          </Box>
+        <Box sx={{ display: "flex" }}>
+          <Text size="m" weight="semibold" mt="30" my="15">
+            {"안녕하세요," + "\u00A0"}
+          </Text>
+          <Text size="m" weight="bold" mt="30" my="15" color="blue">
+            {` ${user.nickName}`}
+          </Text>
+          <Text size="m" weight="semibold" mt="30" my="15">
+            님
+          </Text>
         </Box>
         <MainBox>
           <Box sx={{ display: "flex", flexDirection: "column" }}>
-              {MyChallengeList.slice(page-1, page).map((item) => {
+            {MyChallengeList.slice(page - 1, page).map((item) => {
               const startTimeCheck = moment(item.startTime).format(
                 "YYYY/MM/DD"
               );

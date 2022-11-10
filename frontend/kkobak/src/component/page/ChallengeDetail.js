@@ -115,9 +115,14 @@ export default function ChallengeDetail() {
       }}
     >
       <Box sx={{ margin: "0 auto" }}>
-        <Text size="l" weight="bold" mt="30" my="15">
-          {user.nickName}님의 챌린지리스트
-        </Text>
+        <Box sx={{ display: "flex" }}>
+          <Text size="m" weight="bold" mt="30" my="15" color="blue">
+            {user.nickName}
+          </Text>
+          <Text size="m" weight="semibold" mt="30" my="15">
+            {"님의 챌린지 리스트"}
+          </Text>
+        </Box>
         <MainBox flexDir="col">
           <Box
             sx={{
@@ -243,9 +248,14 @@ export default function ChallengeDetail() {
       }}
     >
       <Box sx={{ margin: "0 auto" }}>
-        <Text size="l" weight="bold" mt="30" my="15">
-          {user.nickName}님의 챌린지리스트
-        </Text>
+        <Box sx={{ display: "flex" }}>
+          <Text size="m" weight="bold" mt="30" my="15" color="blue">
+            {user.nickName}
+          </Text>
+          <Text size="m" weight="semibold" mt="30" my="15">
+            {"님의 챌린지 리스트"}
+          </Text>
+        </Box>
         <MainBox flexDir="col">
           <Box
             sx={{
@@ -306,7 +316,7 @@ export default function ChallengeDetail() {
                     flexDirection: "column",
                     alignItems: "start",
                   }}
-                >                  
+                >
                   <Text size="14px" color="grey" my="10" mx="10">
                     {detailCategoryId}
                   </Text>
