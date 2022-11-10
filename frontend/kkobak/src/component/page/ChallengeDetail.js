@@ -118,7 +118,16 @@ export default function ChallengeDetail() {
         <Text size="l" weight="bold" mt="30" my="15">
           {user.nickName}님의 챌린지리스트
         </Text>
-        <MainBox flexDir="col">
+        <Box
+          sx={{
+            width: "80vw",
+            backgroundColor: "#F7F7F7",
+            borderRadius: "20px",
+            textAlign: "center",
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
           <Box
             sx={{
               width: "100%",
@@ -231,9 +240,9 @@ export default function ChallengeDetail() {
               </Box>
             </Box>
           </Box>
-        </MainBox>
+        </Box>
       </Box>
-      <SideBar />
+      {/* <SideBar /> */}
     </Box>
   ) : (
     <Box
@@ -246,10 +255,19 @@ export default function ChallengeDetail() {
         <Text size="l" weight="bold" mt="30" my="15">
           {user.nickName}님의 챌린지리스트
         </Text>
-        <MainBox flexDir="col">
+        <Box
+          sx={{
+            width: "80vw",
+            backgroundColor: "#F7F7F7",
+            borderRadius: "20px",
+            textAlign: "center",
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
           <Box
             sx={{
-              width: "100%",
+              width: "70%",
               minHeight: "80vh",
               display: "flex",
               flexWrap: "wrap",
@@ -306,7 +324,7 @@ export default function ChallengeDetail() {
                     flexDirection: "column",
                     alignItems: "start",
                   }}
-                >                  
+                >
                   <Text size="14px" color="grey" my="10" mx="10">
                     {detailCategoryId}
                   </Text>
@@ -358,14 +376,15 @@ export default function ChallengeDetail() {
               </Box>
             </Box>
           </Box>
-          <ButtonBox>
-            <Button size="ss" my="0" onClick={moveToStats}>
+          <ButtonBox sx={{ marginTop: "-70px" }}>
+            <Button size="l" my="10" onClick={moveToStats}>
               통계 확인
             </Button>
           </ButtonBox>
-        </MainBox>
+        </Box>
+        <Box sx={{ fontSize: "30px" }}>해당 화면에 통계 화면 보여주기</Box>
       </Box>
-      <SideBar />
+      {/* <SideBar /> */}
     </Box>
   );
 }

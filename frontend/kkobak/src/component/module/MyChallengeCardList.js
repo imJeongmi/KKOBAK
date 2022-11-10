@@ -44,10 +44,11 @@ const WatchToggleBox = styled(Box)(
 const ChallengeListBox = styled(Box)(
   () => `
   width: 100%;
-  height: 70vh;
+  height: 60vh;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  margin-top: 30px;
   `
 );
 
@@ -61,7 +62,7 @@ const ButtonBox = styled(Box)(
 
 const PageBox = styled(Box)(
   () => `
-  margin: 10px auto;
+  margin: 5px auto;
   `
 );
 
@@ -194,7 +195,16 @@ export default function MyChallengeCardList() {
       );
     } else if (filter === "all") {
       return (
-        <MainBox flexDir="col">
+        <Box
+          sx={{
+            width: "80vw",
+            backgroundColor: "#F7F7F7",
+            borderRadius: "20px",
+            textAlign: "center",
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
           <WatchToggleBox>
             <ToggleBox
               color="primary"
@@ -253,7 +263,7 @@ export default function MyChallengeCardList() {
               />
             </Stack>
           </PageBox>
-        </MainBox>
+        </Box>
       );
     } else if (filter === "no") {
       return (

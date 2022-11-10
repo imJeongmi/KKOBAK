@@ -18,9 +18,9 @@ const Text = styled("span")(
 const WidgetBox = styled(Box)(
   () => `
   width: 280px;
-  height: 140px;
+  height: 100px;
   background-color: #F0F6FB;
-  border-radius: 30px;
+  border-radius: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;

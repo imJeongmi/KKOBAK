@@ -49,13 +49,13 @@ function requestUserInfo(success, fail) {
 
 function fetchMyChallengeList(page, success, fail) {
   api
-    .get(`/member/my-chl-list?page=${page - 1}&size=6&sort=id,DESC`)
+    .get(`/member/my-chl-list?page=${page - 1}&size=8&sort=id,DESC`)
     .then(success)
     .catch(fail);
 }
 function fetchMyChallengePageCnt(success, fail) {
   api
-    .get(`/member/sum/my-chl-list?size=6&sort=id,DESC`)
+    .get(`/member/sum/my-chl-list?size=8&sort=id,DESC`)
     .then(success)
     .catch(fail);
 }
@@ -99,7 +99,7 @@ function getKkobakChallengeList(day, success, fail) {
 }
 
 function getMyKkobakList(success, fail) {
-  api.get('/participate/like').then(success).catch(fail);
+  api.get("/participate/like").then(success).catch(fail);
 }
 
 export {
@@ -118,5 +118,5 @@ export {
   requestMyChallengeDetail,
   requestMyChallengeStatistics,
   getKkobakChallengeList,
-  getMyKkobakList
+  getMyKkobakList,
 };
