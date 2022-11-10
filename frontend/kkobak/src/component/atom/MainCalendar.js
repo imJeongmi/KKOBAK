@@ -1,26 +1,22 @@
 import React, { useState, useEffect } from "react";
+import { Box } from "@mui/system";
+import moment from "moment";
+
 import Calendar from "react-calendar";
-import "react-calendar/dist/Calendar.css";
-import "./MainCalendar.css";
 import smile from "../../static/emoji/smile.png";
 import cry from "../../static/emoji/cry.png";
-import { Box } from "@mui/system";
-import Text from "component/atom/Text";
 
-import moment from "moment";
 import { requestCalendarCheckChallenge } from "api/Challenge";
 import { logController } from "api/log";
 
+import "react-calendar/dist/Calendar.css";
+import "./MainCalendar.css";
+
 const CalendarBox = {
-  // margin: "auto",
-  // marginLeft: "20px",
   width: "100%",
-  minHeight: "80vh",
-  backgroundColor: "#F5F5F5",
-  borderRadius: "20px",
+  minHeight: "90%",
   textAlign: "center",
   display: "flex",
-  // alignItems: "center",
   justifyContent: "center",
 };
 
@@ -143,10 +139,11 @@ export default function MainCalendar({ chlId, startTime, endTime, title }) {
                 return (
                   <Box
                     sx={{
-                      left: "50%",
-                      transform: "translate(-50%)",
-                      width: "8vw",
-                      height: "8vh",
+                      width: "100%",
+                      height: "100%",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
                     }}
                   >
                     {isDone(date) ? (
