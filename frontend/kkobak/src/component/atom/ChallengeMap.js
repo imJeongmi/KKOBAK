@@ -40,7 +40,7 @@ export default function ChallengeMap({ findTime }) {
   return gpsStat === undefined ? (
     <Map
       center={{ lat: 37.5016644, lng: 127.0396081 }}
-      style={{ display: "inline-block", width: "60vw", height: "250px" }}
+      style={{ display: "inline-block", width: "90vw", height: "350px" }}
     >
       <Polyline
         path={gps}
@@ -53,7 +53,7 @@ export default function ChallengeMap({ findTime }) {
   ) : (
     <Map
       center={gpsStat}
-      style={{ display: "inline-block", width: "60vw", height: "250px" }}
+      style={{ display: "inline-block", width: "50vw", height: "300px" }}
     >
       <Polyline
         path={gps}
