@@ -126,7 +126,6 @@ export default function ChallengeRegister() {
         imgSrc,
         kkobak,
         1,
-        1,
         "",
         1,
         startTime,
