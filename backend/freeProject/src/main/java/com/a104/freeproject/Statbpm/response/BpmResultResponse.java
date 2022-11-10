@@ -14,7 +14,8 @@ import java.util.List;
 @AllArgsConstructor
 public class BpmResultResponse {
     private boolean flag;
-    private List<BpmListResponse> bpmList;
+    private List<BpmChangeForm> bpmList;
+//    private List<BpmListResponse> bpmList;
     private int maxBpm;
     private int minBpm;
     private int avgBpm;

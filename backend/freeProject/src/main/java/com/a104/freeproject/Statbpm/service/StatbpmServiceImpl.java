@@ -11,6 +11,7 @@ import com.a104.freeproject.PrtChl.repository.PrtChlRepository;
 import com.a104.freeproject.Statbpm.entity.Statbpm;
 import com.a104.freeproject.Statbpm.repository.StatbpmRepository;
 import com.a104.freeproject.Statbpm.request.BpmInputRequest;
+import com.a104.freeproject.Statbpm.response.BpmChangeForm;
 import com.a104.freeproject.Statbpm.response.BpmListResponse;
 import com.a104.freeproject.Statbpm.response.BpmResultResponse;
 import com.a104.freeproject.Statbpm.response.BpmMiddleInterface;
@@ -22,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.LinkedList;
 import java.util.List;
@@ -80,7 +82,7 @@ public class StatbpmServiceImpl implements StatbpmService{
         if(!logRepository.existsByPrtChlAndDate(p,date))
             return BpmResultResponse.builder()
                 .flag(false)
-                .bpmList(new LinkedList<BpmListResponse>())
+                .bpmList(new LinkedList<BpmChangeForm>())
                 .maxBpm(0).minBpm(0).avgBpm(0)
                 .build();
 
@@ -90,15 +92,12 @@ public class StatbpmServiceImpl implements StatbpmService{
         if(statbpmList.size()==0)
             return BpmResultResponse.builder()
                     .flag(false)
-                    .bpmList(new LinkedList<BpmListResponse>())
+                    .bpmList(new LinkedList<BpmChangeForm>())
                     .maxBpm(0).minBpm(0).avgBpm(0)
                     .build();
         
-        System.out.println("size 0 아님");
-        
         boolean flag = statbpmList.get(statbpmList.size()-1).getSuccess();
         LocalDateTime sendTime = statbpmList.get(statbpmList.size()-1).getChk();
-        System.out.println("sendTime = " + sendTime);
         
         if(!flag){
             for(int i = statbpmList.size()-2;i>=0;i--){
@@ -111,7 +110,7 @@ public class StatbpmServiceImpl implements StatbpmService{
         }
 
         List<Statbpm> list = statbpmRepository.findByChkTimeAndPrtChl(p,sendTime);
-        List<BpmListResponse> output = new LinkedList<>();
+        List<BpmChangeForm> output = new LinkedList<>();
         int maxbpm=list.get(0).getBpm();
         int minbpm=list.get(0).getBpm();
         int sumbpm=0;
@@ -120,8 +119,13 @@ public class StatbpmServiceImpl implements StatbpmService{
             maxbpm=Math.max(maxbpm,statbpm.getBpm());
             minbpm=Math.min(minbpm,statbpm.getBpm());
 
-            output.add(BpmListResponse.builder()
-                    .bpm(statbpm.getBpm()).time(statbpm.getTime())
+//            output.add(BpmListResponse.builder()
+//                    .bpm(statbpm.getBpm()).time(statbpm.getTime())
+//                    .build());
+//            LocalTime t = statbpm.getTime().toLocalTime();
+            output.add(BpmChangeForm.builder()
+                    .bpm(statbpm.getBpm())
+                    .time(statbpm.getTime().toLocalTime())
                     .build());
         }
 

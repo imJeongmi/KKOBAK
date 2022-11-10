@@ -366,18 +366,14 @@ public class MemberServiceImpl implements MemberService{
         Member member;
         try{
             member = findEmailbyToken(req);
-            System.out.println("member id : "+member.getEmail());
             List<PrtChl> chlList = member.getChallenges();
-            System.out.println("chlList.size() = " + chlList.size());
             List<TodoListInfoResponse> todoListInfo = new LinkedList<>();
             for(PrtChl p : chlList){
-                System.out.println("p: "+p.getId());
                 if(p.is_fin()) continue;
                 Challenge c = p.getChallenge();
                 if(c.isFin()) continue;
                 if(!logRepository.existsByPrtChlAndDate(p,day.getDay())) continue;
                 Log log = logRepository.findByPrtChlAndDate(p,day.getDay());
-                System.out.println("로그 뽑음");
                 boolean fin = false;
                 if(log.isFin()) fin= true;
                 System.out.println(c.getTitle());
