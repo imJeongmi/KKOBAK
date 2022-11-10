@@ -2,6 +2,7 @@ package com.example.kkobak.ui.test;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -47,6 +48,7 @@ public class TestActivity extends AppCompatActivity {
     int id;
     AccessTokenDatabase db;
     String accessToken;
+    static Context context;
 
     private GpsTracker gpsTracker;
 
@@ -61,6 +63,8 @@ public class TestActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.test_activity);
+
+        context = this;
 
         tv = findViewById(R.id.test_gps);
         addr = findViewById(R.id.test_address);
@@ -262,10 +266,9 @@ public class TestActivity extends AppCompatActivity {
 
     }
 
-
-    public String getCurrentAddress( double latitude, double longitude) {
+    static public String getCurrentAddress( double latitude, double longitude) {
         //지오코더... GPS를 주소로 변환
-        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+        Geocoder geocoder = new Geocoder(context, Locale.getDefault());
 
         List<Address> addresses;
 
@@ -276,10 +279,10 @@ public class TestActivity extends AppCompatActivity {
                     7);
         } catch (IOException ioException) {
             //네트워크 문제
-            Toast.makeText(this, "지오코더 서비스 사용불가", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "지오코더 서비스 사용불가", Toast.LENGTH_LONG).show();
             return "지오코더 서비스 사용불가";
         } catch (IllegalArgumentException illegalArgumentException) {
-            Toast.makeText(this, "잘못된 GPS 좌표", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "잘못된 GPS 좌표", Toast.LENGTH_LONG).show();
             return "잘못된 GPS 좌표";
 
         }
@@ -287,7 +290,7 @@ public class TestActivity extends AppCompatActivity {
 
 
         if (addresses == null || addresses.size() == 0) {
-            Toast.makeText(this, "주소 미발견", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "주소 미발견", Toast.LENGTH_LONG).show();
             return "주소 미발견";
 
         }

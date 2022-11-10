@@ -1,7 +1,9 @@
 package com.example.kkobak.ui.myChallengeDetail;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,6 +18,10 @@ import com.example.kkobak.data.retrofit.model.MyChallengeDetailRes;
 import com.example.kkobak.data.room.dao.AccessTokenDao;
 import com.example.kkobak.data.room.database.AccessTokenDatabase;
 import com.example.kkobak.data.room.entity.AccessToken;
+import com.example.kkobak.ui.challenge.AttendActivity;
+import com.example.kkobak.ui.challenge.GpsActivity;
+import com.example.kkobak.ui.challenge.WaterActivity;
+import com.example.kkobak.ui.main.MainActivity;
 import com.example.kkobak.ui.test.TestActivity;
 
 import java.util.List;
@@ -29,6 +35,35 @@ public class MyChallengeDetailActivity extends AppCompatActivity {
     String accessToken;
     String chlId;
     Call<MyChallengeDetailRes> callDetail;
+
+    MyChallengeDetailRes info;
+
+    final int RUNNING = 1;
+    final int WALKING = 2;
+    final int MEDITATION = 3;
+    final int DRINK_WATER = 4;
+    final int EAT_NUTRIENTS = 5;
+    final int STAND_UP = 6;
+    final int ATTEND = 7;
+
+    ImageView iv_img;
+    TextView tv_categoryId;
+    TextView tv_detailCategoryId;
+    TextView tv_writer;
+    TextView tv_title;
+    TextView tv_contents;
+    TextView tv_watch;
+    TextView tv_roomType;
+    TextView tv_password;
+    TextView tv_currentNum;
+    TextView tv_alarm;
+    TextView tv_goal;
+    TextView tv_unit;
+    TextView tv_nickname;
+    TextView tv_startTime;
+    TextView tv_endTime;
+    TextView tv_tagList;
+    TextView tv_fin;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,30 +83,30 @@ public class MyChallengeDetailActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        ImageView iv_img = findViewById(R.id.detailImg);
-        TextView tv_categoryId = findViewById(R.id.detialCategoryId);
-        TextView tv_detailCategoryId = findViewById(R.id.detialDetailCategoryId);
-        TextView tv_writer = findViewById(R.id.detailWriter);
-        TextView tv_title = findViewById(R.id.detailTitle);
-        TextView tv_contents = findViewById(R.id.detailContents);
-        TextView tv_watch = findViewById(R.id.detailWatch);
-        TextView tv_roomType = findViewById(R.id.detailRoomType);
-        TextView tv_password = findViewById(R.id.detailPassword);
-        TextView tv_currentNum = findViewById(R.id.detailCurrentNum);
-        TextView tv_alarm = findViewById(R.id.detailAlarm);
-        TextView tv_goal = findViewById(R.id.detailGoal);
-        TextView tv_unit = findViewById(R.id.detailUnit);
-        TextView tv_nickname = findViewById(R.id.detailNickName);
-        TextView tv_startTime = findViewById(R.id.detailStartTIme);
-        TextView tv_endTime = findViewById(R.id.detailEndTime);
-        TextView tv_tagList = findViewById(R.id.detailTagList);
-        TextView tv_fin = findViewById(R.id.detailFin);
+        iv_img = findViewById(R.id.detailImg);
+        tv_categoryId = findViewById(R.id.detialCategoryId);
+        tv_detailCategoryId = findViewById(R.id.detialDetailCategoryId);
+        tv_writer = findViewById(R.id.detailWriter);
+        tv_title = findViewById(R.id.detailTitle);
+        tv_contents = findViewById(R.id.detailContents);
+        tv_watch = findViewById(R.id.detailWatch);
+        tv_roomType = findViewById(R.id.detailRoomType);
+        tv_password = findViewById(R.id.detailPassword);
+        tv_currentNum = findViewById(R.id.detailCurrentNum);
+        tv_alarm = findViewById(R.id.detailAlarm);
+        tv_goal = findViewById(R.id.detailGoal);
+        tv_unit = findViewById(R.id.detailUnit);
+        tv_nickname = findViewById(R.id.detailNickName);
+        tv_startTime = findViewById(R.id.detailStartTIme);
+        tv_endTime = findViewById(R.id.detailEndTime);
+        tv_tagList = findViewById(R.id.detailTagList);
+        tv_fin = findViewById(R.id.detailFin);
 
         callDetail = MyChallengeDetailApi.getDetailInfo().getInfo(accessToken, chlId);
         callDetail.enqueue(new Callback<MyChallengeDetailRes>() {
             @Override
             public void onResponse(Call<MyChallengeDetailRes> call, Response<MyChallengeDetailRes> response) {
-                MyChallengeDetailRes info = response.body();
+                info = response.body();
 
                 String testImgUrl = "https://static.wikia.nocookie.net/pokemon/images/3/3c/%EB%9D%BC%EC%9D%B4%EC%B8%84_%EA%B3%B5%EC%8B%9D_%EC%9D%BC%EB%9F%AC%EC%8A%A4%ED%8A%B8.png/revision/latest?cb=20170405000124&path-prefix=ko";
                 String imgUrl = info.getImgUrl();
@@ -103,6 +138,48 @@ public class MyChallengeDetailActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    public void doChallenge(View v) {
+        Intent intent;
+
+        switch (info.getDetailCategoryId()) {
+            case RUNNING:
+                Toast.makeText(this, "Running", Toast.LENGTH_SHORT).show();
+                intent = new Intent(this, GpsActivity.class);
+                break;
+            case WALKING:
+                Toast.makeText(this, "Walking", Toast.LENGTH_SHORT).show();
+                intent = new Intent(this, GpsActivity.class);
+                break;
+            case MEDITATION:
+                Toast.makeText(this, "Meditation", Toast.LENGTH_SHORT).show();
+                intent = new Intent(this, WaterActivity.class);
+                break;
+            case DRINK_WATER:
+                Toast.makeText(this, "Drink Water", Toast.LENGTH_SHORT).show();
+                intent = new Intent(this, WaterActivity.class);
+                break;
+            case EAT_NUTRIENTS:
+                Toast.makeText(this, "Nutrients", Toast.LENGTH_SHORT).show();
+                intent = new Intent(this, WaterActivity.class);
+                break;
+            case STAND_UP:
+                Toast.makeText(this, "Stand up", Toast.LENGTH_SHORT).show();
+                intent = new Intent(this, WaterActivity.class);
+                break;
+            case ATTEND:
+                Toast.makeText(this, "Attend", Toast.LENGTH_SHORT).show();
+                intent = new Intent(this, AttendActivity.class);
+                break;
+            default:
+                Toast.makeText(this, "기타", Toast.LENGTH_SHORT).show();
+                intent = new Intent(this, MainActivity.class);
+                break;
+        }
+        intent.putExtra("chlId", chlId);
+        startActivity(intent);
+        finish();
     }
 
     public static class getAccessTokenAsyncTask extends AsyncTask<Void, Void, AccessToken> {

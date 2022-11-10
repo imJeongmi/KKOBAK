@@ -133,6 +133,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="TextView" />
+
+                <Button
+                    android:id="@+id/button12"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="doChallenge"
+                    android:text="Do IT" />
             </LinearLayout>
         </ScrollView>
     </LinearLayout>
