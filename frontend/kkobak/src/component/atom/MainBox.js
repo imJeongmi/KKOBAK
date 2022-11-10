@@ -32,7 +32,7 @@ function getJustifyContent(flexDir) {
 const GreyMainBox = styled(Box)(
   ({flexDir}) => `
   width: 60vw;
-  height: 85vh;
+  height: 90vh;
   background-color: #F7F7F7;
   border-radius: 20px;
   text-align: center;
