@@ -23,7 +23,7 @@ function getAlignItems(flexDir) {
 function getJustifyContent(flexDir) {
   switch (flexDir) {
     case "col":
-      return "space-between";
+      return "start";
     default:
       return "center";
   }
@@ -32,7 +32,7 @@ function getJustifyContent(flexDir) {
 const GreyMainBox = styled(Box)(
   ({flexDir}) => `
   width: 60vw;
-  height: 90vh;
+  height: 85vh;
   background-color: #F7F7F7;
   border-radius: 20px;
   text-align: center;

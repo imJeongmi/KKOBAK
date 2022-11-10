@@ -26,7 +26,16 @@ export default function Challenge() {
   return (
     <Box sx={{ display: "flex", justifyContent: "space-between" }}>
       <Box sx={{ margin: "0 auto" }}>
-        <Box sx={{ flex: 1, display: "flex" }}>
+        <Box sx={{ display: "flex" }}>
+          <Text size="m" weight="bold" mt="30" my="15" color="blue">
+            {user.nickName}
+          </Text>
+          <Text size="m" weight="semibold" mt="30" my="15">
+            {"님의 챌린지 리스트"}
+          </Text>
+        </Box>
+
+        {/* <Box sx={{ flex: 1, display: "flex" }}>
           <Box sx={{ float: "left" }}>
             <Text size="l" weight="bold" mt="30" my="15" color="red">
               {user.nickName}
@@ -40,7 +49,7 @@ export default function Challenge() {
               {"님의 챌린지 리스트"}
             </Text>
           </Box>
-        </Box>
+        </Box> */}
         <MyChallengeCardList />
       </Box>
       <SideBar>
