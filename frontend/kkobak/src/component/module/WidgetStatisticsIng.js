@@ -57,7 +57,7 @@ export default function WidgetStatsIng() {
   return (
     <WidgetBox>
       <ItemBox>
-        <Text>{`성공한 챌린지 : \u00A0`}</Text>
+        <Text>{`지금까지 챌린지 : \u00A0`}</Text>
         <img src={smile} style={{ width: "30px", float: "left" }} />
         <Text>{`\u00A0 × \u00A0`}</Text>
         {stats.totalChl}
