@@ -15,9 +15,8 @@ import EmptyChallenge from "component/page/EmptyChallenge";
 
 import {
   requestUserInfo,
-  fetchMyChallengeCalendarList,
   fetchMyChallengeCalendarPageCnt,
-  getMyKkobakList
+  getMyKkobakList,
 } from "api/userApi";
 
 export default function Main() {
@@ -40,10 +39,7 @@ export default function Main() {
   }
 
   useEffect(() => {
-    getMyKkobakList(
-      getMyKkobakListSuccess,
-      getMyKkobakListFail
-    );
+    getMyKkobakList(getMyKkobakListSuccess, getMyKkobakListFail);
   }, []);
 
   function fetchChallengePageCntSuccess(res) {
@@ -118,7 +114,7 @@ export default function Main() {
           <Box sx={{ float: "left", flex: 1, display: "flex" }}>
             <Box sx={{ float: "left" }}>
               <Text size="m" weight="semibold" mt="30" my="15">
-                {"안녕하세요," + "\u00A0"}
+                {"안녕하세요,\u00A0"}
               </Text>
             </Box>
             <Box>
@@ -135,7 +131,7 @@ export default function Main() {
         </Box>
         <MainBox>
           <Box sx={{ display: "flex", flexDirection: "column" }}>
-              {MyChallengeList.slice(page-1, page).map((item) => {
+            {MyChallengeList.slice(page - 1, page).map((item) => {
               const startTimeCheck = moment(item.startTime).format(
                 "YYYY/MM/DD"
               );
