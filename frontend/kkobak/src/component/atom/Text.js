@@ -34,6 +34,8 @@ function getSize(size) {
 function getColor(color) {
   switch (color) {
     case "red":
+      return "#DE5E5F";
+    case "pink":
       return "#DB9394";
     case "orange":
       return "#E8BC88";
