@@ -98,6 +98,10 @@ function getKkobakChallengeList(day, success, fail) {
     .catch(fail);
 }
 
+function getMyKkobakList(success, fail) {
+  api.get('/participate/like').then(success).catch(fail);
+}
+
 export {
   requestJoin,
   requestEmailCheck,
@@ -114,4 +118,5 @@ export {
   requestMyChallengeDetail,
   requestMyChallengeStatistics,
   getKkobakChallengeList,
+  getMyKkobakList
 };
