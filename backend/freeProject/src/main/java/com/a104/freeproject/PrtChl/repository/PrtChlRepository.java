@@ -20,5 +20,7 @@ public interface PrtChlRepository extends JpaRepository<PrtChl,Long> {
     List<PrtChl> findByMember(@Param("m") Member m, Pageable pageable);
     @Query(value="select * from prt_chl where is_fin=false and `member_id`=:m", nativeQuery = true)
     Page<PrtChl> findByMember(Pageable pageable,@Param("m")  Member m);
+    @Query(value="select * from prt_chl where is_fin=false and `member_id`=:m", nativeQuery = true)
+    List<PrtChl> findByMember(@Param("m") Member m);
 
 }

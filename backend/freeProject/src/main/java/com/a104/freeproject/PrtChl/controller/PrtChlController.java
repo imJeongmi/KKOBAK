@@ -2,6 +2,7 @@ package com.a104.freeproject.PrtChl.controller;
 
 import com.a104.freeproject.Challenge.request.registerRequest;
 import com.a104.freeproject.PrtChl.request.ChlRequest;
+import com.a104.freeproject.PrtChl.response.LikeDetail;
 import com.a104.freeproject.PrtChl.response.MyChallengeDetailResponse;
 import com.a104.freeproject.PrtChl.service.PrtChlServiceImpl;
 import com.a104.freeproject.advice.exceptions.NotFoundException;
@@ -11,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @RestController
 @RequestMapping("/participate")
@@ -48,5 +50,15 @@ public class PrtChlController {
         return ResponseEntity.ok().body(prtChlService.getPtrChlDetail(cid,req));
     }
     // 스케줄러 돌려서 알람 보내는거 작성
+
+
+
+
+
+    @GetMapping("/like")
+    @ApiOperation(value = "즐찾 리스트 반환")
+    public ResponseEntity<List<LikeDetail>> getLikeList(HttpServletRequest req) throws NotFoundException{
+        return ResponseEntity.ok().body(prtChlService.getLikeList(req));
+    }
 
 }

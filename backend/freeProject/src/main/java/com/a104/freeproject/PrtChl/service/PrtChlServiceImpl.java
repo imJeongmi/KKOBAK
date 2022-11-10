@@ -12,6 +12,7 @@ import com.a104.freeproject.Member.service.MemberServiceImpl;
 import com.a104.freeproject.PrtChl.entity.PrtChl;
 import com.a104.freeproject.PrtChl.repository.PrtChlRepository;
 import com.a104.freeproject.PrtChl.request.ChlRequest;
+import com.a104.freeproject.PrtChl.response.LikeDetail;
 import com.a104.freeproject.PrtChl.response.MyChallengeDetailResponse;
 import com.a104.freeproject.advice.exceptions.NotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,7 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.TimeZone;
 
@@ -142,5 +144,29 @@ public class PrtChlServiceImpl implements PrtChlService{
                 .build();
 
         return result;
+    }
+
+    @Override
+    public List<LikeDetail> getLikeList(HttpServletRequest req) throws NotFoundException {
+
+        Member member = memberService.findEmailbyToken(req);
+        List<PrtChl> prtChlList = prtChlRepository.findByMember(member);
+
+        List<LikeDetail> output = new LinkedList<>();
+        for(PrtChl p : prtChlList){
+            if(p.is_fin()||p.getKkobak()==0) continue;
+            Challenge c = p.getChallenge();
+            if(c.isFin()) continue;
+            ChlTime chlTime = c.getChlTime();
+
+            output.add(LikeDetail.builder()
+                    .chlId(c.getId()).title(c.getTitle()).imgurl(c.getImgurl()).watch(c.isWatch())
+                    .roomtype(c.getRoomtype())
+                    .startTime(chlTime.getStartTime().toLocalDateTime().toLocalDate())
+                    .endTime(chlTime.getEndTime().toLocalDateTime().toLocalDate())
+                    .build());
+        }
+
+        return output;
     }
 }
