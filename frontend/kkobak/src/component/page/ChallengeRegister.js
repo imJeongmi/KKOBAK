@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Box, styled } from "@mui/material";
-import axios from "axios";
 
 
 import Text from "component/atom/Text";
@@ -12,6 +11,10 @@ import initial from "static/initial.png";
 
 import { getDetailCategoryList } from "api/Category";
 import { registerChallenge } from "api/Challenge";
+import axios from "axios";
+
+
+import { getMyKkobakList } from "api/userApi";
 
 const ButtonBox = styled(Box)(
   () => `
@@ -39,6 +42,18 @@ export default function ChallengeRegister() {
   const [title, setTitle] = useState("");
   const [contents, setContents] = useState("");
   const [unit, setUnit] = useState("");
+  const [kkobakCount, setKkobakCount] = useState(0)
+
+  function getMyKkobakListSuccess(res) {
+    setKkobakCount(res.data.length);
+  }
+
+  function getMyKkobakListFail(err) {
+  }
+
+  useEffect(() => {
+    getMyKkobakList(getMyKkobakListSuccess, getMyKkobakListFail);
+  }, []);
 
   const [goal, setGoal] = useState("");
 
@@ -98,26 +113,41 @@ export default function ChallengeRegister() {
   // 유효성 검사
   function checkAll() {
     if (imgSrc === initial) {
-      return;
-    }
-    if (!title) {
-      return;
-    }
-
-    if (!contents) {
+      alert("챌린지 이미지를 등록해주세요");
       return;
     }
 
     if (!category) {
-      return;
+      alert("챌린지 카테고리를 선택해주세요");
+      return false
     }
-
+    
     if (!detailCategory) {
-      return;
+      alert("챌린지 상세 카테고리를 선택해주세요");
+      return false
+    }
+    if (!title) {
+      alert("챌린지 제목을 입력해주세요");
+      return false
     }
 
-    if (!unit) {
-      return;
+    if (!contents) {
+      alert("챌린지 상세 설명을 입력해주세요");
+      return false
+    }
+    let check = /^[0-9]+$/;
+    if (!goal) {
+      alert("챌린지 목표를 입력해주세요");
+      return false
+    }
+    if (detailCategory !== "7" && !check.test(goal)) {
+      alert("챌린지 목표는 숫자로 입력해주세요");
+      return false;
+    }
+    console.log(kkobakCount)
+    if (kkobakCount >= 3) {
+      alert("꼬박 챌린지는 최대 3개만 생성 가능합니다");
+      return false;
     }
     return true;
   }

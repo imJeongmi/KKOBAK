@@ -15,9 +15,8 @@ import EmptyChallenge from "component/page/EmptyChallenge";
 
 import {
   requestUserInfo,
-  fetchMyChallengeCalendarList,
   fetchMyChallengeCalendarPageCnt,
-  getMyKkobakList
+  getMyKkobakList,
 } from "api/userApi";
 
 export default function Main() {
@@ -40,10 +39,7 @@ export default function Main() {
   }
 
   useEffect(() => {
-    getMyKkobakList(
-      getMyKkobakListSuccess,
-      getMyKkobakListFail
-    );
+    getMyKkobakList(getMyKkobakListSuccess, getMyKkobakListFail);
   }, []);
 
   function fetchChallengePageCntSuccess(res) {
