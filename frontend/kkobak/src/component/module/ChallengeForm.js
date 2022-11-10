@@ -22,11 +22,16 @@ const inputStyle = {
   display: "none",
 };
 
+function getHeight(height) {
+  if (!!height) return height;
+  return "50px";
+}
+
 const ImageBox = styled(Box)(
   () => `
-  width: 50%;
-  height: 20vh;
-  margin: 20px auto 20px auto;
+  width: 250px;
+  height: 230px;
+  margin: 20px auto;
   border-radius: 20px;
   background-size: cover;
   overflow: hidden;
@@ -38,26 +43,35 @@ const SettingBox = styled(Box)(
   () => `
   width: 50vw;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: start;
+  // background-color: #ffffff;
+  `
+);
+
+const SettingItem = styled(Box)(
+  () => `
+  display: flex;
   `
 );
 
 const SettingTitleBox = styled(Box)(
-  () => `
+  (height) => `
   width: 130px;
-  margin: 0 50px 20px 35px;
+  height: ${getHeight(height)};
   display: flex;
-  flex-direction: column;
-  align-items: start;
+  justify-content: start;
+  align-items: center;
   `
 );
 
 const SettingContentBox = styled(Box)(
-  () => `
-  width: 100%;
+  (height) => `
+  width: 570px;
+  height: ${getHeight(height)};
   display: flex;
-  flex-direction: column;
-  align-items: start;
+  justify-content: start;
+  align-items: center;
   `
 );
 
@@ -101,30 +115,29 @@ export default function ChallengeForm({
   const challengeImgInput = useRef();
   const [showunit, setShowUnit] = useState("");
 
-
   function changeDetailCategory(e) {
-    e.preventDefault()
-    setDetailCategory(e.target.value)
-    changeUnit(category, e.target.value)
-    showUnit(category, e.target.value)
+    e.preventDefault();
+    setDetailCategory(e.target.value);
+    changeUnit(category, e.target.value);
+    showUnit(category, e.target.value);
   }
   useEffect(() => {
     if (category && detailCategory) {
-      changeUnit(category, detailCategory)
+      changeUnit(category, detailCategory);
     }
-  }, [category, detailCategory])
+  }, [category, detailCategory]);
 
   function showUnit(category, detailCategory) {
     if (category === "2" && detailCategory === "7") {
-      setShowUnit('주소')
+      setShowUnit("주소");
     } else if (category === "2") {
-      setShowUnit('1 회')
+      setShowUnit("1 회");
     } else if (category === "1" && detailCategory === "1") {
-      setShowUnit('Km')
+      setShowUnit("Km");
     } else if (category === "1" && detailCategory === "2") {
-      setShowUnit('Km')
+      setShowUnit("Km");
     } else if (category === "1" && detailCategory === "3") {
-      setShowUnit('분')
+      setShowUnit("분");
     }
   }
 
@@ -133,7 +146,6 @@ export default function ChallengeForm({
     if (!e.target.files) {
       return;
     }
-    // console.log(e.target.files[0]);
     const formData = new FormData();
     formData.set("file", e.target.files[0]);
     uploadPhoto(formData, uploadSuccess, uploadFail);
@@ -180,37 +192,201 @@ export default function ChallengeForm({
       </ImageBox>
 
       <SettingBox>
-        <SettingTitleBox>
-          <Text size="15px" weight="bold" my="12">
-            카테고리
-          </Text>
-          <Text size="15px" weight="bold" my="13">
-            상세 카테고리
-          </Text>
-          <Text size="15px" weight="bold" my="14">
-            제목
-          </Text>
-          <Text size="15px" weight="bold" my="17">
-            상세 설명
-          </Text>
-          <Text size="15px" weight="bold" mt="60">
-            목표
-          </Text>
-          <Text size="15px" weight="bold" my="15" mt="20">
-            기간
-          </Text>
-          <Text size="15px" weight="bold" my="10">
-            알림
-          </Text>
-          <Text size="15px" weight="bold" my="10">
-            꼬박챌린지 설정
-          </Text>
-          <Text size="15px" weight="bold" my="10">
-            워치 사용
-          </Text>
-        </SettingTitleBox>
+        <SettingItem>
+          <SettingTitleBox>
+            <Text size="15px" weight="bold">
+              카테고리
+            </Text>
+          </SettingTitleBox>
+          <SettingContentBox>
+            <FormControl>
+              <RadioGroup
+                row
+                aria-labelledby="demo-row-controlled-radio-buttons-group"
+                name="controlled-radio-buttons-group"
+                onChange={(e) => setCategory(e.target.value)}
+              >
+                <FormControlLabel value={1} control={<Radio />} label="운동" />
+                <FormControlLabel
+                  value={2}
+                  control={<Radio />}
+                  label="생활습관"
+                />
+              </RadioGroup>
+            </FormControl>
+          </SettingContentBox>
+        </SettingItem>
 
-        <SettingContentBox>
+        <SettingItem>
+          <SettingTitleBox>
+            <Text size="16px" weight="bold">
+              상세 카테고리
+            </Text>
+          </SettingTitleBox>
+          <SettingContentBox>
+            <select onChange={changeDetailCategory}>
+              <option value={0}>선택 안함</option>
+              {detailCategoryList?.map((item) => {
+                return (
+                  <option key={item.detailId} value={item.detailId}>
+                    {item.detailName}
+                  </option>
+                );
+              })}
+            </select>
+          </SettingContentBox>
+        </SettingItem>
+
+        <SettingItem>
+          <SettingTitleBox>
+            <Text size="16px" weight="bold">
+              제목
+            </Text>
+          </SettingTitleBox>
+          <SettingContentBox>
+            <Box sx={{ width: "300px", height: "50px" }}>
+              <Input
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+              ></Input>
+            </Box>
+          </SettingContentBox>
+        </SettingItem>
+
+        <SettingItem>
+          <SettingTitleBox height="90px">
+            <Text size="16px" weight="bold">
+              상세 설명
+            </Text>
+          </SettingTitleBox>
+          <SettingContentBox>
+            <Box sx={{ width: "300px", height: "90px"}}>
+              <Textarea
+                value={contents}
+                onChange={(e) => setContents(e.target.value)}
+              ></Textarea>
+            </Box>
+          </SettingContentBox>
+        </SettingItem>
+
+        <SettingItem>
+          <SettingTitleBox>
+            <Text size="16px" weight="bold">
+              목표
+            </Text>
+          </SettingTitleBox>
+          <SettingContentBox>
+            {category === "2" && detailCategory !== "7" ? null : (
+              <Box sx={{ width: "300px", height: "50px" }}>
+                <Input
+                  value={goal}
+                  onChange={(e) => setGoal(e.target.value)}
+                ></Input>
+              </Box>
+            )}
+            <Text my="15px" size="15px">
+              {showunit}
+            </Text>
+          </SettingContentBox>
+        </SettingItem>
+
+        <SettingItem>
+          <SettingTitleBox>
+            <Text size="16px" weight="bold">
+              기간
+            </Text>
+          </SettingTitleBox>
+          <SettingContentBox>
+            <Box sx={{ width: "155px" }}>
+              <DatePicker
+                calendarAriaLabel="calendar"
+                locale="ko-KR"
+                onChange={setStartTime}
+                value={startTime}
+                minDate={new Date()}
+                calendarType="US"
+              />
+            </Box>
+            <Box sx={{ width: "155px" }}>
+              <DatePicker
+                calendarAriaLabel="calendar"
+                locale="ko-KR"
+                onChange={setEndTime}
+                value={endTime}
+                minDate={new Date()}
+                calendarType="US"
+              />
+            </Box>
+          </SettingContentBox>
+        </SettingItem>
+
+        <SettingItem>
+          <SettingTitleBox>
+            <Text size="16px" weight="bold">
+              알림
+            </Text>
+          </SettingTitleBox>
+          <Box sx={{ width: "170px" }}>
+            <TimePicker format="HH:mm" onChange={setAlarm} value={alarm} />
+          </Box>
+          <SettingContentBox></SettingContentBox>
+        </SettingItem>
+
+        <SettingItem>
+          <SettingTitleBox>
+            <Text size="16px" weight="bold">
+              꼬박챌린지 설정
+            </Text>
+          </SettingTitleBox>
+          <SettingContentBox>
+            <FormControl>
+              <RadioGroup
+                row
+                aria-labelledby="demo-row-controlled-radio-buttons-group"
+                name="controlled-radio-buttons-group"
+                onChange={(e) => setKkobak(e.target.value)}
+              >
+                <FormControlLabel value={1} control={<Radio />} label="설정" />
+                <FormControlLabel
+                  value={0}
+                  control={<Radio />}
+                  label="설정 안함"
+                />
+              </RadioGroup>
+            </FormControl>
+          </SettingContentBox>
+        </SettingItem>
+
+        <SettingItem>
+          <SettingTitleBox>
+            <Text size="16px" weight="bold">
+              워치 사용
+            </Text>
+          </SettingTitleBox>
+          <SettingContentBox>
+            <FormControl>
+              <RadioGroup
+                row
+                aria-labelledby="demo-row-controlled-radio-buttons-group"
+                name="controlled-radio-buttons-group"
+                onChange={(e) => setWatch(e.target.value)}
+              >
+                <FormControlLabel
+                  value={true}
+                  control={<Radio />}
+                  label="사용"
+                />
+                <FormControlLabel
+                  value={false}
+                  control={<Radio />}
+                  label="사용 안함"
+                />
+              </RadioGroup>
+            </FormControl>
+          </SettingContentBox>
+        </SettingItem>
+
+        {/* <SettingContentBox>
           <Box
             sx={{
               height: "40px",
@@ -266,15 +442,26 @@ export default function ChallengeForm({
               onChange={(e) => setContents(e.target.value)}
             ></Textarea>
           </Box>
-          <Box sx={{ ml: "40px", width: "30%", height: "45px", display: "flex", verticalAlign: "middle" }}>
-            {(category === "2" && detailCategory !== "7") ? null :
+          <Box
+            sx={{
+              ml: "40px",
+              width: "30%",
+              height: "45px",
+              display: "flex",
+              verticalAlign: "middle",
+            }}
+          >
+            {category === "2" && detailCategory !== "7" ? null : (
               <Input
                 value={goal}
                 onChange={(e) => setGoal(e.target.value)}
-              ></Input>}
+              ></Input>
+            )}
 
-            <Box sx={{ width: "60%", height: '45px', verticalAlign: "middle" }}>
-              <Text my="15px" size="15px">{showunit}</Text>
+            <Box sx={{ width: "60%", height: "45px", verticalAlign: "middle" }}>
+              <Text my="15px" size="15px">
+                {showunit}
+              </Text>
             </Box>
           </Box>
           <Box
@@ -337,11 +524,7 @@ export default function ChallengeForm({
                 name="controlled-radio-buttons-group"
                 onChange={(e) => setKkobak(e.target.value)}
               >
-                <FormControlLabel
-                  value={1}
-                  control={<Radio />}
-                  label="설정"
-                />
+                <FormControlLabel value={1} control={<Radio />} label="설정" />
                 <FormControlLabel
                   value={0}
                   control={<Radio />}
@@ -378,7 +561,7 @@ export default function ChallengeForm({
               </RadioGroup>
             </FormControl>
           </Box>
-        </SettingContentBox>
+        </SettingContentBox> */}
       </SettingBox>
       <ButtonBox>
         <Button size="ss" mx="1" my="2" onClick={register}>
