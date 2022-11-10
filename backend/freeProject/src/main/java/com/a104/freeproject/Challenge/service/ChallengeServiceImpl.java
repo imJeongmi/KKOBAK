@@ -311,7 +311,11 @@ public class ChallengeServiceImpl implements ChallengeService {
     @Override
     public List<useWatchResponse> findWatchUse(boolean useWatch, Pageable pageable, HttpServletRequest req) throws NotFoundException {
         Member m = memberService.findEmailbyToken(req);
-        List<Challenge> chlList = prtChlRepository.findAllByWatchAndMember(useWatch, pageable, m);
+        List<PrtChl> prtList = prtChlRepository.findAllByWatchAndMember(useWatch, pageable, m);
+        List<Challenge> chlList = new LinkedList<>();
+        for(PrtChl prt : prtList){
+            chlList.add(prt.getChallenge());
+        }
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:00");
         TimeZone tz = TimeZone.getTimeZone("Asia/Seoul");
@@ -342,8 +346,8 @@ public class ChallengeServiceImpl implements ChallengeService {
     @Override
     public int findWatchCnt(boolean useWatch, Pageable pageable, HttpServletRequest req) throws NotFoundException {
         Member m = memberService.findEmailbyToken(req);
-        Page<Challenge> chlList = prtChlRepository.findAllByWatchAndMember(pageable, useWatch,m);
-        return chlList.getTotalPages();
+        Page<PrtChl> prtList = prtChlRepository.findAllByWatchAndMember(pageable, useWatch,m);
+        return prtList.getTotalPages();
     }
 
     @Override

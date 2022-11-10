@@ -24,9 +24,9 @@ public interface PrtChlRepository extends JpaRepository<PrtChl,Long> {
     List<PrtChl> findByMember(@Param("m") Member m);
 
     @Query(value="select * from prt_chl as prtchl where is_fin=false and member_id=:m and (select watch from challenge where id = prtchl.id)=:useWatch", nativeQuery = true)
-    List<Challenge> findAllByWatchAndMember(boolean useWatch, Pageable pageable, Member m);
+    List<PrtChl> findAllByWatchAndMember(boolean useWatch, Pageable pageable, Member m);
 
     @Query(value="select * from prt_chl as prtchl where is_fin=false and member_id=:m and (select watch from challenge where id = prtchl.id)=:useWatch", nativeQuery = true)
-    Page<Challenge> findAllByWatchAndMember(Pageable pageable, boolean useWatch, Member m);
+    Page<PrtChl> findAllByWatchAndMember(Pageable pageable, boolean useWatch, Member m);
 
 }
