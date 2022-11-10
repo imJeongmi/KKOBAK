@@ -22,8 +22,8 @@ export default class VerticalMode extends Component {
 
     return (
         <Slider {...settings}>
-            <WidgetStatisticsRlt />
             <WidgetStatisticsIng />
+            <WidgetStatisticsRlt />
         </Slider>
     );
   }
