@@ -15,4 +15,5 @@ public class TodoListInfoResponse {
     private String title;
     private boolean isDone;
     private int kkobak;
+    private boolean watch;
 }

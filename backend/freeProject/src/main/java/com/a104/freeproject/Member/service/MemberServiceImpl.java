@@ -381,6 +381,7 @@ public class MemberServiceImpl implements MemberService{
                         .title(c.getTitle())
                         .isDone(fin)
                         .kkobak(p.getKkobak())
+                        .watch(c.isWatch())
                         .build());
             }
             return todoListInfo;
