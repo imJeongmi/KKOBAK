@@ -6,13 +6,29 @@ import Stack from "@mui/material/Stack";
 
 import ChallengeCard from "component/module/ChallengeCard";
 import Button from "component/atom/TextButton";
-import Text from "component/atom/Text";
 import MainBox from "component/atom/MainBox";
-import WatchToggle from "component/atom/WatchToggle";
 import EmptyChallenge from "component/page/EmptyChallenge";
 
 import { fetchMyChallengeList, fetchMyChallengePageCnt } from "api/userApi";
 import { useNavigate } from "react-router-dom";
+
+import { ToggleButton, ToggleButtonGroup } from "@mui/material";
+
+import {
+  requestChallengeUseWatch,
+  requestChallengeNoUseWatch,
+} from "api/Challenge";
+
+import WatchImage from "static/watch.png";
+import NoWatchImage from "static/noWatch.png";
+
+const ToggleBox = styled(ToggleButtonGroup)(
+  () => `
+width: 130px;
+height: 32px;
+background-color : white;
+    `
+);
 
 const WatchToggleBox = styled(Box)(
   () => `
@@ -56,6 +72,17 @@ export default function MyChallengeCardList() {
     const nowPageInt = parseInt(event.target.outerText);
     setPage(nowPageInt);
   };
+  const [MyChallengeFilterList, setMyChallengeFilterList] = useState([]);
+  const [MyChallengeNoFilterList, setMyChallengeNoFilterList] = useState([]);
+
+  // console.log(MyChallengeFilterList);
+
+  const [filter, setFilter] = useState("all");
+  const handleFilter = (event, newFilter) => {
+    setFilter(newFilter);
+  };
+
+  console.log(filter);
 
   function fetchMyChallengeListSuccess(res) {
     setMyChallengeList(res.data);
@@ -91,54 +118,233 @@ export default function MyChallengeCardList() {
     e.preventDefault();
     navigate("/register");
   }
-  return MyChallengeList.length === 0 ? (
-    <Box>
-      <EmptyChallenge />
-    </Box>
-  ) : (
-    <MainBox flexDir="col">
-      <WatchToggleBox>
-        <WatchToggle />
-      </WatchToggleBox>
 
-      <ChallengeListBox>
-        {/* 받아온 챌린지리스트 순회하기 */}
+  function requestChallengeUseWatchSuccess(res) {
+    setMyChallengeFilterList(res.data);
+  }
 
-        {MyChallengeList.map((item) => {
-          return (
-            <ChallengeCard
-              key={item.chlId}
-              chlId={item.chlId}
-              imgurl={item.imgurl}
-              tagList={item.tagList}
-              title={item.title}
-              contents={item.contents}
-              startTime={item.startTime}
-              endTime={item.endTime}
-              categoryId={item.categoryId}
-              alarm={item.alarm}
-              watch={item.watch}
-            ></ChallengeCard>
-          );
-        })}
-      </ChallengeListBox>
+  function requestChallengeUseWatchFail(res) {
+    setMyChallengeFilterList([]);
+  }
 
-      <ButtonBox>
-        <Button size="ss" my="0" onClick={moveToRegister}>
-          챌린지 생성
-        </Button>
-      </ButtonBox>
+  function requestChallengeNoUseWatchSuccess(res) {
+    setMyChallengeNoFilterList(res.data);
+  }
 
-      <PageBox>
-        <Stack spacing={2}>
-          <Pagination
-            count={TotalMyPage}
-            defaultPage={1}
-            shape="rounded"
-            onChange={(e) => handlePage(e)}
-          />
-        </Stack>
-      </PageBox>
-    </MainBox>
-  );
+  function requestChallengeNoUseWatchFail(res) {
+    setMyChallengeNoFilterList([]);
+  }
+
+  useEffect(() => {
+    requestChallengeNoUseWatch(
+      requestChallengeNoUseWatchSuccess,
+      requestChallengeNoUseWatchFail
+    );
+  }, "no");
+
+  useEffect(() => {
+    requestChallengeUseWatch(
+      requestChallengeUseWatchSuccess,
+      requestChallengeUseWatchFail
+    );
+  }, "yes");
+
+  {
+    if (MyChallengeList.length === 0) {
+      return (
+        <Box>
+          <EmptyChallenge />
+        </Box>
+      );
+    } else if (filter === "all") {
+      return (
+        <MainBox flexDir="col">
+          <WatchToggleBox>
+            <ToggleBox
+              color="primary"
+              value={filter}
+              exclusive
+              onChange={handleFilter}
+              aria-label="watch filter"
+            >
+              <ToggleButton value="yes" aria-label="yes">
+                <img src={WatchImage} width="20px" />
+              </ToggleButton>
+              <ToggleButton value="all" aria-label="all" disabled>
+                <Box sx={{ width: "20px" }} />
+              </ToggleButton>
+              <ToggleButton value="no" aria-label="no">
+                <img src={NoWatchImage} width="20px" />
+              </ToggleButton>
+            </ToggleBox>
+          </WatchToggleBox>
+
+          <ChallengeListBox>
+            {/* 받아온 챌린지리스트 순회하기 */}
+
+            {MyChallengeList.map((item) => {
+              return (
+                <ChallengeCard
+                  key={item.chlId}
+                  chlId={item.chlId}
+                  imgurl={item.imgurl}
+                  tagList={item.tagList}
+                  title={item.title}
+                  contents={item.contents}
+                  startTime={item.startTime}
+                  endTime={item.endTime}
+                  categoryId={item.categoryId}
+                  alarm={item.alarm}
+                  watch={item.watch}
+                ></ChallengeCard>
+              );
+            })}
+          </ChallengeListBox>
+
+          <ButtonBox>
+            <Button size="ss" my="0" onClick={moveToRegister}>
+              챌린지 생성
+            </Button>
+          </ButtonBox>
+
+          <PageBox>
+            <Stack spacing={2}>
+              <Pagination
+                count={TotalMyPage}
+                defaultPage={1}
+                shape="rounded"
+                onChange={(e) => handlePage(e)}
+              />
+            </Stack>
+          </PageBox>
+        </MainBox>
+      );
+    } else if (filter === "no") {
+      return (
+        <MainBox flexDir="col">
+          <WatchToggleBox>
+            <ToggleBox
+              color="primary"
+              value={filter}
+              exclusive
+              onChange={handleFilter}
+              aria-label="watch filter"
+            >
+              <ToggleButton value="yes" aria-label="yes">
+                <img src={WatchImage} width="20px" />
+              </ToggleButton>
+              <ToggleButton value="all" aria-label="all">
+                <Box sx={{ width: "20px" }} />
+              </ToggleButton>
+              <ToggleButton value="no" aria-label="no" disabled>
+                <img src={NoWatchImage} width="20px" />
+              </ToggleButton>
+            </ToggleBox>
+          </WatchToggleBox>
+
+          <ChallengeListBox>
+            {/* 받아온 챌린지리스트 순회하기 */}
+
+            {MyChallengeNoFilterList.map((item) => {
+              return (
+                <ChallengeCard
+                  key={item.id}
+                  chlId={item.id}
+                  imgurl={item.imgurl}
+                  tagList={item.tagList}
+                  title={item.title}
+                  contents={item.contents}
+                  startTime={item.startTime}
+                  endTime={item.endTime}
+                  categoryId={item.categoryId}
+                  alarm={item.alarm}
+                  watch={item.watch}
+                ></ChallengeCard>
+              );
+            })}
+          </ChallengeListBox>
+
+          <ButtonBox>
+            <Button size="ss" my="0" onClick={moveToRegister}>
+              챌린지 생성
+            </Button>
+          </ButtonBox>
+
+          <PageBox>
+            <Stack spacing={2}>
+              <Pagination
+                count={TotalMyPage}
+                defaultPage={1}
+                shape="rounded"
+                onChange={(e) => handlePage(e)}
+              />
+            </Stack>
+          </PageBox>
+        </MainBox>
+      );
+    } else if (filter === "yes") {
+      return (
+        <MainBox flexDir="col">
+          <WatchToggleBox>
+            <ToggleBox
+              color="primary"
+              value={filter}
+              exclusive
+              onChange={handleFilter}
+              aria-label="watch filter"
+            >
+              <ToggleButton value="yes" aria-label="yes" disabled>
+                <img src={WatchImage} width="20px" />
+              </ToggleButton>
+              <ToggleButton value="all" aria-label="all">
+                <Box sx={{ width: "20px" }} />
+              </ToggleButton>
+              <ToggleButton value="no" aria-label="no">
+                <img src={NoWatchImage} width="20px" />
+              </ToggleButton>
+            </ToggleBox>
+          </WatchToggleBox>
+
+          <ChallengeListBox>
+            {/* 받아온 챌린지리스트 순회하기 */}
+
+            {MyChallengeFilterList.map((item) => {
+              return (
+                <ChallengeCard
+                  key={item.id}
+                  chlId={item.id}
+                  imgurl={item.imgurl}
+                  tagList={item.tagList}
+                  title={item.title}
+                  contents={item.contents}
+                  startTime={item.startTime}
+                  endTime={item.endTime}
+                  categoryId={item.categoryId}
+                  alarm={item.alarm}
+                  watch={true}
+                ></ChallengeCard>
+              );
+            })}
+          </ChallengeListBox>
+
+          <ButtonBox>
+            <Button size="ss" my="0" onClick={moveToRegister}>
+              챌린지 생성
+            </Button>
+          </ButtonBox>
+
+          <PageBox>
+            <Stack spacing={2}>
+              <Pagination
+                count={TotalMyPage}
+                defaultPage={1}
+                shape="rounded"
+                onChange={(e) => handlePage(e)}
+              />
+            </Stack>
+          </PageBox>
+        </MainBox>
+      );
+    }
+  }
 }
