@@ -93,17 +93,17 @@ public class LogServiceImpl implements LogService {
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:00");
 
-        if(!log.isFin()) {
+        int goal = challenge.getGoal();
+        if(log.getCnt()+1>=goal) {
+            log.setFin(true);
             log.setCompleteTime(Timestamp.valueOf(LocalDateTime.now()));
             p.setSucDay(p.getSucDay()+1);
             p.setFailDay(p.getFailDay()-1);
         }
         else {
             log.setCompleteTime(null);
-            p.setSucDay(p.getSucDay()-1);
-            p.setFailDay(p.getFailDay()+1);
         }
-        log.setFin(!log.isFin());
+        log.setCnt(log.getCnt()+1);
         logRepository.save(log);
 
         return true;
