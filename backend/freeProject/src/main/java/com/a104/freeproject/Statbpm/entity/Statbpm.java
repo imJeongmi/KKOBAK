@@ -36,6 +36,7 @@ public class Statbpm {
     @NotNull
     private int bpm;
 
+    @Setter
     @NotNull
     @ColumnDefault("false")
     private boolean success = false;

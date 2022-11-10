@@ -6,6 +6,7 @@ import com.a104.freeproject.Category.repository.CategoryRepository;
 import com.a104.freeproject.Category.repository.DetailCategoryRepository;
 import com.a104.freeproject.Challenge.entity.Challenge;
 import com.a104.freeproject.Challenge.repository.ChallengeRepository;
+import com.a104.freeproject.Challenge.request.JudgeRequest;
 import com.a104.freeproject.Challenge.request.registerRequest;
 import com.a104.freeproject.Challenge.response.*;
 import com.a104.freeproject.HashTag.entity.ChlTag;
@@ -20,6 +21,12 @@ import com.a104.freeproject.Member.service.MemberServiceImpl;
 import com.a104.freeproject.PrtChl.entity.PrtChl;
 import com.a104.freeproject.PrtChl.repository.PrtChlRepository;
 import com.a104.freeproject.PrtChl.service.PrtChlServiceImpl;
+import com.a104.freeproject.Statbpm.entity.Statbpm;
+import com.a104.freeproject.Statbpm.repository.StatbpmRepository;
+import com.a104.freeproject.Statgps.entity.Statgps;
+import com.a104.freeproject.Statgps.repository.StatgpsRepository;
+import com.a104.freeproject.Statgps.response.GpsResultResponse;
+import com.a104.freeproject.Statgps.service.StatgpsServiceImpl;
 import com.a104.freeproject.advice.exceptions.NotFoundException;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -40,7 +47,7 @@ import java.util.*;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class ChallengeServiceImpl implements ChallengeService{
+public class ChallengeServiceImpl implements ChallengeService {
 
     private final ChallengeRepository challengeRepository;
     private final CategoryRepository categoryRepository;
@@ -53,6 +60,9 @@ public class ChallengeServiceImpl implements ChallengeService{
     private final ChlTimeServiceImpl chlTimeService;
     private final PrtChlServiceImpl prtChlService;
     private final LogRepository logRepository;
+    private final StatbpmRepository bpmRepository;
+    private final StatgpsRepository gpsRepository;
+    private final static int  EARTH_RADIUS = 6371;
 
     @Override
     public boolean register(registerRequest input, HttpServletRequest req) throws NotFoundException {
@@ -373,6 +383,104 @@ public class ChallengeServiceImpl implements ChallengeService{
         return log.isFin();
     }
 
+    @Override
+    public boolean judgeDone(JudgeRequest input, HttpServletRequest req) throws NotFoundException {
+        Member member = memberService.findEmailbyToken(req);
+
+        if(!challengeRepository.existsById(input.getCid())) throw new NotFoundException("존재하지 않는 챌린지입니다.");
+        Challenge c = challengeRepository.findById(input.getCid()).get();
+
+        if(c.isFin()||c.getStatus()==2) throw new NotFoundException("종료된 챌린지입니다.");
+
+        if(!prtChlRepository.existsByChallengeAndMember(c,member))
+            throw new NotFoundException("참여하지 않은 챌린지 입니다.");
+
+        PrtChl p = prtChlRepository.findByChallengeAndMember(c,member);
+        if(p.is_fin()) throw new NotFoundException("종료된 챌린지입니다.");
+
+        LocalDate now = LocalDate.now(ZoneId.of("Asia/Seoul"));
+
+        if(!logRepository.existsByPrtChlAndDate(p,now))
+            throw new NotFoundException("해당 챌린지의 당일 로그가 존재하지 않습니다.");
+        Log log = logRepository.findByPrtChlAndDate(p,now);
+        if (log.isFin()) return true;  // 이미 진행한 챌린지의 경우 판단하지 않고 끝내기
+
+        Long dc = c.getDetailCategory().getId();
+
+        if(dc==1 || dc==2){ // 달리기 KM, 걷기 KM
+            System.out.println("dc = " + dc);
+
+            int goal = c.getGoal();
+            List<Statgps> gpsList = gpsRepository.findByChkTimeAndPrtChl(p,input.getStartTime());
+
+            double dist = 0;
+            for (int i = 0; i < gpsList.size()-1; i++) {
+                Statgps s1 = gpsList.get(i);
+                Statgps s2 = gpsList.get(i+1);
+                dist += getDistance(s1.getLat(),s1.getLng(),s2.getLat(),s2.getLng());
+            }
+
+            if(dist >= goal) {
+                log.setFin(true);
+                log.setCnt((int)dist);
+
+                for(Statgps s : gpsList){
+                    s.setSuccess(true);
+                    gpsRepository.save(s);
+                }
+            }
+            logRepository.save(log);
+            return log.isFin();
+        }
+        else if (dc==3){ // 명상 분
+            System.out.println("dc3 = " + dc);
+            List<Statbpm> bpmList = bpmRepository.findByChkTimeAndPrtChl(p,input.getStartTime());
+
+            // bpm 기준 100 이하 : 성공, 시간은 워치, 모바일에서 막아줌
+            for(Statbpm s : bpmList){
+                if(s.getBpm()>100) return false;
+            }
+
+            // 성공한 명상
+            System.out.println("성공한 명상임");
+            for(Statbpm s : bpmList){
+                s.setSuccess(true);
+                bpmRepository.save(s);
+            }
+            return log.isFin();
+        }
+        else if (dc==4 || dc==5 || dc==6){ // 물마시기 회, 영양제 먹기 회, 일어서기 회
+            System.out.println("dc = " + dc);
+            int goal = c.getGoal();
+            if(log.getCnt()+1>=goal) {
+                log.setFin(true);
+            }
+            log.setCnt(log.getCnt()+1);
+            logRepository.save(log);
+
+            return log.isFin();
+        }
+        else {  //dc==7, 출석 경도/위도
+            System.out.println("dc7 = " + dc);
+
+            String[] str = c.getUnit().split("/"); // 경도 위도
+            double d = getDistance(input.getLat(), input.getLng(), str[1], str[0]);
+
+            System.out.println("거리 = " + d);
+
+            if(d<50) {
+                log.setFin(true);
+                List<Statgps> gpsList = gpsRepository.findByChkTimeAndPrtChl(p,input.getStartTime());
+                for(Statgps s : gpsList){
+                    s.setSuccess(true);
+                    gpsRepository.save(s);
+                }
+                return true;
+            }
+            return false;
+        }
+    }
+
     public List<ChallengeListResponse> makeResponse(List<Challenge> content) {
         List<ChallengeListResponse> result = new ArrayList<>();
 
@@ -412,7 +520,21 @@ public class ChallengeServiceImpl implements ChallengeService{
     }
 
 
+    public static double getDistance(String lat1_s, String lng1_s, String lat2_s, String lng2_s) {
 
+        double lat1 = Double.parseDouble(lat1_s);
+        double lng1 = Double.parseDouble(lng1_s);
+        double lat2 = Double.parseDouble(lat2_s);
+        double lng2 = Double.parseDouble(lng2_s);
+
+        double dLat = Math.toRadians(lat2 - lat1);
+        double dLon = Math.toRadians(lng2 - lng1);
+
+        double a = Math.sin(dLat/2)* Math.sin(dLat/2)+ Math.cos(Math.toRadians(lat1))* Math.cos(Math.toRadians(lat2))* Math.sin(dLon/2)* Math.sin(dLon/2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        double d = EARTH_RADIUS * c * 1000;    // 미터로 바꾸기
+        return d;
+    }
 }
 
 

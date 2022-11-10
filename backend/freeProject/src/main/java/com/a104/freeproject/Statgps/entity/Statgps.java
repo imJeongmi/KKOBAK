@@ -37,6 +37,7 @@ public class Statgps {
 
     @NotNull String lng;
 
+    @Setter
     @NotNull
     @ColumnDefault("false")
     private boolean success = false;

@@ -1,5 +1,6 @@
 package com.a104.freeproject.Challenge.service;
 
+import com.a104.freeproject.Challenge.request.JudgeRequest;
 import com.a104.freeproject.Challenge.request.registerRequest;
 import com.a104.freeproject.Challenge.response.*;
 import com.a104.freeproject.HashTag.entity.ChlTag;
@@ -26,21 +27,15 @@ public interface ChallengeService {
     List<ChallengeListResponse> getChallengePageListByTitle(int page, String word) throws NotFoundException;
 
     List<ChallengeListResponse> getChallengePageListByNickName(int page, String nickName) throws NotFoundException;
-
     List<ChallengeListResponse> getChallengePageListByTag(int page, String tag) throws NotFoundException;
-
     ChallengeListResponse getChallenge(Long id) throws NotFoundException;
-
     boolean checkPassword(Long id, String password) throws NotFoundException;
-
     int getChallengePageCnt(Pageable pageable);
-
     List<String> findDoneDate(long chlId, int year, int month, HttpServletRequest req) throws NotFoundException;
     List<useWatchResponse> findWatchUse(boolean useWatch, Pageable pageable) throws NotFoundException;
     int findWatchCnt(boolean useWatch, Pageable pageable) throws NotFoundException;
-
     boolean participateChl(Long chlId, int alarmType, HttpServletRequest req) throws NotFoundException;
-
     boolean findChlDone(Long chlId, HttpServletRequest req) throws NotFoundException;
+    boolean judgeDone(JudgeRequest input, HttpServletRequest req) throws NotFoundException;
 
 }

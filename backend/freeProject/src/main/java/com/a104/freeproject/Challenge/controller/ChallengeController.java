@@ -129,4 +129,10 @@ public class ChallengeController {
         return ResponseEntity.ok().body(challengeService.findChlDone(cid, req));
     }
 
+    @PostMapping("/judge")
+    @ApiOperation(value="challenge 판단")
+    public ResponseEntity<Boolean> judgeDone(@RequestBody JudgeRequest input, HttpServletRequest req) throws NotFoundException{
+        return ResponseEntity.ok().body(challengeService.judgeDone(input, req));
+    }
+
 }
