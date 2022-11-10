@@ -17,7 +17,7 @@ export default function ChallengeRegister() {
   // const [imgSrc, setImgSrc] = useState(initial);
   // default imgsrc로 등록해둠!
   const [imgSrc, setImgSrc] = useState(
-    "https://initpjtbucket.s3.ap-northeast-2.amazonaws.com/images/cdd6bd23-f356-4073-91b9-ee89d9542c58.png"
+    "https://initpjtbucket.s3.ap-northeast-2.amazonaws.com/images/95479caa-be3f-4473-95a5-f1d07f2ffe75.png"
   );
   const [watch, setWatch] = useState(true);
   const [kkobak, setKkobak] = useState(0);
@@ -38,6 +38,7 @@ export default function ChallengeRegister() {
   function getDetailCategoryListFail(err) { }
 
   useEffect(() => {
+    console.log(category);
     getDetailCategoryList(
       category,
       getDetailCategoryListSuccess,
@@ -46,7 +47,7 @@ export default function ChallengeRegister() {
   }, [category]);
 
   function registerSuccess() {
-    console.log("성공");
+    console.log("성공 야호");
   }
 
   function registerFail(err) {
