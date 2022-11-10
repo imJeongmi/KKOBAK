@@ -60,7 +60,7 @@ public class TodolistServiceImpl implements TodolistService{
     public List<TodolistResponse> gettodoList(String year, String month, String day, HttpServletRequest req) throws NotFoundException {
         Member member = memberService.findEmailbyToken(req);
         LocalDate date = LocalDate.parse(year+"-"+month+"-"+day);
-        if(todolistRepository.existsByMemberAndDate(member,date)) return new LinkedList<>();
+        if(!todolistRepository.existsByMemberAndDate(member,date)) return new LinkedList<>();
         List<Todolist> list = todolistRepository.findAllByMemberAndDate(member,date);
 
         List<TodolistResponse> output = new LinkedList<>();
