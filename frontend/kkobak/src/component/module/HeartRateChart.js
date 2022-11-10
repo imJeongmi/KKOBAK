@@ -13,6 +13,7 @@ import {
 } from "recharts";
 import moment from "moment";
 import { useParams } from "react-router-dom";
+import Text from "component/atom/Text";
 
 export default function LineChartPage({ findTime }) {
   const year = findTime.getFullYear();
@@ -45,25 +46,20 @@ export default function LineChartPage({ findTime }) {
   }, [year, month, day, cid]);
 
   return (
-    <Box sx={{ display: "flex", marginTop: "15px" }}>
+    <Box sx={{ display: "flex" }}>
       <Box>
-        <Box>심박수 정보</Box>
-        <Box sx={{ marginTop: "70px" }}>
-          <Box sx={{ display: "flex" }}>
-            <Box sx={{ float: "left" }}> 평균 심박수 : </Box>
-            <Box>{stat.avgBpm}</Box>
-          </Box>
-          <Box sx={{ display: "flex" }}>
-            <Box sx={{ float: "left" }}> 최고 심박수 : </Box>
-            <Box>{stat.maxBpm}</Box>
-          </Box>
-          <Box sx={{ display: "flex" }}>
-            <Box sx={{ float: "left" }}> 최저 심박수 : </Box>
-            <Box>{stat.minBpm}</Box>
-          </Box>
+        <Text weight="semibold" color="red" size="18px" mt="25">
+          {"심박수 정보"}
+        </Text>
+        <Box
+          sx={{ marginTop: "50px", display: "flex", flexDirection: "column", alignItems: "start" }}
+        >
+          <Text my="3" weight="medium"> {`평균 심박수 : ${stat.avgBpm}`}</Text>
+          <Text my="3" weight="medium"> {`최고 심박수 : ${stat.maxBpm}`}</Text>
+          <Text my="3" weight="medium"> {`최저 심박수 : ${stat.minBpm}`}</Text>
         </Box>
       </Box>
-      <Box>
+      <Box sx={{fontFamily: "SUIT", marginTop: "20px"}}>
         <LineChart width={600} height={180} data={bpm}>
           <XAxis />
           {/* 데이터 타임 오는 시간 오후 4시가 16시가 아니라 04시로 옴. 
