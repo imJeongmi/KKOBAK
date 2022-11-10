@@ -7,10 +7,12 @@ import ChallengeForm from "component/module/ChallengeForm";
 import { getDetailCategoryList } from "api/Category";
 import { registerChallenge } from "api/Challenge";
 import MainBox from "component/atom/MainBox";
-import Text from "component/atom/Text"
-import axios from "axios"
+import Text from "component/atom/Text";
+import axios from "axios";
 
-import initial from '../../static/initial.png'
+import initial from "../../static/initial.png";
+import storage from "helper/storage";
+import { getMyKkobakList } from "api/userApi";
 
 export default function ChallengeRegister() {
   const [category, setCategory] = useState(1);
@@ -28,15 +30,26 @@ export default function ChallengeRegister() {
   const [alarm, setAlarm] = useState("00:00");
   const [title, setTitle] = useState("");
   const [contents, setContents] = useState("");
-  const [unit, setUnit] = useState('')
+  const [unit, setUnit] = useState("");
+  const [kkobakCount, setKkobakCount] = useState(0)
 
-  const [goal, setGoal] = useState('')
+  function getMyKkobakListSuccess(res) {
+    setKkobakCount(res.data.length);
+  }
+
+  function getMyKkobakListFail(err) {
+  }
+
+  useEffect(() => {
+    getMyKkobakList(getMyKkobakListSuccess, getMyKkobakListFail);
+  }, []);
+  const [goal, setGoal] = useState("");
 
   function getDetailCategoryListSuccess(res) {
     setDetailCategoryList(res.data);
   }
 
-  function getDetailCategoryListFail(err) { }
+  function getDetailCategoryListFail(err) {}
 
   useEffect(() => {
     console.log(category);
@@ -49,7 +62,7 @@ export default function ChallengeRegister() {
 
   function registerSuccess() {
     console.log("성공");
-    console.log(unit)
+    console.log(unit);
   }
 
   function registerFail(err) {
@@ -57,64 +70,83 @@ export default function ChallengeRegister() {
   }
 
   function changeAddressToDot(goal) {
-    axios.get(`https://dapi.kakao.com/v2/local/search/address.json?query=${goal}`, {
-      headers: { Authorization: `KakaoAK ${process.env.REACT_APP_KAKAO_REST_API}` },
-    })
-      .then(res => {
+    axios
+      .get(
+        `https://dapi.kakao.com/v2/local/search/address.json?query=${goal}`,
+        {
+          headers: {
+            Authorization: `KakaoAK ${process.env.REACT_APP_KAKAO_REST_API}`,
+          },
+        }
+      )
+      .then((res) => {
         const location = res.data.documents[0];
-        setUnit(`${location?.address?.x},${location?.address?.y}`)
-      })
+        setUnit(`${location?.address?.x},${location?.address?.y}`);
+      });
   }
-  
+
   function changeUnit(category, detailCategory) {
     if (category === "2" && detailCategory === "7") {
-      changeAddressToDot(goal)
+      changeAddressToDot(goal);
     } else if (category === "2") {
-      setUnit('회')
+      setUnit("회");
     } else if (category === "1" && detailCategory === "1") {
-      setUnit('Km')
+      setUnit("Km");
     } else if (category === "1" && detailCategory === "2") {
-      setUnit('Km')
+      setUnit("Km");
     } else if (category === "1" && detailCategory === "3") {
-      setUnit('분')
+      setUnit("분");
     }
   }
   // 유효성 검사
   function checkAll() {
     if (imgSrc === initial) {
-      return;
-    }
-    if (!title) {
-      return;
-    }
-
-    if (!contents) {
+      alert("챌린지 이미지를 등록해주세요");
       return;
     }
 
     if (!category) {
-      return;
+      alert("챌린지 카테고리를 선택해주세요");
+      return false
     }
-
+    
     if (!detailCategory) {
-      return;
+      alert("챌린지 상세 카테고리를 선택해주세요");
+      return false
+    }
+    if (!title) {
+      alert("챌린지 제목을 입력해주세요");
+      return false
     }
 
-    if (!unit) {
-      return;
+    if (!contents) {
+      alert("챌린지 상세 설명을 입력해주세요");
+      return false
     }
-    return true
+    let check = /^[0-9]+$/;
+    if (!goal) {
+      alert("챌린지 목표를 입력해주세요");
+      return false
+    }
+    if (detailCategory !== "7" && !check.test(goal)) {
+      alert("챌린지 목표는 숫자로 입력해주세요");
+      return false;
+    }
+    console.log(kkobakCount)
+    if (kkobakCount >= 3) {
+      alert("꼬박 챌린지는 최대 3개만 생성 가능합니다");
+      return false;
+    }
+    return true;
   }
-
-
 
   function register(e) {
     e.preventDefault();
     if (!checkAll()) {
-      return
+      return;
     }
     if (category === "1") {
-      changeUnit(category, detailCategory)
+      changeUnit(category, detailCategory);
       registerChallenge(
         alarm,
         0,
@@ -137,7 +169,7 @@ export default function ChallengeRegister() {
         registerFail
       );
     } else {
-      changeUnit(category, detailCategory)
+      changeUnit(category, detailCategory);
       registerChallenge(
         alarm,
         0,
