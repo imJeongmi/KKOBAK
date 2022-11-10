@@ -36,9 +36,4 @@ public interface ChallengeRepository extends JpaRepository<Challenge,Long> {
     @Query(value="select * from challenge where is_fin=false", nativeQuery = true)
     Page<Challenge> findAllChallenge(PageRequest pageRequest);
 
-    @Query(value="select * from challenge where watch=:useWatch and is_fin=false and member_id=:m", nativeQuery = true)
-    List<Challenge> findAllByWatchAndMember(boolean useWatch, Pageable pageable, Member m);
-
-    @Query(value="select * from challenge where watch=:useWatch and is_fin=false and member_id=:m", nativeQuery = true)
-    Page<Challenge> findAllByWatchAndMember(Pageable pageable, boolean useWatch, Member m);
 }
