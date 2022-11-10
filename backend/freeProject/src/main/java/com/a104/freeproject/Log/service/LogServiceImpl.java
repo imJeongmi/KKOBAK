@@ -2,8 +2,6 @@ package com.a104.freeproject.Log.service;
 
 import com.a104.freeproject.Challenge.entity.Challenge;
 import com.a104.freeproject.Challenge.repository.ChallengeRepository;
-import com.a104.freeproject.Challenge.request.JudgeRequest;
-import com.a104.freeproject.Challenge.service.ChallengeServiceImpl;
 import com.a104.freeproject.Log.entity.Log;
 import com.a104.freeproject.Log.repository.LogRepository;
 import com.a104.freeproject.Log.request.ChangeStatusRequest;
@@ -35,7 +33,6 @@ public class LogServiceImpl implements LogService {
     private final LogRepository logRepository;
     private final ChallengeRepository challengeRepository;
     private final MemberServiceImpl memberService;
-    private final ChallengeServiceImpl challengeService;
 
     @Override
     public boolean createLog(PrtChl prtChl) throws NotFoundException {
@@ -106,7 +103,7 @@ public class LogServiceImpl implements LogService {
             p.setSucDay(p.getSucDay()-1);
             p.setFailDay(p.getFailDay()+1);
         }
-        challengeService.judgeDone(JudgeRequest.builder().cid(challenge.getId()).build(),req);
+        log.setFin(!log.isFin());
         logRepository.save(log);
 
         return true;

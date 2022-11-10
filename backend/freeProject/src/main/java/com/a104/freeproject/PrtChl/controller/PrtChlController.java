@@ -49,6 +49,7 @@ public class PrtChlController {
     public ResponseEntity<MyChallengeDetailResponse> getPtrChlDetail(@PathVariable("chlId")Long cid, HttpServletRequest req) throws NotFoundException{
         return ResponseEntity.ok().body(prtChlService.getPtrChlDetail(cid,req));
     }
+
     // 스케줄러 돌려서 알람 보내는거 작성
 
 
