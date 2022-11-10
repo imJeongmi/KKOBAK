@@ -17,7 +17,7 @@
         android:ems="30"
         android:hint="ssafy@ssafy.com"
         android:inputType="textEmailAddress"
-        android:text="henry1302@naver.com"
+        android:text="cheecrma@gmail.com"
         android:textAlignment="center"
         android:textSize="13sp" />
 

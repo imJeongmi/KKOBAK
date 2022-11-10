@@ -7,17 +7,17 @@
     android:background="#FFFFFF"
     android:orientation="vertical"
     android:gravity="center"
-    tools:context=".GpsActivity"
+    tools:context=".RunActivity"
     android:keepScreenOn="true">
 
     <TextView
-        android:id="@+id/txt_gps"
+        android:id="@+id/txt_run"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:textColor="#000000"
         android:scrollbars="vertical"
-        android:text="GPS" />
+        android:text="RUN" />
 
     <LinearLayout
         android:layout_width="184dp"
@@ -25,7 +25,7 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/gps_hour"
+            android:id="@+id/run_hour"
             android:layout_width="44dp"
             android:layout_height="match_parent"
             android:textAlignment="center"
@@ -34,7 +34,7 @@
             android:text="00" />
 
         <TextView
-            android:id="@+id/gps_colon1"
+            android:id="@+id/run_colon1"
             android:layout_width="19dp"
             android:layout_height="match_parent"
             android:textAlignment="center"
@@ -43,7 +43,7 @@
             android:text=":" />
 
         <TextView
-            android:id="@+id/gps_minute"
+            android:id="@+id/run_minute"
             android:layout_width="51dp"
             android:layout_height="match_parent"
             android:textAlignment="center"
@@ -52,7 +52,7 @@
             android:text="00" />
 
         <TextView
-            android:id="@+id/gps_colon2"
+            android:id="@+id/run_colon2"
             android:layout_width="17dp"
             android:layout_height="match_parent"
             android:textAlignment="center"
@@ -61,7 +61,7 @@
             android:text=":" />
 
         <TextView
-            android:id="@+id/gps_second"
+            android:id="@+id/run_second"
             android:layout_width="53dp"
             android:layout_height="match_parent"
             android:textAlignment="center"
@@ -71,7 +71,7 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/gps_distance"
+        android:id="@+id/run_distance"
         android:layout_width="160dp"
         android:layout_height="33dp"
         android:textAlignment="center"
@@ -79,10 +79,17 @@
         android:textColor="#000000" />
 
     <TextView
-        android:id="@+id/gps_speed"
+        android:id="@+id/run_speed"
         android:layout_width="159dp"
         android:layout_height="33dp"
-        android:text="현재 속도:"
+        android:text="현재 속력:"
+        android:textAlignment="center"
+        android:textColor="#000000" />
+    <TextView
+        android:id="@+id/run_heartRate"
+        android:layout_width="159dp"
+        android:layout_height="33dp"
+        android:text="심박수:"
         android:textAlignment="center"
         android:textColor="#000000" />
     <LinearLayout
@@ -91,16 +98,16 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/button_gps_start"
+            android:id="@+id/button_run_start"
             android:layout_width="73dp"
             android:layout_height="wrap_content"
-            android:text="GPS 시작" />
+            android:text="달리기 시작" />
 
         <Button
-            android:id="@+id/button_gps_end"
+            android:id="@+id/button_run_end"
             android:layout_width="71dp"
             android:layout_height="wrap_content"
-            android:text="GPS 끝" />
+            android:text="달리기 끝" />
 
     </LinearLayout>
 

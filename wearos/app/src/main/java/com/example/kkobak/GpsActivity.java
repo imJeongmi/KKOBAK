@@ -8,12 +8,17 @@ import android.hardware.SensorManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -46,8 +51,8 @@ public class GpsActivity extends Activity {
 
     // 출력용 뷰
     String str;
-    private TextView textView;
-    TextView hour, minute, second, gpsSpeed, gpsDistance;
+    private TextView titleView;
+    private TextView hourView, minuteView, secondView, gpsSpeedView, gpsDistanceView;
 
     private Button btn_gps_start;
     private Button btn_gps_stop;
@@ -64,10 +69,20 @@ public class GpsActivity extends Activity {
 
     // 시작 시간 저장용
     LocalDateTime chk;
+    Location mLastLocation;
 
     // 타이머
-    int _hour, _minute, _second;
+    int gps_hour, gps_minute, gps_second;
     Timer timer;
+
+    // 속도,거리
+    double speed, distance;
+
+    // 플래그
+    boolean flag;
+
+    final int TIMER = 1;
+    final int GPS = 2;
 
     private static final String TAG = "____GPS____";
 
@@ -76,14 +91,13 @@ public class GpsActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gps);
         // 뷰 연결
-        textView = findViewById(R.id.txt_gps);
-        hour = findViewById(R.id.gps_hour);
-        minute = findViewById(R.id.gps_minute);
-        second = findViewById(R.id.gps_second);
+        titleView = findViewById(R.id.txt_gps);
+        hourView = findViewById(R.id.gps_hour);
+        minuteView = findViewById(R.id.gps_minute);
+        secondView = findViewById(R.id.gps_second);
 
-        gpsSpeed = findViewById(R.id.gps_speed);
-        gpsDistance = findViewById(R.id.gps_distance);
-
+        gpsSpeedView = findViewById(R.id.gps_speed);
+        gpsDistanceView = findViewById(R.id.gps_distance);
 
 
         str ="";
@@ -108,9 +122,8 @@ public class GpsActivity extends Activity {
             public void onLocationChanged(@NonNull Location location) {
                 System.out.println("호출됩니다");
                 System.out.println(LocalDateTime.now().withNano(0));
-//                location.distanceTo()
                 updateMap(location);
-                sendOne(location.getLatitude(), location.getLongitude(), LocalDateTime.now().withNano(0));
+//                sendOne(location.getLatitude(), location.getLongitude(), LocalDateTime.now().withNano(0));
             }
 
             @Override
@@ -168,9 +181,10 @@ public class GpsActivity extends Activity {
                 // 권한 확인
                 checkPermission();
                 // 클릭하면 센서를 로케이션 리스너에 등록
-                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,3000,0,locationListener);
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,1000,0,locationListener);
                 // 시작 시간 등록
                 chk = LocalDateTime.now(). withNano(0);
+                startTimer();
             }
         });
 
@@ -182,6 +196,7 @@ public class GpsActivity extends Activity {
                 if(locationManager != null){
                     locationManager.removeUpdates(locationListener);
                 }
+                endTimer();
             }
         });
 
@@ -201,9 +216,24 @@ public class GpsActivity extends Activity {
         double lat = location.getLatitude();
         double lng = location.getLongitude();
         str = "timestamp: " +LocalDateTime.now() + "\n" + "lat: "+ lat +" ,\n "+" lng: "+ lng+ "\n" + "startTime: "+ chk+"\n";
-        System.out.println("lat: "+ lat +" ,\n "+" lng: "+ lng);
-        textView.setText(str);
+        System.out.println(str);
+//        titleView.setText(str);
+//        Toast.makeText(getApplicationContext(), str, Toast.LENGTH_LONG).show();
+        if (mLastLocation != null) {
+            double deltaTime, interval;
 
+            deltaTime = (location.getTime() - mLastLocation.getTime()) / 1000.0;
+            interval = mLastLocation.distanceTo(location);
+
+            distance += interval;
+            speed = (interval / deltaTime);
+
+            distance = Double.parseDouble(String.format("%.2f", distance));
+            speed = Double.parseDouble(String.format("%.2f", speed));
+
+            mHandler.sendEmptyMessage(GPS);
+        }
+        mLastLocation = location;
     }
 
     private void checkPermission() { // step 3 started (according to content detail)
@@ -240,5 +270,85 @@ public class GpsActivity extends Activity {
                 Log.e("연결실패", t.getMessage());
             }
         });
+    }
+
+    private final Handler mHandler = new Handler(Looper.getMainLooper()) {
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            switch (msg.what) {
+                case TIMER:
+                    updateTimer();
+                    break;
+                case GPS:
+                    if (flag)
+                        updateGpsData();
+                    break;
+                default:
+                    System.out.println("Run Default Handler");
+                    break;
+            }
+        }
+    };
+
+    private void updateTimer() {
+        gps_second++;
+        if (gps_second == 60) {
+            gps_second = 0;
+            gps_minute++;
+        }
+        if (gps_minute == 60) {
+            gps_minute = 0;
+            gps_hour++;
+        }
+
+        if (gps_second <= 9) secondView.setText("0" + gps_second);
+        else        secondView.setText(Integer.toString(gps_second));
+        if (gps_minute <= 9) minuteView.setText("0" + gps_minute);
+        else        minuteView.setText(Integer.toString(gps_minute));
+        if (gps_hour <= 9) hourView.setText("0" + gps_hour);
+        else        hourView.setText(Integer.toString(gps_hour));
+    }
+
+    private void updateGpsData() {
+        gpsSpeedView.setText("현재속도: "+ speed + "km/h");
+        gpsDistanceView.setText("이동거리: "+ distance + "m");
+    }
+
+    private void runTimer() {
+        gps_hour = gps_minute = gps_second = 0;
+
+        btn_gps_start.setClickable(false);
+        btn_gps_end.setClickable(true);
+
+        timer = new Timer();
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                mHandler.sendEmptyMessage(TIMER);
+            }
+        };
+        timer.schedule(timerTask, 0, 1000); //Timer 실행
+    }
+
+    private void destroyTimer() {
+        btn_gps_start.setClickable(true);
+        btn_gps_end.setClickable(false);
+
+        if (timer != null)
+            timer.cancel();
+    }
+
+    public void startTimer() {
+        distance = speed = 0;
+        runTimer();
+        flag = true;
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            startTime = LocalDateTime.now().withNano(0);
+//        }
+    }
+
+    public void endTimer() {
+        destroyTimer();
+        flag = false;
     }
 }
