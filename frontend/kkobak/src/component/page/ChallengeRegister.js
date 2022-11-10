@@ -1,16 +1,26 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
-import { Box } from "@mui/material";
-import SideBarChallengeCreate from "component/atom/SideBarChallengeCreate";
+import React, { useEffect, useState } from "react";
+import { Box, styled } from "@mui/material";
+import axios from "axios";
+
+
+import Text from "component/atom/Text";
+import Button from "component/atom/TextButton"
+import MainBox from "component/atom/MainBox";
 import ChallengeForm from "component/module/ChallengeForm";
+import SideBarChallengeCreate from "component/atom/SideBarChallengeCreate";
+import initial from "static/initial.png";
 
 import { getDetailCategoryList } from "api/Category";
 import { registerChallenge } from "api/Challenge";
-import MainBox from "component/atom/MainBox";
-import Text from "component/atom/Text"
-import axios from "axios"
 
-import initial from '../../static/initial.png'
+const ButtonBox = styled(Box)(
+  () => `
+  width: 95%;
+  margin-bottom: 30px;
+  display: flex;
+  justify-content: end;
+  `
+);
 
 export default function ChallengeRegister() {
   const [category, setCategory] = useState(1);
@@ -28,15 +38,15 @@ export default function ChallengeRegister() {
   const [alarm, setAlarm] = useState("00:00");
   const [title, setTitle] = useState("");
   const [contents, setContents] = useState("");
-  const [unit, setUnit] = useState('')
+  const [unit, setUnit] = useState("");
 
-  const [goal, setGoal] = useState('')
+  const [goal, setGoal] = useState("");
 
   function getDetailCategoryListSuccess(res) {
     setDetailCategoryList(res.data);
   }
 
-  function getDetailCategoryListFail(err) { }
+  function getDetailCategoryListFail(err) {}
 
   useEffect(() => {
     console.log(category);
@@ -49,7 +59,7 @@ export default function ChallengeRegister() {
 
   function registerSuccess() {
     console.log("성공");
-    console.log(unit)
+    console.log(unit);
   }
 
   function registerFail(err) {
@@ -57,26 +67,32 @@ export default function ChallengeRegister() {
   }
 
   function changeAddressToDot(goal) {
-    axios.get(`https://dapi.kakao.com/v2/local/search/address.json?query=${goal}`, {
-      headers: { Authorization: `KakaoAK ${process.env.REACT_APP_KAKAO_REST_API}` },
-    })
-      .then(res => {
+    axios
+      .get(
+        `https://dapi.kakao.com/v2/local/search/address.json?query=${goal}`,
+        {
+          headers: {
+            Authorization: `KakaoAK ${process.env.REACT_APP_KAKAO_REST_API}`,
+          },
+        }
+      )
+      .then((res) => {
         const location = res.data.documents[0];
-        setUnit(`${location?.address?.x},${location?.address?.y}`)
-      })
+        setUnit(`${location?.address?.x},${location?.address?.y}`);
+      });
   }
-  
+
   function changeUnit(category, detailCategory) {
     if (category === "2" && detailCategory === "7") {
-      changeAddressToDot(goal)
+      changeAddressToDot(goal);
     } else if (category === "2") {
-      setUnit('회')
+      setUnit("회");
     } else if (category === "1" && detailCategory === "1") {
-      setUnit('Km')
+      setUnit("Km");
     } else if (category === "1" && detailCategory === "2") {
-      setUnit('Km')
+      setUnit("Km");
     } else if (category === "1" && detailCategory === "3") {
-      setUnit('분')
+      setUnit("분");
     }
   }
   // 유효성 검사
@@ -103,18 +119,16 @@ export default function ChallengeRegister() {
     if (!unit) {
       return;
     }
-    return true
+    return true;
   }
-
-
 
   function register(e) {
     e.preventDefault();
     if (!checkAll()) {
-      return
+      return;
     }
     if (category === "1") {
-      changeUnit(category, detailCategory)
+      changeUnit(category, detailCategory);
       registerChallenge(
         alarm,
         0,
@@ -137,7 +151,7 @@ export default function ChallengeRegister() {
         registerFail
       );
     } else {
-      changeUnit(category, detailCategory)
+      changeUnit(category, detailCategory);
       registerChallenge(
         alarm,
         0,
@@ -170,10 +184,10 @@ export default function ChallengeRegister() {
       }}
     >
       <Box sx={{ margin: "0 auto" }}>
-        <Text size="l" weight="bold" mt="30" my="15">
+        <Text size="m" weight="semibold" mt="30" my="15">
           새 챌린지 등록
         </Text>
-        <MainBox>
+        <MainBox flexDir="col">
           <ChallengeForm
             imgSrc={imgSrc}
             category={category}
@@ -203,6 +217,11 @@ export default function ChallengeRegister() {
             setUnit={setUnit}
             changeUnit={changeUnit}
           ></ChallengeForm>
+          <ButtonBox>
+            <Button size="ss" my="0" onClick={register}>
+              챌린지 등록
+            </Button>
+          </ButtonBox>
         </MainBox>
       </Box>
       <SideBarChallengeCreate />

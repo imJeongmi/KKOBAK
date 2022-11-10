@@ -32,7 +32,7 @@ function getJustifyContent(flexDir) {
 const GreyMainBox = styled(Box)(
   ({flexDir}) => `
   width: 60vw;
-  // minHeight: 80vh;
+  height: 90vh;
   background-color: #F7F7F7;
   border-radius: 20px;
   text-align: center;
@@ -40,6 +40,8 @@ const GreyMainBox = styled(Box)(
   flex-direction: ${getFlexDirection(flexDir)};
   align-items: ${getAlignItems(flexDir)};
   justify-content: ${getJustifyContent(flexDir)};
+  // box-shadow:  20px 20px 66px #e0e0e0,
+  // -20px -20px 66px #ffffff;
   `
 );
 
