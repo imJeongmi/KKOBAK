@@ -27,7 +27,7 @@ public class SwaggerConfig {
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
-//                .host("kkobak.ml")
+                .host("kkobak.ml")
                 .useDefaultResponseMessages(false)
                 .securityContexts(Arrays.asList(securityContext()))
                 .securitySchemes(Arrays.asList(apiKey()))
