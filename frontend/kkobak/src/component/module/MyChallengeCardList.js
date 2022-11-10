@@ -47,6 +47,7 @@ const ChallengeListBox = styled(Box)(
   height: 60vh;
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   justify-content: center;
   margin-top: 30px;
   `
@@ -55,8 +56,10 @@ const ChallengeListBox = styled(Box)(
 const ButtonBox = styled(Box)(
   () => `
   width: 95%;
+  height: 35px;
   display: flex;
   justify-content: end;
+  marginTop: 15px;
   `
 );
 
