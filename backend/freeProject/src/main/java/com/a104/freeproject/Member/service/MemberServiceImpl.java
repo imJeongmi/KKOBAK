@@ -18,6 +18,8 @@ import com.a104.freeproject.Member.request.*;
 import com.a104.freeproject.Member.response.*;
 import com.a104.freeproject.PrtChl.entity.PrtChl;
 import com.a104.freeproject.PrtChl.repository.PrtChlRepository;
+import com.a104.freeproject.Todolist.entity.Todolist;
+import com.a104.freeproject.Todolist.repository.TodolistRepository;
 import com.a104.freeproject.advice.exceptions.NotFoundException;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
@@ -54,6 +56,8 @@ public class MemberServiceImpl implements MemberService{
     private final ChlTimeRepository chlTimeRepository;
     private final ChallengeRepository challengeRepository;
     private final LogRepository logRepository;
+    
+    private final TodolistRepository todolistRepository;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final PasswordEncoder passwordEncoder;
     private final TokenProvider tokenProvider;
@@ -391,25 +395,49 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public List<TodoListInfoResponse> getTodayListInfo(HttpServletRequest req) throws NotFoundException {
+    public List<WatchTodoListInfoResponse> getTodayListInfo(HttpServletRequest req) throws NotFoundException {
         Member member;
         try{
             member = findEmailbyToken(req);
             List<PrtChl> chlList = member.getChallenges();
-            List<TodoListInfoResponse> todoListInfo = new LinkedList<>();
+            List<WatchTodoListInfoResponse> watchTodoListInfo = new LinkedList<>();
 
             LocalDate today = LocalDate.now(ZoneId.of("Asia/Seoul"));
 
+            // 챌린지 목록을 추가
             for(PrtChl p : chlList){
                 System.out.println(p.getId());
                 if(p.is_fin()) continue;
                 if(p.getChallenge().isFin()) continue;
                 Log log = logRepository.findByPrtChlAndDate(p,today);
                 Challenge c = p.getChallenge();
-                todoListInfo.add(TodoListInfoResponse.builder().chlId(c.getId())
-                        .title(c.getTitle()).isDone(log.isFin()).build());
+                watchTodoListInfo.add(WatchTodoListInfoResponse.builder()
+                        .chlId(c.getId())
+                        .title(c.getTitle())
+                        .contents(c.getContents())
+                        .categoryId(c.getCategory().getId())
+                        .detailCategoryId(c.getDetailCategory().getId())
+                        .goal(c.getGoal())
+                        .unit(c.getUnit())
+                        .isDone(log.isFin())
+                        .kkobak(p.getKkobak())
+                        .build());
             }
-            return todoListInfo;
+
+            //TodoList 목록 추가
+            List<Todolist> todolist= todolistRepository.findAllByMemberAndDate(member,today);
+
+            for (Todolist todo : todolist) {
+                watchTodoListInfo.add(WatchTodoListInfoResponse.builder()
+                        .chlId(-1*todo.getId())
+                        .contents(todo.getContents())
+                        .categoryId(0L)
+                        .detailCategoryId(0L)
+                        .isDone(todo.isDone())
+                        .build());
+            }
+
+            return watchTodoListInfo;
         } catch (Exception e){
             throw e;
         }

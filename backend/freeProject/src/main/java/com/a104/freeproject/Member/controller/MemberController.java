@@ -165,8 +165,8 @@ public class MemberController {
     }
 
     @GetMapping("/watch/today-list")
-    @ApiOperation(value = "(워치용) 오늘 챌린지 목록 + 실행여부 가져오기")
-    public ResponseEntity<List<TodoListInfoResponse>> getTodayTodoList(HttpServletRequest req) throws NotFoundException {
+    @ApiOperation(value = "(워치용) 오늘 챌린지와 TodoList의 목록과 실행여부 가져오기")
+    public ResponseEntity<List<WatchTodoListInfoResponse>> getTodayTodoList(HttpServletRequest req) throws NotFoundException {
         return ResponseEntity.ok().body(memberService.getTodayListInfo(req));
     }
 }

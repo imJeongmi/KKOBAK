@@ -31,5 +31,5 @@ public interface MemberService {
     ChlSimpleStatResponse getChlSimpleStatistics(HttpServletRequest req) throws NotFoundException;
     List<MonthChlResponse> monthChlInfo(Long chlId, String year, String month, HttpServletRequest req) throws NotFoundException;
     List<TodoListInfoResponse> getTodoListInfo(DayRequest day, HttpServletRequest req) throws NotFoundException;
-    List<TodoListInfoResponse> getTodayListInfo(HttpServletRequest req) throws NotFoundException;
+    List<WatchTodoListInfoResponse> getTodayListInfo(HttpServletRequest req) throws NotFoundException;
 }
