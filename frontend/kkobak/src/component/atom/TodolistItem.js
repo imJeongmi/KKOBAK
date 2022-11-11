@@ -22,12 +22,12 @@ const TodolistItemBox = styled(Box)(
 
 const CheckBox = styled(Box)(
   () => `
-    width: 20px;
-    height: 20px;
+    width: 17px;
+    height: 17px;
     background-color: #ffffff;
     border-radius: 5px;
     border: 1px solid #CCCCCC;
-    margin: 0 20px;
+    margin: 0 15px;
     `
 );
 
@@ -115,7 +115,7 @@ export default function TodolistItem({
       </CheckBox>
       <Box sx={{ width: "170px" }}>
         <Text
-          size="14px"
+          size="12px"
           color={color}
           weight={weight}
           py="1"
@@ -129,7 +129,7 @@ export default function TodolistItem({
         onClick={onClickDelete}
         sx={{ width: "30px", textAlign: "center", opacity: "0.6" }}
       >
-        {!chlId ? <img src={DeleteImage} alt="img" width="20px" /> : ""}
+        {!chlId ? <img src={DeleteImage} alt="img" width="17px" /> : ""}
       </Box>
     </TodolistItemBox>
   );
