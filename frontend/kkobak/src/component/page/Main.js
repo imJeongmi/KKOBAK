@@ -112,7 +112,7 @@ export default function Main() {
       <Box sx={{ margin: "0 auto" }}>
         <Box sx={{ display: "flex" }}>
           <Text size="m" weight="semibold" mt="30" my="15">
-            {"안녕하세요," + "\u00A0"}
+            {"안녕하세요\u00A0"}
           </Text>
           <Text size="m" weight="bold" mt="30" my="15" color="blue">
             {` ${user.nickName}`}
@@ -131,57 +131,29 @@ export default function Main() {
               // console.log(item);
               return (
                 <Box>
-                  <Box sx={{ display: "flex" }}>
-                    <Box
-                      sx={{
-                        float: "left",
-                        marginTop: "20px",
-                        marginLeft: "40px",
-                      }}
-                    >
-                      <Stack spacing={2}>
-                        <Pagination
-                          count={3}
-                          defaultPage={1}
-                          shape="rounded"
-                          onChange={(e) => handlePage(e)}
-                          hidePrevButton
-                          hideNextButton
-                        />
-                      </Stack>
-                    </Box>
-                    <Box sx={{ flex: 1 }}></Box>
-                    <Box
-                      sx={{
-                        float: "right",
-                        marginLeft: "50px",
-                        marginTop: "20px",
-                      }}
-                    >
-                      <Text size="l" weight="bold">
-                        {item.title}
-                      </Text>
-                    </Box>
-                    <Box sx={{ flex: 1 }}></Box>
-                    <Box sx={{ float: "right", marginRight: "45px" }}>
-                      <Box sx={{ flex: 1, display: "flex" }}>
-                        <Box sx={{ float: "left" }}>
-                          <Text weight="semibold" mt="30" my="15">
-                            {startTimeCheck}
-                          </Text>
-                        </Box>
-                        <Box>
-                          <Text weight="semibold" mt="30" my="15">
-                            &nbsp;&nbsp;-&nbsp;&nbsp;
-                          </Text>
-                        </Box>
-                        <Box>
-                          <Text weight="semibold" mt="30" my="15">
-                            {endTimeCheck}
-                          </Text>
-                        </Box>
-                      </Box>
-                    </Box>
+                  <Box
+                    sx={{
+                      height: "50px",
+                      margin: "0 30px",
+                      display: "flex",
+                      alignItems: "end",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <Stack spacing={2}>
+                      <Pagination
+                        count={3}
+                        defaultPage={1}
+                        shape="rounded"
+                        onChange={(e) => handlePage(e)}
+                        hidePrevButton
+                        hideNextButton
+                      />
+                    </Stack>
+                    <Text size="20px" weight="bold">
+                      {item.title}
+                    </Text>
+                    <Text>{`${startTimeCheck}-${endTimeCheck}`}</Text>
                   </Box>
                   <Box>
                     <MainCalendar
@@ -198,11 +170,11 @@ export default function Main() {
           </Box>
         </MainBox>
       </Box>
+
       <SideBar>
         <Box sx={{ margin: "40px 30px 50px 30px" }}>
           <MainCarousel />
         </Box>
-
         <Box sx={{ marginTop: "30px", marginLeft: "30px" }}>
           <Todolist />
         </Box>

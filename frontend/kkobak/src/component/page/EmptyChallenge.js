@@ -17,7 +17,7 @@ export default function EmptyChallenge() {
         sx={{
           width: "500px",
           height: "500px",
-          backgroundColor: "#F9D0CF",
+          backgroundColor: "#f0f6fb",
           borderRadius: 5,
           textAlign: "center",
         }}
