@@ -2,10 +2,20 @@ package com.example.kkobak.repository.response;
 
 import com.google.gson.annotations.SerializedName;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
 public class TodoListResponse {
     @SerializedName("chlId") private int chlId;
     @SerializedName("done") private boolean done;
     @SerializedName("title") private String title;
+    @SerializedName("contents") private String contents;
+    @SerializedName("categoryId") private Long categoryId;
+    @SerializedName("detailCategoryId") private Long detailCategoryId;
+    @SerializedName("goal") private int goal;
+    @SerializedName("unit") private String unit;
+    @SerializedName("kkobak") private int kkobak;
 
     public int getChlId() {
         return chlId;
