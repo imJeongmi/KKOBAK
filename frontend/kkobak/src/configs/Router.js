@@ -9,6 +9,7 @@ import SignupModal from "component/module/SignupModal";
 import ChallengeDetail from "component/page/ChallengeDetail";
 import ChallengeRegister from "component/page/ChallengeRegister";
 import Statistics from "component/page/Statistics";
+import IntroPage from "component/page/IntroPage";
 
 function checkAuth() {
   return !!storage.get("accessToken");
@@ -64,6 +65,7 @@ export default function RouterConfiguration() {
       />
       <Route path="/Setting" element={<Setting />} />
       <Route path="/signup" element={<SignupModal />} />
+      <Route path="/IntroPage" element={<IntroPage />} />
     </Routes>
   );
 }
