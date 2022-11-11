@@ -1,6 +1,6 @@
 .react-calendar {
   width: 90%;
-  height: 90%;
+  height: 100%;
   border: 0.5px solid #cccccc;
   border-radius: 10px;
   overflow: hidden;
@@ -8,7 +8,7 @@
 
 .react-calendar__tile {
   width: 10vw;
-  height: 10vh;
+  height: 11.9vh;
   text-align: right;
   display: flex;
   flex-direction: column;
@@ -38,7 +38,6 @@
 
 .react-calendar__tile:hover {
   background-color: #f0f6fb !important;
-
 }
 
 .react-calendar__navigation__arrow {
