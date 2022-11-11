@@ -468,21 +468,16 @@ public class ChallengeServiceImpl implements ChallengeService {
 
             return log.isFin();
         }
-        else {  //dc==7, 출석 경도/위도
+        else {  //dc==7, 출석 경도,위도
             System.out.println("dc7 = " + dc);
 
-            String[] str = c.getUnit().split("/"); // 경도 위도
+            String[] str = c.getUnit().split(","); // 경도 위도
             double d = getDistance(input.getLat(), input.getLng(), str[1], str[0]);
 
             System.out.println("거리 = " + d);
 
-            if(d<50) {
+            if(d<100) {
                 log.setFin(true);
-                List<Statgps> gpsList = gpsRepository.findByChkTimeAndPrtChl(p,input.getStartTime());
-                for(Statgps s : gpsList){
-                    s.setSuccess(true);
-                    gpsRepository.save(s);
-                }
                 return true;
             }
             return false;
