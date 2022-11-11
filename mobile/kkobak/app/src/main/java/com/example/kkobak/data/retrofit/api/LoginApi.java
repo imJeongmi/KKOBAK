@@ -7,17 +7,7 @@ import com.google.gson.GsonBuilder;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class LoginApi {
-    private static final String BASE_URL = "https://kkobak.ml/api/";
-
-    private static Retrofit getInstance() {
-        Gson gson = new GsonBuilder().setLenient().create();
-        return (new Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build());
-    }
-
+public class LoginApi extends BaseApi {
     public static LoginService doLoginService() {
         return (getInstance().create(LoginService.class));
     }

@@ -7,6 +7,8 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -22,15 +24,30 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.kkobak.R;
+import com.example.kkobak.data.retrofit.api.BpmDataApi;
+import com.example.kkobak.data.retrofit.model.BpmDataReq;
+import com.example.kkobak.data.room.dao.AccessTokenDao;
+import com.example.kkobak.data.room.database.AccessTokenDatabase;
+import com.example.kkobak.data.room.entity.AccessToken;
+import com.example.kkobak.ui.test.TestActivity;
 import com.txusballesteros.SnakeView;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MeditationActivity extends AppCompatActivity implements SensorEventListener {
     SensorManager sensorManager;
     SensorEventListener sensorEventListener;
     Sensor sensor;
+
+    AccessTokenDatabase db;
+    String accessToken;
 
     Button heartRateBtn;
     TextView heartRateTv;
@@ -46,9 +63,13 @@ public class MeditationActivity extends AppCompatActivity implements SensorEvent
     final int TIMER = 1;
 
     Timer timer;
+    LocalDateTime startTime;
 
     boolean btnState;
     int _minute, _second;
+
+    String chlId;
+//    String chlId = "133";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,6 +77,13 @@ public class MeditationActivity extends AppCompatActivity implements SensorEvent
         setContentView(R.layout.activity_meditation);
 
         checkPermission();
+
+        db = AccessTokenDatabase.getAppDatabase(this);
+        try {
+            accessToken = new TestActivity.getAccessTokenAsyncTask(db.accessTokenDao()).execute().get().getAccessToken();
+        } catch (Exception e) {
+            Toast.makeText(this, "에러 발생", Toast.LENGTH_SHORT).show();
+        }
 
         heartRateTv = findViewById(R.id.hrmText);
         heartRateBtn = findViewById(R.id.heartRateBtn);
@@ -78,6 +106,11 @@ public class MeditationActivity extends AppCompatActivity implements SensorEvent
         snakeView = (SnakeView)findViewById(R.id.snake);
         snakeView.setMinValue(-20500);
         snakeView.setMaxValue(20000);
+
+        if (getIntent() != null)
+            chlId = getIntent().getStringExtra("chlId");
+
+//        Toast.makeText(this, "id: " + chlId, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -86,7 +119,35 @@ public class MeditationActivity extends AppCompatActivity implements SensorEvent
         sensorManager.unregisterListener(sensorEventListener);
     }
 
+    public void sendBpmData(int bpm) {
+        BpmDataReq data = new BpmDataReq();
 
+        data.setChlId(Long.parseLong(chlId));
+        data.setChk(startTime.toString());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            data.setTime(LocalDateTime.now().withNano(0).toString());
+        }
+        data.setBpm(bpm);
+
+        Call<Boolean> call = BpmDataApi.getBpmService().sendBpmData(accessToken, data);
+        call.enqueue(new Callback<Boolean>() {
+            @Override
+            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                if(!response.isSuccessful()){
+                    Toast.makeText(MeditationActivity.this, "에러: " + response.code(), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                else {
+                    Toast.makeText(MeditationActivity.this, "성공: " + response.body().toString(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Boolean> call, Throwable t) {
+                Toast.makeText(MeditationActivity.this, "그냥 실패", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
@@ -94,8 +155,6 @@ public class MeditationActivity extends AppCompatActivity implements SensorEvent
             float value = sensorEvent.values[0];
             int printValue;
 
-//            if (value != 0.0) {
-//                Toast.makeText(this, sensorEvent.values[0] + "", Toast.LENGTH_SHORT).show();
             value *= 100;
             snakeView.addValue(value);
             snakeView.addValue(value - 1000);
@@ -104,14 +163,9 @@ public class MeditationActivity extends AppCompatActivity implements SensorEvent
 
             printValue = (int) (value / 100);
             heartRateTv.setText("" + printValue);
-//            }
 
+            sendBpmData(printValue);
         }
-
-//        if (sensorEvent.sensor.getType() == Sensor.TYPE_HEART_RATE) {
-//            int value = (int) sensorEvent.values[0];
-//            Toast.makeText(this, "heart: " + value, Toast.LENGTH_SHORT).show();
-//        }
     }
 
     @Override
@@ -170,7 +224,6 @@ public class MeditationActivity extends AppCompatActivity implements SensorEvent
 
             _minute = Integer.parseInt(inputMinute.getText().toString());
             _second = Integer.parseInt(inputSecond.getText().toString());
-            //Toast.makeText(this, "Hour: " + settingHour + "  Minute: " + settingMinute , Toast.LENGTH_SHORT).show();
             inputLayout.setVisibility(View.INVISIBLE);
 
             if (_minute <= 9)   timerMinute.setText("0" + _minute);
@@ -189,11 +242,32 @@ public class MeditationActivity extends AppCompatActivity implements SensorEvent
             timer.schedule(timerTask, 0, 1000);
 
             heartRateBtn.setText("정지");
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                startTime = LocalDateTime.now().withNano(0);
+            }
         }
         else {
             heartRateBtn.setText("시작");
             Toast.makeText(this, "정지 실행", Toast.LENGTH_SHORT).show();
         }
 
+    }
+
+    public static class getAccessTokenAsyncTask extends AsyncTask<Void, Void, AccessToken> {
+        private final AccessTokenDao accessTokenDao;
+
+        public getAccessTokenAsyncTask(AccessTokenDao accessTokenDao) {
+            this.accessTokenDao = accessTokenDao;
+        }
+
+        @Override
+        protected AccessToken doInBackground(Void... voids) {
+            List<AccessToken> tokens = accessTokenDao.getAll();
+            if (tokens == null || tokens.size() == 0)
+                return (null);
+            else
+                return (tokens.get(0));
+        }
     }
 }

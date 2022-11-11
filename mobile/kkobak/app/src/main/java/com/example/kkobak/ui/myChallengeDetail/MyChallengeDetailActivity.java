@@ -13,13 +13,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.example.kkobak.R;
+import com.example.kkobak.data.retrofit.api.LogChkApi;
 import com.example.kkobak.data.retrofit.api.MyChallengeDetailApi;
+import com.example.kkobak.data.retrofit.model.LogChkReq;
 import com.example.kkobak.data.retrofit.model.MyChallengeDetailRes;
 import com.example.kkobak.data.room.dao.AccessTokenDao;
 import com.example.kkobak.data.room.database.AccessTokenDatabase;
 import com.example.kkobak.data.room.entity.AccessToken;
 import com.example.kkobak.ui.challenge.AttendActivity;
 import com.example.kkobak.ui.challenge.GpsActivity;
+import com.example.kkobak.ui.challenge.MeditationActivity;
 import com.example.kkobak.ui.challenge.WaterActivity;
 import com.example.kkobak.ui.main.MainActivity;
 import com.example.kkobak.ui.test.TestActivity;
@@ -71,12 +74,31 @@ public class MyChallengeDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_mychallengedetail);
 
         chlId = getIntent().getStringExtra("id");
+        Toast.makeText(this, "chlId: " + chlId, Toast.LENGTH_SHORT).show();
+
         db = AccessTokenDatabase.getAppDatabase(this);
         try {
             accessToken = new TestActivity.getAccessTokenAsyncTask(db.accessTokenDao()).execute().get().getAccessToken();
         } catch (Exception e) {
             Toast.makeText(this, "에러 발생", Toast.LENGTH_SHORT).show();
         }
+
+//        Toast.makeText(this, "" + new LogChkReq().makeDate(), Toast.LENGTH_SHORT).show();
+        Call<Boolean> call = LogChkApi.getLogChkService().isValid(accessToken, new LogChkReq(Long.parseLong(chlId), LogChkReq.makeDate()));
+        call.enqueue(new Callback<Boolean>() {
+            @Override
+            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                if(!response.isSuccessful()){
+                    Toast.makeText(MyChallengeDetailActivity.this, "에러: " + response.code(), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                else {
+                    Toast.makeText(MyChallengeDetailActivity.this, "성공: " + response.body().toString(), Toast.LENGTH_SHORT).show();
+                }
+            }
+            @Override
+            public void onFailure(Call<Boolean> call, Throwable t) {}
+        });
     }
 
     @Override
@@ -154,7 +176,7 @@ public class MyChallengeDetailActivity extends AppCompatActivity {
                 break;
             case MEDITATION:
                 Toast.makeText(this, "Meditation", Toast.LENGTH_SHORT).show();
-                intent = new Intent(this, WaterActivity.class);
+                intent = new Intent(this, MeditationActivity.class);
                 break;
             case DRINK_WATER:
                 Toast.makeText(this, "Drink Water", Toast.LENGTH_SHORT).show();
