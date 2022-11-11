@@ -25,8 +25,8 @@ const inputStyle = {
 
 const ImageBox = styled(Box)(
   () => `
-  width: 350px;
-  height: 200px;
+  width: 600px;
+  height: 300px;
   margin: 25px auto 10px auto;
   border-radius: 20px;
   background-size: cover;
@@ -53,7 +53,7 @@ const SettingItem = styled(Box)(
 
 const SettingTitleBox = styled(Box)(
   (height) => `
-  width: 200px;
+  width: 150px;
   height: 50px;
   display: flex;
   justify-content: start;
@@ -185,252 +185,248 @@ export default function ChallengeForm({
           height="100%"
         ></img>
       </ImageBox>
-
-      <SettingBox>
-        <SettingItem>
-          <SettingTitleBox>
-            <Text size="16px" weight="bold">
-              카테고리
-            </Text>
-          </SettingTitleBox>
-          <SettingContentBox>
-            <Box sx={{ height: "50px", display: "flex", alignItems: "center" }}>
-              <FormControl>
-                <RadioGroup
-                  row
-                  aria-labelledby="demo-row-controlled-radio-buttons-group"
-                  name="controlled-radio-buttons-group"
-                  onChange={(e) => setCategory(e.target.value)}
-                >
-                  <FormControlLabel
-                    value={1}
-                    control={<Radio />}
-                    label="운동"
-                  />
-                  <FormControlLabel
-                    value={2}
-                    control={<Radio />}
-                    label="생활습관"
-                  />
-                </RadioGroup>
-              </FormControl>
-            </Box>
-          </SettingContentBox>
-        </SettingItem>
-
-        <SettingItem>
-          <SettingTitleBox>
-            <Text size="16px" weight="bold">
-              상세 카테고리
-            </Text>
-          </SettingTitleBox>
-          <SettingContentBox>
-            <select onChange={changeDetailCategory}>
-              <option value={0}>선택 안함</option>
-              {detailCategoryList?.map((item) => {
-                return (
-                  <option key={item.detailId} value={item.detailId}>
-                    {item.detailName}
-                  </option>
-                );
-              })}
-            </select>
-          </SettingContentBox>
-        </SettingItem>
-
-        <SettingItem>
-          <SettingTitleBox>
-            <Text size="16px" weight="bold">
-              제목
-            </Text>
-          </SettingTitleBox>
-          <SettingContentBox>
-            <Box
-              sx={{
-                width: "350px",
-                height: "40px",
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              <Input
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-              ></Input>
-            </Box>
-          </SettingContentBox>
-        </SettingItem>
-
-        <SettingItem>
-          <SettingTitleBox sx={{ height: "90px" }}>
-            <Text size="16px" weight="bold">
-              상세 설명
-            </Text>
-          </SettingTitleBox>
-          <SettingContentBox sx={{ height: "90px" }}>
-            <Box
-              sx={{
-                width: "350px",
-                height: "85px",
-              }}
-            >
-              <Textarea
-                value={contents}
-                onChange={(e) => setContents(e.target.value)}
-              ></Textarea>
-            </Box>
-          </SettingContentBox>
-        </SettingItem>
-
-        <SettingItem>
-          <SettingTitleBox>
-            <Text size="16px" weight="bold">
-              목표
-            </Text>
-          </SettingTitleBox>
-          <SettingContentBox>
-            <Box
-              sx={{
-                width: "120px",
-                height: "40px",
-                display: "flex",
-                alignItems: "center",
-                marginRight: "10px",
-              }}
-            >
-              <Input
-                value={goal}
-                onChange={(e) => setGoal(e.target.value)}
-              ></Input>
-            </Box>
-            <Box sx={{ width: "20px" }}>
-              <Text my="15px" size="16px" weight="medium">
-                {showunit}
+      <Box sx={{ display: "flex", flexDirection: "row", mt: 5,}}>
+        <SettingBox>
+          <SettingItem>
+            <SettingTitleBox>
+              <Text size="16px" weight="bold">
+                카테고리
               </Text>
-            </Box>
-          </SettingContentBox>
-        </SettingItem>
+            </SettingTitleBox>
+            <SettingContentBox>
+              <Box sx={{ height: "50px", display: "flex", alignItems: "center" }}>
+                <FormControl>
+                  <RadioGroup
+                    row
+                    aria-labelledby="demo-row-controlled-radio-buttons-group"
+                    name="controlled-radio-buttons-group"
+                    onChange={(e) => setCategory(e.target.value)}
+                  >
+                    <FormControlLabel
+                      value={1}
+                      control={<Radio />}
+                      label="운동"
+                    />
+                    <FormControlLabel
+                      value={2}
+                      control={<Radio />}
+                      label="생활습관"
+                    />
+                  </RadioGroup>
+                </FormControl>
+              </Box>
+            </SettingContentBox>
+          </SettingItem>
 
-        <SettingItem>
-          <SettingTitleBox>
-            <Text size="16px" weight="bold">
-              기간
-            </Text>
-          </SettingTitleBox>
-          <SettingContentBox
-            sx={{
-              width: "350px",
-              paddingRight: "10px",
-              justifyContent: "space-between",
-            }}
-          >
-            <Box sx={{ width: "160px", height: "40px" }}>
-              <DatePicker
-                calendarAriaLabel="calendar"
-                locale="ko-KR"
-                onChange={setStartTime}
-                value={startTime}
-                minDate={new Date()}
-                calendarType="US"
-              />
-            </Box>
-            <Text size="16px" weight="semibold" color="black">
-              ~
-            </Text>
-            <Box sx={{ width: "160px", height: "40px" }}>
-              <DatePicker
-                calendarAriaLabel="calendar"
-                locale="ko-KR"
-                onChange={setEndTime}
-                value={endTime}
-                minDate={new Date()}
-                calendarType="US"
-              />
-            </Box>
-          </SettingContentBox>
-        </SettingItem>
+          <SettingItem>
+            <SettingTitleBox>
+              <Text size="16px" weight="bold">
+                상세 카테고리
+              </Text>
+            </SettingTitleBox>
+            <SettingContentBox>
+              <select onChange={changeDetailCategory}>
+                <option value={0}>선택 안함</option>
+                {detailCategoryList?.map((item) => {
+                  return (
+                    <option key={item.detailId} value={item.detailId}>
+                      {item.detailName}
+                    </option>
+                  );
+                })}
+              </select>
+            </SettingContentBox>
+          </SettingItem>
 
-        <SettingItem>
-          <SettingTitleBox>
-            <Text size="16px" weight="bold">
-              알림
-            </Text>
-          </SettingTitleBox>
-          <SettingContentBox>
-            <Box sx={{ width: "160px", height: "40px" }}>
-              <TimePicker format="HH:mm" onChange={setAlarm} value={alarm} />
-            </Box>
-          </SettingContentBox>
-        </SettingItem>
+          <SettingItem>
+            <SettingTitleBox>
+              <Text size="16px" weight="bold">
+                제목
+              </Text>
+            </SettingTitleBox>
+            <SettingContentBox>
+              <Box
+                sx={{
+                  width: "350px",
+                  height: "40px",
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                <Input
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                ></Input>
+              </Box>
+            </SettingContentBox>
+          </SettingItem>
 
-        <SettingItem>
-          <SettingTitleBox>
-            <Text size="16px" weight="bold">
-              꼬박챌린지 설정
-            </Text>
-          </SettingTitleBox>
-          <SettingContentBox>
-            <Box sx={{ height: "50px", display: "flex", alignItems: "center" }}>
-              <FormControl>
-                <RadioGroup
-                  row
-                  aria-labelledby="demo-row-controlled-radio-buttons-group"
-                  name="controlled-radio-buttons-group"
-                  onChange={(e) => setKkobak(e.target.value)}
-                >
-                  <FormControlLabel
-                    value={1}
-                    control={<Radio />}
-                    label="설정"
-                  />
-                  <FormControlLabel
-                    value={0}
-                    control={<Radio />}
-                    label="설정 안함"
-                  />
-                </RadioGroup>
-              </FormControl>
-            </Box>
-          </SettingContentBox>
-        </SettingItem>
+          <SettingItem>
+            <SettingTitleBox sx={{ height: "90px" }}>
+              <Text size="16px" weight="bold">
+                상세 설명
+              </Text>
+            </SettingTitleBox>
+            <SettingContentBox sx={{ height: "90px" }}>
+              <Box
+                sx={{
+                  width: "350px",
+                  height: "85px",
+                }}
+              >
+                <Textarea
+                  value={contents}
+                  onChange={(e) => setContents(e.target.value)}
+                ></Textarea>
+              </Box>
+            </SettingContentBox>
+          </SettingItem>
+        </SettingBox>
+        <SettingBox>
+          <SettingItem>
+            <SettingTitleBox>
+              <Text size="16px" weight="bold">
+                목표
+              </Text>
+            </SettingTitleBox>
+            <SettingContentBox>
+              <Box
+                sx={{
+                  width: "120px",
+                  height: "40px",
+                  display: "flex",
+                  alignItems: "center",
+                  marginRight: "10px",
+                }}
+              >
+                <Input
+                  value={goal}
+                  onChange={(e) => setGoal(e.target.value)}
+                ></Input>
+              </Box>
+              <Box sx={{ width: "20px" }}>
+                <Text my="15px" size="16px" weight="medium">
+                  {showunit}
+                </Text>
+              </Box>
+            </SettingContentBox>
+          </SettingItem>
 
-        <SettingItem>
-          <SettingTitleBox>
-            <Text size="16px" weight="bold">
-              워치 사용
-            </Text>
-          </SettingTitleBox>
-          <SettingContentBox>
-            <Box sx={{ height: "50px", display: "flex", alignItems: "center" }}>
-              <FormControl>
-                <RadioGroup
-                  row
-                  aria-labelledby="demo-row-controlled-radio-buttons-group"
-                  name="controlled-radio-buttons-group"
-                  onChange={(e) => setWatch(e.target.value)}
-                >
-                  <FormControlLabel
-                    value={true}
-                    control={<Radio />}
-                    label="사용"
-                  />
-                  <FormControlLabel
-                    value={false}
-                    control={<Radio />}
-                    label="사용 안함"
-                  />
-                </RadioGroup>
-              </FormControl>
-            </Box>
-          </SettingContentBox>
-        </SettingItem>
-      </SettingBox>
+          <SettingItem>
+            <SettingTitleBox>
+              <Text size="16px" weight="bold">
+                기간
+              </Text>
+            </SettingTitleBox>
+            <SettingContentBox
+              sx={{
+                width: "350px",
+                paddingRight: "10px",
+                justifyContent: "space-between",
+              }}
+            >
+              <Box sx={{ width: "160px", height: "40px" }}>
+                <DatePicker
+                  calendarAriaLabel="calendar"
+                  locale="ko-KR"
+                  onChange={setStartTime}
+                  value={startTime}
+                  minDate={new Date()}
+                  calendarType="US"
+                />
+              </Box>
+              <Text size="16px" weight="semibold" color="black">
+                ~
+              </Text>
+              <Box sx={{ width: "160px", height: "40px" }}>
+                <DatePicker
+                  calendarAriaLabel="calendar"
+                  locale="ko-KR"
+                  onChange={setEndTime}
+                  value={endTime}
+                  minDate={new Date()}
+                  calendarType="US"
+                />
+              </Box>
+            </SettingContentBox>
+          </SettingItem>
 
-      {/* <ButtonBox>
-        <Button size="ss" onClick={register} my="5px">
-          챌린지 등록
-        </Button>
-      </ButtonBox> */}
+          <SettingItem>
+            <SettingTitleBox>
+              <Text size="16px" weight="bold">
+                알림
+              </Text>
+            </SettingTitleBox>
+            <SettingContentBox>
+              <Box sx={{ width: "160px", height: "40px" }}>
+                <TimePicker format="HH:mm" onChange={setAlarm} value={alarm} />
+              </Box>
+            </SettingContentBox>
+          </SettingItem>
+
+          <SettingItem>
+            <SettingTitleBox>
+              <Text size="16px" weight="bold">
+                꼬박챌린지 설정
+              </Text>
+            </SettingTitleBox>
+            <SettingContentBox>
+              <Box sx={{ height: "50px", display: "flex", alignItems: "center" }}>
+                <FormControl>
+                  <RadioGroup
+                    row
+                    aria-labelledby="demo-row-controlled-radio-buttons-group"
+                    name="controlled-radio-buttons-group"
+                    onChange={(e) => setKkobak(e.target.value)}
+                  >
+                    <FormControlLabel
+                      value={1}
+                      control={<Radio />}
+                      label="설정"
+                    />
+                    <FormControlLabel
+                      value={0}
+                      control={<Radio />}
+                      label="설정 안함"
+                    />
+                  </RadioGroup>
+                </FormControl>
+              </Box>
+            </SettingContentBox>
+          </SettingItem>
+
+          <SettingItem>
+            <SettingTitleBox>
+              <Text size="16px" weight="bold">
+                워치 사용
+              </Text>
+            </SettingTitleBox>
+            <SettingContentBox>
+              <Box sx={{ height: "50px", display: "flex", alignItems: "center" }}>
+                <FormControl>
+                  <RadioGroup
+                    row
+                    aria-labelledby="demo-row-controlled-radio-buttons-group"
+                    name="controlled-radio-buttons-group"
+                    onChange={(e) => setWatch(e.target.value)}
+                  >
+                    <FormControlLabel
+                      value={true}
+                      control={<Radio />}
+                      label="사용"
+                    />
+                    <FormControlLabel
+                      value={false}
+                      control={<Radio />}
+                      label="사용 안함"
+                    />
+                  </RadioGroup>
+                </FormControl>
+              </Box>
+            </SettingContentBox>
+          </SettingItem>
+        </SettingBox>
+      </Box>
     </Box>
   );
 }

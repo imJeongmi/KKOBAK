@@ -19,9 +19,7 @@ import { getMyKkobakList } from "api/userApi";
 const ButtonBox = styled(Box)(
   () => `
   width: 95%;
-  margin-bottom: 30px;
-  display: flex;
-  justify-content: end;
+  margin-top : 30px;
   `
 );
 
@@ -82,6 +80,7 @@ export default function ChallengeRegister() {
   }
 
   function changeAddressToDot(goal) {
+    console.log(goal)
     axios
       .get(
         `https://dapi.kakao.com/v2/local/search/address.json?query=${goal}`,
@@ -99,7 +98,8 @@ export default function ChallengeRegister() {
 
   function changeUnit(category, detailCategory) {
     if (category === "2" && detailCategory === "7") {
-      changeAddressToDot(goal);
+      const add = changeAddressToDot(goal);
+      return add
     } else if (category === "2") {
       setUnit("회");
     } else if (category === "1" && detailCategory === "1") {
@@ -179,8 +179,32 @@ export default function ChallengeRegister() {
         registerSuccess,
         registerFail
       );
+    } else if (category === "2" && detailCategory === "7") {
+      const add = changeUnit(category, detailCategory);
+      registerChallenge(
+        alarm,
+        0,
+        category,
+        contents,
+        detailCategory,
+        endTime,
+        1,
+        imgSrc,
+        kkobak,
+        1,
+        "",
+        1,
+        startTime,
+        [],
+        title,
+        add,
+        watch,
+        registerSuccess,
+        registerFail
+      );
     } else {
       changeUnit(category, detailCategory);
+      // console.log(unit)
       registerChallenge(
         alarm,
         0,
@@ -247,13 +271,12 @@ export default function ChallengeRegister() {
             changeUnit={changeUnit}
           ></ChallengeForm>
           <ButtonBox>
-            <Button size="ss" my="0" onClick={register}>
+            <Button size="m" my="0" onClick={register}>
               챌린지 등록
             </Button>
           </ButtonBox>
         </MainBox>
       </Box>
-      <SideBarChallengeCreate />
     </Box>
   );
 }
