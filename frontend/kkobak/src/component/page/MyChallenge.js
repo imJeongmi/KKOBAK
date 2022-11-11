@@ -34,32 +34,18 @@ export default function Challenge() {
             {"님의 챌린지 리스트"}
           </Text>
         </Box>
-
-        {/* <Box sx={{ flex: 1, display: "flex" }}>
-          <Box sx={{ float: "left" }}>
-            <Text size="l" weight="bold" mt="30" my="15" color="red">
-              {user.nickName}
-            </Text>
-          </Box>
-          <Box>
-            <Text>&nbsp;</Text>
-          </Box>
-          <Box sx={{ marginTop: "6px" }}>
-            <Text size="m" weight="semibold" mt="30" my="15">
-              {"님의 챌린지 리스트"}
-            </Text>
-          </Box>
-        </Box> */}
         <MyChallengeCardList />
       </Box>
-      <SideBar>
+      {/* <SideBar>
         <Box sx={{ margin: "40px 30px 50px 30px" }}>
           <MyChallengeCarousel />
         </Box>
         <Box sx={{ marginTop: "30px", marginLeft: "30px" }}>
           <Todolist />
         </Box>
-      </SideBar>
+      </SideBar> */}
+      <Box sx={{width: "150px", height: "100vh", backgroundColor: "white"}}></Box>
+      {/* <Box sx={{width: "150px", height: "100vh", backgroundColor: "#f8f8f8"}}></Box> */}
     </Box>
   );
 }
