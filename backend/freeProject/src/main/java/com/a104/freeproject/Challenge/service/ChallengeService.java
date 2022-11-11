@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public interface ChallengeService {
-    boolean register(registerRequest input, HttpServletRequest req) throws NotFoundException;
+    Long register(registerRequest input, HttpServletRequest req) throws NotFoundException;
 
     List<ChlUserNameResponse> getUserInfo(Long chlId) throws NotFoundException;
 

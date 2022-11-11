@@ -65,7 +65,7 @@ public class ChallengeServiceImpl implements ChallengeService {
     private final static int  EARTH_RADIUS = 6371;
 
     @Override
-    public boolean register(registerRequest input, HttpServletRequest req) throws NotFoundException {
+    public Long register(registerRequest input, HttpServletRequest req) throws NotFoundException {
 
         Member member;
 
@@ -127,7 +127,7 @@ public class ChallengeServiceImpl implements ChallengeService {
             ptrChl.setKkobak(input.getKkobak());
         }
         
-        return true;
+        return cid;
     }
 
     @Override

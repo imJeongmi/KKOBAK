@@ -28,7 +28,7 @@ public class ChallengeController {
             +"순서 >> 회원가입 >> 토큰 입력(유효기간 7일) >> 카테고리 생성 + 세부카테고리 생성(있으면 pass) >> 이미지url 생성 >> 챌린지 생성 일..걸요...?"
             +"startTime, endTime 걍 스웨거 무시하시고 \"startTime\": \"2022-10-22T22:37\" 형식으로 입력해주시면 됩니당\n"
             +"알람시간은 24시간 표시 형식으로 >> 14:25 이렇게 보내주세용")
-    public ResponseEntity<Boolean> register(@RequestBody registerRequest input, HttpServletRequest req) throws NotFoundException{
+    public ResponseEntity<Long> register(@RequestBody registerRequest input, HttpServletRequest req) throws NotFoundException{
         return ResponseEntity.ok().body(challengeService.register(input, req));
     }
 
