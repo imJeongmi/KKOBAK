@@ -2,49 +2,37 @@ import React from "react";
 import { Box } from "@mui/system";
 import styled from "@emotion/styled";
 
-function getFlexDirection(flexDir) {
-  switch (flexDir) {
-    case "col":
-      return "column";
-    default:
-      return "row";
-  }
+function getWidth(width) {
+  if (!!width) return width;
+  return 60;
 }
 
-function getAlignItems(flexDir) {
-  switch (flexDir) {
-    case "col":
-      return "center";
-    default:
-      return "none";
-  }
+function getAlignItems(alignItems) {
+  if (!!alignItems) return alignItems;
+  return "center"
 }
 
-function getJustifyContent(flexDir) {
-  switch (flexDir) {
-    case "col":
-      return "start";
-    default:
-      return "center";
-  }
+function getJustifyContent(justifyContent) {
+  if (!!justifyContent) return justifyContent;
+  return "start"
 }
 
 const GreyMainBox = styled(Box)(
-  ({flexDir}) => `
-  width: 60vw;
-  height: 85vh;
+  ({width, alignItems, justifyContent}) => `
+  width: ${getWidth(width)}vw;
+  height: 88vh;
   background-color: #F7F7F7;
   border-radius: 20px;
   text-align: center;
   display: flex;
-  flex-direction: ${getFlexDirection(flexDir)};
-  align-items: ${getAlignItems(flexDir)};
-  justify-content: ${getJustifyContent(flexDir)};
+  flex-direction: column;
+  align-items: ${getAlignItems(alignItems)};
+  justify-content: ${getJustifyContent(justifyContent)};
   // box-shadow:  20px 20px 66px #e0e0e0,
   // -20px -20px 66px #ffffff;
   `
 );
 
-export default function MainBox({ children, flexDir }) {
-  return <GreyMainBox flexDir={flexDir}>{children}</GreyMainBox>;
+export default function MainBox({ children, width, alignItems, justifyContent}) {
+  return <GreyMainBox width={width} alignItems={alignItems} justifyContent={justifyContent}>{children}</GreyMainBox>;
 }

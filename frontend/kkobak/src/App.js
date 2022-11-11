@@ -19,9 +19,10 @@ function App() {
       >
         <Box
           sx={{
-            width: "80px",
+            width: "150px",
             height: "100vh",
-            backgroundColor: "black",
+            // backgroundColor: "#f8f8f8",
+            backgroundColor: "white",
           }}
         ></Box>
         <Nav />
