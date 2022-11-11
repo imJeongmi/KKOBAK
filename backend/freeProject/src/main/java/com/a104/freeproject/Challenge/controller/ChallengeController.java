@@ -135,4 +135,16 @@ public class ChallengeController {
         return ResponseEntity.ok().body(challengeService.judgeDone(input, req));
     }
 
+    @GetMapping("/chk/{cid}")
+    @ApiOperation(value="chlId를 넘겨주고 오늘 날짜 기준 몇 번 했는지 알려주는 api", notes="'/api/challenge/chk/1' 형식으로 사용")
+    public ResponseEntity<CntResponse> chkCid(@PathVariable("cid") Long cid, HttpServletRequest req) throws NotFoundException{
+        return ResponseEntity.ok().body(challengeService.chkCid(cid, req));
+    }
+
+    @GetMapping("/change/{cid}/{cnt}")
+    @ApiOperation(value="cnt의 값을 직접 다룰 수 있는 api", notes="'/api/challenge/change/106/3' 형식으로 사용")
+    public void changeCnt(@PathVariable("cid") Long cid, @PathVariable("cnt") int cnt, HttpServletRequest req) throws NotFoundException{
+        challengeService.changeCnt(cid,cnt,req);
+    }
+
 }

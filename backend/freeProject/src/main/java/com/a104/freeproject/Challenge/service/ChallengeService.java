@@ -37,5 +37,6 @@ public interface ChallengeService {
     boolean participateChl(Long chlId, int alarmType, HttpServletRequest req) throws NotFoundException;
     boolean findChlDone(Long chlId, HttpServletRequest req) throws NotFoundException;
     boolean judgeDone(JudgeRequest input, HttpServletRequest req) throws NotFoundException;
-
+    CntResponse chkCid(Long cid, HttpServletRequest req) throws NotFoundException;
+    void changeCnt (Long cid, int cnt, HttpServletRequest req) throws NotFoundException;
 }

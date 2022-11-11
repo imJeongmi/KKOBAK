@@ -428,9 +428,16 @@ public class ChallengeServiceImpl implements ChallengeService {
                 dist += getDistance(s1.getLat(),s1.getLng(),s2.getLat(),s2.getLng());
             }
 
-            if(dist >= goal) {
-                log.setFin(true);
-                log.setCnt((int)dist);
+            if(dist >= goal) { // 성공
+                if(!log.isFin()){ // 실패 -> 성공
+                    log.setFin(true);
+                    log.setCnt(log.getCnt()+(int)dist);
+                    logRepository.save(log);
+
+                    p.setFailDay(p.getFailDay()-1);
+                    p.setSucDay(p.getSucDay()+1);
+                    prtChlRepository.save(p);
+                }
 
                 for(Statgps s : gpsList){
                     s.setSuccess(true);
@@ -438,6 +445,9 @@ public class ChallengeServiceImpl implements ChallengeService {
                 }
             }
             logRepository.save(log);
+
+            System.out.println("현재 log 상태: cnt = "+
+                    log.getCnt()+", 성공일 = "+p.getSucDay()+", 실패일 = "+p.getFailDay());
             return log.isFin();
         }
         else if (dc==3){ // 명상 분
@@ -450,21 +460,53 @@ public class ChallengeServiceImpl implements ChallengeService {
             }
 
             // 성공한 명상
-            System.out.println("성공한 명상임");
+            System.out.println("성공한 명상");
             for(Statbpm s : bpmList){
                 s.setSuccess(true);
                 bpmRepository.save(s);
             }
+
+            if(!log.isFin()){ // 실패 -> 성공
+                log.setFin(true);
+                log.setCnt(log.getCnt()+c.getGoal());
+                logRepository.save(log);
+
+                p.setFailDay(p.getFailDay()-1);
+                p.setSucDay(p.getSucDay()+1);
+                prtChlRepository.save(p);
+            }
+
+            System.out.println("현재 log 상태: cnt = "+
+                    log.getCnt()+", 성공일 = "+p.getSucDay()+", 실패일 = "+p.getFailDay());
+
             return log.isFin();
         }
         else if (dc==4 || dc==5 || dc==6){ // 물마시기 회, 영양제 먹기 회, 일어서기 회
             System.out.println("dc = " + dc);
             int goal = c.getGoal();
-            if(log.getCnt()+1>=goal) {
-                log.setFin(true);
+
+            if(log.getCnt()+1>=goal){ // 성공
+                if(!log.isFin()) { // 실패 -> 성공
+                    log.setFin(true);
+                    p.setSucDay(p.getSucDay()+1);
+                    p.setFailDay(p.getFailDay()-1);
+                    prtChlRepository.save(p);
+                }
+            }
+            else{ // 실패
+                if(log.isFin()){ // 성공 -> 실패
+                    log.setFin(false);
+                    p.setSucDay(p.getSucDay()-1);
+                    p.setFailDay(p.getFailDay()+1);
+                    prtChlRepository.save(p);
+                }
             }
             log.setCnt(log.getCnt()+1);
             logRepository.save(log);
+            System.out.println("현재 log 상태: cnt = "+
+                    log.getCnt()+", 성공일 = "+p.getSucDay()+", 실패일 = "+p.getFailDay());
+
+            // --------------------------------
 
             return log.isFin();
         }
@@ -478,10 +520,85 @@ public class ChallengeServiceImpl implements ChallengeService {
 
             if(d<100) {
                 log.setFin(true);
+                logRepository.save(log);
+                if(!log.isFin()){
+                    p.setSucDay(p.getSucDay()+1);
+                    p.setFailDay(p.getFailDay()-1);
+                    prtChlRepository.save(p);
+                }
                 return true;
             }
             return false;
         }
+    }
+
+    @Override
+    public CntResponse chkCid(Long cid, HttpServletRequest req) throws NotFoundException {
+        Member member = memberService.findEmailbyToken(req);
+
+        if(!challengeRepository.existsById(cid)) throw new NotFoundException("존재하지 않는 챌린지입니다.");
+        Challenge c = challengeRepository.findById(cid).get();
+
+        if(c.isFin()||c.getStatus()==2) throw new NotFoundException("종료된 챌린지입니다.");
+
+        if(!prtChlRepository.existsByChallengeAndMember(c,member))
+            throw new NotFoundException("참여하지 않은 챌린지 입니다.");
+
+        PrtChl p = prtChlRepository.findByChallengeAndMember(c,member);
+        if(p.is_fin()) throw new NotFoundException("종료된 챌린지입니다.");
+
+        LocalDate now = LocalDate.now(ZoneId.of("Asia/Seoul"));
+
+        if(!logRepository.existsByPrtChlAndDate(p,now))
+            throw new NotFoundException("해당 챌린지의 당일 로그가 존재하지 않습니다.");
+        Log log = logRepository.findByPrtChlAndDate(p,now);
+
+        return CntResponse.builder()
+                .cnt(log.getCnt()).done(log.isFin()).goal(c.getGoal())
+                .build();
+    }
+
+    @Override
+    public void changeCnt(Long cid, int cnt, HttpServletRequest req) throws NotFoundException {
+        Member member = memberService.findEmailbyToken(req);
+
+        if(!challengeRepository.existsById(cid)) throw new NotFoundException("존재하지 않는 챌린지입니다.");
+        Challenge c = challengeRepository.findById(cid).get();
+
+        if(c.isFin()||c.getStatus()==2) throw new NotFoundException("종료된 챌린지입니다.");
+
+        if(!prtChlRepository.existsByChallengeAndMember(c,member))
+            throw new NotFoundException("참여하지 않은 챌린지 입니다.");
+
+        PrtChl p = prtChlRepository.findByChallengeAndMember(c,member);
+        if(p.is_fin()) throw new NotFoundException("종료된 챌린지입니다.");
+
+        LocalDate now = LocalDate.now(ZoneId.of("Asia/Seoul"));
+
+        if(!logRepository.existsByPrtChlAndDate(p,now))
+            throw new NotFoundException("해당 챌린지의 당일 로그가 존재하지 않습니다.");
+        Log log = logRepository.findByPrtChlAndDate(p,now);
+
+        log.setCnt(cnt);
+        if(cnt>=c.getGoal()){ // 성공
+            if(!log.isFin()) { // 실패 -> 성공
+                log.setFin(true);
+                p.setSucDay(p.getSucDay()+1);
+                p.setFailDay(p.getFailDay()-1);
+                prtChlRepository.save(p);
+            }
+        }
+        else{ // 실패
+            if(log.isFin()){ // 성공 -> 실패
+                log.setFin(false);
+                p.setSucDay(p.getSucDay()-1);
+                p.setFailDay(p.getFailDay()+1);
+                prtChlRepository.save(p);
+            }
+        }
+        logRepository.save(log);
+        System.out.println("현재 log 상태: cnt = "+
+                log.getCnt()+", 성공일 = "+p.getSucDay()+", 실패일 = "+p.getFailDay());
     }
 
     public List<ChallengeListResponse> makeResponse(List<Challenge> content) {
