@@ -63,7 +63,6 @@ export default function WidgetWeather() {
 
   useEffect(() => {
     pushDays();
-    console.log("hi");
     // getCurrentTemp();
   }, []);
 

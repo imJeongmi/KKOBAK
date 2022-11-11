@@ -143,9 +143,8 @@ export default function ChallengeRegister() {
     if (detailCategory !== "7" && !check.test(goal)) {
       alert("챌린지 목표는 숫자로 입력해주세요");
       return false;
-    }
-    console.log(kkobakCount)
-    if (kkobakCount >= 3) {
+    } 
+    if (kkobak === "1" && kkobakCount >= 3 ) {
       alert("꼬박 챌린지는 최대 3개만 생성 가능합니다");
       return false;
     }
