@@ -29,6 +29,7 @@
     "sass": "^1.55.0",
     "sass-loader": "^13.1.0",
     "slick-carousel": "^1.8.1",
+    "swiper": "^8.4.4",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
