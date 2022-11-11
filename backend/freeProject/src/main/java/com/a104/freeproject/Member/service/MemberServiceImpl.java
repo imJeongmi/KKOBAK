@@ -430,6 +430,7 @@ public class MemberServiceImpl implements MemberService{
             for (Todolist todo : todolist) {
                 watchTodoListInfo.add(WatchTodoListInfoResponse.builder()
                         .chlId(-1*todo.getId())
+                        .title(todo.getContents())
                         .contents(todo.getContents())
                         .categoryId(0L)
                         .detailCategoryId(0L)
