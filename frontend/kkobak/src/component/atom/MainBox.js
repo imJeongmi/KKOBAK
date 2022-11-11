@@ -7,6 +7,11 @@ function getWidth(width) {
   return 60;
 }
 
+function getHeight(height) {
+  if (!!height) return height;
+  return "88vh";
+}
+
 function getAlignItems(alignItems) {
   if (!!alignItems) return alignItems;
   return "center"
@@ -18,9 +23,9 @@ function getJustifyContent(justifyContent) {
 }
 
 const GreyMainBox = styled(Box)(
-  ({width, alignItems, justifyContent}) => `
+  ({width, height, alignItems, justifyContent}) => `
   width: ${getWidth(width)}vw;
-  height: 88vh;
+  height: ${getHeight(height)};
   background-color: #F7F7F7;
   border-radius: 20px;
   text-align: center;
@@ -31,6 +36,6 @@ const GreyMainBox = styled(Box)(
   `
 );
 
-export default function MainBox({ children, width, alignItems, justifyContent}) {
-  return <GreyMainBox width={width} alignItems={alignItems} justifyContent={justifyContent}>{children}</GreyMainBox>;
+export default function MainBox({ children, width, height, alignItems, justifyContent}) {
+  return <GreyMainBox width={width} height={height} alignItems={alignItems} justifyContent={justifyContent}>{children}</GreyMainBox>;
 }
