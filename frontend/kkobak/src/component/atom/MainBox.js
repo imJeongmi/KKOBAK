@@ -28,8 +28,6 @@ const GreyMainBox = styled(Box)(
   flex-direction: column;
   align-items: ${getAlignItems(alignItems)};
   justify-content: ${getJustifyContent(justifyContent)};
-  // box-shadow:  20px 20px 66px #e0e0e0,
-  // -20px -20px 66px #ffffff;
   `
 );
 
