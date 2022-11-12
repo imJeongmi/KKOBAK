@@ -369,7 +369,12 @@ public class ChallengeServiceImpl implements ChallengeService {
         if(prtChlRepository.existsByChallengeAndMember(c,member))
             throw new NotFoundException("이미 진행 중인 챌린지입니다.");
 
+        if(c.getCurrentNum()==c.getLimitPeople())
+            throw new NotFoundException("챌린지 참여 인원이 다 찼습니다.");
+
         prtChlService.participate(chlId,req,alarmType);
+        c.setCurrentNum(c.getCurrentNum()+1);
+        challengeRepository.save(c);
         return true;
     }
 
