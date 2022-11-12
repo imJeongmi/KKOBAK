@@ -19,7 +19,6 @@ export default function WidgetWeather() {
   const [days, setDays] = useState();
 
   const [location, setLocation] = useState("Seoul");
-  // const [location, setLocation] = useState();
   const [currentLat, setCurrentLat] = useState(37.5);
   const [currentLon, setCurrentLon] = useState(127.03);
   const [currentDayIdx, setCurrentDayIdx] = useState(0);
@@ -31,7 +30,6 @@ export default function WidgetWeather() {
 
   function getCurrentTempSuccess(res) {
     const data = res.data;
-    // console.log(data);
 
     setCurrentTemp(Math.round(data.current.temp));
     setCurrentMaxTemp(Math.round(data.daily[currentDayIdx].temp.max));
@@ -63,17 +61,11 @@ export default function WidgetWeather() {
 
   useEffect(() => {
     pushDays();
-    // getCurrentTemp();
   }, []);
 
   useEffect(() => {
     getCurrentTemp();
-    // }, [currentLat, currentDayIdx]);
   }, [currentDayIdx]);
-
-  // useEffect(() => {
-  //   getLocationTemp();
-  // }, [location]);
 
   useEffect(() => {
     switch (currentWeather) {
@@ -118,7 +110,6 @@ export default function WidgetWeather() {
   function onSubmit(e) {
     e.preventDefault();
     const newLocation = e.target[0].value;
-    // setLocation(newLocation);
   }
 
   return (
@@ -131,17 +122,17 @@ export default function WidgetWeather() {
         />
       </form>
       <div className="main-display">
-        <Text size="xl" weight="medium">{`${currentTemp}°`}</Text>
+        <Text size="40px" weight="semibold">{`${currentTemp}°`}</Text>
         <div className="sub-info">
           <div className="weather-display">
-            <img src={currentWeatherImg} width="30px" />
-            <Text weight="semibold" size="18px" color="white" mx="10px">
+            <img src={currentWeatherImg} width="20px" />
+            <Text weight="semibold" size="16px" color="white" mx="10px">
               {currentWeather}
             </Text>
           </div>
           <Text
             weight="semibold"
-            size="15px"
+            size="13px"
             mt="3"
           >{`최고: ${currentMaxTemp}°  최저: ${currentMinTemp}°`}</Text>
         </div>
@@ -168,7 +159,7 @@ export default function WidgetWeather() {
                     setCurrentDayIdx(index);
                   }}
                 >
-                  <Text weight="medium" color="white" mx="4px" size="13px">
+                  <Text weight="medium" color="white" mx="4px" size="11px">
                     {item}
                   </Text>
                 </div>

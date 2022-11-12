@@ -13,8 +13,9 @@ import "./Todolist.scss";
 
 const TodolistBox = styled(Box)(
   () => `
-    width: 278px;
-    height: 600px;
+    width: 250px;
+    height: 465px;
+    margin: 35px 0;
     background-color: #FAFAFA;
     border-radius: 20px;
     `
@@ -22,7 +23,7 @@ const TodolistBox = styled(Box)(
 
 const DateBox = styled(Box)(
   () => `
-    padding: 25px 35px 25px 35px;
+    padding: 25px 35px 15px 35px;
     display: flex;
     justify-content: space-around;
     `
@@ -40,12 +41,12 @@ const TodolistInput = styled(Box)(
 
 const CheckBox = styled(Box)(
   () => `
-    width: 20px;
-    height: 20px;
+    width: 17px;
+    height: 17px;
     background-color: #ffffff;
     border-radius: 5px;
     border: 1px solid #CCCCCC;
-    margin: 0 20px;
+    margin: 0 15px;
     `
 );
 
@@ -164,12 +165,12 @@ export default function Todolist() {
             cursor: "pointer",
           }}
         >
-          <Text color="blue" weight="bold">
+          <Text color="blue" weight="bold" size="14px">
             &lt;
           </Text>
         </Box>
         <Box sx={{ width: "140px", textAlign: "center" }}>
-          <Text weight="semibold">{`${formedNowDate} (${formedNowDay})`}</Text>
+          <Text weight="semibold" size="14px">{`${formedNowDate} (${formedNowDay})`}</Text>
         </Box>
         <Box
           onClick={onClickNextDay}
@@ -177,7 +178,7 @@ export default function Todolist() {
             cursor: "pointer",
           }}
         >
-          <Text color="blue" weight="bold">
+          <Text color="blue" weight="bold" size="14px">
             &gt;
           </Text>
         </Box>
@@ -193,6 +194,8 @@ export default function Todolist() {
             contents={item.title}
             done={item.done}
             chlId={item.chlId}
+            watch={item.watch}
+            category={item.category}
             dashedNowDate={nowDate.format("YYYY-MM-DD")}
             weight="semibold"
             color="blue"

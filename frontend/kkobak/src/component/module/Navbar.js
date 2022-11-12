@@ -66,7 +66,7 @@ export default function SelectedListItem() {
       >
         <ListItemButton
           component={Link}
-          to="/setting"
+          to="/IntroPage"
           // href="/setting"
           sx={{ paddingLeft: "21px" }}
           selected={selectedIndex === 0}

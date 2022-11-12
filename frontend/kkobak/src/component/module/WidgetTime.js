@@ -7,14 +7,13 @@ import Text from "component/atom/Text";
 
 const TimeBox = styled(Box)(
   () => `
-  // width: 280px;
-  height: 140px;
+  width: 250px;
+  height: 120px;
   background-color: #F0F6FB;
   border-radius: 30px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   `
 );
 
@@ -52,10 +51,10 @@ export default function ClockContainer() {
 
   return (
     <TimeBox>
-      <Text size="xl" weight="bold">
+      <Text size="38px" weight="bold" mt="20" my="10">
         {time.format("HH : mm")}
       </Text>
-      <Text size="14" weight="medium" mt="10">
+      <Text size="13px" weight="medium">
         {time.format("YYYY년 MM월 DD일")}
         {` (${getDay(time.day())}) `}
       </Text>

@@ -102,9 +102,8 @@ export default function MainCalendar({ chlId, startTime, endTime, title }) {
         height: "80vh",
         width: "60vw",
         display: "flex",
-        // alignItems: "center"
         flexDirection: "column",
-        justifyContent: "center",
+        justifyContent: "start",
       }}
     >
       {/* <Box>{title}</Box>

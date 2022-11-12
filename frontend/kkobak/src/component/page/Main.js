@@ -8,9 +8,9 @@ import Pagination from "@mui/material/Pagination";
 import MainBox from "component/atom/MainBox";
 import SideBar from "component/atom/SideBar";
 import Text from "component/atom/Text";
-import Todolist from "component/module/Todolist";
-import MainCarousel from "component/module/MainCarousel";
 import MainCalendar from "component/atom/MainCalendar";
+import Todolist from "component/module/Todolist";
+import WidgetCarousel from "component/module/WidgetCarousel";
 import EmptyChallenge from "component/page/EmptyChallenge";
 
 import {
@@ -44,7 +44,6 @@ export default function Main() {
 
   function fetchChallengePageCntSuccess(res) {
     setMyPageNation(res.data);
-    // console.log(res.data);
   }
 
   function fetchChallengePageCntFail(res) {
@@ -60,8 +59,6 @@ export default function Main() {
 
   function requestUserInfoSuccess(res) {
     setUser(res.data);
-    // console.log(res.data);
-    // console.log(user.nickName);
   }
 
   function requestUserInfoFail(res) {
@@ -92,24 +89,14 @@ export default function Main() {
           <EmptyChallenge />
         </Box>
       </Box>
-      <SideBar>
-        <Box sx={{ margin: "40px 30px 50px 30px" }}>
-          <MainCarousel />
-        </Box>
-
-        <Box sx={{ marginTop: "30px", marginLeft: "30px" }}>
-          <Todolist />
-        </Box>
-      </SideBar>
     </Box>
   ) : (
     <Box
       sx={{
         display: "flex",
-        justifyContent: "space-between",
       }}
     >
-      <Box sx={{ margin: "0 auto" }}>
+      <Box sx={{ margin: "0 auto", display: "flex", flexDirection: "column" }}>
         <Box sx={{ display: "flex" }}>
           <Text size="m" weight="semibold" mt="30" my="15">
             {"안녕하세요\u00A0"}
@@ -121,20 +108,19 @@ export default function Main() {
             님
           </Text>
         </Box>
-        <MainBox>
+        <MainBox height="622px">
           <Box sx={{ display: "flex", flexDirection: "column" }}>
             {MyChallengeList.slice(page - 1, page).map((item) => {
               const startTimeCheck = moment(item.startTime).format(
                 "YYYY/MM/DD"
               );
               const endTimeCheck = moment(item.endTime).format("YYYY/MM/DD");
-              // console.log(item);
               return (
                 <Box>
                   <Box
                     sx={{
-                      height: "50px",
-                      margin: "0 30px",
+                      height: "45px",
+                      margin: "30px 45px 1px 45px",
                       display: "flex",
                       alignItems: "end",
                       justifyContent: "space-between",
@@ -150,10 +136,12 @@ export default function Main() {
                         hideNextButton
                       />
                     </Stack>
-                    <Text size="20px" weight="bold">
+                    <Text size="20px" weight="bold" my="25">
                       {item.title}
                     </Text>
-                    <Text>{`${startTimeCheck}-${endTimeCheck}`}</Text>
+                    <Text
+                      size="14px"
+                    >{`${startTimeCheck}-${endTimeCheck}`}</Text>
                   </Box>
                   <Box>
                     <MainCalendar
@@ -170,15 +158,16 @@ export default function Main() {
           </Box>
         </MainBox>
       </Box>
-
-      <SideBar>
-        <Box sx={{ margin: "40px 30px 50px 30px" }}>
-          <MainCarousel />
-        </Box>
-        <Box sx={{ marginTop: "30px", marginLeft: "30px" }}>
+      <Box sx={{ margin: "0 auto", display: "flex", flexDirection: "column" }}>
+        <Box sx={{ width: "250px", margin: "70px 30px 50px 30px" }}>
+          <WidgetCarousel />
           <Todolist />
         </Box>
-      </SideBar>
+      </Box>
+      {/* <Box sx={{width: "150px", height: "100vh", backgroundColor: "#f8f8f8"}}></Box>       */}
+      <Box
+        sx={{ width: "150px", height: "100vh", backgroundColor: "white" }}
+      ></Box>
     </Box>
   );
 }
