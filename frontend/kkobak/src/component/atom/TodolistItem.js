@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { styled } from "@mui/system";
-import { Box } from "@mui/material";
+import { Box, setRef } from "@mui/material";
 
 import moment from "moment";
 import Text from "component/atom/Text";
@@ -39,6 +39,8 @@ export default function TodolistItem({
   contents,
   done,
   chlId,
+  watch,
+  category,
   dashedNowDate,
   weight,
   color,
@@ -62,16 +64,15 @@ export default function TodolistItem({
   function deleteTodolistFail(res) {}
 
   function changeKkobakChallengeDoneSuccess(res) {
-    // 캘린더 새로고침 연결
-    console.log("success");
+    setRefresh(!refresh);
   }
 
-  function changeKkobakChallengeDoneFail(res) {
-    console.log(res);
-  }
+  function changeKkobakChallengeDoneFail(res) {}
 
   function onClickCheckBox() {
+    console.log("watch: ", watch, ", done: ", done, ", category: ", category);
     setHover(false);
+    if (!!watch) return;
     if (nowDate === today) {
       setCheck(!check);
       setCancelText(!cancelText);
@@ -103,11 +104,11 @@ export default function TodolistItem({
         onMouseOver={() => setHover(true)}
         onMouseOut={() => setHover(false)}
       >
-        {(check && done) ? (
-          <img src={CheckImage} width="20px" />
-        ) : hover ? (
+        {check && done ? (
+          <img src={CheckImage} width="17px" />
+        ) : hover && !watch ? (
           <Box sx={{ opacity: 0.5 }}>
-            <img src={CheckImage} width="20px" />
+            <img src={CheckImage} width="17px" />
           </Box>
         ) : (
           ""
