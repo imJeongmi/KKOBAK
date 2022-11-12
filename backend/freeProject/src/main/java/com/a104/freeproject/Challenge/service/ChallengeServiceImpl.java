@@ -5,7 +5,9 @@ import com.a104.freeproject.Category.entity.DetailCategory;
 import com.a104.freeproject.Category.repository.CategoryRepository;
 import com.a104.freeproject.Category.repository.DetailCategoryRepository;
 import com.a104.freeproject.Challenge.entity.Challenge;
+import com.a104.freeproject.Challenge.entity.ChlTime;
 import com.a104.freeproject.Challenge.repository.ChallengeRepository;
+import com.a104.freeproject.Challenge.repository.ChlTimeRepository;
 import com.a104.freeproject.Challenge.request.JudgeRequest;
 import com.a104.freeproject.Challenge.request.registerRequest;
 import com.a104.freeproject.Challenge.response.*;
@@ -62,6 +64,7 @@ public class ChallengeServiceImpl implements ChallengeService {
     private final LogRepository logRepository;
     private final StatbpmRepository bpmRepository;
     private final StatgpsRepository gpsRepository;
+    private final ChlTimeRepository chlTimeRepository;
     private final static int  EARTH_RADIUS = 6371;
 
     @Override
@@ -312,6 +315,7 @@ public class ChallengeServiceImpl implements ChallengeService {
     public List<useWatchResponse> findWatchUse(boolean useWatch, Pageable pageable, HttpServletRequest req) throws NotFoundException {
         Member m = memberService.findEmailbyToken(req);
         List<PrtChl> prtList = prtChlRepository.findAllByWatchAndMember(useWatch, pageable, m);
+
         List<Challenge> chlList = new LinkedList<>();
         for(PrtChl prt : prtList){
             chlList.add(prt.getChallenge());
@@ -346,10 +350,12 @@ public class ChallengeServiceImpl implements ChallengeService {
     @Override
     public int findWatchCnt(boolean useWatch, Pageable pageable, HttpServletRequest req) throws NotFoundException {
         Member m = memberService.findEmailbyToken(req);
+        List<PrtChl> totalList = prtChlRepository.findAllByWatchAndMember(m,useWatch);
+        int size = totalList.size();
         List<PrtChl> prtList = prtChlRepository.findAllByWatchAndMember(useWatch, pageable, m);
-        int size = pageable.getPageSize();
-        if(prtList.size()%size!=0) return (prtList.size()/size)+1;
-        else return (prtList.size()/size);
+
+        if(size%prtList.size()!=0) return (size/prtList.size())+1;
+        else return (size/prtList.size());
     }
 
     @Override
@@ -599,6 +605,38 @@ public class ChallengeServiceImpl implements ChallengeService {
         logRepository.save(log);
         System.out.println("현재 log 상태: cnt = "+
                 log.getCnt()+", 성공일 = "+p.getSucDay()+", 실패일 = "+p.getFailDay());
+    }
+
+    @Override
+    public List<ChlSimpleResponse> getGroupList(Pageable pageable) throws NotFoundException {
+
+        List<Challenge> chlList = challengeRepository.findByLimitPeople(pageable);
+        List<ChlSimpleResponse> output = new LinkedList<>();
+
+        for(Challenge c : chlList){
+
+            ChlTime cTime = chlTimeRepository.findByChallenge(c);
+
+            List<String> tags = new LinkedList<>();
+            for (ChlTag t : c.getTagList()){
+                tags.add(t.getHashtag().getName());
+            }
+
+            output.add(ChlSimpleResponse.builder()
+                    .ChlId(c.getId()).title(c.getTitle()).imgurl(c.getImgurl()).isWatch(c.isWatch())
+                    .roomtype(c.getRoomtype()).startTime(cTime.getStartTime().toLocalDateTime().toLocalDate())
+                    .endTime(cTime.getEndTime().toLocalDateTime().toLocalDate()).tags(tags)
+                    .build());
+        }
+
+        return output;
+    }
+
+    @Override
+    public int getGroupListCnt(Pageable pageable) throws NotFoundException {
+        Page<Challenge> page = challengeRepository.findByLimitPeopleCnt(pageable);
+
+        return page.getTotalPages();
     }
 
     public List<ChallengeListResponse> makeResponse(List<Challenge> content) {

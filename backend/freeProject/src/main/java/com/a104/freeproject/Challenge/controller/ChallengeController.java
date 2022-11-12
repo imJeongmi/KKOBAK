@@ -147,4 +147,16 @@ public class ChallengeController {
         challengeService.changeCnt(cid,cnt,req);
     }
 
+    @GetMapping("/list/group-chl")
+    @ApiOperation(value="cnt의 값을 직접 다룰 수 있는 api", notes = "'/api/challenge/list/group-chl?page=0&size=3&sort=id,DESC' 형식으로 사용")
+    public ResponseEntity<List<ChlSimpleResponse>> getGroupList(Pageable pageable) throws NotFoundException{
+        return ResponseEntity.ok().body(challengeService.getGroupList(pageable));
+    }
+
+    @GetMapping("/list/group-chl/cnt")
+    @ApiOperation(value="cnt의 값을 직접 다룰 수 있는 api", notes = "'/api/challenge/list/group-chl/cnt?size=3&sort=id,DESC' 형식으로 사용")
+    public ResponseEntity<Integer> getGroupListCnt(Pageable pageable) throws NotFoundException{
+        return ResponseEntity.ok().body(challengeService.getGroupListCnt(pageable));
+    }
+
 }

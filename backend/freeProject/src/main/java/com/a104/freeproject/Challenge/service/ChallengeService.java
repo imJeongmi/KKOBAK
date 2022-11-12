@@ -39,4 +39,6 @@ public interface ChallengeService {
     boolean judgeDone(JudgeRequest input, HttpServletRequest req) throws NotFoundException;
     CntResponse chkCid(Long cid, HttpServletRequest req) throws NotFoundException;
     void changeCnt (Long cid, int cnt, HttpServletRequest req) throws NotFoundException;
+    List<ChlSimpleResponse> getGroupList(Pageable pageable) throws NotFoundException;
+    int getGroupListCnt(Pageable pageable) throws NotFoundException;
 }
