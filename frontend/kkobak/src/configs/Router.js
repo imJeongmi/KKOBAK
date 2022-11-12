@@ -10,6 +10,7 @@ import ChallengeDetail from "component/page/ChallengeDetail";
 import ChallengeRegister from "component/page/ChallengeRegister";
 import Statistics from "component/page/Statistics";
 import IntroPage from "component/page/IntroPage";
+import GroupChallenge from "component/page/GroupChallenge";
 
 function checkAuth() {
   return !!storage.get("accessToken");
@@ -36,6 +37,14 @@ export default function RouterConfiguration() {
         element={
           <CheckAuth>
             <MyChallenge />
+          </CheckAuth>
+        }
+      />
+      <Route
+        path="/GroupChallenge"
+        element={
+          <CheckAuth>
+            <GroupChallenge />
           </CheckAuth>
         }
       />
