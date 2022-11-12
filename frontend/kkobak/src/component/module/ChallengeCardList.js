@@ -87,7 +87,7 @@ export default function ChallengeCardList() {
       <Text> 생성된 챌린지가 없어요 </Text>
     </MainBox>
   ) : (
-    <MainBox flexDir="col">
+    <MainBox>
       <WatchToggleBox>
         <WatchToggle />
       </WatchToggleBox>
