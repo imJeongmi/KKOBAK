@@ -384,6 +384,8 @@ public class MemberServiceImpl implements MemberService{
                 todoListInfo.add(TodoListInfoResponse.builder().chlId(c.getId())
                         .title(c.getTitle())
                         .isDone(fin)
+                        .categoryId(c.getCategory().getId())
+                        .detailCategoryId(c.getDetailCategory().getId())
                         .kkobak(p.getKkobak())
                         .watch(c.isWatch())
                         .build());
