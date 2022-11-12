@@ -148,15 +148,21 @@ public class ChallengeController {
     }
 
     @GetMapping("/list/group-chl")
-    @ApiOperation(value="cnt의 값을 직접 다룰 수 있는 api", notes = "'/api/challenge/list/group-chl?page=0&size=3&sort=id,DESC' 형식으로 사용")
+    @ApiOperation(value="단체 챌린지 리스트 반환 api", notes = "'/api/challenge/list/group-chl?page=0&size=3&sort=id,DESC' 형식으로 사용")
     public ResponseEntity<List<ChlSimpleResponse>> getGroupList(Pageable pageable) throws NotFoundException{
         return ResponseEntity.ok().body(challengeService.getGroupList(pageable));
     }
 
     @GetMapping("/list/group-chl/cnt")
-    @ApiOperation(value="cnt의 값을 직접 다룰 수 있는 api", notes = "'/api/challenge/list/group-chl/cnt?size=3&sort=id,DESC' 형식으로 사용")
+    @ApiOperation(value="단체 챌린지 총 페이지 수 확인 api", notes = "'/api/challenge/list/group-chl/cnt?size=3&sort=id,DESC' 형식으로 사용")
     public ResponseEntity<Integer> getGroupListCnt(Pageable pageable) throws NotFoundException{
         return ResponseEntity.ok().body(challengeService.getGroupListCnt(pageable));
+    }
+
+    @GetMapping("/state/{cid}/{type}")
+    @ApiOperation(value="챌린지 웹에서 수행여부 cnt 보내고 받는 api", notes = "'/api/challenge/state/1/2' 형식으로 사용"+"type: 1 = add, 2 = sub")
+    public ResponseEntity<Boolean> changeStateChl(@PathVariable("cid") Long cid, @PathVariable("type") int type, HttpServletRequest req) throws NotFoundException{
+        return ResponseEntity.ok().body(challengeService.changeStateChl(cid,type,req));
     }
 
 }

@@ -41,4 +41,5 @@ public interface ChallengeService {
     void changeCnt (Long cid, int cnt, HttpServletRequest req) throws NotFoundException;
     List<ChlSimpleResponse> getGroupList(Pageable pageable) throws NotFoundException;
     int getGroupListCnt(Pageable pageable) throws NotFoundException;
+    boolean changeStateChl(Long cid, int type, HttpServletRequest req) throws NotFoundException;
 }

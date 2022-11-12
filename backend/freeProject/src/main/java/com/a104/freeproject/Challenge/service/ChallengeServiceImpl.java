@@ -25,6 +25,7 @@ import com.a104.freeproject.PrtChl.repository.PrtChlRepository;
 import com.a104.freeproject.PrtChl.service.PrtChlServiceImpl;
 import com.a104.freeproject.Statbpm.entity.Statbpm;
 import com.a104.freeproject.Statbpm.repository.StatbpmRepository;
+import com.a104.freeproject.Statbpm.response.BpmMiddleInterface;
 import com.a104.freeproject.Statgps.entity.Statgps;
 import com.a104.freeproject.Statgps.repository.StatgpsRepository;
 import com.a104.freeproject.Statgps.response.GpsResultResponse;
@@ -642,6 +643,61 @@ public class ChallengeServiceImpl implements ChallengeService {
         Page<Challenge> page = challengeRepository.findByLimitPeopleCnt(pageable);
 
         return page.getTotalPages();
+    }
+
+    @Override
+    public boolean changeStateChl(Long cid, int type, HttpServletRequest req) throws NotFoundException {
+
+        Member member = memberService.findEmailbyToken(req);
+
+        if(!challengeRepository.existsById(cid)) throw new NotFoundException("존재하지 않는 챌린지입니다.");
+        Challenge c = challengeRepository.findById(cid).get();
+
+        if(c.isFin()||c.getStatus()==2) throw new NotFoundException("종료된 챌린지입니다.");
+
+        if(!prtChlRepository.existsByChallengeAndMember(c,member))
+            throw new NotFoundException("참여하지 않은 챌린지 입니다.");
+
+        PrtChl p = prtChlRepository.findByChallengeAndMember(c,member);
+        if(p.is_fin()) throw new NotFoundException("종료된 챌린지입니다.");
+
+        LocalDate now = LocalDate.now(ZoneId.of("Asia/Seoul"));
+
+        if(!logRepository.existsByPrtChlAndDate(p,now))
+            throw new NotFoundException("해당 챌린지의 당일 로그가 존재하지 않습니다.");
+        Log log = logRepository.findByPrtChlAndDate(p,now);
+
+        Long dc = c.getDetailCategory().getId();
+        LocalDate today = LocalDate.now(ZoneId.of("Asia/Seoul"));
+        if(dc==1 ||dc==2 ||dc==3 ||dc==7 ) { // 센서 사용
+            if(bpmRepository.findByChkAndPrtChlJPQL(today.toString(),p).size()!=0) throw new NotFoundException("워치로만 조작 가능합니다.");
+            if(gpsRepository.findByChkAndPrtChl(today.toString(),p).size()!=0) throw new NotFoundException("워치로만 조작 가능합니다.");
+        }
+
+        int nowCnt = (type==1) ? 1 : -1;
+
+        if(log.getCnt()+nowCnt >= c.getGoal()){ // 성공 시
+            if(!log.isFin()){ // 실패 -> 성공
+                log.setFin(true);
+                p.setSucDay(p.getSucDay()+1);
+                p.setFailDay(p.getFailDay()-1);
+                prtChlRepository.save(p);
+            }
+        }
+        else{ // 실패 시
+            if(log.isFin()){ // 성공 -> 실패
+                log.setFin(false);
+                p.setSucDay(p.getSucDay()-1);
+                p.setFailDay(p.getFailDay()+1);
+                prtChlRepository.save(p);
+            }
+        }
+
+        if(log.getCnt()+nowCnt<0) log.setCnt(0);
+        else log.setCnt(log.getCnt()+nowCnt);
+        logRepository.save(log);
+
+        return log.isFin();
     }
 
     public List<ChallengeListResponse> makeResponse(List<Challenge> content) {
