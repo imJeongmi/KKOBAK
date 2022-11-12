@@ -6,7 +6,6 @@ import Text from "component/atom/Text";
 import Button from "component/atom/TextButton"
 import MainBox from "component/atom/MainBox";
 import ChallengeForm from "component/module/ChallengeForm";
-import SideBarChallengeCreate from "component/atom/SideBarChallengeCreate";
 import initial from "static/initial.png";
 
 import { getDetailCategoryList } from "api/Category";
@@ -19,7 +18,7 @@ import { getMyKkobakList } from "api/userApi";
 const ButtonBox = styled(Box)(
   () => `
   width: 95%;
-  margin-top : 30px;
+  margin-top : 50px;
   `
 );
 
@@ -168,9 +167,9 @@ export default function ChallengeRegister() {
         goal,
         imgSrc,
         kkobak,
-        1,
+        "1",
         "",
-        1,
+        "1",
         startTime,
         [],
         title,
@@ -191,7 +190,7 @@ export default function ChallengeRegister() {
         1,
         imgSrc,
         kkobak,
-        1,
+        "1",
         "",
         1,
         startTime,
@@ -215,7 +214,7 @@ export default function ChallengeRegister() {
         1,
         imgSrc,
         kkobak,
-        1,
+        "1",
         "",
         1,
         startTime,
@@ -238,9 +237,9 @@ export default function ChallengeRegister() {
     >
       <Box sx={{ margin: "0 auto" }}>
         <Text size="m" weight="semibold" mt="30" my="15">
-          새 챌린지 등록
+          나만의 챌린지 만들기
         </Text>
-        <MainBox flexDir="col">
+        <MainBox width="80" height="80vh" flexDir="col">
           <ChallengeForm
             imgSrc={imgSrc}
             category={category}
@@ -271,7 +270,7 @@ export default function ChallengeRegister() {
             changeUnit={changeUnit}
           ></ChallengeForm>
           <ButtonBox>
-            <Button size="m" my="0" onClick={register}>
+            <Button size="m" my="5" onClick={register}>
               챌린지 등록
             </Button>
           </ButtonBox>

@@ -63,7 +63,7 @@ const SettingTitleBox = styled(Box)(
 
 const SettingContentBox = styled(Box)(
   (height) => `
-  width: 360px;
+  width: 300px;
   height: 50px;
   display: flex;
   justify-content: start;
@@ -73,7 +73,7 @@ const SettingContentBox = styled(Box)(
 
 const ButtonBox = styled(Box)(
   () => `
-  // width: 100%;
+  width: 100%;
   display: flex;
   justify-content: end;
   margin-top: 10px;
