@@ -139,9 +139,7 @@ export default function Main() {
                     <Text size="20px" weight="bold" my="25">
                       {item.title}
                     </Text>
-                    <Text
-                      size="14px"
-                    >{`${startTimeCheck}-${endTimeCheck}`}</Text>
+                    <Text size="14px">{`${startTimeCheck}-${endTimeCheck}`}</Text>
                   </Box>
                   <Box>
                     <MainCalendar
@@ -164,10 +162,8 @@ export default function Main() {
           <Todolist />
         </Box>
       </Box>
-      {/* <Box sx={{width: "150px", height: "100vh", backgroundColor: "#f8f8f8"}}></Box>       */}
-      <Box
-        sx={{ width: "150px", height: "100vh", backgroundColor: "white" }}
-      ></Box>
+      {/* <Box sx={{ width: "150px", height: "100vh", backgroundColor: "#f8f8f8" }} /> */}
+      <Box sx={{ width: "150px", height: "100vh", backgroundColor: "white" }} />
     </Box>
   );
 }
