@@ -62,4 +62,10 @@ public class PrtChlController {
         return ResponseEntity.ok().body(prtChlService.getLikeList(req));
     }
 
+    @GetMapping("/check")
+    @ApiOperation(value="곧 삭제 예정. db 성공,실패일 한번에 수정용")
+    public ResponseEntity<Boolean> test() throws NotFoundException{
+        return ResponseEntity.ok().body(prtChlService.test());
+    }
+
 }

@@ -6,6 +6,8 @@ import com.a104.freeproject.Challenge.repository.ChallengeRepository;
 import com.a104.freeproject.Challenge.repository.ChlTimeRepository;
 import com.a104.freeproject.Challenge.response.ChallengeListResponse;
 import com.a104.freeproject.HashTag.entity.ChlTag;
+import com.a104.freeproject.Log.entity.Log;
+import com.a104.freeproject.Log.repository.LogRepository;
 import com.a104.freeproject.Log.service.LogServiceImpl;
 import com.a104.freeproject.Member.entity.Member;
 import com.a104.freeproject.Member.service.MemberServiceImpl;
@@ -38,6 +40,7 @@ public class PrtChlServiceImpl implements PrtChlService{
     private final MemberServiceImpl memberService;
     private final ChlTimeRepository chlTimeRepository;
     private final LogServiceImpl logService;
+    private final LogRepository logRepository;
 
     @Override
     public boolean participate(Long cid, HttpServletRequest req, int alarm) throws NotFoundException {
@@ -168,5 +171,23 @@ public class PrtChlServiceImpl implements PrtChlService{
         }
 
         return output;
+    }
+
+    @Override
+    public boolean test() {
+
+        List<PrtChl> pList = prtChlRepository.findAll();
+        for (PrtChl p : pList){
+            List<Log> logs = p.getLogs();
+            int sucDay = 0, FailDay = 0;
+            for (Log log : logs){
+                if(log.isFin()) sucDay++;
+                else FailDay++;
+            }
+            p.setFailDay(FailDay);
+            p.setSucDay(sucDay);
+        }
+
+        return true;
     }
 }

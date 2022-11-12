@@ -17,4 +17,6 @@ public interface PrtChlService {
     MyChallengeDetailResponse getPtrChlDetail(Long cid, HttpServletRequest req) throws NotFoundException;
 
     List<LikeDetail> getLikeList(HttpServletRequest req) throws NotFoundException;
+
+    boolean test();
 }
