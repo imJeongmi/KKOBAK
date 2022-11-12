@@ -251,7 +251,6 @@ export default function GroupChallengeRegister() {
             alarm={alarm}
             watch={watch}
             goal={goal}
-            unit={unit}
             kkobak={kkobak}
             setImgSrc={setImgSrc}
             setTitle={setTitle}

@@ -6,7 +6,6 @@ import TimePicker from "react-time-picker";
 import Input from "component/atom/Input";
 import Text from "component/atom/Text";
 import Textarea from "component/atom/Textarea";
-import Button from "component/atom/TextButton";
 
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
@@ -71,14 +70,6 @@ const SettingContentBox = styled(Box)(
   `
 );
 
-const ButtonBox = styled(Box)(
-  () => `
-  width: 100%;
-  display: flex;
-  justify-content: end;
-  margin-top: 10px;
-  `
-);
 
 export default function ChallengeForm({
   imgSrc,
@@ -92,7 +83,6 @@ export default function ChallengeForm({
   alarm,
   watch,
   goal,
-  unit,
   setImgSrc,
   setTitle,
   setCategory,

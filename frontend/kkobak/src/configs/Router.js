@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Main from "../component/page/Main";
 import MyChallenge from "../component/page/MyChallenge";
 import Setting from "component/page/Setting";
