@@ -89,15 +89,6 @@ export default function Main() {
           <EmptyChallenge />
         </Box>
       </Box>
-      <SideBar>
-        <Box sx={{ margin: "40px 30px 50px 30px" }}>
-          <WidgetCarousel />
-        </Box>
-
-        <Box sx={{ marginTop: "30px", marginLeft: "30px" }}>
-          <Todolist />
-        </Box>
-      </SideBar>
     </Box>
   ) : (
     <Box
@@ -128,8 +119,8 @@ export default function Main() {
                 <Box>
                   <Box
                     sx={{
-                      height: "50px",
-                      margin: "0 30px",
+                      height: "45px",
+                      margin: "30px 45px 1px 45px",
                       display: "flex",
                       alignItems: "end",
                       justifyContent: "space-between",
@@ -145,10 +136,12 @@ export default function Main() {
                         hideNextButton
                       />
                     </Stack>
-                    <Text size="20px" weight="bold">
+                    <Text size="20px" weight="bold" my="25">
                       {item.title}
                     </Text>
-                    <Text>{`${startTimeCheck}-${endTimeCheck}`}</Text>
+                    <Text
+                      size="14px"
+                    >{`${startTimeCheck}-${endTimeCheck}`}</Text>
                   </Box>
                   <Box>
                     <MainCalendar
@@ -172,7 +165,9 @@ export default function Main() {
         </Box>
       </Box>
       {/* <Box sx={{width: "150px", height: "100vh", backgroundColor: "#f8f8f8"}}></Box>       */}
-      <Box sx={{width: "150px", height: "100vh", backgroundColor: "white"}}></Box>      
+      <Box
+        sx={{ width: "150px", height: "100vh", backgroundColor: "white" }}
+      ></Box>
     </Box>
   );
 }

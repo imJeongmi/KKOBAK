@@ -194,6 +194,8 @@ export default function Todolist() {
             contents={item.title}
             done={item.done}
             chlId={item.chlId}
+            watch={item.watch}
+            category={item.category}
             dashedNowDate={nowDate.format("YYYY-MM-DD")}
             weight="semibold"
             color="blue"
