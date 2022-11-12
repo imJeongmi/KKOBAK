@@ -56,7 +56,6 @@ public class MemberServiceImpl implements MemberService{
     private final ChlTimeRepository chlTimeRepository;
     private final ChallengeRepository challengeRepository;
     private final LogRepository logRepository;
-    
     private final TodolistRepository todolistRepository;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final PasswordEncoder passwordEncoder;
@@ -444,6 +443,12 @@ public class MemberServiceImpl implements MemberService{
         } catch (Exception e){
             throw e;
         }
+    }
+
+    @Override
+    public void changeImg(ImgRequest input, HttpServletRequest req) throws NotFoundException {
+        Member member = findEmailbyToken(req);
+        member.setImgurl(input.getImgurl());
     }
 
 

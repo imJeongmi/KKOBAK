@@ -169,4 +169,12 @@ public class MemberController {
     public ResponseEntity<List<WatchTodoListInfoResponse>> getTodayTodoList(HttpServletRequest req) throws NotFoundException {
         return ResponseEntity.ok().body(memberService.getTodayListInfo(req));
     }
+
+    @PatchMapping("/change/profile-img")
+    @ApiOperation(value = "프로필 이미지 바꾸기")
+    public void changeImg(@RequestBody ImgRequest input, HttpServletRequest req) throws NotFoundException {
+        memberService.changeImg(input, req);
+    }
+
+
 }

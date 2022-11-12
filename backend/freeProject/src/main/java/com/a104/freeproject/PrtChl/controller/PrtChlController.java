@@ -54,8 +54,6 @@ public class PrtChlController {
 
 
 
-
-
     @GetMapping("/like")
     @ApiOperation(value = "즐찾 리스트 반환")
     public ResponseEntity<List<LikeDetail>> getLikeList(HttpServletRequest req) throws NotFoundException{

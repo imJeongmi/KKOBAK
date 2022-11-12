@@ -32,4 +32,5 @@ public interface MemberService {
     List<MonthChlResponse> monthChlInfo(Long chlId, String year, String month, HttpServletRequest req) throws NotFoundException;
     List<TodoListInfoResponse> getTodoListInfo(DayRequest day, HttpServletRequest req) throws NotFoundException;
     List<WatchTodoListInfoResponse> getTodayListInfo(HttpServletRequest req) throws NotFoundException;
+    void changeImg(ImgRequest input, HttpServletRequest req) throws NotFoundException;
 }

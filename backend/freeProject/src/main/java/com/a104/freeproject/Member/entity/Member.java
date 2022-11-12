@@ -49,6 +49,9 @@ public class Member implements Serializable {
     private String password;
 
     @Setter
+    private String imgurl;
+
+    @Setter
     @NotNull
     @Column(length = 20, unique = true)
     private String nickname;
