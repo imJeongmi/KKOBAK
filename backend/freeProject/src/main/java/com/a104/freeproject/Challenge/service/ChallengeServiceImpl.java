@@ -706,6 +706,20 @@ public class ChallengeServiceImpl implements ChallengeService {
         return log.isFin();
     }
 
+    @Override
+    public boolean findIsParticipate(Long cid, HttpServletRequest req) throws NotFoundException {
+
+        Member member = memberService.findEmailbyToken(req);
+
+        if(!challengeRepository.existsById(cid)) throw new NotFoundException("존재하지 않는 챌린지입니다.");
+        Challenge c = challengeRepository.findById(cid).get();
+
+        if(c.isFin()||c.getStatus()==2) throw new NotFoundException("종료된 챌린지입니다.");
+
+        if(!prtChlRepository.existsByChallengeAndMember(c,member)) return false;
+        else return true;
+    }
+
     public List<ChallengeListResponse> makeResponse(List<Challenge> content) {
         List<ChallengeListResponse> result = new ArrayList<>();
 

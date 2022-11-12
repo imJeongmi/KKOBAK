@@ -165,4 +165,10 @@ public class ChallengeController {
         return ResponseEntity.ok().body(challengeService.changeStateChl(cid,type,req));
     }
 
+    @GetMapping("/member/{cid}")
+    @ApiOperation(value="챌린지 웹에서 수행여부 cnt 보내고 받는 api", notes = "'/api/challenge/member/1' 형식으로 사용")
+    public ResponseEntity<Boolean> findIsParticipate(@PathVariable("cid") Long cid, HttpServletRequest req) throws NotFoundException{
+        return ResponseEntity.ok().body(challengeService.findIsParticipate(cid, req));
+    }
+
 }
