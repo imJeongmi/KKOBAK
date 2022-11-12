@@ -339,6 +339,7 @@ export default function ChallengeDetail() {
           </CardBox>
         </MainBox>
       </Box>
+      <Box sx={{ width: "150px", height: "100vh", backgroundColor: "white" }} />
     </Box>
   );
 }
