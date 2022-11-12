@@ -1,4 +1,5 @@
 import api from "api/api.js";
+import apiS3 from "./apiS3";
 
 function getChallengeDetail(challengeId, success, fail) {
   api.get(`/challenge/${challengeId}`).then(success).catch(fail);
@@ -136,6 +137,20 @@ function fetchNoWatchMyChallengePageCnt(success, fail) {
   api.get(`/challenge/watch-cnt/false?size=6`).then(success).catch(fail);
 }
 
+function fetchGroupChallengeList(page, success, fail) {
+  api
+    .get(`/challenge/list/group-chl?page=${page - 1}&size=8&sort=id,DESC`)
+    .then(success)
+    .catch(fail);
+}
+
+function fetchGroupChallengePageCnt(success, fail) {
+  api
+    .get(`/challenge/list/group-chl/cnt?size=8&sort=id,DESC`)
+    .then(success)
+    .catch(fail);
+}
+
 export {
   getChallengeDetail,
   checkChallengePassword,
@@ -152,4 +167,6 @@ export {
   requestChallengeNoUseWatch,
   fetchWatchMyChallengePageCnt,
   fetchNoWatchMyChallengePageCnt,
+  fetchGroupChallengeList,
+  fetchGroupChallengePageCnt,
 };
