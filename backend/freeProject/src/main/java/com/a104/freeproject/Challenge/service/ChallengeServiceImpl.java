@@ -158,9 +158,15 @@ public class ChallengeServiceImpl implements ChallengeService {
         List<ChlUserSimpleStatResponse> output = new LinkedList<>();
 
         for (PrtChl p:chlList){
+            Member member = p.getMember();
             double ratio = (1.0*p.getSucDay())/(p.getSucDay()+p.getFailDay());
-            output.add(ChlUserSimpleStatResponse.builder().nickname(p.getMember().getNickname())
-                    .sucRatio(Math.round(ratio*1000)/1000.0).build());
+            output.add(ChlUserSimpleStatResponse.builder()
+                    .nickname(member.getNickname())
+                    .imgurl(member.getImgurl())
+                    .sucRatio(Math.round(ratio*1000)/1000.0)
+                    .sucCnt(p.getSucDay())
+                    .failCnt(p.getFailDay())
+                    .build());
         }
 
         return output;

@@ -11,5 +11,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ChlUserSimpleStatResponse {
     private String nickname;
+    private String imgurl;
     private double sucRatio;
+    private int sucCnt;
+    private int failCnt;
 }
