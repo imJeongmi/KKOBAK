@@ -139,6 +139,25 @@ export default function SelectedListItem() {
             />
           </Box>
         </ListItemButton>
+
+        <ListItemButton
+          component={Link}
+          to="/GroupChallenge"
+          // href="/myChallenge"
+          selected={selectedIndex === 3}
+          onClick={(event) => handleListItemClick(event, 3)}
+          sx={{ paddingLeft: "14px", marginBottom: "30px", color: "white" }}
+        >
+          <Box>
+            <ListItemIcon sx={{ paddingLeft: "8px" }}>
+              <Flag />
+            </ListItemIcon>
+            <ListItemText
+              primary="단체챌린지"
+              primaryTypographyProps={{ fontSize: "12px" }}
+            />
+          </Box>
+        </ListItemButton>
         {/* <ListItemButton
           component={Link}
           to="/Statistics"
