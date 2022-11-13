@@ -27,7 +27,9 @@ const ListBox = styled(Box)(
   width: 100%;
   height: 80%;
   margin: 20px auto 0 auto;
-  overflow: scroll;
+  overflow-y: auto;
+  scrollbar-width: none;
+  overflow-x: none;
   `
 );
 
