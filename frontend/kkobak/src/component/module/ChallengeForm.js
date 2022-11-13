@@ -70,7 +70,6 @@ const SettingContentBox = styled(Box)(
   `
 );
 
-
 export default function ChallengeForm({
   imgSrc,
   title,
@@ -175,7 +174,7 @@ export default function ChallengeForm({
           height="100%"
         ></img>
       </ImageBox>
-      <Box sx={{ display: "flex", flexDirection: "row", mt: 5,}}>
+      <Box sx={{ display: "flex", flexDirection: "row", mt: 5 }}>
         <SettingBox>
           <SettingItem>
             <SettingTitleBox>
@@ -184,7 +183,9 @@ export default function ChallengeForm({
               </Text>
             </SettingTitleBox>
             <SettingContentBox>
-              <Box sx={{ height: "50px", display: "flex", alignItems: "center" }}>
+              <Box
+                sx={{ height: "50px", display: "flex", alignItems: "center" }}
+              >
                 <FormControl>
                   <RadioGroup
                     row
@@ -194,13 +195,33 @@ export default function ChallengeForm({
                   >
                     <FormControlLabel
                       value={1}
-                      control={<Radio />}
-                      label="운동"
+                      control={
+                        <Radio
+                          size="small"
+                          sx={{
+                            color: "default",
+                            "&.Mui-checked": {
+                              color: "#99b9d6",
+                            },
+                          }}
+                        />
+                      }
+                      label={<Text size="13px">운동</Text>}
                     />
                     <FormControlLabel
                       value={2}
-                      control={<Radio />}
-                      label="생활습관"
+                      control={
+                        <Radio
+                          size="small"
+                          sx={{
+                            color: "default",
+                            "&.Mui-checked": {
+                              color: "#99b9d6",
+                            },
+                          }}
+                        />
+                      }
+                      label={<Text size="13px">생활습관</Text>}
                     />
                   </RadioGroup>
                 </FormControl>
@@ -361,7 +382,9 @@ export default function ChallengeForm({
               </Text>
             </SettingTitleBox>
             <SettingContentBox>
-              <Box sx={{ height: "50px", display: "flex", alignItems: "center" }}>
+              <Box
+                sx={{ height: "50px", display: "flex", alignItems: "center" }}
+              >
                 <FormControl>
                   <RadioGroup
                     row
@@ -371,13 +394,33 @@ export default function ChallengeForm({
                   >
                     <FormControlLabel
                       value={1}
-                      control={<Radio />}
-                      label="설정"
+                      control={
+                        <Radio
+                          size="small"
+                          sx={{
+                            color: "default",
+                            "&.Mui-checked": {
+                              color: "#99b9d6",
+                            },
+                          }}
+                        />
+                      }
+                      label={<Text size="13px">설정</Text>}
                     />
                     <FormControlLabel
                       value={0}
-                      control={<Radio />}
-                      label="설정 안함"
+                      control={
+                        <Radio
+                          size="small"
+                          sx={{
+                            color: "default",
+                            "&.Mui-checked": {
+                              color: "#99b9d6",
+                            },
+                          }}
+                        />
+                      }
+                      label={<Text size="13px">설정 안함</Text>}
                     />
                   </RadioGroup>
                 </FormControl>
@@ -392,7 +435,9 @@ export default function ChallengeForm({
               </Text>
             </SettingTitleBox>
             <SettingContentBox>
-              <Box sx={{ height: "50px", display: "flex", alignItems: "center" }}>
+              <Box
+                sx={{ height: "50px", display: "flex", alignItems: "center" }}
+              >
                 <FormControl>
                   <RadioGroup
                     row
@@ -402,13 +447,33 @@ export default function ChallengeForm({
                   >
                     <FormControlLabel
                       value={true}
-                      control={<Radio />}
-                      label="사용"
+                      control={
+                        <Radio
+                          size="small"
+                          sx={{
+                            color: "default",
+                            "&.Mui-checked": {
+                              color: "#99b9d6",
+                            },
+                          }}
+                        />
+                      }
+                      label={<Text size="13px">사용</Text>}
                     />
                     <FormControlLabel
                       value={false}
-                      control={<Radio />}
-                      label="사용 안함"
+                      control={
+                        <Radio
+                          size="small"
+                          sx={{
+                            color: "default",
+                            "&.Mui-checked": {
+                              color: "#99b9d6",
+                            },
+                          }}
+                        />
+                      }
+                      label={<Text size="13px">사용 안함</Text>}
                     />
                   </RadioGroup>
                 </FormControl>
