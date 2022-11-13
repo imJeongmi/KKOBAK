@@ -8,7 +8,7 @@ import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 import ChallengeCard from "component/module/ChallengeCard";
 import Button from "component/atom/TextButton";
 import MainBox from "component/atom/MainBox";
-import EmptyChallenge from "component/page/EmptyChallenge";
+import EmptyChallenge from "component/module/EmptyChallenge";
 
 import { fetchMyChallengeList, fetchMyChallengePageCnt } from "api/userApi";
 import { useNavigate } from "react-router-dom";
