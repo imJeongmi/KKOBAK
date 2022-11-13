@@ -97,6 +97,7 @@ export default function GroupChallengeCardList() {
         <EmptyChallenge />
       ) : (
         <MainBox width={75} justifyContent="space-between">
+          <Box sx={{ width: "130px", height: "30px" }}></Box>
           <ChallengeListBox>
             {GroupChallengeList.map((item) => {
               return (
