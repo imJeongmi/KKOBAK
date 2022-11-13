@@ -213,6 +213,7 @@ public class MyChallengeDetailActivity extends AppCompatActivity {
             case MEDITATION:
                 Toast.makeText(this, "Meditation", Toast.LENGTH_SHORT).show();
                 intent = new Intent(this, MeditationActivity.class);
+                if (goal != -1) intent.putExtra("goal", goal);
                 break;
             case DRINK_WATER:
                 Toast.makeText(this, "Drink Water", Toast.LENGTH_SHORT).show();
