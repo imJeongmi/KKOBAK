@@ -71,7 +71,7 @@ const SettingContentBox = styled(Box)(
 );
 
 
-export default function ChallengeForm({
+export default function GroupChallengeForm({
   imgSrc,
   title,
   category,
@@ -95,7 +95,6 @@ export default function ChallengeForm({
   setRoomtype,
   setGoal,
   changeUnit,
-  setKkobak,
   register,
 }) {
   const challengeImgInput = useRef();
@@ -350,37 +349,6 @@ export default function ChallengeForm({
             <SettingContentBox>
               <Box sx={{ width: "160px", height: "40px" }}>
                 <TimePicker format="HH:mm" onChange={setAlarm} value={alarm} />
-              </Box>
-            </SettingContentBox>
-          </SettingItem>
-
-          <SettingItem>
-            <SettingTitleBox>
-              <Text size="16px" weight="bold">
-                꼬박챌린지 설정
-              </Text>
-            </SettingTitleBox>
-            <SettingContentBox>
-              <Box sx={{ height: "50px", display: "flex", alignItems: "center" }}>
-                <FormControl>
-                  <RadioGroup
-                    row
-                    aria-labelledby="demo-row-controlled-radio-buttons-group"
-                    name="controlled-radio-buttons-group"
-                    onChange={(e) => setKkobak(e.target.value)}
-                  >
-                    <FormControlLabel
-                      value={1}
-                      control={<Radio />}
-                      label="설정"
-                    />
-                    <FormControlLabel
-                      value={0}
-                      control={<Radio />}
-                      label="설정 안함"
-                    />
-                  </RadioGroup>
-                </FormControl>
               </Box>
             </SettingContentBox>
           </SettingItem>

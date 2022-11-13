@@ -1,19 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { Box, styled } from "@mui/material";
 
-
 import Text from "component/atom/Text";
-import Button from "component/atom/TextButton"
+import Button from "component/atom/TextButton";
 import MainBox from "component/atom/MainBox";
-import ChallengeForm from "component/module/ChallengeForm";
+import GroupChallengeForm from "component/module/GroupChallengeForm";
 import initial from "static/initial.png";
 
 import { getDetailCategoryList } from "api/Category";
 import { registerChallenge } from "api/Challenge";
 import axios from "axios";
 
-
-import { getMyKkobakList } from "api/userApi";
 import { useNavigate } from "react-router-dom";
 
 const ButtonBox = styled(Box)(
@@ -23,7 +20,7 @@ const ButtonBox = styled(Box)(
   `
 );
 
-export default function ChallengeRegister() {
+export default function GroupChallengeRegister() {
   const [category, setCategory] = useState(1);
   const [detailCategory, setDetailCategory] = useState(1);
   const [detailCategoryList, setDetailCategoryList] = useState([]);
@@ -40,19 +37,7 @@ export default function ChallengeRegister() {
   const [title, setTitle] = useState("");
   const [contents, setContents] = useState("");
   const [unit, setUnit] = useState("");
-  const [kkobakCount, setKkobakCount] = useState(0)
-
   const navigate = useNavigate();
-  function getMyKkobakListSuccess(res) {
-    setKkobakCount(res.data.length);
-  }
-
-  function getMyKkobakListFail(err) {
-  }
-
-  useEffect(() => {
-    getMyKkobakList(getMyKkobakListSuccess, getMyKkobakListFail);
-  }, []);
 
   const [goal, setGoal] = useState("");
 
@@ -63,6 +48,7 @@ export default function ChallengeRegister() {
   function getDetailCategoryListFail(err) {}
 
   useEffect(() => {
+    console.log(category);
     getDetailCategoryList(
       category,
       getDetailCategoryListSuccess,
@@ -71,7 +57,7 @@ export default function ChallengeRegister() {
   }, [category]);
 
   function registerSuccess(res) {
-    navigate(`/myChallenge/${res.data}`)
+    navigate(`/myChallenge/${res.data}`);
   }
 
   function registerFail(err) {
@@ -79,6 +65,7 @@ export default function ChallengeRegister() {
   }
 
   function changeAddressToDot(goal) {
+    console.log(goal);
     axios
       .get(
         `https://dapi.kakao.com/v2/local/search/address.json?query=${goal}`,
@@ -90,33 +77,14 @@ export default function ChallengeRegister() {
       )
       .then((res) => {
         const location = res.data.documents[0];
-        registerChallenge(
-          alarm,
-          0,
-          category,
-          contents,
-          detailCategory,
-          endTime,
-          1,
-          imgSrc,
-          kkobak,
-          "1",
-          "",
-          1,
-          startTime,
-          [],
-          title,
-          `${location?.address?.x},${location?.address?.y}`,
-          watch,
-          registerSuccess,
-          registerFail
-        );
+        setUnit(`${location?.address?.x},${location?.address?.y}`);
       });
   }
 
   function changeUnit(category, detailCategory) {
     if (category === "2" && detailCategory === "7") {
-      changeAddressToDot(goal);
+      const add = changeAddressToDot(goal);
+      return add;
     } else if (category === "2") {
       setUnit("회");
     } else if (category === "1" && detailCategory === "1") {
@@ -136,33 +104,29 @@ export default function ChallengeRegister() {
 
     if (!category) {
       alert("챌린지 카테고리를 선택해주세요");
-      return false
+      return false;
     }
-    
+
     if (!detailCategory) {
       alert("챌린지 상세 카테고리를 선택해주세요");
-      return false
+      return false;
     }
     if (!title) {
       alert("챌린지 제목을 입력해주세요");
-      return false
+      return false;
     }
 
     if (!contents) {
       alert("챌린지 상세 설명을 입력해주세요");
-      return false
+      return false;
     }
     let check = /^[0-9]+$/;
     if (!goal) {
       alert("챌린지 목표를 입력해주세요");
-      return false
+      return false;
     }
     if (detailCategory !== "7" && !check.test(goal)) {
       alert("챌린지 목표는 숫자로 입력해주세요");
-      return false;
-    } 
-    if (kkobak === "1" && kkobakCount >= 3 ) {
-      alert("꼬박 챌린지는 최대 3개만 생성 가능합니다");
       return false;
     }
     return true;
@@ -185,7 +149,7 @@ export default function ChallengeRegister() {
         goal,
         imgSrc,
         kkobak,
-        "1",
+        "100",
         "",
         "1",
         startTime,
@@ -197,9 +161,6 @@ export default function ChallengeRegister() {
         registerFail
       );
     } else if (category === "2" && detailCategory === "7") {
-      changeUnit(category, detailCategory);
-    } else {
-      changeUnit(category, detailCategory);
       registerChallenge(
         alarm,
         0,
@@ -210,7 +171,31 @@ export default function ChallengeRegister() {
         1,
         imgSrc,
         kkobak,
-        "1",
+        "100",
+        "",
+        1,
+        startTime,
+        [],
+        title,
+        unit,
+        watch,
+        registerSuccess,
+        registerFail
+      );
+    } else {
+      changeUnit(category, detailCategory);
+      // console.log(unit)
+      registerChallenge(
+        alarm,
+        0,
+        category,
+        contents,
+        detailCategory,
+        endTime,
+        1,
+        imgSrc,
+        kkobak,
+        "100",
         "",
         1,
         startTime,
@@ -233,10 +218,10 @@ export default function ChallengeRegister() {
     >
       <Box sx={{ margin: "0 auto" }}>
         <Text size="m" weight="semibold" mt="30" my="15">
-          나만의 챌린지 만들기
+          다 같이 챌린지 만들기
         </Text>
         <MainBox width="80" height="80vh" flexDir="col">
-          <ChallengeForm
+          <GroupChallengeForm
             imgSrc={imgSrc}
             category={category}
             detailCategory={detailCategory}
@@ -248,7 +233,6 @@ export default function ChallengeRegister() {
             alarm={alarm}
             watch={watch}
             goal={goal}
-            unit={unit}
             kkobak={kkobak}
             setImgSrc={setImgSrc}
             setTitle={setTitle}
@@ -264,7 +248,7 @@ export default function ChallengeRegister() {
             register={register}
             setUnit={setUnit}
             changeUnit={changeUnit}
-          ></ChallengeForm>
+          ></GroupChallengeForm>
           <ButtonBox>
             <Button size="m" my="5" onClick={register}>
               챌린지 등록
