@@ -159,6 +159,10 @@ function requestChallengeUserList(chlId, success, fail) {
   api.get(`/challenge/user-list/stat/${chlId}`).then(success).catch(fail);
 }
 
+function requestParticipateCheck(chlId, success, fail) {
+  api.get(`/challenge/member/${chlId}`).then(success).catch(fail);
+}
+
 export {
   getChallengeDetail,
   checkChallengePassword,
@@ -179,4 +183,5 @@ export {
   fetchGroupChallengePageCnt,
   requestChallengeParticipate,
   requestChallengeUserList,
+  requestParticipateCheck,
 };

@@ -17,6 +17,7 @@ import {
   getChallengeDetail,
   requestChallengeParticipate,
   requestChallengeUserList,
+  requestParticipateCheck,
 } from "api/Challenge";
 import { styled } from "@mui/material";
 
@@ -159,6 +160,24 @@ export default function ChallengeDetail() {
     );
   }, []);
 
+  const [check, setCheck] = useState([]);
+
+  function requestParticipateCheckSuccess(res) {
+    setCheck(res.data);
+  }
+
+  function requestParticipateCheckFail(res) {
+    setCheck([]);
+  }
+
+  useEffect(() => {
+    requestParticipateCheck(
+      chlId,
+      requestParticipateCheckSuccess,
+      requestParticipateCheckFail
+    );
+  }, []);
+
   const [userList, setUserList] = useState([]);
 
   function requestChallengeUserListSuccess(res) {
@@ -195,6 +214,16 @@ export default function ChallengeDetail() {
       requestChallengeParticipateSuccess,
       requestChallengeParticipateFail
     );
+  }
+
+  function Comment() {
+    {
+      if (check) {
+        return <Box>현재 챌린지 참여 중입니다.</Box>;
+      } else {
+        return <Box>단체 챌린지 참여하기</Box>;
+      }
+    }
   }
 
   return (
@@ -327,7 +356,17 @@ export default function ChallengeDetail() {
                 return (
                   <Box>
                     <Text>닉네임 : {item.nickname}</Text>
-                    <Text>프로필이미지 : {item.imgurl}</Text>
+                    <Text>
+                      프로필이미지 :
+                      {
+                        <img
+                          src={item.imgurl}
+                          alt="img"
+                          width="100%"
+                          height="100%"
+                        />
+                      }
+                    </Text>
                     <Text>성공률 : {item.sucRatio}</Text>
                     <Text>성공 횟수 : {item.sucCnt}</Text>
                     <Text>실패 횟수 : {item.failCnt}</Text>
@@ -336,8 +375,8 @@ export default function ChallengeDetail() {
                 );
               })}
             </Box>
-            <Button size="m" my="0" onClick={moveToStart}>
-              단체 챌린지 참여하기
+            <Button size="m" my="0" onClick={moveToStart} disabled={check}>
+              <Comment></Comment>
             </Button>
           </CardBox>
         </MainBox>

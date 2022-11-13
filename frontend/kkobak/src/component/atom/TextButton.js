@@ -85,12 +85,25 @@ function getmarginY(my) {
   }
 }
 
-export default function TextButton({ size, onClick, color, my, children }) {
+export default function TextButton({
+  size,
+  onClick,
+  color,
+  my,
+  children,
+  disabled,
+}) {
   return (
     // color : primary(핑크), grey(회색)
     // size : s, m, l
     // onClick : 클릭 시 필요한 함수 상위 컴포넌트에서 작성하면 됨!
-    <StyledButton size={size} onClick={onClick} color={color} my={my}>
+    <StyledButton
+      size={size}
+      onClick={onClick}
+      color={color}
+      my={my}
+      disabled={disabled}
+    >
       {children}
     </StyledButton>
   );
