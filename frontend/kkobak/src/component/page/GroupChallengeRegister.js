@@ -5,7 +5,7 @@ import { Box, styled } from "@mui/material";
 import Text from "component/atom/Text";
 import Button from "component/atom/TextButton"
 import MainBox from "component/atom/MainBox";
-import ChallengeForm from "component/module/ChallengeForm";
+import GroupChallengeForm from "component/module/GroupChallengeForm";
 import initial from "static/initial.png";
 
 import { getDetailCategoryList } from "api/Category";
@@ -239,7 +239,7 @@ export default function GroupChallengeRegister() {
           다 같이 챌린지 만들기
         </Text>
         <MainBox width="80" height="80vh" flexDir="col">
-          <ChallengeForm
+          <GroupChallengeForm
             imgSrc={imgSrc}
             category={category}
             detailCategory={detailCategory}
@@ -266,7 +266,7 @@ export default function GroupChallengeRegister() {
             register={register}
             setUnit={setUnit}
             changeUnit={changeUnit}
-          ></ChallengeForm>
+          ></GroupChallengeForm>
           <ButtonBox>
             <Button size="m" my="5" onClick={register}>
               챌린지 등록
