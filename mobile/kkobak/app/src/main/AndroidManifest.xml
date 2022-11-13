@@ -63,6 +63,10 @@
 
         <activity android:name=".ui.challenge.AttendActivity" />
 
+        <activity android:name=".ui.challenge.PillActivity" />
+
+        <activity android:name=".ui.challenge.StandupActivity" />
+
         <service android:name=".ui.test.FirebaseMsgService"
             android:exported="true">
             <intent-filter>

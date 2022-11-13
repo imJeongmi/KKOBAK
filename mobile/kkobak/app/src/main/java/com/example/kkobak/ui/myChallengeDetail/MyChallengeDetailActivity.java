@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -13,8 +14,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.example.kkobak.R;
+import com.example.kkobak.data.retrofit.api.ChallengeChkApi;
 import com.example.kkobak.data.retrofit.api.LogChkApi;
 import com.example.kkobak.data.retrofit.api.MyChallengeDetailApi;
+import com.example.kkobak.data.retrofit.model.CallengeChkRes;
 import com.example.kkobak.data.retrofit.model.LogChkReq;
 import com.example.kkobak.data.retrofit.model.MyChallengeDetailRes;
 import com.example.kkobak.data.room.dao.AccessTokenDao;
@@ -23,6 +26,8 @@ import com.example.kkobak.data.room.entity.AccessToken;
 import com.example.kkobak.ui.challenge.AttendActivity;
 import com.example.kkobak.ui.challenge.GpsActivity;
 import com.example.kkobak.ui.challenge.MeditationActivity;
+import com.example.kkobak.ui.challenge.PillActivity;
+import com.example.kkobak.ui.challenge.StandupActivity;
 import com.example.kkobak.ui.challenge.WaterActivity;
 import com.example.kkobak.ui.main.MainActivity;
 import com.example.kkobak.ui.test.TestActivity;
@@ -36,7 +41,12 @@ import retrofit2.Response;
 public class MyChallengeDetailActivity extends AppCompatActivity {
     AccessTokenDatabase db;
     String accessToken;
+
     String chlId;
+    int cnt;
+    int goal;
+
+
     Call<MyChallengeDetailRes> callDetail;
 
     MyChallengeDetailRes info;
@@ -68,6 +78,8 @@ public class MyChallengeDetailActivity extends AppCompatActivity {
     TextView tv_tagList;
     TextView tv_fin;
 
+    Button detailBtn;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,7 +105,7 @@ public class MyChallengeDetailActivity extends AppCompatActivity {
                     return;
                 }
                 else {
-                    Toast.makeText(MyChallengeDetailActivity.this, "성공: " + response.body().toString(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(MyChallengeDetailActivity.this, "성공: " + response.body().toString(), Toast.LENGTH_SHORT).show();
                 }
             }
             @Override
@@ -123,6 +135,8 @@ public class MyChallengeDetailActivity extends AppCompatActivity {
         tv_endTime = findViewById(R.id.detailEndTime);
         tv_tagList = findViewById(R.id.detailTagList);
         tv_fin = findViewById(R.id.detailFin);
+
+        detailBtn = findViewById(R.id.challengeDetailBtn);
 
         callDetail = MyChallengeDetailApi.getDetailInfo().getInfo(accessToken, chlId);
         callDetail.enqueue(new Callback<MyChallengeDetailRes>() {
@@ -160,6 +174,28 @@ public class MyChallengeDetailActivity extends AppCompatActivity {
 
             }
         });
+
+        cnt = goal = -1;
+        changeBtnStatus();
+    }
+
+    public void changeBtnStatus() {
+        Call<CallengeChkRes> call = ChallengeChkApi.getService(). getStatusInfo(accessToken, Integer.parseInt(chlId));
+        call.enqueue(new Callback<CallengeChkRes>() {
+            @Override
+            public void onResponse(Call<CallengeChkRes> call, Response<CallengeChkRes> response) {
+                if (response.body().isDone()) {
+                    detailBtn.setText("이미 했음");
+//                    detailBtn.setClickable(false);
+                }
+
+                goal = response.body().getGoal();
+                cnt = response.body().getCnt();
+            }
+
+            @Override
+            public void onFailure(Call<CallengeChkRes> call, Throwable t) {}
+        });
     }
 
     public void doChallenge(View v) {
@@ -181,18 +217,29 @@ public class MyChallengeDetailActivity extends AppCompatActivity {
             case DRINK_WATER:
                 Toast.makeText(this, "Drink Water", Toast.LENGTH_SHORT).show();
                 intent = new Intent(this, WaterActivity.class);
+                if (cnt != -1)  intent.putExtra("cnt", cnt);
+                if (goal != -1) intent.putExtra("goal", goal);
                 break;
             case EAT_NUTRIENTS:
                 Toast.makeText(this, "Nutrients", Toast.LENGTH_SHORT).show();
-                intent = new Intent(this, WaterActivity.class);
+                intent = new Intent(this, PillActivity.class);
+                if (cnt != -1)  intent.putExtra("cnt", cnt);
+                if (goal != -1) intent.putExtra("goal", goal);
                 break;
             case STAND_UP:
                 Toast.makeText(this, "Stand up", Toast.LENGTH_SHORT).show();
-                intent = new Intent(this, WaterActivity.class);
+                intent = new Intent(this, StandupActivity.class);
+                if (cnt != -1)  intent.putExtra("cnt", cnt);
+                if (goal != -1) intent.putExtra("goal", goal);
                 break;
             case ATTEND:
                 Toast.makeText(this, "Attend", Toast.LENGTH_SHORT).show();
                 intent = new Intent(this, AttendActivity.class);
+                String[] location = info.getUnit().split(",");
+                if (location.length == 2) {
+                    intent.putExtra("lon", location[0]);
+                    intent.putExtra("lat", location[1]);
+                }
                 break;
             default:
                 Toast.makeText(this, "기타", Toast.LENGTH_SHORT).show();

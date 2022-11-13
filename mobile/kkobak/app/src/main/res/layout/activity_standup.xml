@@ -6,11 +6,11 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/pillTitle"
+        android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="80dp"
-        android:text="물 마시기"
+        android:text="일어서기"
         android:textAppearance="@style/TextAppearance.AppCompat.Display2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,7 +22,7 @@
         android:layout_height="50dp"
         android:layout_marginStart="230dp"
         android:layout_marginTop="565dp"
-        android:onClick="waterPlus"
+        android:onClick="standupPlus"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/plus" />
@@ -33,13 +33,13 @@
         android:layout_height="50dp"
         android:layout_marginStart="130dp"
         android:layout_marginTop="565dp"
-        android:onClick="waterMinus"
+        android:onClick="standupMinus"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/minus" />
 
     <TextView
-        android:id="@+id/waterCnt"
+        android:id="@+id/standupCnt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="420dp"
@@ -51,7 +51,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/waterGoal"
+        android:id="@+id/standupGoal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -60,7 +60,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/waterCnt" />
+        app:layout_constraintTop_toBottomOf="@+id/standupCnt" />
 
     <FrameLayout
         android:layout_width="250dp"
@@ -71,10 +71,9 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/waterImg"
+            android:id="@+id/standupImg"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:srcCompat="@drawable/water0" />
+            app:srcCompat="@drawable/stand_up0" />
     </FrameLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

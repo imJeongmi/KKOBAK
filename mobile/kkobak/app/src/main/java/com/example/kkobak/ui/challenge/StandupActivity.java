@@ -29,7 +29,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class WaterActivity extends AppCompatActivity {
+public class StandupActivity extends AppCompatActivity {
     AccessTokenDatabase db;
     String accessToken;
 
@@ -38,12 +38,12 @@ public class WaterActivity extends AppCompatActivity {
 
     TextView tv_cnt;
     TextView tv_goal;
-    ImageView iv_water;
+    ImageView iv_standup;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_water);
+        setContentView(R.layout.activity_standup);
 
         Intent intent = getIntent();
         if (intent.getStringExtra("chlId") != null)
@@ -57,9 +57,10 @@ public class WaterActivity extends AppCompatActivity {
         if (goal < 0)   goal = 0;
         if (cnt > goal) cnt = goal;
 
-        tv_cnt = findViewById(R.id.waterCnt);
-        tv_goal = findViewById(R.id.waterGoal);
-        iv_water = findViewById(R.id.waterImg);
+
+        tv_cnt = findViewById(R.id.standupCnt);
+        tv_goal = findViewById(R.id.standupGoal);
+        iv_standup = findViewById(R.id.standupImg);
 
         tv_cnt.setText("현재 횟수: " + cnt);
         tv_goal.setText("목표 횟수: " + goal);
@@ -84,9 +85,9 @@ public class WaterActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                 if (response.code() != 200)
-                    Toast.makeText(WaterActivity.this, "이상함", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(StandupActivity.this, "이상함", Toast.LENGTH_SHORT).show();
                 else
-                    Toast.makeText(WaterActivity.this, "성공", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(StandupActivity.this, "성공", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -102,18 +103,18 @@ public class WaterActivity extends AppCompatActivity {
 
 //        Toast.makeText(this, "" + quot, Toast.LENGTH_SHORT).show();
         if (quot >= 100)
-            Glide.with(this).load(R.drawable.waterfinish).into(iv_water);
+            Glide.with(this).load(R.drawable.stand_upfinish).into(iv_standup);
         else if (quot >= 75)
-            Glide.with(this).load(R.drawable.water75).into(iv_water);
+            Glide.with(this).load(R.drawable.stand_up75).into(iv_standup);
         else if (quot >= 50)
-            Glide.with(this).load(R.drawable.water50).into(iv_water);
+            Glide.with(this).load(R.drawable.stand_up50).into(iv_standup);
         else if (quot >= 25)
-            Glide.with(this).load(R.drawable.water25).into(iv_water);
+            Glide.with(this).load(R.drawable.stand_up25).into(iv_standup);
         else
-            Glide.with(this).load(R.drawable.water0).into(iv_water);
+            Glide.with(this).load(R.drawable.stand_up0).into(iv_standup);
     }
 
-    public void waterPlus(View v){
+    public void standupPlus(View v) {
         if (cnt >= goal)    return;
         ++cnt;
         if (cnt == goal) {
@@ -127,7 +128,7 @@ public class WaterActivity extends AppCompatActivity {
         changeImgBaseStatus();
     }
 
-    public void waterMinus(View v) {
+    public void standupMinus(View v) {
         if (cnt <= 0)   return;
         --cnt;
         tv_cnt.setText("현재 횟수: " + cnt);

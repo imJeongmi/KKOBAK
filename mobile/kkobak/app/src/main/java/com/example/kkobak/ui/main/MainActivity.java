@@ -20,6 +20,8 @@ import com.example.kkobak.databinding.ActivityMainBinding;
 import com.example.kkobak.ui.challenge.AttendActivity;
 import com.example.kkobak.ui.challenge.GpsActivity;
 import com.example.kkobak.ui.challenge.MeditationActivity;
+import com.example.kkobak.ui.challenge.PillActivity;
+import com.example.kkobak.ui.challenge.StandupActivity;
 import com.example.kkobak.ui.challenge.WaterActivity;
 import com.example.kkobak.ui.login.LoginActivity;
 import com.example.kkobak.ui.test.SpeedActivity;
@@ -136,6 +138,18 @@ public class MainActivity extends AppCompatActivity {
 
     public void moveAttend(View v) {
         Intent intent = new Intent(this, AttendActivity.class);
+        startActivity(intent);
+    }
+
+    public void movePill(View v) {
+        Intent intent = new Intent(this, PillActivity.class);
+        startActivity(intent);
+    }
+
+    public void moveStandup(View v) {
+        Intent intent = new Intent(this, StandupActivity.class);
+        intent.putExtra("cnt", 3);
+        intent.putExtra("goal", 6);
         startActivity(intent);
     }
 }

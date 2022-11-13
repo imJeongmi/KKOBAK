@@ -107,10 +107,12 @@ public class MeditationActivity extends AppCompatActivity implements SensorEvent
         snakeView.setMinValue(-20500);
         snakeView.setMaxValue(20000);
 
-        if (getIntent() != null)
+        if (getIntent().getStringExtra("chlId") != null)
             chlId = getIntent().getStringExtra("chlId");
+        else
+           chlId = "-1";
 
-//        Toast.makeText(this, "id: " + chlId, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "id: " + chlId, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -164,7 +166,8 @@ public class MeditationActivity extends AppCompatActivity implements SensorEvent
             printValue = (int) (value / 100);
             heartRateTv.setText("" + printValue);
 
-            sendBpmData(printValue);
+            if (!chlId.equals("-1"))
+                sendBpmData(printValue);
         }
     }
 

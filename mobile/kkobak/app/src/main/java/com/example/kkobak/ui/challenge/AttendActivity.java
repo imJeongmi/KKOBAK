@@ -2,14 +2,19 @@ package com.example.kkobak.ui.challenge;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -38,10 +43,10 @@ public class AttendActivity extends AppCompatActivity implements LocationListene
 
     LocationManager locationManager;
 
-    final double DISTANCE_RANGE = 65.0;
+    final double DISTANCE_RANGE = 100.0;
 
-    double targetLat = 37.5014951;
-    double targetLon = 127.0396188;
+    double targetLat;
+    double targetLon;
     Location targetLocation;
 
     Button attendBtn;
@@ -57,11 +62,21 @@ public class AttendActivity extends AppCompatActivity implements LocationListene
         Glide.with(this).load(R.drawable.search).override(1200,1200).into(searchIV);
         searchTV = findViewById(R.id.searchTV);
 
+//        targetLat = 37.5014951;
+//        targetLon = 127.0396188;
+
+        Intent intent = getIntent();
+        if (intent.getStringExtra("lat") != null)
+            targetLat = Double.parseDouble(intent.getStringExtra("lat"));
+        if (intent.getStringExtra("lon") != null)
+            targetLon = Double.parseDouble(intent.getStringExtra("lon"));
+
+
         //권한 체크
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
             return;
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000,0, this);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0,0, this);
 
         db = AccessTokenDatabase.getAppDatabase(this);
         try {
@@ -78,7 +93,7 @@ public class AttendActivity extends AppCompatActivity implements LocationListene
         attendBtn = findViewById(R.id.attendBtn);
         attendBtn.setVisibility(View.INVISIBLE);
 
-        targetLocation = new Location("multiCampus");
+        targetLocation = new Location("target");
         targetLocation.setLatitude(targetLat);
         targetLocation.setLongitude(targetLon);
 
@@ -102,7 +117,7 @@ public class AttendActivity extends AppCompatActivity implements LocationListene
         super.onResume();
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
             return;
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000,1, this);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0,0, this);
     }
 
     @Override
@@ -119,12 +134,22 @@ public class AttendActivity extends AppCompatActivity implements LocationListene
         if (distance <= DISTANCE_RANGE && attendBtn.getVisibility() == View.INVISIBLE) {
             String currentAddress = getCurrentAddress(location.getLatitude(), location.getLongitude());
             attendBtn.setVisibility(View.VISIBLE);
-            Glide.with(this).load(R.drawable.checked).override(1200,1200).fitCenter().into(searchIV);
+            Glide.with(this).load(R.drawable.waterfinish).into(searchIV);
             searchTV.setText("[현재 위치]\n" + currentAddress);
+            Vibrator vib = (Vibrator)getSystemService(VIBRATOR_SERVICE);
+            vib.vibrate(1000);
+            Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+            Ringtone ringtone = RingtoneManager.getRingtone(getApplicationContext(), notification);
+            ringtone.play();
         }
-
         else if (distance > DISTANCE_RANGE && attendBtn.getVisibility() == View.VISIBLE){
             attendBtn.setVisibility(View.INVISIBLE);
+            searchTV.setText("거리가 멀어 출석할 수 없습니다.");
+            Glide.with(this).load(R.drawable.search).override(1200,1200).into(searchIV);
+        }
+        else if (distance > DISTANCE_RANGE && searchTV.getText().toString().equals("탐색 중")){
+            attendBtn.setVisibility(View.INVISIBLE);
+            searchTV.setText("거리가 멀어 출석할 수 없습니다.");
             Glide.with(this).load(R.drawable.search).override(1200,1200).into(searchIV);
         }
     }
