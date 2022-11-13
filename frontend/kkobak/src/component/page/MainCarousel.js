@@ -9,6 +9,7 @@ import "swiper/css/pagination";
 import "./MainCarousel.css";
 import Main from "./Main";
 import ChallengeCardList from "component/module/ChallengeCardList";
+import GroupChallengeCardList from "component/module/GroupChallengeCardList";
 
 export default function MainCarousel() {
   return (
@@ -23,9 +24,9 @@ export default function MainCarousel() {
       modules={[Mousewheel, Pagination]}
       className="mySwiper"
     >
-      <SwiperSlide><Main></Main></SwiperSlide>
-      <SwiperSlide><ChallengeCardList></ChallengeCardList></SwiperSlide>
-      <SwiperSlide>Slide 3</SwiperSlide>
+      <SwiperSlide><Main /></SwiperSlide>
+      <SwiperSlide><ChallengeCardList /></SwiperSlide>
+      <SwiperSlide><GroupChallengeCardList /></SwiperSlide>
     </Swiper>
   )
 }

@@ -73,7 +73,7 @@ export default function GroupChallengeCardList() {
 
   function moveToRegister(e) {
     e.preventDefault();
-    navigate("/register");
+    navigate("/group/register");
   }
 
   useEffect(() => {
