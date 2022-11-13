@@ -272,13 +272,41 @@ export default function ChallengeDetail() {
                       <FormControlLabel
                         className="FormControlLabel"
                         value="true"
-                        control={<Radio />}
-                        label="사용"
+                        control={
+                          <Radio
+                            size="small"
+                            sx={{
+                              color: "default",
+                              "&.Mui-checked": {
+                                color: "#99b9d6",
+                              },
+                            }}
+                          />
+                        }
+                        label={
+                          <Text size="13px" color="grey">
+                            사용
+                          </Text>
+                        }
                       />
                       <FormControlLabel
                         value="false"
-                        control={<Radio />}
-                        label="사용 안함"
+                        control={
+                          <Radio
+                            size="small"
+                            sx={{
+                              color: "default",
+                              "&.Mui-checked": {
+                                color: "#99b9d6",
+                              },
+                            }}
+                          />
+                        }
+                        label={
+                          <Text size="13px" color="grey">
+                            사용 안함
+                          </Text>
+                        }
                       />
                     </RadioGroup>
                   </Box>
