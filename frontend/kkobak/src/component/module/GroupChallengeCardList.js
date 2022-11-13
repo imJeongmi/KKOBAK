@@ -7,7 +7,7 @@ import Stack from "@mui/material/Stack";
 import GroupChallengeCard from "component/module/GroupChallengeCard";
 import Button from "component/atom/TextButton";
 import MainBox from "component/atom/MainBox";
-import EmptyChallenge from "component/page/EmptyChallenge";
+import EmptyChallenge from "component/module/EmptyChallenge";
 
 import {
   fetchGroupChallengeList,

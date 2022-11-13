@@ -1,21 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 import { Box } from "@mui/system";
+import { styled } from "@mui/material";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 
 import MainBox from "component/atom/MainBox";
-import SideBar from "component/atom/SideBar";
 import Text from "component/atom/Text";
-import Button from "component/atom/TextButton";
-
-import { useNavigate } from "react-router-dom";
+import Statistics from "component/module/Statistics";
 
 import { requestUserInfo, requestMyChallengeDetail } from "api/userApi";
-import { styled } from "@mui/material";
-import Statistics from "./Statistics";
 
 const CardBox = styled(Box)(
   () => `
@@ -96,7 +92,7 @@ function getCategory(categoryId) {
       return "운동";
     case 2:
       return "생활습관";
-    case 3:
+    default:
       return "기타";
   }
 }
@@ -123,8 +119,8 @@ function getDetailCategory(detailCategoryId) {
 }
 
 export default function ChallengeDetail() {
-  const [user, setUser] = useState([]);
   const chlId = Number(useParams().chlId);
+  const [user, setUser] = useState([]);
 
   const [imgurl, setImgurl] = useState("");
   const [title, setTitle] = useState("");
@@ -138,8 +134,6 @@ export default function ChallengeDetail() {
   const [unit, setUnit] = useState("");
   const [watch, setWatch] = useState("");
   const [kkobakChallenge, setKkobakChallenge] = useState("");
-
-  const navigate = useNavigate();
 
   function requestUserInfoSuccess(res) {
     setUser(res.data);
@@ -176,11 +170,6 @@ export default function ChallengeDetail() {
     );
   }, []);
 
-  function moveToStats(e) {
-    e.preventDefault();
-    navigate(`/Statistics/${chlId}`);
-  }
-
   return (
     <Box
       sx={{
@@ -194,7 +183,7 @@ export default function ChallengeDetail() {
             {user.nickName}
           </Text>
           <Text size="m" weight="semibold" mt="30" my="15">
-            {"님의 챌린지 리스트"}
+            {"님의 챌린지 상세보기"}
           </Text>
         </Box>
         <MainBox width="75" flexDir="row" justifyContent="center">
@@ -208,6 +197,7 @@ export default function ChallengeDetail() {
             <Text size="12px" color="grey" mt="8">
               {contents}
             </Text>
+
             <SettingBox>
               <SettingItem>
                 <SettingTitleBox>
@@ -334,6 +324,7 @@ export default function ChallengeDetail() {
               </SettingItem>
             </SettingBox>
           </CardBox>
+          
           <CardBox>
             <Statistics />
           </CardBox>

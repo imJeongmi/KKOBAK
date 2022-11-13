@@ -1,16 +1,16 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Main from "../component/page/Main";
-import MyChallenge from "../component/page/MyChallenge";
-import Setting from "component/page/Setting";
+import MyChallenge from "../component/page/ChallengeList";
+import Setting from "component/page/Test";
 import storage from "../helper/storage";
 import LoginModal from "component/module/LoginModal";
 import SignupModal from "component/module/SignupModal";
 import ChallengeDetail from "component/page/ChallengeDetail";
 import GroupChallengeDetail from "component/page/GroupChallengeDetail";
 import ChallengeRegister from "component/page/ChallengeRegister";
-import Statistics from "component/page/Statistics";
-import IntroPage from "component/page/IntroPage";
+import Statistics from "component/module/Statistics";
+import IntroPage from "component/page/Intro";
 import GroupChallenge from "component/page/GroupChallenge";
 import GroupChallengeRegister from "component/page/GroupChallengeRegister";
 
