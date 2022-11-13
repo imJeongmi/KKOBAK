@@ -168,7 +168,7 @@ export default function GroupChallengeRegister() {
         contents,
         detailCategory,
         endTime,
-        1,
+        goal,
         imgSrc,
         kkobak,
         "100",

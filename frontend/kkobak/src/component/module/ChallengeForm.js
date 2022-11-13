@@ -117,7 +117,7 @@ export default function ChallengeForm({
     if (category === "2" && detailCategory === "7") {
       setShowUnit("주소");
     } else if (category === "2") {
-      setShowUnit("1 회");
+      setShowUnit("회");
     } else if (category === "1" && detailCategory === "1") {
       setShowUnit("Km");
     } else if (category === "1" && detailCategory === "2") {
