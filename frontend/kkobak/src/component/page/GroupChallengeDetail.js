@@ -1,25 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 import { Box } from "@mui/system";
+import { styled } from "@mui/material";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 
 import MainBox from "component/atom/MainBox";
-import SideBar from "component/atom/SideBar";
 import Text from "component/atom/Text";
-import Button from "component/atom/TextButton";
+import GroupStatistics from "component/module/GroupStatistics";
 
-import { useNavigate } from "react-router-dom";
-
-import {
-  getChallengeDetail,
-  requestChallengeParticipate,
-  requestChallengeUserList,
-  requestParticipateCheck,
-} from "api/Challenge";
-import { styled } from "@mui/material";
+import { getChallengeDetail } from "api/Challenge";
+import { requestUserInfo } from "api/userApi";
 
 const CardBox = styled(Box)(
   () => `
@@ -92,7 +85,7 @@ function getCategory(categoryId) {
       return "운동";
     case 2:
       return "생활습관";
-    case 3:
+    default:
       return "기타";
   }
 }
@@ -120,8 +113,7 @@ function getDetailCategory(detailCategoryId) {
 
 export default function ChallengeDetail() {
   const chlId = Number(useParams().chlId);
-
-  const navigate = useNavigate();
+  const [user, setUser] = useState([]);
 
   const [imgurl, setImgurl] = useState("");
   const [title, setTitle] = useState("");
@@ -134,6 +126,14 @@ export default function ChallengeDetail() {
   const [watch, setWatch] = useState("");
   const [goal, setGoal] = useState("");
   const [unit, setUnit] = useState("");
+
+  function requestUserInfoSuccess(res) {
+    setUser(res.data);
+  }
+
+  function requestUserInfoFail(res) {
+    setUser([]);
+  }
 
   function getChallengeDetailSuccess(res) {
     const data = res.data;
@@ -153,78 +153,13 @@ export default function ChallengeDetail() {
   function getChallengeDetailFail(res) {}
 
   useEffect(() => {
+    requestUserInfo(requestUserInfoSuccess, requestUserInfoFail);
     getChallengeDetail(
       chlId,
       getChallengeDetailSuccess,
       getChallengeDetailFail
     );
   }, []);
-
-  const [check, setCheck] = useState([]);
-
-  function requestParticipateCheckSuccess(res) {
-    setCheck(res.data);
-  }
-
-  function requestParticipateCheckFail(res) {
-    setCheck([]);
-  }
-
-  useEffect(() => {
-    requestParticipateCheck(
-      chlId,
-      requestParticipateCheckSuccess,
-      requestParticipateCheckFail
-    );
-  }, []);
-
-  const [userList, setUserList] = useState([]);
-
-  function requestChallengeUserListSuccess(res) {
-    setUserList(res.data);
-  }
-
-  function requestChallengeUserListFail(res) {
-    setUserList([]);
-  }
-
-  useEffect(() => {
-    requestChallengeUserList(
-      chlId,
-      requestChallengeUserListSuccess,
-      requestChallengeUserListFail
-    );
-  }, []);
-
-  const [participate, setParticipate] = useState([]);
-
-  function requestChallengeParticipateSuccess(res) {
-    setParticipate(res.data);
-  }
-
-  function requestChallengeParticipateFail(err) {
-    setParticipate([]);
-    alert("해당 챌린지에 참여 중입니다.");
-  }
-
-  function moveToStart(e) {
-    e.preventDefault();
-    requestChallengeParticipate(
-      chlId,
-      requestChallengeParticipateSuccess,
-      requestChallengeParticipateFail
-    );
-  }
-
-  function Comment() {
-    {
-      if (check) {
-        return <Box>현재 챌린지 참여 중입니다.</Box>;
-      } else {
-        return <Box>단체 챌린지 참여하기</Box>;
-      }
-    }
-  }
 
   return (
     <Box
@@ -236,7 +171,10 @@ export default function ChallengeDetail() {
       <Box sx={{ margin: "0 auto" }}>
         <Box sx={{ display: "flex" }}>
           <Text size="m" weight="bold" mt="30" my="15" color="blue">
-            단체 챌린지 상세 화면
+            {user.nickName}
+          </Text>
+          <Text size="m" weight="bold" mt="30" my="15">
+            {"님이 참여중인 챌린지 상세보기"}
           </Text>
         </Box>
         <MainBox width="75" flexDir="row" justifyContent="center">
@@ -348,40 +286,13 @@ export default function ChallengeDetail() {
               </SettingItem>
             </SettingBox>
           </CardBox>
+
           <CardBox>
-            <Box> 참가 인원 </Box>
-            <Box>--------------</Box>
-            <Box>
-              {userList.map((item) => {
-                return (
-                  <Box>
-                    <Text>닉네임 : {item.nickname}</Text>
-                    <Text>
-                      프로필이미지 :
-                      {
-                        <img
-                          src={item.imgurl}
-                          alt="img"
-                          width="100%"
-                          height="100%"
-                        />
-                      }
-                    </Text>
-                    <Text>성공률 : {item.sucRatio}</Text>
-                    <Text>성공 횟수 : {item.sucCnt}</Text>
-                    <Text>실패 횟수 : {item.failCnt}</Text>
-                    <Box>--------------</Box>
-                  </Box>
-                );
-              })}
-            </Box>
-            <Button size="m" my="0" onClick={moveToStart} disabled={check}>
-              <Comment></Comment>
-            </Button>
+            <GroupStatistics />
           </CardBox>
         </MainBox>
       </Box>
-      <SideBar />
+      <Box sx={{ width: "150px", height: "100vh", backgroundColor: "white" }} />
     </Box>
   );
 }
