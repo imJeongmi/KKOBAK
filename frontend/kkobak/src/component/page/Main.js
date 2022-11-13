@@ -11,7 +11,7 @@ import Text from "component/atom/Text";
 import MainCalendar from "component/atom/MainCalendar";
 import Todolist from "component/module/Todolist";
 import WidgetCarousel from "component/module/WidgetCarousel";
-import EmptyChallenge from "component/page/EmptyChallenge";
+import EmptyChallenge from "component/module/EmptyChallenge";
 
 import {
   requestUserInfo,

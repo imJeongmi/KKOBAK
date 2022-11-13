@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Box, styled } from "@mui/system";
-import moment from "moment";
 
 import Text from "component/atom/Text";
 import ChallengeMap from "component/atom/ChallengeMap";
