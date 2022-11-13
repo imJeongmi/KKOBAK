@@ -91,14 +91,33 @@ export default function ChallengeRegister() {
       )
       .then((res) => {
         const location = res.data.documents[0];
-        setUnit(`${location?.address?.x},${location?.address?.y}`);
+        registerChallenge(
+          alarm,
+          0,
+          category,
+          contents,
+          detailCategory,
+          endTime,
+          1,
+          imgSrc,
+          kkobak,
+          "1",
+          "",
+          1,
+          startTime,
+          [],
+          title,
+          `${location?.address?.x},${location?.address?.y}`,
+          watch,
+          registerSuccess,
+          registerFail
+        );
       });
   }
 
   function changeUnit(category, detailCategory) {
     if (category === "2" && detailCategory === "7") {
-      const add = changeAddressToDot(goal);
-      return add
+      changeAddressToDot(goal);
     } else if (category === "2") {
       setUnit("회");
     } else if (category === "1" && detailCategory === "1") {
@@ -179,28 +198,7 @@ export default function ChallengeRegister() {
         registerFail
       );
     } else if (category === "2" && detailCategory === "7") {
-      const add = changeUnit(category, detailCategory);
-      registerChallenge(
-        alarm,
-        0,
-        category,
-        contents,
-        detailCategory,
-        endTime,
-        1,
-        imgSrc,
-        kkobak,
-        "1",
-        "",
-        1,
-        startTime,
-        [],
-        title,
-        add,
-        watch,
-        registerSuccess,
-        registerFail
-      );
+      changeUnit(category, detailCategory);
     } else {
       changeUnit(category, detailCategory);
       // console.log(unit)
