@@ -207,7 +207,7 @@ export default function ChallengeRegister() {
         contents,
         detailCategory,
         endTime,
-        1,
+        goal,
         imgSrc,
         kkobak,
         "1",
