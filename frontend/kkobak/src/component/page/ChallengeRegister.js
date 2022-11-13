@@ -14,6 +14,7 @@ import axios from "axios";
 
 
 import { getMyKkobakList } from "api/userApi";
+import { useNavigate } from "react-router-dom";
 
 const ButtonBox = styled(Box)(
   () => `
@@ -41,6 +42,7 @@ export default function ChallengeRegister() {
   const [unit, setUnit] = useState("");
   const [kkobakCount, setKkobakCount] = useState(0)
 
+  const navigate = useNavigate();
   function getMyKkobakListSuccess(res) {
     setKkobakCount(res.data.length);
   }
@@ -61,7 +63,6 @@ export default function ChallengeRegister() {
   function getDetailCategoryListFail(err) {}
 
   useEffect(() => {
-    console.log(category);
     getDetailCategoryList(
       category,
       getDetailCategoryListSuccess,
@@ -69,9 +70,8 @@ export default function ChallengeRegister() {
     );
   }, [category]);
 
-  function registerSuccess() {
-    console.log("성공");
-    console.log(unit);
+  function registerSuccess(res) {
+    navigate(`/myChallenge/${res.data}`)
   }
 
   function registerFail(err) {
@@ -79,7 +79,6 @@ export default function ChallengeRegister() {
   }
 
   function changeAddressToDot(goal) {
-    console.log(goal)
     axios
       .get(
         `https://dapi.kakao.com/v2/local/search/address.json?query=${goal}`,
@@ -201,7 +200,6 @@ export default function ChallengeRegister() {
       changeUnit(category, detailCategory);
     } else {
       changeUnit(category, detailCategory);
-      // console.log(unit)
       registerChallenge(
         alarm,
         0,
