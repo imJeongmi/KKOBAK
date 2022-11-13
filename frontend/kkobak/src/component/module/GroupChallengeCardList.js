@@ -4,7 +4,7 @@ import styled from "@emotion/styled";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 
-import ChallengeCard from "component/module/ChallengeCard";
+import GroupChallengeCard from "component/module/GroupChallengeCard";
 import Button from "component/atom/TextButton";
 import MainBox from "component/atom/MainBox";
 import EmptyChallenge from "component/page/EmptyChallenge";
@@ -100,7 +100,7 @@ export default function GroupChallengeCardList() {
           <ChallengeListBox>
             {GroupChallengeList.map((item) => {
               return (
-                <ChallengeCard
+                <GroupChallengeCard
                   key={item.chlId}
                   chlId={item.chlId}
                   imgurl={item.imgurl}
@@ -112,7 +112,7 @@ export default function GroupChallengeCardList() {
                   categoryId={item.categoryId}
                   alarm={item.alarm}
                   watch={item.watch}
-                ></ChallengeCard>
+                ></GroupChallengeCard>
               );
             })}
           </ChallengeListBox>

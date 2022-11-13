@@ -7,6 +7,7 @@ import storage from "../helper/storage";
 import LoginModal from "component/module/LoginModal";
 import SignupModal from "component/module/SignupModal";
 import ChallengeDetail from "component/page/ChallengeDetail";
+import GroupChallengeDetail from "component/page/GroupChallengeDetail";
 import ChallengeRegister from "component/page/ChallengeRegister";
 import Statistics from "component/page/Statistics";
 import IntroPage from "component/page/IntroPage";
@@ -69,6 +70,14 @@ export default function RouterConfiguration() {
         element={
           <CheckAuth>
             <ChallengeDetail />
+          </CheckAuth>
+        }
+      />
+      <Route
+        path="/GroupChallenge/:chlId"
+        element={
+          <CheckAuth>
+            <GroupChallengeDetail />
           </CheckAuth>
         }
       />

@@ -151,6 +151,14 @@ function fetchGroupChallengePageCnt(success, fail) {
     .catch(fail);
 }
 
+function requestChallengeParticipate(chlId, success, fail) {
+  api.get(`/challenge/participate/${chlId}/1`).then(success).catch(fail);
+}
+
+function requestChallengeUserList(chlId, success, fail) {
+  api.get(`/challenge/user-list/stat/${chlId}`).then(success).catch(fail);
+}
+
 export {
   getChallengeDetail,
   checkChallengePassword,
@@ -169,4 +177,6 @@ export {
   fetchNoWatchMyChallengePageCnt,
   fetchGroupChallengeList,
   fetchGroupChallengePageCnt,
+  requestChallengeParticipate,
+  requestChallengeUserList,
 };

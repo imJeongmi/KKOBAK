@@ -13,9 +13,12 @@ import Button from "component/atom/TextButton";
 
 import { useNavigate } from "react-router-dom";
 
-import { requestUserInfo, requestMyChallengeDetail } from "api/userApi";
+import {
+  getChallengeDetail,
+  requestChallengeParticipate,
+  requestChallengeUserList,
+} from "api/Challenge";
 import { styled } from "@mui/material";
-import Statistics from "./Statistics";
 
 const CardBox = styled(Box)(
   () => `
@@ -82,14 +85,6 @@ const SettingContentBox = styled(Box)(
   `
 );
 
-const ButtonBox = styled(Box)(
-  () => `
-  width: 95%;
-  display: flex;
-  justify-content: end;
-  `
-);
-
 function getCategory(categoryId) {
   switch (categoryId) {
     case 1:
@@ -123,8 +118,9 @@ function getDetailCategory(detailCategoryId) {
 }
 
 export default function ChallengeDetail() {
-  const [user, setUser] = useState([]);
   const chlId = Number(useParams().chlId);
+
+  const navigate = useNavigate();
 
   const [imgurl, setImgurl] = useState("");
   const [title, setTitle] = useState("");
@@ -134,22 +130,11 @@ export default function ChallengeDetail() {
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
   const [alarm, setAlarm] = useState("");
+  const [watch, setWatch] = useState("");
   const [goal, setGoal] = useState("");
   const [unit, setUnit] = useState("");
-  const [watch, setWatch] = useState("");
-  const [kkobakChallenge, setKkobakChallenge] = useState("");
 
-  const navigate = useNavigate();
-
-  function requestUserInfoSuccess(res) {
-    setUser(res.data);
-  }
-
-  function requestUserInfoFail(res) {
-    setUser([]);
-  }
-
-  function requestMyChallengeDetailSuccess(res) {
+  function getChallengeDetailSuccess(res) {
     const data = res.data;
     setImgurl(data.imgurl);
     setTitle(data.title);
@@ -159,26 +144,57 @@ export default function ChallengeDetail() {
     setStartTime(data.startTime);
     setEndTime(data.endTime);
     setAlarm(data.alarm);
+    setWatch(data.watch);
     setGoal(data.goal);
     setUnit(data.unit);
-    setWatch(data.watch);
-    setKkobakChallenge(data.kkobak);
   }
 
-  function requestMyChallengeDetailFail(res) {}
+  function getChallengeDetailFail(res) {}
 
   useEffect(() => {
-    requestUserInfo(requestUserInfoSuccess, requestUserInfoFail);
-    requestMyChallengeDetail(
+    getChallengeDetail(
       chlId,
-      requestMyChallengeDetailSuccess,
-      requestMyChallengeDetailFail
+      getChallengeDetailSuccess,
+      getChallengeDetailFail
     );
   }, []);
 
-  function moveToStats(e) {
+  const [userList, setUserList] = useState([]);
+
+  function requestChallengeUserListSuccess(res) {
+    setUserList(res.data);
+  }
+
+  function requestChallengeUserListFail(res) {
+    setUserList([]);
+  }
+
+  useEffect(() => {
+    requestChallengeUserList(
+      chlId,
+      requestChallengeUserListSuccess,
+      requestChallengeUserListFail
+    );
+  }, []);
+
+  const [participate, setParticipate] = useState([]);
+
+  function requestChallengeParticipateSuccess(res) {
+    setParticipate(res.data);
+  }
+
+  function requestChallengeParticipateFail(err) {
+    setParticipate([]);
+    alert("해당 챌린지에 참여 중입니다.");
+  }
+
+  function moveToStart(e) {
     e.preventDefault();
-    navigate(`/Statistics/${chlId}`);
+    requestChallengeParticipate(
+      chlId,
+      requestChallengeParticipateSuccess,
+      requestChallengeParticipateFail
+    );
   }
 
   return (
@@ -191,10 +207,7 @@ export default function ChallengeDetail() {
       <Box sx={{ margin: "0 auto" }}>
         <Box sx={{ display: "flex" }}>
           <Text size="m" weight="bold" mt="30" my="15" color="blue">
-            {user.nickName}
-          </Text>
-          <Text size="m" weight="semibold" mt="30" my="15">
-            {"님의 챌린지 리스트"}
+            단체 챌린지 상세 화면
           </Text>
         </Box>
         <MainBox width="75" flexDir="row" justifyContent="center">
@@ -208,6 +221,7 @@ export default function ChallengeDetail() {
             <Text size="12px" color="grey" mt="8">
               {contents}
             </Text>
+
             <SettingBox>
               <SettingItem>
                 <SettingTitleBox>
@@ -303,43 +317,32 @@ export default function ChallengeDetail() {
                   </Box>
                 </SettingContentBox>
               </SettingItem>
-
-              <SettingItem>
-                <SettingTitleBox>
-                  <Text size="13px" weight="semibold">
-                    꼬박챌린지 설정
-                  </Text>
-                </SettingTitleBox>
-                <SettingContentBox>
-                  <Box>
-                    <RadioGroup
-                      row
-                      aria-labelledby="demo-row-controlled-radio-buttons-group"
-                      name="controlled-radio-buttons-group"
-                      value={kkobakChallenge}
-                    >
-                      <FormControlLabel
-                        value={1}
-                        control={<Radio />}
-                        label="설정"
-                      />
-                      <FormControlLabel
-                        value={0}
-                        control={<Radio />}
-                        label="설정 안함"
-                      />
-                    </RadioGroup>
-                  </Box>
-                </SettingContentBox>
-              </SettingItem>
             </SettingBox>
           </CardBox>
           <CardBox>
-            <Statistics />
+            <Box> 참가 인원 </Box>
+            <Box>--------------</Box>
+            <Box>
+              {userList.map((item) => {
+                return (
+                  <Box>
+                    <Text>닉네임 : {item.nickname}</Text>
+                    <Text>프로필이미지 : {item.imgurl}</Text>
+                    <Text>성공률 : {item.sucRatio}</Text>
+                    <Text>성공 횟수 : {item.sucCnt}</Text>
+                    <Text>실패 횟수 : {item.failCnt}</Text>
+                    <Box>--------------</Box>
+                  </Box>
+                );
+              })}
+            </Box>
+            <Button size="m" my="0" onClick={moveToStart}>
+              단체 챌린지 참여하기
+            </Button>
           </CardBox>
         </MainBox>
       </Box>
-      <Box sx={{ width: "150px", height: "100vh", backgroundColor: "white" }} />
+      <SideBar />
     </Box>
   );
 }
