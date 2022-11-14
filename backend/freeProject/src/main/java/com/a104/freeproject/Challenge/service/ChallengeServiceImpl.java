@@ -720,6 +720,26 @@ public class ChallengeServiceImpl implements ChallengeService {
         else return true;
     }
 
+    @Override
+    public List<ChlDoneResponse> getLogs(Long cid, HttpServletRequest req) throws NotFoundException {
+        Member member = memberService.findEmailbyToken(req);
+
+        if(!challengeRepository.existsById(cid)) throw new NotFoundException("존재하지 않는 챌린지입니다.");
+        Challenge c = challengeRepository.findById(cid).get();
+
+        if(!prtChlRepository.existsByChallengeAndMember(c,member)) return new LinkedList<>();
+        PrtChl p = prtChlRepository.findByChallengeAndMember(c,member);
+
+        List<Log> logs = p.getLogs();
+        List<ChlDoneResponse> output = new LinkedList<>();
+        for(Log log : logs){
+            output.add(ChlDoneResponse.builder()
+                    .done(log.isFin()).cnt(log.getCnt()).date(log.getDate())
+                    .build());
+        }
+        return output;
+    }
+
     public List<ChallengeListResponse> makeResponse(List<Challenge> content) {
         List<ChallengeListResponse> result = new ArrayList<>();
 

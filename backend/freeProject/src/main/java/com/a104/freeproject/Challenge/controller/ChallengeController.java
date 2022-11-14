@@ -141,6 +141,12 @@ public class ChallengeController {
         return ResponseEntity.ok().body(challengeService.chkCid(cid, req));
     }
 
+    @GetMapping("/get-logs/{cid}")
+    @ApiOperation(value="cid를 활용해 챌린지를 진행한 날 별로 관련 데이터 가져오는 api", notes="'/api/challenge/get-logs/1' 형식으로 사용")
+    public ResponseEntity<List<ChlDoneResponse>> getLogs(@PathVariable("cid") Long cid, HttpServletRequest req) throws NotFoundException{
+        return ResponseEntity.ok().body(challengeService.getLogs(cid, req));
+    }
+
     @GetMapping("/change/{cid}/{cnt}")
     @ApiOperation(value="cnt의 값을 직접 다룰 수 있는 api", notes="'/api/challenge/change/106/3' 형식으로 사용")
     public void changeCnt(@PathVariable("cid") Long cid, @PathVariable("cnt") int cnt, HttpServletRequest req) throws NotFoundException{
