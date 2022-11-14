@@ -1,7 +1,6 @@
 import React from "react";
 import { styled } from "@mui/system";
 import { Box } from "@mui/material";
-import { NearbyError } from "@mui/icons-material";
 
 const TextBox = styled(Box)(
   ({ size, color, weight, my, mx, mt, py, px, done }) => `
