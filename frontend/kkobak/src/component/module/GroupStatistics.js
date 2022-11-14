@@ -4,6 +4,7 @@ import { Box, styled } from "@mui/system";
 
 import Text from "component/atom/Text";
 import Button from "component/atom/TextButton";
+import { useNavigate } from "react-router-dom";
 
 import {
   requestChallengeParticipate,
@@ -81,6 +82,7 @@ function getAlignItems(alignItems) {
 
 export default function GroupStatistics() {
   const chlId = Number(useParams().chlId);
+  const navigate = useNavigate();
 
   const [check, setCheck] = useState([]);
   const [userList, setUserList] = useState([]);
@@ -112,6 +114,8 @@ export default function GroupStatistics() {
   }
 
   function moveToStart(e) {
+    // navigate("/myChallenge");
+    window.location.reload();
     e.preventDefault();
     requestChallengeParticipate(
       chlId,
