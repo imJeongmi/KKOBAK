@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Box, styled } from "@mui/material";
 
-
 import Text from "component/atom/Text";
-import Button from "component/atom/TextButton"
+import Button from "component/atom/TextButton";
 import MainBox from "component/atom/MainBox";
 import ChallengeForm from "component/module/ChallengeForm";
 import initial from "static/initial.png";
@@ -11,7 +10,6 @@ import initial from "static/initial.png";
 import { getDetailCategoryList } from "api/Category";
 import { registerChallenge } from "api/Challenge";
 import axios from "axios";
-
 
 import { getMyKkobakList } from "api/userApi";
 import { useNavigate } from "react-router-dom";
@@ -25,14 +23,14 @@ const ButtonBox = styled(Box)(
 
 export default function ChallengeRegister() {
   const [category, setCategory] = useState(1);
-  const [detailCategory, setDetailCategory] = useState(1);
+  const [detailCategory, setDetailCategory] = useState(0);
   const [detailCategoryList, setDetailCategoryList] = useState([]);
   // const [imgSrc, setImgSrc] = useState(initial);
   // default imgsrc로 등록해둠!
   const [imgSrc, setImgSrc] = useState(
     "https://initpjtbucket.s3.ap-northeast-2.amazonaws.com/images/95479caa-be3f-4473-95a5-f1d07f2ffe75.png"
   );
-  const [watch, setWatch] = useState(true);
+  const [watch, setWatch] = useState();
   const [kkobak, setKkobak] = useState(0);
   const [startTime, setStartTime] = useState(new Date());
   const [endTime, setEndTime] = useState(new Date());
@@ -40,15 +38,14 @@ export default function ChallengeRegister() {
   const [title, setTitle] = useState("");
   const [contents, setContents] = useState("");
   const [unit, setUnit] = useState("");
-  const [kkobakCount, setKkobakCount] = useState(0)
+  const [kkobakCount, setKkobakCount] = useState(0);
 
   const navigate = useNavigate();
   function getMyKkobakListSuccess(res) {
     setKkobakCount(res.data.length);
   }
 
-  function getMyKkobakListFail(err) {
-  }
+  function getMyKkobakListFail(err) {}
 
   useEffect(() => {
     getMyKkobakList(getMyKkobakListSuccess, getMyKkobakListFail);
@@ -60,7 +57,9 @@ export default function ChallengeRegister() {
     setDetailCategoryList(res.data);
   }
 
-  function getDetailCategoryListFail(err) {}
+  function getDetailCategoryListFail(err) {
+    console.log(err);
+  }
 
   useEffect(() => {
     getDetailCategoryList(
@@ -71,7 +70,7 @@ export default function ChallengeRegister() {
   }, [category]);
 
   function registerSuccess(res) {
-    navigate(`/myChallenge/${res.data}`)
+    navigate(`/myChallenge/${res.data}`);
   }
 
   function registerFail(err) {
@@ -115,18 +114,28 @@ export default function ChallengeRegister() {
   }
 
   function changeUnit(category, detailCategory) {
-    if (category === "2" && detailCategory === "7") {
+    if (detailCategory === "1") {
+      setUnit("km");
+      setWatch(true);
+    } else if (detailCategory === "2") {
+      setUnit("km");
+      setWatch(true);
+    } else if (detailCategory === "3") {
+      setUnit("분");
+      setWatch(true);
+    } else if (detailCategory === "7") {
       changeAddressToDot(goal);
+      setUnit("주소");
+      setWatch(true);
+    } else if (category === "1") {
+      setUnit("분");
     } else if (category === "2") {
       setUnit("회");
-    } else if (category === "1" && detailCategory === "1") {
-      setUnit("Km");
-    } else if (category === "1" && detailCategory === "2") {
-      setUnit("Km");
-    } else if (category === "1" && detailCategory === "3") {
-      setUnit("분");
+    } else {
+      setWatch(false);
     }
   }
+
   // 유효성 검사
   function checkAll() {
     if (imgSrc === initial) {
@@ -136,32 +145,32 @@ export default function ChallengeRegister() {
 
     if (!category) {
       alert("챌린지 카테고리를 선택해주세요");
-      return false
+      return false;
     }
-    
+
     if (!detailCategory) {
       alert("챌린지 상세 카테고리를 선택해주세요");
-      return false
+      return false;
     }
     if (!title) {
       alert("챌린지 제목을 입력해주세요");
-      return false
+      return false;
     }
 
     if (!contents) {
       alert("챌린지 상세 설명을 입력해주세요");
-      return false
+      return false;
     }
     let check = /^[0-9]+$/;
     if (!goal) {
       alert("챌린지 목표를 입력해주세요");
-      return false
+      return false;
     }
     if (detailCategory !== "7" && !check.test(goal)) {
       alert("챌린지 목표는 숫자로 입력해주세요");
       return false;
-    } 
-    if (kkobak === "1" && kkobakCount >= 3 ) {
+    }
+    if (kkobak === "1" && kkobakCount >= 3) {
       alert("꼬박 챌린지는 최대 3개만 생성 가능합니다");
       return false;
     }
