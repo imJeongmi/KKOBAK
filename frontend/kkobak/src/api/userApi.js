@@ -102,6 +102,23 @@ function getMyKkobakList(success, fail) {
   api.get('/participate/like').then(success).catch(fail);
 }
 
+function changeNickname(nickname, success, fail) {
+  api.patch('/member/change/nick', {
+    nickname: nickname,
+  })
+    .then(success)
+    .catch(fail)
+}
+
+function changeProfileImage(imgurl, success, fail) {
+  api.patch('/member/change/profile-img', {
+    imgurl: imgurl,
+  })
+    .then(success)
+    .catch(fail)
+}
+
+
 export {
   requestJoin,
   requestEmailCheck,
@@ -118,5 +135,7 @@ export {
   requestMyChallengeDetail,
   requestMyChallengeStatistics,
   getKkobakChallengeList,
-  getMyKkobakList
+  getMyKkobakList,
+  changeNickname,
+  changeProfileImage
 };
