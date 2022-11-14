@@ -193,7 +193,7 @@ export default function GroupChallengeForm({
             <SettingContentBox>
               <Box sx={{ height: "50px", display: "flex", alignItems: "center" }}>
                 <FormControl>
-                  <RadioGroup
+                <RadioGroup
                     row
                     aria-labelledby="demo-row-controlled-radio-buttons-group"
                     name="controlled-radio-buttons-group"
@@ -201,13 +201,33 @@ export default function GroupChallengeForm({
                   >
                     <FormControlLabel
                       value={1}
-                      control={<Radio />}
-                      label="운동"
+                      control={
+                        <Radio
+                          size="small"
+                          sx={{
+                            color: "default",
+                            "&.Mui-checked": {
+                              color: "#99b9d6",
+                            },
+                          }}
+                        />
+                      }
+                      label={<Text size="13px">운동</Text>}
                     />
                     <FormControlLabel
                       value={2}
-                      control={<Radio />}
-                      label="생활습관"
+                      control={
+                        <Radio
+                          size="small"
+                          sx={{
+                            color: "default",
+                            "&.Mui-checked": {
+                              color: "#99b9d6",
+                            },
+                          }}
+                        />
+                      }
+                      label={<Text size="13px">생활습관</Text>}
                     />
                   </RadioGroup>
                 </FormControl>
@@ -370,7 +390,7 @@ export default function GroupChallengeForm({
             <SettingContentBox>
               <Box sx={{ height: "50px", display: "flex", alignItems: "center" }}>
                 <FormControl>
-                  <RadioGroup
+                <RadioGroup
                     row
                     aria-labelledby="demo-row-controlled-radio-buttons-group"
                     name="controlled-radio-buttons-group"
@@ -378,13 +398,33 @@ export default function GroupChallengeForm({
                   >
                     <FormControlLabel
                       value={true}
-                      control={<Radio />}
-                      label="사용"
+                      control={
+                        <Radio
+                          size="small"
+                          sx={{
+                            color: "default",
+                            "&.Mui-checked": {
+                              color: "#99b9d6",
+                            },
+                          }}
+                        />
+                      }
+                      label={<Text size="13px">사용</Text>}
                     />
                     <FormControlLabel
                       value={false}
-                      control={<Radio />}
-                      label="사용 안함"
+                      control={
+                        <Radio
+                          size="small"
+                          sx={{
+                            color: "default",
+                            "&.Mui-checked": {
+                              color: "#99b9d6",
+                            },
+                          }}
+                        />
+                      }
+                      label={<Text size="13px">사용 안함</Text>}
                     />
                   </RadioGroup>
                 </FormControl>
