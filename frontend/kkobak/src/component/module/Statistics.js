@@ -71,7 +71,6 @@ export default function Statistics() {
           width: "100%",
           height: "20px",
           marginLeft: "-55px",
-          marginY: "10px",
           zIndex: 100,
         }}
       >
@@ -84,7 +83,7 @@ export default function Statistics() {
       <CardBox height="450px">
         <HeartRateChart findTime={findTime} setFindTime={setFindTime} />
       </CardBox>
-      <CardBox>
+      <CardBox height="450px">
         <BarChart findTime={findTime} setFindTime={setFindTime} />
         {/* <Text>하루 통계 이동한 거리, 소요된 시간, 평균 속력</Text>
         <Text>
@@ -100,7 +99,6 @@ export default function Statistics() {
           width: "100%",
           height: "20px",
           marginLeft: "-55px",
-          marginY: "10px",
           zIndex: 100,
         }}
       >
@@ -124,7 +122,6 @@ export default function Statistics() {
           width: "100%",
           height: "20px",
           marginLeft: "-55px",
-          marginY: "10px",
           zIndex: 100,
         }}
       >
@@ -142,7 +139,6 @@ export default function Statistics() {
           width: "100%",
           height: "20px",
           marginLeft: "-55px",
-          marginY: "10px",
           zIndex: 100,
         }}
       >
