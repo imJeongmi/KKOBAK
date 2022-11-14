@@ -13,5 +13,6 @@ public class MyInfoResponse {
 
     private String nickName;
     private String email;
+    private String imgurl;
 
 }

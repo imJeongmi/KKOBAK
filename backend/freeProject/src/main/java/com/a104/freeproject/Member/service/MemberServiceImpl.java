@@ -214,7 +214,11 @@ public class MemberServiceImpl implements MemberService{
     public MyInfoResponse getMyInfo(HttpServletRequest req) throws NotFoundException {
         try{
             Member member = findEmailbyToken(req);
-            return MyInfoResponse.builder().nickName(member.getNickname()).email(member.getEmail()).build();
+            return MyInfoResponse.builder()
+                    .nickName(member.getNickname())
+                    .email(member.getEmail())
+                    .imgurl(member.getImgurl())
+                    .build();
         } catch (Exception e){
             throw e;
         }
