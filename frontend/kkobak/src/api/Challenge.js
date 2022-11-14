@@ -163,6 +163,10 @@ function requestParticipateCheck(chlId, success, fail) {
   api.get(`/challenge/member/${chlId}`).then(success).catch(fail);
 }
 
+function requestChallengeCount(cid, type, success, fail) {
+  api.get(`challenge/state/${cid}/${type}`).then(success).catch(fail);
+}
+
 export {
   getChallengeDetail,
   checkChallengePassword,
@@ -184,4 +188,5 @@ export {
   requestChallengeParticipate,
   requestChallengeUserList,
   requestParticipateCheck,
+  requestChallengeCount,
 };
