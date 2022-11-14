@@ -45,6 +45,9 @@ public class LogServiceImpl implements LogService {
                 .date(LocalDate.now(ZoneId.of("Asia/Seoul")))
                 .build());
 
+        prtChl.setFailDay(prtChl.getFailDay()+1);
+        prtChl.setSucDay(prtChl.getSucDay()-1);
+
         return true;
     }
 

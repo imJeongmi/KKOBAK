@@ -61,7 +61,7 @@ public class PrtChlServiceImpl implements PrtChlService{
 
         Long prtId = prtChlRepository.save(PrtChl.builder().challenge(c).member(member)
                 .is_fin(false).startDate(now.toLocalDateTime().toLocalDate()).alarmDir(alarm)
-                .endDate(chl.getEndTime().toLocalDateTime().toLocalDate()).build()).getId();
+                .endDate(chl.getEndTime().toLocalDateTime().toLocalDate()).sucDay(0).failDay(0).build()).getId();
 
         // 로그 생성
         logService.createLog(prtChlRepository.findById(prtId).get());

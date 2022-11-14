@@ -370,7 +370,6 @@ public class ChallengeServiceImpl implements ChallengeService {
         Member member = memberService.findEmailbyToken(req);
         Challenge c = challengeRepository.findById(chlId).get();
 
-
         if(c.isFin()||c.getStatus()==2) throw new NotFoundException("종료된 챌린지입니다.");
 
         if(prtChlRepository.existsByChallengeAndMember(c,member))
