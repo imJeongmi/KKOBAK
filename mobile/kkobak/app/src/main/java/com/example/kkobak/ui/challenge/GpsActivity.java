@@ -2,6 +2,8 @@ package com.example.kkobak.ui.challenge;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -14,14 +16,17 @@ import android.os.Looper;
 import android.os.Message;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import com.bumptech.glide.Glide;
 import com.example.kkobak.R;
 import com.example.kkobak.data.retrofit.api.GpsDataApi;
 import com.example.kkobak.data.retrofit.model.GpsDataReq;
@@ -46,16 +51,27 @@ public class GpsActivity extends AppCompatActivity implements LocationListener {
     LocationManager locationManager;
     Location mLastLocation;
     TextView hour, minute, second, gpsSpeed, gpsDistance;
-    Button startBtn, stopBtn;
+    TextView remindDistance;
+    TextView title;
+    ImageView img;
+    Button btn;
     int _hour, _minute, _second;
     Timer timer;
     double speed, distance;
+    double remind;
     boolean flag;
+
+    String chlId;
+    String name;
+    double goal;
 
     LocalDateTime startTime;
 
     final int TIMER = 1;
     final int GPS = 2;
+
+    final int GPS_TIME = 2000;
+    final int GPS_DISTANCE = 10;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -68,17 +84,19 @@ public class GpsActivity extends AppCompatActivity implements LocationListener {
 
         gpsSpeed = findViewById(R.id.gpsSpeed);
         gpsDistance = findViewById(R.id.gpsDistance);
+        remindDistance = findViewById(R.id.remindDistance);
+        title = findViewById(R.id.gpsTitle);
 
-        startBtn = findViewById(R.id.gpsStartBtn);
-        stopBtn = findViewById(R.id.gpsStopBtn);
+        btn = findViewById(R.id.gpsBtn);
+        img = findViewById(R.id.gpsImg);
 
-        stopBtn.setClickable(false);
+        Glide.with(this).load(R.drawable.running).into(img);
 
         //권한 체크
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) 
             return;
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000,20, this);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, GPS_TIME, GPS_DISTANCE, this);
 
         db = AccessTokenDatabase.getAppDatabase(this);
         try {
@@ -86,6 +104,19 @@ public class GpsActivity extends AppCompatActivity implements LocationListener {
         } catch (Exception e) {
             Toast.makeText(this, "에러 발생", Toast.LENGTH_SHORT).show();
         }
+
+        Intent intent = getIntent();
+        name = intent.getStringExtra("title");
+        goal = intent.getIntExtra("goal", 1) * 1000;
+        if (intent.getStringExtra("chlId") != null)
+            chlId = intent.getStringExtra("chlId");
+        else
+            chlId = "-1";
+
+        title.setText(name);
+        remindDistance.setText(convertMtoKm(goal) + " km");
+
+        remind = Double.parseDouble(convertMtoKm(goal));
     }
 
     @Override
@@ -112,7 +143,7 @@ public class GpsActivity extends AppCompatActivity implements LocationListener {
         super.onResume();
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
             return;
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000,20, this);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, GPS_DISTANCE, GPS_DISTANCE, this);
     }
 
     @Override
@@ -135,8 +166,8 @@ public class GpsActivity extends AppCompatActivity implements LocationListener {
             distance += interval;
             speed = (interval / deltaTime);
 
-            distance = Double.parseDouble(String.format("%.2f", distance));
-            speed = Double.parseDouble(String.format("%.2f", speed));
+//            distance = Double.parseDouble(String.format("%.2f", distance));
+//            speed = Double.parseDouble(String.format("%.2f", speed));
 
             mHandler.sendEmptyMessage(GPS);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -147,8 +178,8 @@ public class GpsActivity extends AppCompatActivity implements LocationListener {
     }
 
     public void sendGpsData(double lat, double lng, LocalDateTime time) {
-        int chlId = 139;
-        GpsDataReq gpsDataReq = new GpsDataReq(chlId, time.toString(), Double.toString(lat), Double.toString(lng), startTime.toString());
+        int id = Integer.parseInt(chlId);
+        GpsDataReq gpsDataReq = new GpsDataReq(id, time.toString(), Double.toString(lat), Double.toString(lng), startTime.toString());
         Call<Boolean> call = GpsDataApi.sendGpsData().sendGpsData(accessToken, gpsDataReq);
         call.enqueue(new Callback<Boolean>() {
             @Override
@@ -206,16 +237,24 @@ public class GpsActivity extends AppCompatActivity implements LocationListener {
         else        hour.setText(Integer.toString(_hour));
     }
 
+    public String convertMtoKm(double m) {
+        m /= 1000;
+        return (String.format("%.2f", m));
+    }
+
     private void updateGpsData() {
-        gpsSpeed.setText(speed + "km");
-        gpsDistance.setText(distance + "m");
+        gpsSpeed.setText(String.format("%.2f", speed) + " km/h");
+        gpsDistance.setText(convertMtoKm(distance) + " km");
+        if (remind > 0) {
+            remind = goal - distance;
+            if (remind < 0)
+                remind = 0;
+        }
+        remindDistance.setText(convertMtoKm(remind) + " km");
     }
 
     private void runTimer() {
         _hour = _minute = _second = 0;
-
-        startBtn.setClickable(false);
-        stopBtn.setClickable(true);
 
         timer = new Timer();
         TimerTask timerTask = new TimerTask() {
@@ -227,26 +266,34 @@ public class GpsActivity extends AppCompatActivity implements LocationListener {
         timer.schedule(timerTask, 0, 1000); //Timer 실행
     }
 
-    private void destroyTimer() {
-        startBtn.setClickable(true); 
-        stopBtn.setClickable(false); 
-
-        if (timer != null)
-            timer.cancel();
-    }
-
     public void startLogic(View v) {
-        runTimer();
-        distance = speed = 0;
-        flag = true;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            startTime = LocalDateTime.now().withNano(0);
+        if (!flag) {
+            btn.setText("종료");
+            runTimer();
+            distance = speed = 0;
+            flag = true;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                startTime = LocalDateTime.now().withNano(0);
+            }
         }
-    }
+        else {
+            timer.cancel();
 
-    public void endLogic(View v) {
-        destroyTimer();
-        flag = false;
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle(name + " 결과");
+            builder.setMessage("[ " + (remind > 0 ? "실패" : "성공") + " ]\n" +
+                    "남은거리: " + remind + " km\n" + "소요시간: " +
+                    (_hour <= 9 ? "0" + _hour : "" + _hour) + ":" +
+                    (_minute <= 9 ? "0" + _minute : "" + _minute) + ":" +
+                    (_second <= 9 ? "0" + _second : "" + _second));
+            builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    finish();
+                }
+            });
+            builder.create().show();
+        }
     }
 
     public static class getAccessTokenAsyncTask extends AsyncTask<Void, Void, AccessToken> {

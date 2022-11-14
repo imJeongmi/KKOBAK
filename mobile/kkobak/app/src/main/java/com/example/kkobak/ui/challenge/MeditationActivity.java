@@ -2,6 +2,7 @@ package com.example.kkobak.ui.challenge;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.Sensor;
@@ -77,6 +78,8 @@ public class MeditationActivity extends AppCompatActivity implements SensorEvent
     String chlId;
 //    String chlId = "133";
 
+    Context context;
+
     final static int BPM_LIMIT = 100;
 
     @Override
@@ -129,6 +132,8 @@ public class MeditationActivity extends AppCompatActivity implements SensorEvent
         minBpm = 300;
         maxBpm = 0;
 //        Toast.makeText(this, "id: " + chlId, Toast.LENGTH_SHORT).show();
+
+        context = getApplicationContext();
     }
 
     @Override
@@ -230,6 +235,7 @@ public class MeditationActivity extends AppCompatActivity implements SensorEvent
 
         if (_minute == 0 && _second == 0) {
             timer.cancel();
+            sensorManager.unregisterListener(sensorEventListener);
 
             Vibrator vib = (Vibrator)getSystemService(VIBRATOR_SERVICE);
             vib.vibrate(new long[] { 500, 1000, 500, 1000}, -1);
@@ -241,12 +247,21 @@ public class MeditationActivity extends AppCompatActivity implements SensorEvent
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("명상 결과");
             builder.setMessage("최고 심박수: " + maxBpm + "\n최저 심박수:" + minBpm + "\n [ " + (maxBpm >= BPM_LIMIT ? "실패" : "성공") + " ]");
+            builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    finish();
+                }
+            });
             builder.create().show();
         }
     }
 
     public void pressBtn(View v) {
         btnState = !btnState;
+
+//        _minute = 0;
+//        _second = 5;
 
         if (btnState) {
             if (_minute <= 9)   timerMinute.setText("0" + _minute);

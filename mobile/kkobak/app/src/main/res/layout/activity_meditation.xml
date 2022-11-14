@@ -114,6 +114,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="300dp"
+        android:gravity="center"
         android:orientation="vertical"
         android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -122,7 +123,7 @@
 
         <include layout="@layout/include_hrm_counter" />
 
-<!--        <include layout="@layout/include_vertical_space" />-->
+        <!--        <include layout="@layout/include_vertical_space" />-->
 
         <com.txusballesteros.SnakeView
             android:id="@+id/snake"

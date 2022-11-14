@@ -205,10 +205,14 @@ public class MyChallengeDetailActivity extends AppCompatActivity {
             case RUNNING:
                 Toast.makeText(this, "Running", Toast.LENGTH_SHORT).show();
                 intent = new Intent(this, GpsActivity.class);
+                intent.putExtra("title", "달리기");
+                if (goal != -1) intent.putExtra("goal", goal);
                 break;
             case WALKING:
                 Toast.makeText(this, "Walking", Toast.LENGTH_SHORT).show();
                 intent = new Intent(this, GpsActivity.class);
+                intent.putExtra("title", "걷기");
+                if (goal != -1) intent.putExtra("goal", goal);
                 break;
             case MEDITATION:
                 Toast.makeText(this, "Meditation", Toast.LENGTH_SHORT).show();
