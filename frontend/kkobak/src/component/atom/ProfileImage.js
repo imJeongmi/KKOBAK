@@ -6,7 +6,7 @@ function importAllImgs(r) {
   return r.keys().map(r);
 }
 
-const ProfileImgs = importAllImgs(require.context("static/avatars", false, /\.(jpg)$/));
+const ProfileImgs = importAllImgs(require.context("static/avatars", false, /\.(png)$/));
 
 const Image = styled(Avatar)(
   ({ type, mb }) => `
