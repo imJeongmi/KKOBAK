@@ -18,12 +18,14 @@ import {
   fetchMyChallengeCalendarPageCnt,
   getMyKkobakList,
 } from "api/userApi";
+import ProfileImage from "component/atom/ProfileImage";
 
 export default function Main() {
   const [user, setUser] = useState([]);
   const [MyChallengeList, setMyChallengeList] = useState([]);
   const [TotalMyPage, setMyPageNation] = useState([]);
   const [page, setPage] = useState(1);
+
 
   const handlePage = (event) => {
     const nowPageInt = parseInt(event.target.outerText);
@@ -96,8 +98,8 @@ export default function Main() {
         display: "flex",
       }}
     >
-      <Box sx={{ margin: "0 auto", display: "flex", flexDirection: "column" }}>
-        <Box sx={{ display: "flex" }}>
+        <Box sx={{ margin: "0 auto", display: "flex", flexDirection: "column" }}>
+          <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
           <Text size="m" weight="semibold" mt="30" my="15">
             {"안녕하세요\u00A0"}
           </Text>
@@ -107,6 +109,9 @@ export default function Main() {
           <Text size="m" weight="semibold" mt="30" my="15">
             님
           </Text>
+          <Box sx={{mt:3.75, ml: 1 }}>
+            <ProfileImage type="small" num={Number(user.imgurl)}></ProfileImage>
+          </Box>
         </Box>
         <MainBox height="622px">
           <Box sx={{ display: "flex", flexDirection: "column" }}>
@@ -157,7 +162,7 @@ export default function Main() {
         </MainBox>
       </Box>
       <Box sx={{ margin: "0 auto", display: "flex", flexDirection: "column" }}>
-        <Box sx={{ width: "250px", margin: "70px 30px 50px 30px" }}>
+        <Box sx={{ width: "250px", margin: "30px 30px 50px 30px" }}>
           <WidgetCarousel />
           <Todolist />
         </Box>
