@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import { styled } from "@mui/system";
-import { Box, setRef } from "@mui/material";
+import { Box } from "@mui/material";
 
 import moment from "moment";
 import Text from "component/atom/Text";
 import CheckImage from "static/check.png";
+import PlusImage from "static/plus.png";
 import DeleteImage from "static/delete.png";
 
 import { deleteTodolist, updateTodolistStatus } from "api/todolistApi";
-import { logController } from "api/log";
+import { requestChallengeCount } from "api/Challenge";
 
 const TodolistItemBox = styled(Box)(
   () => `
@@ -22,13 +23,23 @@ const TodolistItemBox = styled(Box)(
 
 const CheckBox = styled(Box)(
   () => `
-    width: 17px;
-    height: 17px;
+    width: 16px;
+    height: 16px;
     background-color: #ffffff;
     border-radius: 5px;
     border: 1px solid #CCCCCC;
     margin: 0 15px;
     `
+);
+
+const ImageBox = styled(Box)(
+  () => `
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  `
 );
 
 export default function TodolistItem({
@@ -41,7 +52,6 @@ export default function TodolistItem({
   chlId,
   watch,
   category,
-  dashedNowDate,
   weight,
   color,
 }) {
@@ -63,38 +73,58 @@ export default function TodolistItem({
 
   function deleteTodolistFail(res) {}
 
-  function changeKkobakChallengeDoneSuccess(res) {
+  function requestChallengeCountSuccess(res) {
     setRefresh(!refresh);
   }
 
-  function changeKkobakChallengeDoneFail(res) {}
+  function requestChallengeCountFail(res) {}
 
   function onClickCheckBox() {
-    console.log("watch: ", watch, ", done: ", done, ", category: ", category);
     setHover(false);
-    if (!!watch) return;
-    if (nowDate === today) {
-      setCheck(!check);
-      setCancelText(!cancelText);
-      if (!!chlId) {
-        logController(
+    if (nowDate !== today) return;
+    if (done && category === 2) return;
+
+    setCheck(!check);
+    setCancelText(!cancelText);
+    if (!chlId) {
+      updateTodolistStatus(
+        id,
+        updateTodolistStatusSuccess,
+        updateTodolistStatusFail
+      );
+    } else if (category === 1) {
+      if (done) {
+        requestChallengeCount(
           chlId,
-          dashedNowDate,
-          changeKkobakChallengeDoneSuccess,
-          changeKkobakChallengeDoneFail
+          2,
+          requestChallengeCountSuccess,
+          requestChallengeCountFail
         );
       } else {
-        updateTodolistStatus(
-          id,
-          updateTodolistStatusSuccess,
-          updateTodolistStatusFail
+        requestChallengeCount(
+          chlId,
+          1,
+          requestChallengeCountSuccess,
+          requestChallengeCountFail
         );
       }
+    } else if (category === 2) {
+      requestChallengeCount(
+        chlId,
+        1,
+        requestChallengeCountSuccess,
+        requestChallengeCountFail
+      );
     }
   }
 
   function onClickDelete() {
     deleteTodolist(id, deleteTodolistSuccess, deleteTodolistFail);
+  }
+
+  function getImage() {
+    if (category === 2) return PlusImage;
+    return CheckImage;
   }
 
   return (
@@ -105,11 +135,13 @@ export default function TodolistItem({
         onMouseOut={() => setHover(false)}
       >
         {check && done ? (
-          <img src={CheckImage} width="17px" />
+          <ImageBox>
+            <img src={CheckImage} width="100%" height="100%" />
+          </ImageBox>
         ) : hover && !watch ? (
-          <Box sx={{ opacity: 0.5 }}>
-            <img src={CheckImage} width="17px" />
-          </Box>
+          <ImageBox sx={{ opacity: "0.4" }}>
+            <img src={getImage()} width="100%" height="100%" />
+          </ImageBox>
         ) : (
           ""
         )}
@@ -121,7 +153,7 @@ export default function TodolistItem({
           weight={weight}
           py="1"
           px="2"
-          done={cancelText && done} // 이 부분 테스트 필요
+          done={cancelText && done}
         >
           {contents}
         </Text>

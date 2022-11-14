@@ -101,11 +101,13 @@ export default function ChallengeForm({
   const [showunit, setShowUnit] = useState("");
 
   function changeDetailCategory(e) {
+    const value = e.target.value;
     e.preventDefault();
-    setDetailCategory(e.target.value);
-    changeUnit(category, e.target.value);
-    showUnit(category, e.target.value);
+    setDetailCategory(value);
+    changeUnit(category, value);
+    showUnit(category, value);
   }
+
   useEffect(() => {
     if (category && detailCategory) {
       changeUnit(category, detailCategory);
@@ -113,16 +115,24 @@ export default function ChallengeForm({
   }, [category, detailCategory]);
 
   function showUnit(category, detailCategory) {
-    if (category === "2" && detailCategory === "7") {
+    if (detailCategory === "1") {
+      setShowUnit("km");
+      setWatch(true);
+    } else if (detailCategory === "2") {
+      setShowUnit("km");
+      setWatch(true);
+    } else if (detailCategory === "3") {
+      setShowUnit("분");
+      setWatch(true);
+    } else if (detailCategory === "7") {
       setShowUnit("주소");
+      setWatch(true);
+    } else if (category === "1") {
+      setShowUnit("분");
     } else if (category === "2") {
       setShowUnit("회");
-    } else if (category === "1" && detailCategory === "1") {
-      setShowUnit("Km");
-    } else if (category === "1" && detailCategory === "2") {
-      setShowUnit("Km");
-    } else if (category === "1" && detailCategory === "3") {
-      setShowUnit("분");
+    } else {
+      setWatch(false);
     }
   }
 

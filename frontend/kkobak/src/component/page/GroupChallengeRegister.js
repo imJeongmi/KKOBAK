@@ -82,19 +82,28 @@ export default function GroupChallengeRegister() {
   }
 
   function changeUnit(category, detailCategory) {
-    if (category === "2" && detailCategory === "7") {
-      const add = changeAddressToDot(goal);
-      return add;
+    if (detailCategory === "1") {
+      setUnit("km");
+      setWatch(true);
+    } else if (detailCategory === "2") {
+      setUnit("km");
+      setWatch(true);
+    } else if (detailCategory === "3") {
+      setUnit("분");
+      setWatch(true);
+    } else if (detailCategory === "7") {
+      changeAddressToDot(goal);
+      setUnit("주소");
+      setWatch(true);
+    } else if (category === "1") {
+      setUnit("분");
     } else if (category === "2") {
       setUnit("회");
-    } else if (category === "1" && detailCategory === "1") {
-      setUnit("Km");
-    } else if (category === "1" && detailCategory === "2") {
-      setUnit("Km");
-    } else if (category === "1" && detailCategory === "3") {
-      setUnit("분");
+    } else {
+      setWatch(false);
     }
   }
+  
   // 유효성 검사
   function checkAll() {
     if (imgSrc === initial) {
