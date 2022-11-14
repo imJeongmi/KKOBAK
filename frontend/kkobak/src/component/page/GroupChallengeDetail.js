@@ -10,6 +10,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import MainBox from "component/atom/MainBox";
 import Text from "component/atom/Text";
 import GroupStatistics from "component/module/GroupStatistics";
+import WidgetGroupStat from "component/module/WidgetGroupStat";
 
 import { getChallengeDetail } from "api/Challenge";
 import { requestUserInfo } from "api/userApi";
@@ -315,9 +316,20 @@ export default function ChallengeDetail() {
             </SettingBox>
           </CardBox>
 
-          <CardBox>
-            <GroupStatistics />
-          </CardBox>
+          <Box
+            sx={{
+              backgroundColor: "#ffffff",
+              marginTop: "10px",
+              width: "480px",
+              height: "90%",
+              borderRadius: "20px",
+              margin: "0 20px",
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            <WidgetGroupStat />
+          </Box>
         </MainBox>
       </Box>
       <Box sx={{ width: "150px", height: "100vh", backgroundColor: "white" }} />
