@@ -66,6 +66,17 @@ export default function Statistics() {
 
   return detailCategoryId === 1 || detailCategoryId === 2 ? (
     <StatisticsBox>
+      <Box
+        sx={{
+          width: "100%",
+          height: "20px",
+          marginLeft: "-55px",
+          marginY: "10px",
+          zIndex: 100,
+        }}
+      >
+        <CheckDayForm findTime={findTime} setFindTime={setFindTime} />
+      </Box>
       <CardBox height="350px">
         <ChallengeMap findTime={findTime} setFindTime={setFindTime} />
       </CardBox>
@@ -77,40 +88,75 @@ export default function Statistics() {
         <BarChart findTime={findTime} setFindTime={setFindTime} />
         {/* <Text>하루 통계 이동한 거리, 소요된 시간, 평균 속력</Text>
         <Text>
-          주간 통계 누적 이동 거리(그날 그날 km 필요, 총 km 필요), 누적 소요
-          시간, 전체 평균 속력
-        </Text> */}
+        주간 통계 누적 이동 거리(그날 그날 km 필요, 총 km 필요), 누적 소요
+        시간, 전체 평균 속력
+      </Text> */}
       </CardBox>
     </StatisticsBox>
   ) : detailCategoryId === 3 ? (
     <StatisticsBox>
+      <Box
+        sx={{
+          width: "100%",
+          height: "20px",
+          marginLeft: "-55px",
+          marginY: "10px",
+          zIndex: 100,
+        }}
+      >
+        <CheckDayForm findTime={findTime} setFindTime={setFindTime} />
+      </Box>
       <CardBox margin="center">
         <HeartRateChart findTime={findTime} setFindTime={setFindTime} />
       </CardBox>
+
       <CardBox>
-        <Text>
+        <BarChart findTime={findTime} setFindTime={setFindTime} />
+        {/* <Text>
           주간 통계 : 누적 진행시간(막대 그래프로 표현), 누적 평균 심박수
-        </Text>
+        </Text> */}
       </CardBox>
     </StatisticsBox>
   ) : detailCategoryId === 7 ? (
     <StatisticsBox>
+      <Box
+        sx={{
+          width: "100%",
+          height: "20px",
+          marginLeft: "-55px",
+          marginY: "10px",
+          zIndex: 100,
+        }}
+      >
+        <CheckDayForm findTime={findTime} setFindTime={setFindTime} />
+      </Box>
       <CardBox height="250px">
         <ChallengeMap findTime={findTime} setFindTime={setFindTime} />
       </CardBox>
-      <CardBox>
-        <Text>출석 정보 통계 들어갈 곳</Text>
-      </CardBox>
+      <CardBox>{/* <Text>출석 정보 통계 들어갈 곳</Text> */}</CardBox>
     </StatisticsBox>
   ) : (
     <StatisticsBox>
+      <Box
+        sx={{
+          width: "100%",
+          height: "20px",
+          marginLeft: "-55px",
+          marginY: "10px",
+          zIndex: 100,
+        }}
+      >
+        <CheckDayForm findTime={findTime} setFindTime={setFindTime} />
+      </Box>
       <CardBox height="250px"></CardBox>
+
       <CardBox>
-        <Text>
+        <BarChart findTime={findTime} setFindTime={setFindTime} />
+        {/* <Text>
           하루 통계 : 몇시에 진행했는지 하루 전체 시간 리스트 필요(막대 그래프로
           표현)
         </Text>
-        <Text> 주간 통계 : 하루에 몇 회했는지 1주일 리스트 필요합니다.</Text>
+        <Text> 주간 통계 : 하루에 몇 회했는지 1주일 리스트 필요합니다.</Text> */}
       </CardBox>
     </StatisticsBox>
   );
