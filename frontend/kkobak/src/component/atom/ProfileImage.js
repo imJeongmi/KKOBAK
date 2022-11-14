@@ -24,7 +24,7 @@ function getSizeByType(type) {
     case "big":
       return "150px";
     case "small":
-      return "45px";
+      return "30px";
     default:
       return "45px";
   }
