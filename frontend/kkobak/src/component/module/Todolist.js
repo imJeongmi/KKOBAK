@@ -116,7 +116,7 @@ export default function Todolist() {
     const data = res.data;
     const list = [];
     data.map((item, index) => {
-      if (item.kkobak === 1) {
+      if (item.kkobak === 1 && item.watch === false) {
         list.push(item);
       }
     });
@@ -195,7 +195,7 @@ export default function Todolist() {
             done={item.done}
             chlId={item.chlId}
             watch={item.watch}
-            category={item.category}
+            category={item.categoryId}
             dashedNowDate={nowDate.format("YYYY-MM-DD")}
             weight="semibold"
             color="blue"
