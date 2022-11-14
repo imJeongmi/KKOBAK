@@ -60,10 +60,21 @@ export default function Statistics() {
     );
   }, []);
 
+  // detailCategoryId 1,2 는 달리기와 걷기 입니다.
+  // 3은 명상입니다. 7은 출석체크 입니다. 4, 5, 6은 생활습관 입니다.
+
   return detailCategoryId === 1 || detailCategoryId === 2 ? (
     <StatisticsBox>
       <CardBox height="250px">
         <ChallengeMap findTime={findTime} setFindTime={setFindTime} />
+      </CardBox>
+
+      <CardBox>
+        <Text>하루 통계 이동한 거리, 소요된 시간, 평균 속력</Text>
+        <Text>
+          주간 통계 누적 이동 거리(그날 그날 km 필요, 총 km 필요), 누적 소요
+          시간, 전체 평균 속력
+        </Text>
       </CardBox>
       <CardBox>
         <HeartRateChart findTime={findTime} setFindTime={setFindTime} />
@@ -74,14 +85,30 @@ export default function Statistics() {
       <CardBox margin="center">
         <HeartRateChart findTime={findTime} setFindTime={setFindTime} />
       </CardBox>
+      <CardBox>
+        <Text>
+          주간 통계 : 누적 진행시간(막대 그래프로 표현), 누적 평균 심박수
+        </Text>
+      </CardBox>
     </StatisticsBox>
-  ) : (
+  ) : detailCategoryId === 7 ? (
     <StatisticsBox>
       <CardBox height="250px">
         <ChallengeMap findTime={findTime} setFindTime={setFindTime} />
       </CardBox>
       <CardBox>
-        <Text>{"출석 정보 통계 들어갈 곳"}</Text>
+        <Text>출석 정보 통계 들어갈 곳</Text>
+      </CardBox>
+    </StatisticsBox>
+  ) : (
+    <StatisticsBox>
+      <CardBox height="250px"></CardBox>
+      <CardBox>
+        <Text>
+          하루 통계 : 몇시에 진행했는지 하루 전체 시간 리스트 필요(막대 그래프로
+          표현)
+        </Text>
+        <Text> 주간 통계 : 하루에 몇 회했는지 1주일 리스트 필요합니다.</Text>
       </CardBox>
     </StatisticsBox>
   );
