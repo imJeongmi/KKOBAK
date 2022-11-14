@@ -13,26 +13,18 @@ const Image = styled(Avatar)(
   margin: auto;
   width: ${getSizeByType(type)};
   height: ${getSizeByType(type)};
-  border-radius: ${getBorderRadiusByType(type)};
+  border-radius: 50%
   margin-bottom: ${getMarginY(mb)};
 `,
 );
 
-function getBorderRadiusByType(type) {
-  switch (type) {
-    case "rounded":
-      return "25% 25% 25% 25%";
-    default:
-      return "50%";
-  }
-}
 
 function getSizeByType(type) {
   switch (type) {
-    case "rounded":
+    case "big":
       return "150px";
-    case "winner":
-      return "70px";
+    case "small":
+      return "45px";
     default:
       return "45px";
   }

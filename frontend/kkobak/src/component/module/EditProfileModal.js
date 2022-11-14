@@ -11,6 +11,7 @@ import Text from "component/atom/Text";
 
 import RefreshIcon from "static/refresh.png";
 import ProfileImage from "component/atom/ProfileImage";
+import { changeNickname, changeProfileImage } from "api/userApi";
 
 const ModalStyle = {
   position: "absolute",
@@ -63,6 +64,18 @@ export default function EditProfileModal() {
     setNum(Math.floor(Math.random() * 10));
   }
 
+  function changeNicknameSuccess(res) {
+  }
+
+  function changeNicknameFail(err) {
+  }
+
+  function changeProfileImageSuccess(res) {
+  }
+
+  function changeProfileImageFail(err) {
+  }
+
   function onClickChange() {
     if (!nickname) {
       setMessage("닉네임을 입력해주세요.");
@@ -70,7 +83,8 @@ export default function EditProfileModal() {
       return;
     }
 
-    // 프로필 변경 api
+    changeNickname(nickname, changeNicknameSuccess, changeNicknameFail)
+    changeProfileImage(num, changeProfileImageSuccess, changeProfileImageFail)
   }
 
   return (
@@ -85,13 +99,13 @@ export default function EditProfileModal() {
         </Box>
         
         <Box sx={BoxStyle}>
-          <ProfileImage type="rounded" num={num}></ProfileImage>
+          <ProfileImage type="big" num={num}></ProfileImage>
           <Box sx={IconStyle} onClick={onClickRefresh}>
             <img src={RefreshIcon} alt="refresh" width="25px" />
           </Box>
         </Box>
 
-        <Box sx={{ width: "65%", margin: "auto", textAlign: "center", mt: 2 }}>
+        <Box sx={{ width: "65%", margin: "auto", textAlign: "center", mt: 3 }}>
           <Input
             type="text"
             placeholder="닉네임"
@@ -99,7 +113,7 @@ export default function EditProfileModal() {
           ></Input>
 
 
-          <Box onClick={onClickChange} sx={{ mt: "20px" }}>
+          <Box onClick={onClickChange} sx={{ mt: "10px" }}>
             <TextButton size="m" my="15px">
               프로필 변경
             </TextButton>
