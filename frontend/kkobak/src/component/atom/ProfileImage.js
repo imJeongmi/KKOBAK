@@ -23,6 +23,8 @@ function getSizeByType(type) {
   switch (type) {
     case "big":
       return "150px";
+    case "m":
+      return "80px"
     case "small":
       return "30px";
     default:
