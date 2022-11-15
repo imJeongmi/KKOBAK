@@ -40,7 +40,7 @@ export default function MainCarousel() {
       </SwiperSlide>
       <SwiperSlide>
         <Challenge />
-        <Box sx={{ display: "flex", alignItems: "end", mb: 3, ml: 3 }}>
+        <Box sx={{ position: "absolute", right: "9%", bottom: "5%" }}>
           <ArrowUpwardIcon
             fontSize="large"
             color="disabled"
@@ -50,7 +50,7 @@ export default function MainCarousel() {
       </SwiperSlide>
       <SwiperSlide>
         <GroupChallenge />
-        <Box sx={{ display: "flex", alignItems: "end", mb: 3, ml: 3 }}>
+        <Box sx={{ position: "absolute", right: "9%", bottom: "5%" }}>
           <ArrowUpwardIcon
             fontSize="large"
             color="disabled"
