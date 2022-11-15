@@ -64,7 +64,7 @@ const SettingItem = styled(Box)(
 
 const SettingTitleBox = styled(Box)(
   (height) => `
-  width: 130px;
+  width: 150px;
   height: 100%;
   display: flex;
   justify-content: start;
@@ -202,7 +202,7 @@ export default function ChallengeDetail() {
               <SettingItem>
                 <SettingTitleBox>
                   <Text size="13px" weight="semibold">
-                    카테고리
+                    {"🔎\u00A0\u00A0 카테고리"}
                   </Text>
                 </SettingTitleBox>
                 <SettingContentBox>
@@ -215,7 +215,7 @@ export default function ChallengeDetail() {
               <SettingItem>
                 <SettingTitleBox>
                   <Text size="13px" weight="semibold">
-                    상세 카테고리
+                    {"🔖\u00A0\u00A0 상세 카테고리"}
                   </Text>
                 </SettingTitleBox>
                 <SettingContentBox>
@@ -228,7 +228,7 @@ export default function ChallengeDetail() {
               <SettingItem>
                 <SettingTitleBox>
                   <Text size="13px" weight="semibold">
-                    기간
+                    {"📅\u00A0\u00A0 기간"}
                   </Text>
                 </SettingTitleBox>
                 <SettingContentBox>
@@ -241,7 +241,7 @@ export default function ChallengeDetail() {
               <SettingItem>
                 <SettingTitleBox>
                   <Text size="13px" weight="semibold">
-                    알림
+                    {"🔔\u00A0\u00A0 알림"}
                   </Text>
                 </SettingTitleBox>
                 <SettingContentBox>
@@ -254,7 +254,7 @@ export default function ChallengeDetail() {
               <SettingItem>
                 <SettingTitleBox>
                   <Text size="13px" weight="semibold">
-                    목표
+                    {"🔥\u00A0\u00A0 목표"}
                   </Text>
                 </SettingTitleBox>
                 <SettingContentBox>
@@ -267,7 +267,7 @@ export default function ChallengeDetail() {
               <SettingItem>
                 <SettingTitleBox>
                   <Text size="13px" weight="semibold">
-                    워치 사용
+                    {"⌚️\u00A0\u00A0 워치 사용"}
                   </Text>
                 </SettingTitleBox>
                 <SettingContentBox>

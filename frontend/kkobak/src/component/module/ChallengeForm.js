@@ -184,7 +184,7 @@ export default function ChallengeForm({
           <SettingItem>
             <SettingTitleBox>
               <Text size="15px" weight="bold">
-                🔎 카테고리
+                {"🔎\u00A0 카테고리"}
               </Text>
             </SettingTitleBox>
             <SettingContentBox>
@@ -237,7 +237,7 @@ export default function ChallengeForm({
           <SettingItem>
             <SettingTitleBox>
               <Text size="15px" weight="bold">
-                🔖 상세 카테고리
+                {"🔖\u00A0 상세 카테고리"}
               </Text>
             </SettingTitleBox>
             <SettingContentBox>
@@ -256,7 +256,7 @@ export default function ChallengeForm({
           <SettingItem>
             <SettingTitleBox>
               <Text size="15px" weight="bold">
-                📌 제목
+                {"📌\u00A0 제목"}
               </Text>
             </SettingTitleBox>
             <SettingContentBox>
@@ -278,7 +278,7 @@ export default function ChallengeForm({
           <SettingItem>
             <SettingTitleBox sx={{ height: "90px" }}>
               <Text size="15px" weight="bold">
-                💬 상세 설명
+                {"💬\u00A0 상세 설명"}
               </Text>
             </SettingTitleBox>
             <SettingContentBox sx={{ height: "90px" }}>
@@ -301,7 +301,7 @@ export default function ChallengeForm({
           <SettingItem>
             <SettingTitleBox>
               <Text size="15px" weight="bold">
-                🔥 목표
+                {"🔥\u00A0 목표"}
               </Text>
             </SettingTitleBox>
             <SettingContentBox>
@@ -330,7 +330,7 @@ export default function ChallengeForm({
           <SettingItem>
             <SettingTitleBox>
               <Text size="15px" weight="bold">
-                📅 기간
+                {"📅\u00A0 기간"}
               </Text>
             </SettingTitleBox>
             <SettingContentBox
@@ -369,7 +369,7 @@ export default function ChallengeForm({
           <SettingItem>
             <SettingTitleBox>
               <Text size="15px" weight="bold">
-                🔔 알림
+                {"🔔\u00A0 알림"}
               </Text>
             </SettingTitleBox>
             <SettingContentBox>
@@ -382,7 +382,7 @@ export default function ChallengeForm({
           <SettingItem>
             <SettingTitleBox>
               <Text size="15px" weight="bold">
-                ✔️ 꼬박챌린지 설정
+                {"✔️\u00A0 꼬박챌린지 설정"}
               </Text>
             </SettingTitleBox>
             <SettingContentBox>
@@ -435,7 +435,7 @@ export default function ChallengeForm({
           <SettingItem>
             <SettingTitleBox>
               <Text size="15px" weight="bold">
-                ⌚️ 워치 사용
+                {"⌚️\u00A0 워치 사용"}
               </Text>
             </SettingTitleBox>
             <SettingContentBox>

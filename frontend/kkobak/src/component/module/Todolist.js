@@ -222,7 +222,7 @@ export default function Todolist() {
       })}
 
       <TodolistInput>
-        <CheckBox />
+        <CheckBox sx={{ cursor: "pointer" }} />
         <input
           autoFocus
           onKeyPress={onKeyPress}
