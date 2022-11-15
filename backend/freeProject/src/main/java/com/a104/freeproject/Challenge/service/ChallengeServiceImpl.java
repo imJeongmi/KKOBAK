@@ -443,8 +443,6 @@ public class ChallengeServiceImpl implements ChallengeService {
         Long dc = c.getDetailCategory().getId();
 
         if(dc==1 || dc==2){ // 달리기 KM, 걷기 KM
-            System.out.println("dc = " + dc);
-
             int goal = c.getGoal();
             List<Statgps> gpsList = gpsRepository.findByChkTimeAndPrtChl(p,input.getStartTime());
 
@@ -459,26 +457,19 @@ public class ChallengeServiceImpl implements ChallengeService {
                 if(!log.isFin()){ // 실패 -> 성공
                     log.setFin(true);
                     log.setCnt(log.getCnt()+(int)dist);
-                    logRepository.save(log);
 
                     p.setFailDay(p.getFailDay()-1);
                     p.setSucDay(p.getSucDay()+1);
-                    prtChlRepository.save(p);
                 }
 
                 for(Statgps s : gpsList){
                     s.setSuccess(true);
-                    gpsRepository.save(s);
                 }
             }
             logRepository.save(log);
-
-            System.out.println("현재 log 상태: cnt = "+
-                    log.getCnt()+", 성공일 = "+p.getSucDay()+", 실패일 = "+p.getFailDay());
             return log.isFin();
         }
         else if (dc==3){ // 명상 분
-            System.out.println("dc3 = " + dc);
             List<Statbpm> bpmList = bpmRepository.findByChkTimeAndPrtChl(p,input.getStartTime());
 
             // bpm 기준 100 이하 : 성공, 시간은 워치, 모바일에서 막아줌
@@ -486,30 +477,21 @@ public class ChallengeServiceImpl implements ChallengeService {
                 if(s.getBpm()>100) return false;
             }
 
-            // 성공한 명상
-            System.out.println("성공한 명상");
             for(Statbpm s : bpmList){
                 s.setSuccess(true);
-                bpmRepository.save(s);
             }
 
             if(!log.isFin()){ // 실패 -> 성공
                 log.setFin(true);
                 log.setCnt(log.getCnt()+c.getGoal());
-                logRepository.save(log);
 
                 p.setFailDay(p.getFailDay()-1);
                 p.setSucDay(p.getSucDay()+1);
-                prtChlRepository.save(p);
             }
-
-            System.out.println("현재 log 상태: cnt = "+
-                    log.getCnt()+", 성공일 = "+p.getSucDay()+", 실패일 = "+p.getFailDay());
 
             return log.isFin();
         }
-        else if (dc==4 || dc==5 || dc==6){ // 물마시기 회, 영양제 먹기 회, 일어서기 회
-            System.out.println("dc = " + dc);
+        else if (dc==4 || dc==5 || dc==6 || dc==0){ // 물마시기 회, 영양제 먹기 회, 일어서기 회
             int goal = c.getGoal();
 
             if(log.getCnt()+1>=goal){ // 성공
@@ -517,41 +499,23 @@ public class ChallengeServiceImpl implements ChallengeService {
                     log.setFin(true);
                     p.setSucDay(p.getSucDay()+1);
                     p.setFailDay(p.getFailDay()-1);
-                    prtChlRepository.save(p);
                 }
             }
-            else{ // 실패
-                if(log.isFin()){ // 성공 -> 실패
-                    log.setFin(false);
-                    p.setSucDay(p.getSucDay()-1);
-                    p.setFailDay(p.getFailDay()+1);
-                    prtChlRepository.save(p);
-                }
-            }
-            log.setCnt(log.getCnt()+1);
-            logRepository.save(log);
-            System.out.println("현재 log 상태: cnt = "+
-                    log.getCnt()+", 성공일 = "+p.getSucDay()+", 실패일 = "+p.getFailDay());
 
-            // --------------------------------
+            log.setCnt(log.getCnt()+1);
 
             return log.isFin();
         }
-        else {  //dc==7, 출석 경도,위도
-            System.out.println("dc7 = " + dc);
+        else{  //dc==7, 출석 경도,위도
 
             String[] str = c.getUnit().split(","); // 경도 위도
             double d = getDistance(input.getLat(), input.getLng(), str[1], str[0]);
 
-            System.out.println("거리 = " + d);
-
             if(d<100) {
                 log.setFin(true);
-                logRepository.save(log);
                 if(!log.isFin()){
                     p.setSucDay(p.getSucDay()+1);
                     p.setFailDay(p.getFailDay()-1);
-                    prtChlRepository.save(p);
                 }
                 return true;
             }
@@ -612,7 +576,6 @@ public class ChallengeServiceImpl implements ChallengeService {
                 log.setFin(true);
                 p.setSucDay(p.getSucDay()+1);
                 p.setFailDay(p.getFailDay()-1);
-                prtChlRepository.save(p);
             }
         }
         else{ // 실패
@@ -620,12 +583,8 @@ public class ChallengeServiceImpl implements ChallengeService {
                 log.setFin(false);
                 p.setSucDay(p.getSucDay()-1);
                 p.setFailDay(p.getFailDay()+1);
-                prtChlRepository.save(p);
             }
         }
-        logRepository.save(log);
-        System.out.println("현재 log 상태: cnt = "+
-                log.getCnt()+", 성공일 = "+p.getSucDay()+", 실패일 = "+p.getFailDay());
     }
 
     @Override
@@ -710,7 +669,6 @@ public class ChallengeServiceImpl implements ChallengeService {
 
         if(log.getCnt()+nowCnt<0) log.setCnt(0);
         else log.setCnt(log.getCnt()+nowCnt);
-        logRepository.save(log);
 
         return log.isFin();
     }
