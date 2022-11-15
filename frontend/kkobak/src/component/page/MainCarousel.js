@@ -40,7 +40,14 @@ export default function MainCarousel() {
       </SwiperSlide>
       <SwiperSlide>
         <Challenge />
-        <Box sx={{ position: "absolute", right: "9%", bottom: "5%" }}>
+        <Box
+          sx={{
+            position: "absolute",
+            right: "9%",
+            bottom: "5%",
+            cursor: "pointer",
+          }}
+        >
           <ArrowUpwardIcon
             fontSize="large"
             color="disabled"
@@ -50,7 +57,14 @@ export default function MainCarousel() {
       </SwiperSlide>
       <SwiperSlide>
         <GroupChallenge />
-        <Box sx={{ position: "absolute", right: "9%", bottom: "5%" }}>
+        <Box
+          sx={{
+            position: "absolute",
+            right: "9%",
+            bottom: "5%",
+            cursor: "pointer",
+          }}
+        >
           <ArrowUpwardIcon
             fontSize="large"
             color="disabled"

@@ -133,6 +133,7 @@ export default function TodolistItem({
         onClick={onClickCheckBox}
         onMouseOver={() => setHover(true)}
         onMouseOut={() => setHover(false)}
+        sx={{ cursor: "pointer" }}
       >
         {check && done ? (
           <ImageBox>
