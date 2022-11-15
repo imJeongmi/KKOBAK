@@ -78,4 +78,23 @@ dependencies {
 
     //Design 의존성
     implementation 'com.txusballesteros:snake:1.0'
+
+    //noinspection GradleCompatible,GradleCompatible
+//    implementation 'com.android.support:cardview-v7:28.0.0-alpha1'
+
+    //noinspection GradleCompatible
+    implementation 'com.android.support:cardview-v7:21.+'
+    //noinspection GradleCompatible
+    implementation 'com.android.support:recyclerview-v7:21.+'
+
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+    implementation 'androidx.cardview:cardview:1.0.0'
+
+    //noinspection GradleCompatible
+    implementation 'com.android.support:appcompat-v7:25.1.1'
+
+    implementation group: 'com.github.johnkil.android-robototextview', name: 'robototextview', version: '4.0.0'
+
+    implementation 'com.jakewharton:butterknife:10.0.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
 }

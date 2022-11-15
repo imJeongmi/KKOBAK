@@ -67,6 +67,10 @@
 
         <activity android:name=".ui.challenge.StandupActivity" />
 
+        <activity android:name=".ui.dashboard.DesignActivity" />
+
+        <activity android:name=".ui.dashboard.InfoActivity" />
+
         <service android:name=".ui.test.FirebaseMsgService"
             android:exported="true">
             <intent-filter>
@@ -74,5 +78,4 @@
             </intent-filter>
         </service>
     </application>
-
 </manifest>

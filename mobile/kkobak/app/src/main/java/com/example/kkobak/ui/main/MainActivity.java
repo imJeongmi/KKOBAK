@@ -23,6 +23,7 @@ import com.example.kkobak.ui.challenge.MeditationActivity;
 import com.example.kkobak.ui.challenge.PillActivity;
 import com.example.kkobak.ui.challenge.StandupActivity;
 import com.example.kkobak.ui.challenge.WaterActivity;
+import com.example.kkobak.ui.dashboard.DesignActivity;
 import com.example.kkobak.ui.login.LoginActivity;
 import com.example.kkobak.ui.test.SpeedActivity;
 import com.example.kkobak.ui.test.TestActivity;
@@ -150,6 +151,12 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, StandupActivity.class);
         intent.putExtra("cnt", 3);
         intent.putExtra("goal", 6);
+        startActivity(intent);
+    }
+
+    public void testBt(View v) {
+        Intent intent = new Intent(this, DesignActivity.class);
+        Toast.makeText(this, "눌렸는데..", Toast.LENGTH_SHORT).show();
         startActivity(intent);
     }
 }
