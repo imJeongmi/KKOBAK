@@ -19,6 +19,7 @@ import {
   getMyKkobakList,
 } from "api/userApi";
 import ProfileImage from "component/atom/ProfileImage";
+import ProfileMenu from "component/atom/ProfileMenu";
 
 export default function Main() {
   const [user, setUser] = useState([]);
@@ -98,21 +99,8 @@ export default function Main() {
         display: "flex",
       }}
     >
-        <Box sx={{ margin: "0 auto", display: "flex", flexDirection: "column" }}>
-          <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-          <Text size="m" weight="semibold" mt="30" my="15">
-            {"안녕하세요\u00A0"}
-          </Text>
-          <Text size="m" weight="bold" mt="30" my="15" color="blue">
-            {` ${user.nickName}`}
-          </Text>
-          <Text size="m" weight="semibold" mt="30" my="15">
-            님
-          </Text>
-          <Box sx={{mt:3.75, ml: 1 }}>
-            <ProfileImage type="small" num={Number(user.imgurl)}></ProfileImage>
-          </Box>
-        </Box>
+      <Box sx={{ margin: "0 auto", display: "flex", flexDirection: "column" }}>
+        <ProfileMenu nickName={user?.nickName} imgurl={user?.imgurl}></ProfileMenu>
         <MainBox height="622px">
           <Box sx={{ display: "flex", flexDirection: "column" }}>
             {MyChallengeList.slice(page - 1, page).map((item) => {
