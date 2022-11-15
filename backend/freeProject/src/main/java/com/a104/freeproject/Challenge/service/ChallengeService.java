@@ -45,4 +45,5 @@ public interface ChallengeService {
     boolean findIsParticipate(Long cid, HttpServletRequest req) throws NotFoundException;
     List<ChlDoneResponse> getLogs(Long cid, HttpServletRequest req) throws NotFoundException;
     List<RunTotalStatResponse> getRunStatList(Long cid, HttpServletRequest req) throws NotFoundException;
+    List<MedTotalStatResponse> getMedStatList(Long cid, HttpServletRequest req) throws NotFoundException;
 }

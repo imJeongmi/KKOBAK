@@ -15,7 +15,6 @@ import java.util.List;
 public class BpmResultResponse {
     private boolean flag;
     private List<BpmChangeForm> bpmList;
-//    private List<BpmListResponse> bpmList;
     private int maxBpm;
     private int minBpm;
     private int avgBpm;

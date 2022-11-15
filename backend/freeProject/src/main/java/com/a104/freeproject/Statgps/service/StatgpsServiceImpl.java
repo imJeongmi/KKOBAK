@@ -55,11 +55,11 @@ public class StatgpsServiceImpl implements StatgpsService{
         PrtChl p = prtChlRepository.findByChallengeAndMember(c,member);
 
         Statgps statgps = Statgps.builder().prtChl(p)
-                .time(input.getTime().atZone(ZoneId.of("Asia/Seoul")).toLocalDateTime())
+                .time(input.getTime().atZone(ZoneId.of("Asia/Seoul")).toLocalDateTime().plusHours(9))
                 .lat(input.getLat())
                 .lng(input.getLng())
                 .success(false)
-                .chk(input.getChk().atZone(ZoneId.of("Asia/Seoul")).toLocalDateTime())
+                .chk(input.getChk().atZone(ZoneId.of("Asia/Seoul")).toLocalDateTime().plusHours(9))
                 .build();
 
         statgpsRepository.save(statgps);
@@ -124,9 +124,11 @@ public class StatgpsServiceImpl implements StatgpsService{
                     .lat(statgps.getLat()).lng(statgps.getLng()).time(statgps.getTime())
                     .build());
         }
-
-        LocalDateTime st = list.get(0).getTime();
-        LocalDateTime ed = list.get(list.size()-1).getTime();
+        LocalDateTime st=LocalDateTime.now(), ed=LocalDateTime.now();
+        if (list.size() != 0) {
+            st = list.get(0).getTime();
+            ed = list.get(list.size()-1).getTime();
+        }
 
         long hour = ChronoUnit.HOURS.between(st, ed);
         long minute = ChronoUnit.MINUTES.between(st, ed)%60;
@@ -167,12 +169,20 @@ public class StatgpsServiceImpl implements StatgpsService{
         long secDiffTime = (afterTime - beforeTime)/1000; //두 시간에 차 계산
         System.out.println("GPS 계산 시간 : "+secDiffTime);
 
+        double speed = 0;
+        if(list.size() == 0){
+            speed=0;
+        }
+        else {
+            speed = dist/ChronoUnit.SECONDS.between(st, ed);
+        }
+
         return ResultResponse.builder()
                 .flag(flag)
                 .gpsList(output)
                 .total_dist(dist)
                 .time_len(timelen)
-                .avg_speed(dist/ChronoUnit.SECONDS.between(st, ed))
+                .avg_speed(speed)
                 .build();
     }
     

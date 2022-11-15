@@ -25,7 +25,10 @@ import com.a104.freeproject.PrtChl.repository.PrtChlRepository;
 import com.a104.freeproject.PrtChl.service.PrtChlServiceImpl;
 import com.a104.freeproject.Statbpm.entity.Statbpm;
 import com.a104.freeproject.Statbpm.repository.StatbpmRepository;
+import com.a104.freeproject.Statbpm.response.BpmChangeForm;
 import com.a104.freeproject.Statbpm.response.BpmMiddleInterface;
+import com.a104.freeproject.Statbpm.response.BpmResultResponse;
+import com.a104.freeproject.Statbpm.service.StatbpmServiceImpl;
 import com.a104.freeproject.Statgps.entity.Statgps;
 import com.a104.freeproject.Statgps.repository.StatgpsRepository;
 import com.a104.freeproject.Statgps.response.GpsResultResponse;
@@ -45,7 +48,10 @@ import javax.transaction.Transactional;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 @Service
@@ -68,6 +74,7 @@ public class ChallengeServiceImpl implements ChallengeService {
     private final StatgpsRepository gpsRepository;
     private final ChlTimeRepository chlTimeRepository;
     private final StatgpsServiceImpl statgpsService;
+    private final StatbpmServiceImpl statbpmService;
     private final static int  EARTH_RADIUS = 6371;
 
     @Override
@@ -766,6 +773,60 @@ public class ChallengeServiceImpl implements ChallengeService {
                     .year(year).month(month).day(day)
                     .done(log.isFin())
                     .dist(res.getTotal_dist())
+                    .build());
+        }
+
+        return output;
+    }
+
+    @Override
+    public List<MedTotalStatResponse> getMedStatList(Long cid, HttpServletRequest req) throws NotFoundException {
+        Member member = memberService.findEmailbyToken(req);
+
+        if(!challengeRepository.existsById(cid)) throw new NotFoundException("존재하지 않는 챌린지입니다.");
+        Challenge c = challengeRepository.findById(cid).get();
+
+        if(!prtChlRepository.existsByChallengeAndMember(c,member)) return new LinkedList<>();
+        PrtChl p = prtChlRepository.findByChallengeAndMember(c,member);
+
+        List<MedTotalStatResponse> output = new LinkedList<>();
+
+        if(p.getLogs().size()==0) return new LinkedList<>();
+        List<Log> logs = p.getLogs();
+        for(Log log : logs){
+            String date = log.getDate().toString();
+            String year = date.substring(0,4);
+            String month = date.substring(5,7);
+            String day = date.substring(8,10);
+
+            BpmResultResponse res = statbpmService.getTryList(year,month,day,cid,req);
+
+            List<BpmChangeForm> list = res.getBpmList();
+            LocalTime st=LocalTime.now(),ed=LocalTime.now();
+            if(list.size()!=0){
+                st = list.get(0).getTime();
+                ed = list.get(list.size()-1).getTime();
+            }
+
+            long hour = ChronoUnit.HOURS.between(st, ed);
+            long minute = ChronoUnit.MINUTES.between(st, ed)%60;
+            long sec = ChronoUnit.SECONDS.between(st, ed)%60;
+
+            String h,m,s;
+            if(hour<=9) h = "0"+hour;
+            else h = ""+hour;
+
+            if(minute<=9) m = "0"+minute;
+            else m = ""+minute;
+
+            if(sec<=9) s = "0"+sec;
+            else s = ""+sec;
+
+            String timelen = h+":"+m+":"+s;
+
+            output.add(MedTotalStatResponse.builder()
+                    .year(year).month(month).day(day)
+                    .done(log.isFin()).timelen(timelen)
                     .build());
         }
 
