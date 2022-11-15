@@ -6,6 +6,7 @@ import Text from "component/atom/Text";
 import ChallengeMap from "component/atom/ChallengeMap";
 import HeartRateChart from "component/module/HeartRateChart";
 import BarChart from "component/module/BarChart";
+import MedBarChart from "component/module/MedBarChart";
 import CheckDayForm from "component/module/CheckDayForm";
 
 import { requestMyChallengeDetail } from "api/userApi";
@@ -95,11 +96,6 @@ export default function Statistics() {
       </CardBox>
       <CardBox height="450px">
         <BarChart findTime={findTime} setFindTime={setFindTime} />
-        {/* <Text>하루 통계 이동한 거리, 소요된 시간, 평균 속력</Text>
-        <Text>
-        주간 통계 누적 이동 거리(그날 그날 km 필요, 총 km 필요), 누적 소요
-        시간, 전체 평균 속력
-      </Text> */}
       </CardBox>
     </StatisticsBox>
   ) : detailCategoryId === 3 ? (
@@ -112,10 +108,7 @@ export default function Statistics() {
       </CardBox>
 
       <CardBox>
-        <BarChart findTime={findTime} setFindTime={setFindTime} />
-        {/* <Text>
-          주간 통계 : 누적 진행시간(막대 그래프로 표현), 누적 평균 심박수
-        </Text> */}
+        <MedBarChart findTime={findTime} setFindTime={setFindTime} />
       </CardBox>
     </StatisticsBox>
   ) : detailCategoryId === 7 ? (
