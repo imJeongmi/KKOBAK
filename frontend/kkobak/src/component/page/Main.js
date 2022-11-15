@@ -27,7 +27,6 @@ export default function Main() {
   const [TotalMyPage, setMyPageNation] = useState([]);
   const [page, setPage] = useState(1);
 
-
   const handlePage = (event) => {
     const nowPageInt = parseInt(event.target.outerText);
     setPage(nowPageInt);
@@ -52,6 +51,23 @@ export default function Main() {
   function fetchChallengePageCntFail(res) {
     setMyPageNation([]);
   }
+
+  const checkPage = MyChallengeList.length;
+  const [checkNum, setCheckNum] = useState(1);
+
+  function CheckNumPage(checkPage) {
+    if (checkPage === 1) {
+      setCheckNum(1);
+    } else if (checkPage === 2) {
+      setCheckNum(2);
+    } else {
+      setCheckNum(3);
+    }
+  }
+
+  useEffect(() => {
+    CheckNumPage(checkPage);
+  });
 
   useEffect(() => {
     fetchMyChallengeCalendarPageCnt(
@@ -100,6 +116,7 @@ export default function Main() {
       }}
     >
       <Box sx={{ margin: "0 auto", display: "flex", flexDirection: "column" }}>
+
         <ProfileMenu nickName={user?.nickName} imgurl={user?.imgurl}></ProfileMenu>
         <MainBox height="622px">
           <Box sx={{ display: "flex", flexDirection: "column" }}>
@@ -121,7 +138,7 @@ export default function Main() {
                   >
                     <Stack spacing={2}>
                       <Pagination
-                        count={3}
+                        count={checkNum}
                         defaultPage={1}
                         shape="rounded"
                         onChange={(e) => handlePage(e)}

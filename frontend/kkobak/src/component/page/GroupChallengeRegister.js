@@ -16,7 +16,7 @@ import { useNavigate } from "react-router-dom";
 const ButtonBox = styled(Box)(
   () => `
   width: 95%;
-  margin-top : 50px;
+  margin-top : 25px;
   `
 );
 
@@ -48,7 +48,6 @@ export default function GroupChallengeRegister() {
   function getDetailCategoryListFail(err) {}
 
   useEffect(() => {
-    console.log(category);
     getDetailCategoryList(
       category,
       getDetailCategoryListSuccess,
@@ -65,7 +64,6 @@ export default function GroupChallengeRegister() {
   }
 
   function changeAddressToDot(goal) {
-    console.log(goal);
     axios
       .get(
         `https://dapi.kakao.com/v2/local/search/address.json?query=${goal}`,
@@ -103,7 +101,7 @@ export default function GroupChallengeRegister() {
       setWatch(false);
     }
   }
-  
+
   // 유효성 검사
   function checkAll() {
     if (imgSrc === initial) {
@@ -193,7 +191,6 @@ export default function GroupChallengeRegister() {
       );
     } else {
       changeUnit(category, detailCategory);
-      // console.log(unit)
       registerChallenge(
         alarm,
         0,
@@ -229,7 +226,7 @@ export default function GroupChallengeRegister() {
         <Text size="m" weight="semibold" mt="30" my="15">
           다 같이 챌린지 만들기
         </Text>
-        <MainBox width="80" height="80vh" flexDir="col">
+        <MainBox width="75" flexDir="col">
           <GroupChallengeForm
             imgSrc={imgSrc}
             category={category}
@@ -265,6 +262,7 @@ export default function GroupChallengeRegister() {
           </ButtonBox>
         </MainBox>
       </Box>
+      <Box sx={{ width: "150px", height: "100vh", backgroundColor: "white" }} />
     </Box>
   );
 }

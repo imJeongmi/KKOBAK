@@ -1,17 +1,21 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import Box from "@mui/material/Box";
 import styled from "@emotion/styled";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 
-import ChallengeCard from "component/module/ChallengeCard";
 import Button from "component/atom/TextButton";
 import MainBox from "component/atom/MainBox";
+import ChallengeCard from "component/module/ChallengeCard";
 import EmptyChallenge from "component/module/EmptyChallenge";
 
+import WatchImage from "static/watch.png";
+import NoWatchImage from "static/noWatch.png";
+
 import { fetchMyChallengeList, fetchMyChallengePageCnt } from "api/userApi";
-import { useNavigate } from "react-router-dom";
 
 import {
   requestChallengeUseWatch,
@@ -19,9 +23,6 @@ import {
   fetchWatchMyChallengePageCnt,
   fetchNoWatchMyChallengePageCnt,
 } from "api/Challenge";
-
-import WatchImage from "static/watch.png";
-import NoWatchImage from "static/noWatch.png";
 
 const ToggleBox = styled(ToggleButtonGroup)(
   () => `
@@ -180,7 +181,7 @@ export default function MyChallengeCardList() {
       {MyChallengeList.length === 0 ? (
         <EmptyChallenge />
       ) : (
-        <MainBox width={75} justifyContent="space-between">
+        <MainBox width="75" justifyContent="space-between">
           <WatchToggleBox>
             {filter === "all" ? (
               <ToggleBox
