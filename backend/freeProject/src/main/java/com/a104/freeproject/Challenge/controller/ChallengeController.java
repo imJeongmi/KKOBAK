@@ -184,7 +184,7 @@ public class ChallengeController {
     }
 
     @GetMapping("/med-stat/{cid}")
-    @ApiOperation(value="걷기/달리기 total 통계 api", notes = "'/api/challenge/run-stat/1' 형식으로 사용")
+    @ApiOperation(value="명상 total 통계 api", notes = "'/api/challenge/med-stat/1' 형식으로 사용")
     public ResponseEntity<List<MedTotalStatResponse>> getMedStatList(@PathVariable("cid") Long cid, HttpServletRequest req) throws NotFoundException{
         return ResponseEntity.ok().body(challengeService.getMedStatList(cid, req));
     }
