@@ -107,8 +107,8 @@ public class RunActivity extends Activity {
 
         //챌린지 아이디 가져오기
         intent = getIntent();
-//        chlId = intent.getLongExtra("chlId",1);
-        chlId = 138L;
+        chlId = intent.getLongExtra("chlId",-1);
+
 
         // 장소, 심박수 권한 확인
         checkPermission();
@@ -120,6 +120,7 @@ public class RunActivity extends Activity {
                 now = System.currentTimeMillis();
                 System.out.println("GPS 호출됩니다");
                 System.out.println(LocalDateTime.now().withNano(0));
+//                Toast.makeText(getApplicationContext(), "GPS: " + location.getLatitude() +"\n"+ location.getLongitude(), Toast.LENGTH_LONG).show();
                 updateMap(location);
                 if (flag) {
                     runDistanceView.setText("이동거리: "+distance+"m" );
@@ -152,7 +153,7 @@ public class RunActivity extends Activity {
         locationManager = (LocationManager) this.getSystemService(LOCATION_SERVICE);
         System.out.println("위치 매니저 설정 완료");
 
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,1000,30,locationListener);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,2000,20,locationListener);
         System.out.println("위치 연결");
 
         // 심박수 설정
@@ -171,14 +172,13 @@ public class RunActivity extends Activity {
                     System.out.println(LocalDateTime.now().withNano(0));
                     System.out.println("센서가 인식한 심박수: "+heartValue);
 
-//                    runHeartView.setText("심박수: " + heartRate);
+
                     if(flag) {
                         runHeartView.setText("심박수: " + heartRate);
 //                        Toast.makeText(getApplicationContext(), "심박수: " + heartRate, Toast.LENGTH_LONG).show();
                         sendHeartOne(heartRate, LocalDateTime.now().withNano(0));
                         System.out.println("심박수 보냈습니다");
                     }
-//                    heartRate.add(heartValue);
 
                 }
             }
@@ -258,7 +258,8 @@ public class RunActivity extends Activity {
     
     public void startTimer() {
         distance = speed = 0;
-        heartRate = 0;
+//        얘가 심박수 문제인듯?
+//        heartRate = 0;
         runHeartView.setText("심박수: 0");
         runDistanceView.setText("이동거리: 0m" );
         runSpeedView.setText("현재 속력: 0km/h" );
@@ -301,7 +302,7 @@ public class RunActivity extends Activity {
                 case TIMER:
                     updateTimer();
                     Long next = System.currentTimeMillis();
-                    if(next-now>3000) runSpeedView.setText("현재 속력: 0km/h");
+                    if(next-now>10000) runSpeedView.setText("현재 속력: 0km/h");
                     break;
 //                case GPS:
 //                    if (flag)
@@ -363,6 +364,7 @@ public class RunActivity extends Activity {
     public void sendGPSOne(double lat, double lng, LocalDateTime time) {
         //Retrofit 호출
         GPSRequest gpsRequest = new GPSRequest( chlId, time.toString(), Double.toString(lat), Double.toString(lng), chk.toString());
+//        System.out.println(chlId+" "+ time.toString() +" "+ Double.toString(lat) +" "+ Double.toString(lng) +" "+ chk.toString());
         Call<Boolean> call = RetrofitClient.getApiService().sendGPSOne(gpsRequest, accessToken);
         call.enqueue(new Callback<Boolean>() {
             @Override
