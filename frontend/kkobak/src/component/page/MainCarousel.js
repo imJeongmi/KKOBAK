@@ -8,8 +8,8 @@ import "swiper/css/pagination";
 
 import "./MainCarousel.css";
 import Main from "./Main";
-import ChallengeCardList from "component/module/ChallengeCardList";
-import GroupChallengeCardList from "component/module/GroupChallengeCardList";
+import Challenge from "./ChallengeList";
+import GroupChallenge from "./GroupChallenge";
 
 export default function MainCarousel() {
   return (
@@ -25,8 +25,8 @@ export default function MainCarousel() {
       className="mySwiper"
     >
       <SwiperSlide><Main /></SwiperSlide>
-      <SwiperSlide><ChallengeCardList /></SwiperSlide>
-      <SwiperSlide><GroupChallengeCardList /></SwiperSlide>
+      <SwiperSlide><Challenge /></SwiperSlide>
+      <SwiperSlide><GroupChallenge /></SwiperSlide>
     </Swiper>
   )
 }
