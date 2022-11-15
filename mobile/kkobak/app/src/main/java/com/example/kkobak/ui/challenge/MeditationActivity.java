@@ -260,8 +260,8 @@ public class MeditationActivity extends AppCompatActivity implements SensorEvent
     public void pressBtn(View v) {
         btnState = !btnState;
 
-//        _minute = 0;
-//        _second = 5;
+        _minute = 0;
+        _second = 3;
 
         if (btnState) {
             if (_minute <= 9)   timerMinute.setText("0" + _minute);
