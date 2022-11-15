@@ -38,6 +38,7 @@ const GreyMainBox = styled(Box)(
   background-color: #F7F7F7;
   border-radius: 20px;
   text-align: center;
+  position: relative;
   display: flex;
   flex-direction: ${getDirection(flexDir)};
   align-items: ${getAlignItems(alignItems)};

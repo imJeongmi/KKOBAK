@@ -4,6 +4,7 @@ import Slider from "react-slick";
 import GroupStatistics from "component/module/GroupStatistics";
 import GroupStatRank from "component/module/GroupStatRank";
 
+import "component/module/WidgetCarousel.css" 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 export default class VerticalMode extends Component {
@@ -22,7 +23,7 @@ export default class VerticalMode extends Component {
     };
 
     return (
-      <Slider {...settings}>
+      <Slider {...settings} dotsClass="dots-css">
         <GroupStatistics />
         <GroupStatRank />
       </Slider>
