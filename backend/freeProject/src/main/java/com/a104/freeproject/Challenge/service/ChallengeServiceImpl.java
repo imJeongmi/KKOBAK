@@ -895,7 +895,7 @@ public class ChallengeServiceImpl implements ChallengeService {
         });
         List<ChlRankResponse> output = new LinkedList<>();
         for(int i=0;i<rankList.size();i++){
-            if(i==3) break;
+            if(i==5) break;
             ChlRankResponse now = rankList.get(i);
             if(now.getTotal_dist() < c.getGoal()) continue;
 
