@@ -1,0 +1,51 @@
+.dots-css {
+  width: 100%;
+  bottom: -15px;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  list-style: none;
+  text-align: center;
+}
+
+.dots-css li {
+  width: 20px;
+  height: 10px;
+  padding: 0;
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.dots-css li button {
+  width: 20px;
+  height: 10px;
+  background: 0 0;
+  padding: 0 5px;
+  border: 0;
+  outline: 0;
+  font-size: 0;
+  line-height: 0;
+  display: block;
+  cursor: pointer;
+  color: transparent;
+}
+
+.dots-css li button:before {
+  width: 20px;
+  height: 10px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 1.8rem;
+  line-height: 20px;
+  text-align: center;
+  content: '•';
+  opacity: 0.8;
+  color: #99b9d6;
+}
+
+.dots-css li.slick-active button:before {
+  opacity: 1;
+  color: #f0f0f0;
+}
