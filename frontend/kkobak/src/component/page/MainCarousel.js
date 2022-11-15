@@ -1,17 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Mousewheel, Pagination } from "swiper";
-
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import SwiperCore from 'swiper';
 import "swiper/css";
 import "swiper/css/pagination";
 
 import "./MainCarousel.css";
 import Main from "./Main";
-import ChallengeCardList from "component/module/ChallengeCardList";
-import GroupChallengeCardList from "component/module/GroupChallengeCardList";
+import Challenge from "./ChallengeList";
+import GroupChallenge from "./GroupChallenge";
+import { Box, Button } from "@mui/material"
 
 export default function MainCarousel() {
+  const [swiper, setSwiper] = useState(<SwiperCore />);
+
+  function moveToTop(e) {
+    e.preventDefault();
+    console.log("눌렷삼")
+    swiper.slideTo(0, 500, false)
+  }
+
+
   return (
     <Swiper
       direction={"vertical"}
@@ -23,10 +34,23 @@ export default function MainCarousel() {
       }}
       modules={[Mousewheel, Pagination]}
       className="mySwiper"
+      onSwiper={(swiper) => setSwiper(swiper)}
     >
-      <SwiperSlide><Main /></SwiperSlide>
-      <SwiperSlide><ChallengeCardList /></SwiperSlide>
-      <SwiperSlide><GroupChallengeCardList /></SwiperSlide>
+      <SwiperSlide>
+        <Main />
+      </SwiperSlide>
+      <SwiperSlide>
+        <Challenge />
+        <Box sx={{ display: "flex", alignItems: "end", mb: 3, ml: 3 }}>
+          <ArrowUpwardIcon fontSize="large" color="disabled" onClick={moveToTop} />
+        </Box>
+      </SwiperSlide>
+      <SwiperSlide>
+        <GroupChallenge />
+        <Box sx={{ display: "flex", alignItems: "end", mb: 3, ml: 3 }}>
+          <ArrowUpwardIcon fontSize="large" color="disabled" onClick={moveToTop} />
+        </Box>
+      </SwiperSlide>
     </Swiper>
   )
 }

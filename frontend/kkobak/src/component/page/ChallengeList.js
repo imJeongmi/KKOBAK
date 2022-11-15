@@ -34,7 +34,6 @@ export default function Challenge() {
         </Box>
         <MyChallengeCardList />
       </Box>
-      <Box sx={{width: "150px", height: "100vh", backgroundColor: "white"}} />
     </Box>
   );
 }
