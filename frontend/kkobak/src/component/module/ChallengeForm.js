@@ -146,7 +146,7 @@ export default function ChallengeForm({
   }
 
   function uploadFail(err) {
-    console.log(err);
+    // console.log(err);
   }
 
   const imgDivClick = (e) => {
@@ -301,7 +301,7 @@ export default function ChallengeForm({
           <SettingItem>
             <SettingTitleBox>
               <Text size="15px" weight="bold">
-              🔥 목표
+                🔥 목표
               </Text>
             </SettingTitleBox>
             <SettingContentBox>

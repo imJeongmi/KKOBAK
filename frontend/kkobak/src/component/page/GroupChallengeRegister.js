@@ -66,7 +66,7 @@ export default function GroupChallengeRegister() {
   }
 
   function registerFail(err) {
-    console.log(err);
+    // console.log(err);
   }
 
   function changeAddressToDot(goal) {
