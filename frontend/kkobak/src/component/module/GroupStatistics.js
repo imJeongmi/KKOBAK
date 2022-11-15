@@ -26,58 +26,39 @@ const StatisticsBox = styled(Box)(
 const ListBox = styled(Box)(
   () => `
   width: 100%;
-  height: 80%;
+  height: 380px;
   margin: 20px auto 0 auto;
+  overflow-x: none;
   overflow-y: auto;
   scrollbar-width: none;
-  overflow-x: none;
   `
 );
 
 const CardBox = styled(Box)(
   ({ margin }) => `
-    width: 90%;
-    height: 85px;
+    width: 70%;
+    height: 50px;
     margin: ${getMargin(margin)};
-    border-radius: 20px;
+    border-radius: 10px;
     display: flex;
     align-items: center;
     background-color: #e7f0fa;
   `
 );
 
-const ContentBox = styled(Box)(
-  ({ width, alignItems }) => `
-    width: ${getWidth(width)};
-    display: flex;
-    flex-direction: column;
-    align-items: ${getAlignItems(alignItems)};
-    justify-content: center;
-  `
-);
-
 const ImageBox = styled(Box)(
   () => `
-  width: 55px;
-  height: 55px;
+  width: 40px;
+  height: 40px;
+  margin: auto 40px auto 20px;
   border-radius: 100%;
   overflow: hidden;
   `
 );
 
-function getWidth(width) {
-  if (!!width) return width;
-  else return "50%";
-}
-
 function getMargin(margin) {
   if (margin === "center") return "auto";
-  else return "0 auto 15px auto";
-}
-
-function getAlignItems(alignItems) {
-  if (!!alignItems) return alignItems;
-  else return "center";
+  else return "10px auto 15px auto";
 }
 
 export default function GroupStatistics() {
@@ -98,6 +79,7 @@ export default function GroupStatistics() {
 
   function requestChallengeUserListSuccess(res) {
     setUserList(res.data);
+    console.log(res.data);
   }
 
   function requestChallengeUserListFail(res) {
@@ -151,24 +133,22 @@ export default function GroupStatistics() {
         {userList.map((item) => {
           return (
             <CardBox>
-              <ContentBox width="40%">
-                <ImageBox>
-                  {/* <img src={item.imgurl} alt="img" width="100%" height="100%" /> */}
-                  <img
-                    src={
-                      "https://initpjtbucket.s3.ap-northeast-2.amazonaws.com/images/95479caa-be3f-4473-95a5-f1d07f2ffe75.png"
-                    }
-                    alt="img"
-                    width="100%"
-                    height="100%"
-                  />
-                </ImageBox>
-                <Text mt="5" size="14px" weight="semibold">
-                  {item.nickname}
-                </Text>
-              </ContentBox>
-              <ContentBox width="50%" alignItems="center">
-                <Text my="4" size="13px" weight="medium">
+              <ImageBox>
+                {/* <img src={item.imgurl} alt="img" width="100%" height="100%" /> */}
+                <img
+                  src={
+                    "https://initpjtbucket.s3.ap-northeast-2.amazonaws.com/images/95479caa-be3f-4473-95a5-f1d07f2ffe75.png"
+                  }
+                  alt="img"
+                  width="100%"
+                  height="100%"
+                />
+              </ImageBox>
+              <Box sx={{ width: "100px", textAlign: "center"}}>
+              <Text size="14px" weight="semibold">
+                {item.nickname}
+              </Text></Box>
+              {/* <Text my="4" size="13px" weight="medium">
                   성공률 : {item.sucRatio}
                 </Text>
                 <Text my="4" size="13px" weight="medium">
@@ -176,8 +156,7 @@ export default function GroupStatistics() {
                 </Text>
                 <Text my="4" size="13px" weight="medium">
                   실패 횟수 : {item.failCnt}
-                </Text>
-              </ContentBox>
+                </Text> */}
             </CardBox>
           );
         })}
