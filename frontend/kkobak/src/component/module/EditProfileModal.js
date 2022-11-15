@@ -46,14 +46,12 @@ const BoxStyle = {
   margin: "2vh auto",
 };
 
-export default function EditProfileModal() {
+export default function EditProfileModal({ open, setOpen, nickName, imgurl }) {
   const navigate = useNavigate();
-
-  const [open, setOpen] = React.useState(true);
   const handleClose = () => setOpen(false);
 
-  const [num, setNum] = useState("");
-  const [nickname, setNickname] = useState("");
+  const [num, setNum] = useState(imgurl);
+  const [nickname, setNickname] = useState(nickName);
   const [message, setMessage] = useState("")
 
   function onChangeNickname(e) {
@@ -97,7 +95,7 @@ export default function EditProfileModal() {
         <Box sx={LogoStyle}>
           <img alt="logo" src={Logo} height="80%" />
         </Box>
-        
+
         <Box sx={BoxStyle}>
           <ProfileImage type="big" num={num}></ProfileImage>
           <Box sx={IconStyle} onClick={onClickRefresh}>
@@ -110,6 +108,7 @@ export default function EditProfileModal() {
             type="text"
             placeholder="닉네임"
             onChange={onChangeNickname}
+            value={nickname}
           ></Input>
 
 
