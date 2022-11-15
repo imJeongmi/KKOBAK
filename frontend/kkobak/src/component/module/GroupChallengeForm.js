@@ -187,7 +187,7 @@ export default function GroupChallengeForm({
           <SettingItem>
             <SettingTitleBox>
               <Text size="15px" weight="bold">
-                카테고리
+                🔎 카테고리
               </Text>
             </SettingTitleBox>
             <SettingContentBox>
@@ -238,7 +238,7 @@ export default function GroupChallengeForm({
           <SettingItem>
             <SettingTitleBox>
               <Text size="15px" weight="bold">
-                상세 카테고리
+                🔖 상세 카테고리
               </Text>
             </SettingTitleBox>
             <SettingContentBox>
@@ -258,7 +258,7 @@ export default function GroupChallengeForm({
           <SettingItem>
             <SettingTitleBox>
               <Text size="15px" weight="bold">
-                제목
+                📌 제목
               </Text>
             </SettingTitleBox>
             <SettingContentBox>
@@ -281,7 +281,7 @@ export default function GroupChallengeForm({
           <SettingItem>
             <SettingTitleBox sx={{ height: "90px" }}>
               <Text size="15px" weight="bold">
-                상세 설명
+                💬 상세 설명
               </Text>
             </SettingTitleBox>
             <SettingContentBox sx={{ height: "90px" }}>
@@ -303,7 +303,7 @@ export default function GroupChallengeForm({
           <SettingItem>
             <SettingTitleBox>
               <Text size="15px" weight="bold">
-                목표
+              🔥 목표
               </Text>
             </SettingTitleBox>
             <SettingContentBox>
@@ -332,7 +332,7 @@ export default function GroupChallengeForm({
           <SettingItem>
             <SettingTitleBox>
               <Text size="15px" weight="bold">
-                기간
+                📅 기간
               </Text>
             </SettingTitleBox>
             <SettingContentBox
@@ -371,7 +371,7 @@ export default function GroupChallengeForm({
           <SettingItem>
             <SettingTitleBox>
               <Text size="15px" weight="bold">
-                알림
+                🔔 알림
               </Text>
             </SettingTitleBox>
             <SettingContentBox>
@@ -384,7 +384,7 @@ export default function GroupChallengeForm({
           <SettingItem>
             <SettingTitleBox>
               <Text size="15px" weight="bold">
-                워치 사용
+                ⌚️ 워치 사용
               </Text>
             </SettingTitleBox>
             <SettingContentBox>
