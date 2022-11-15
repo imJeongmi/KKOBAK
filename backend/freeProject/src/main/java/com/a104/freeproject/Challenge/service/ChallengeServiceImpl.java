@@ -29,6 +29,7 @@ import com.a104.freeproject.Statbpm.response.BpmMiddleInterface;
 import com.a104.freeproject.Statgps.entity.Statgps;
 import com.a104.freeproject.Statgps.repository.StatgpsRepository;
 import com.a104.freeproject.Statgps.response.GpsResultResponse;
+import com.a104.freeproject.Statgps.response.ResultResponse;
 import com.a104.freeproject.Statgps.service.StatgpsServiceImpl;
 import com.a104.freeproject.advice.exceptions.NotFoundException;
 import lombok.Data;
@@ -66,6 +67,7 @@ public class ChallengeServiceImpl implements ChallengeService {
     private final StatbpmRepository bpmRepository;
     private final StatgpsRepository gpsRepository;
     private final ChlTimeRepository chlTimeRepository;
+    private final StatgpsServiceImpl statgpsService;
     private final static int  EARTH_RADIUS = 6371;
 
     @Override
@@ -736,6 +738,37 @@ public class ChallengeServiceImpl implements ChallengeService {
                     .done(log.isFin()).cnt(log.getCnt()).date(log.getDate())
                     .build());
         }
+        return output;
+    }
+
+    @Override
+    public List<RunTotalStatResponse> getRunStatList(Long cid, HttpServletRequest req) throws NotFoundException {
+        Member member = memberService.findEmailbyToken(req);
+
+        if(!challengeRepository.existsById(cid)) throw new NotFoundException("존재하지 않는 챌린지입니다.");
+        Challenge c = challengeRepository.findById(cid).get();
+
+        if(!prtChlRepository.existsByChallengeAndMember(c,member)) return new LinkedList<>();
+        PrtChl p = prtChlRepository.findByChallengeAndMember(c,member);
+
+        List<RunTotalStatResponse> output = new LinkedList<>();
+
+        if(p.getLogs().size()==0) return new LinkedList<>();
+        List<Log> logs = p.getLogs();
+        for(Log log : logs){
+            String date = log.getDate().toString();
+            String year = date.substring(0,4);
+            String month = date.substring(5,7);
+            String day = date.substring(8,10);
+
+            ResultResponse res = statgpsService.getTryList(year,month,day,cid,req);
+            output.add(RunTotalStatResponse.builder()
+                    .year(year).month(month).day(day)
+                    .done(log.isFin())
+                    .dist(res.getTotal_dist())
+                    .build());
+        }
+
         return output;
     }
 

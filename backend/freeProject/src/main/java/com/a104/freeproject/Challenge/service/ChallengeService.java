@@ -44,4 +44,5 @@ public interface ChallengeService {
     boolean changeStateChl(Long cid, int type, HttpServletRequest req) throws NotFoundException;
     boolean findIsParticipate(Long cid, HttpServletRequest req) throws NotFoundException;
     List<ChlDoneResponse> getLogs(Long cid, HttpServletRequest req) throws NotFoundException;
+    List<RunTotalStatResponse> getRunStatList(Long cid, HttpServletRequest req) throws NotFoundException;
 }
