@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import { Box, styled } from "@mui/material";
 
 import Text from "component/atom/Text";
@@ -9,15 +11,12 @@ import initial from "static/initial.png";
 
 import { getDetailCategoryList } from "api/Category";
 import { registerChallenge } from "api/Challenge";
-import axios from "axios";
-
 import { getMyKkobakList } from "api/userApi";
-import { useNavigate } from "react-router-dom";
 
 const ButtonBox = styled(Box)(
   () => `
   width: 95%;
-  margin-top : 50px;
+  margin-top : 25px;
   `
 );
 
@@ -244,7 +243,7 @@ export default function ChallengeRegister() {
         <Text size="m" weight="semibold" mt="30" my="15">
           나만의 챌린지 만들기
         </Text>
-        <MainBox width="80" height="80vh" flexDir="col">
+        <MainBox width="75" flexDir="col">
           <ChallengeForm
             imgSrc={imgSrc}
             category={category}
@@ -281,6 +280,7 @@ export default function ChallengeRegister() {
           </ButtonBox>
         </MainBox>
       </Box>
+      <Box sx={{width: "150px", height: "100vh", backgroundColor: "white"}} />
     </Box>
   );
 }
