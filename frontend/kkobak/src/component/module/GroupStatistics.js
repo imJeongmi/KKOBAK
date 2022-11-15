@@ -79,7 +79,7 @@ export default function GroupStatistics() {
 
   function requestChallengeUserListSuccess(res) {
     setUserList(res.data);
-    console.log(res.data);
+    // console.log(res.data);
   }
 
   function requestChallengeUserListFail(res) {
@@ -144,10 +144,11 @@ export default function GroupStatistics() {
                   height="100%"
                 />
               </ImageBox>
-              <Box sx={{ width: "100px", textAlign: "center"}}>
-              <Text size="14px" weight="semibold">
-                {item.nickname}
-              </Text></Box>
+              <Box sx={{ width: "100px", textAlign: "center" }}>
+                <Text size="14px" weight="semibold">
+                  {item.nickname}
+                </Text>
+              </Box>
               {/* <Text my="4" size="13px" weight="medium">
                   성공률 : {item.sucRatio}
                 </Text>

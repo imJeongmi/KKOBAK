@@ -130,7 +130,7 @@ export default function SignupModal() {
     setSignupMessage("회원가입 완료");
   }
   function joinFail(res) {
-    console.log("Signup Fail", res);
+    // console.log("Signup Fail", res);
   }
   function onClickSignup() {
     if (!email) {
@@ -219,7 +219,7 @@ export default function SignupModal() {
     }
   }
   function passwdCheckFail(res) {
-    console.log("Password Check Fail", res);
+    // console.log("Password Check Fail", res);
   }
   function onClickPasswdCheck() {
     if (passwd !== passwdCheck) {
@@ -242,7 +242,7 @@ export default function SignupModal() {
     }
   }
   function nicknameCheckFail(res) {
-    console.log("Nickname Check Fail", res);
+    // console.log("Nickname Check Fail", res);
   }
   function onClickNicknameCheck() {
     if (nickname !== "") {

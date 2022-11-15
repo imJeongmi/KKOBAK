@@ -64,7 +64,7 @@ export default function ChallengeRegister() {
   }
 
   function getDetailCategoryListFail(err) {
-    console.log(err);
+    // console.log(err);
   }
 
   useEffect(() => {
@@ -80,7 +80,7 @@ export default function ChallengeRegister() {
   }
 
   function registerFail(err) {
-    console.log(err);
+    // console.log(err);
   }
 
   function changeAddressToDot(goal) {

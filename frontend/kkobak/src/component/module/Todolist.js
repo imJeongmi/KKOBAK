@@ -124,7 +124,7 @@ export default function Todolist() {
   }
 
   function getKkobakChallengeListFail(res) {
-    console.log(res);
+    // console.log(res);
   }
 
   function getTodolistSuccess(res) {
@@ -132,7 +132,7 @@ export default function Todolist() {
   }
 
   function getTodolistFail(res) {
-    console.log(res);
+    // console.log(res);
   }
 
   function registerTodolistSuccess(res) {
@@ -140,7 +140,7 @@ export default function Todolist() {
   }
 
   function registerTodolistFail(res) {
-    console.log(res);
+    // console.log(res);
   }
 
   function onKeyPress(e) {
@@ -170,7 +170,10 @@ export default function Todolist() {
           </Text>
         </Box>
         <Box sx={{ width: "140px", textAlign: "center" }}>
-          <Text weight="semibold" size="14px">{`${formedNowDate} (${formedNowDay})`}</Text>
+          <Text
+            weight="semibold"
+            size="14px"
+          >{`${formedNowDate} (${formedNowDay})`}</Text>
         </Box>
         <Box
           onClick={onClickNextDay}

@@ -175,6 +175,10 @@ function requestTotalMedStat(cid, success, fail) {
   api.get(`/challenge/med-stat/${cid}`).then(success).catch(fail);
 }
 
+function requestTotalHabitStat(cid, success, fail) {
+  api.get(`/challenge/habit-cnt/${cid}`).then(success).catch(fail);
+}
+
 export {
   getChallengeDetail,
   checkChallengePassword,
@@ -199,4 +203,5 @@ export {
   requestChallengeCount,
   requestTotalRunStat,
   requestTotalMedStat,
+  requestTotalHabitStat,
 };

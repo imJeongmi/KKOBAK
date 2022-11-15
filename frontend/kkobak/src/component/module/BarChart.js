@@ -21,7 +21,7 @@ export default function BarChartPage({ findTime }) {
 
   const [stat, setStat] = useState([]);
 
-  console.log(stat);
+  // console.log(stat);
 
   function requestTotalRunStatSuccess(res) {
     setStat(res.data);

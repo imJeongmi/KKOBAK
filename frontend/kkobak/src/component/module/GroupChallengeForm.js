@@ -70,7 +70,6 @@ const SettingContentBox = styled(Box)(
   `
 );
 
-
 export default function GroupChallengeForm({
   imgSrc,
   title,
@@ -149,7 +148,7 @@ export default function GroupChallengeForm({
   }
 
   function uploadFail(err) {
-    console.log(err);
+    // console.log(err);
   }
 
   const imgDivClick = (e) => {
@@ -182,7 +181,7 @@ export default function GroupChallengeForm({
           height="100%"
         ></img>
       </ImageBox>
-      <Box sx={{ display: "flex", flexDirection: "row", mt: 5,}}>
+      <Box sx={{ display: "flex", flexDirection: "row", mt: 5 }}>
         <SettingBox>
           <SettingItem>
             <SettingTitleBox>
@@ -191,9 +190,11 @@ export default function GroupChallengeForm({
               </Text>
             </SettingTitleBox>
             <SettingContentBox>
-              <Box sx={{ height: "50px", display: "flex", alignItems: "center" }}>
+              <Box
+                sx={{ height: "50px", display: "flex", alignItems: "center" }}
+              >
                 <FormControl>
-                <RadioGroup
+                  <RadioGroup
                     row
                     aria-labelledby="demo-row-controlled-radio-buttons-group"
                     name="controlled-radio-buttons-group"
@@ -303,7 +304,7 @@ export default function GroupChallengeForm({
           <SettingItem>
             <SettingTitleBox>
               <Text size="15px" weight="bold">
-              🔥 목표
+                🔥 목표
               </Text>
             </SettingTitleBox>
             <SettingContentBox>
@@ -388,9 +389,11 @@ export default function GroupChallengeForm({
               </Text>
             </SettingTitleBox>
             <SettingContentBox>
-              <Box sx={{ height: "50px", display: "flex", alignItems: "center" }}>
+              <Box
+                sx={{ height: "50px", display: "flex", alignItems: "center" }}
+              >
                 <FormControl>
-                <RadioGroup
+                  <RadioGroup
                     row
                     aria-labelledby="demo-row-controlled-radio-buttons-group"
                     name="controlled-radio-buttons-group"
