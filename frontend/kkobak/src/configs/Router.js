@@ -1,9 +1,8 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import Main from "../component/page/Main";
-import MyChallenge from "../component/page/ChallengeList";
+import MyChallenge from "component/page/ChallengeList";
 import Setting from "component/page/Test";
-import storage from "../helper/storage";
+import storage from "helper/storage";
 import LoginModal from "component/module/LoginModal";
 import SignupModal from "component/module/SignupModal";
 import ChallengeDetail from "component/page/ChallengeDetail";
@@ -13,6 +12,7 @@ import Statistics from "component/module/Statistics";
 import IntroPage from "component/page/Intro";
 import GroupChallenge from "component/page/GroupChallenge";
 import GroupChallengeRegister from "component/page/GroupChallengeRegister";
+import MainCarousel from "component/page/MainCarousel";
 
 function checkAuth() {
   return !!storage.get("accessToken");
@@ -30,7 +30,7 @@ export default function RouterConfiguration() {
         path="/"
         element={
           <CheckAuth>
-            <Main />
+            <MainCarousel />
           </CheckAuth>
         }
       />
@@ -57,14 +57,15 @@ export default function RouterConfiguration() {
             <ChallengeRegister />
           </CheckAuth>
         }
-      /><Route
-      path="/group/register"
-      element={
-        <CheckAuth>
-          <GroupChallengeRegister />
-        </CheckAuth>
-      }
-    />
+      />
+      <Route
+        path="/group/register"
+        element={
+          <CheckAuth>
+            <GroupChallengeRegister />
+          </CheckAuth>
+        }
+      />
       <Route
         path="/myChallenge/:chlId"
         element={
