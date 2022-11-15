@@ -64,7 +64,7 @@ export default function ChallengeCard({
   }
 
   return watch ? (
-    <CardBox onClick={onClickCard}>
+    <CardBox onClick={onClickCard} sx={{ cursor: "pointer" }}>
       <ImageBox>
         <img src={imgurl} width="100%" height="100%" />
       </ImageBox>
@@ -81,7 +81,7 @@ export default function ChallengeCard({
       </TextBox>
     </CardBox>
   ) : (
-    <CardBox onClick={onClickCard}>
+    <CardBox onClick={onClickCard} sx={{ cursor: "pointer" }}>
       <ImageBox>
         <img src={imgurl} width="100%" height="100%" />
       </ImageBox>
