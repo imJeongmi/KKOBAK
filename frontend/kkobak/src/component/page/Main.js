@@ -6,7 +6,6 @@ import Stack from "@mui/material/Stack";
 import Pagination from "@mui/material/Pagination";
 
 import MainBox from "component/atom/MainBox";
-import SideBar from "component/atom/SideBar";
 import Text from "component/atom/Text";
 import MainCalendar from "component/atom/MainCalendar";
 import Todolist from "component/module/Todolist";
@@ -18,7 +17,6 @@ import {
   fetchMyChallengeCalendarPageCnt,
   getMyKkobakList,
 } from "api/userApi";
-import ProfileImage from "component/atom/ProfileImage";
 import ProfileMenu from "component/atom/ProfileMenu";
 
 export default function Main() {
@@ -173,7 +171,6 @@ export default function Main() {
         </Box>
       </Box>
       {/* <Box sx={{ width: "150px", height: "100vh", backgroundColor: "#f8f8f8" }} /> */}
-      <Box sx={{ width: "150px", height: "100vh", backgroundColor: "white" }} />
     </Box>
   );
 }
