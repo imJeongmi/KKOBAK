@@ -9,6 +9,9 @@ import MainBox from "component/atom/MainBox";
 import ChallengeForm from "component/module/ChallengeForm";
 import initial from "static/initial.png";
 
+import BackButton from "@mui/material/Button";
+import CloseIcon from "@mui/icons-material/Close";
+
 import { getDetailCategoryList } from "api/Category";
 import { registerChallenge } from "api/Challenge";
 import { getMyKkobakList } from "api/userApi";
@@ -42,6 +45,10 @@ export default function ChallengeRegister() {
   const navigate = useNavigate();
   function getMyKkobakListSuccess(res) {
     setKkobakCount(res.data.length);
+  }
+
+  function backPage() {
+    navigate(`/myChallenge`);
   }
 
   function getMyKkobakListFail(err) {}
@@ -244,6 +251,19 @@ export default function ChallengeRegister() {
           나만의 챌린지 만들기
         </Text>
         <MainBox width="75" flexDir="col">
+          <Box sx={{ marginLeft: "70vw", marginBottom: "-35px" }}>
+            <BackButton
+              onClick={backPage}
+              sx={{
+                color: "gray",
+                "&.MuiButtonBase-root:hover": {
+                  bgcolor: "transparent",
+                },
+              }}
+            >
+              <CloseIcon />
+            </BackButton>
+          </Box>
           <ChallengeForm
             imgSrc={imgSrc}
             category={category}
@@ -280,7 +300,7 @@ export default function ChallengeRegister() {
           </ButtonBox>
         </MainBox>
       </Box>
-      <Box sx={{width: "150px", height: "100vh", backgroundColor: "white"}} />
+      <Box sx={{ width: "150px", height: "100vh", backgroundColor: "white" }} />
     </Box>
   );
 }
