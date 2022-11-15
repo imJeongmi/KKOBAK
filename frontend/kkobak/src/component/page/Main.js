@@ -26,7 +26,6 @@ export default function Main() {
   const [TotalMyPage, setMyPageNation] = useState([]);
   const [page, setPage] = useState(1);
 
-
   const handlePage = (event) => {
     const nowPageInt = parseInt(event.target.outerText);
     setPage(nowPageInt);
@@ -51,6 +50,25 @@ export default function Main() {
   function fetchChallengePageCntFail(res) {
     setMyPageNation([]);
   }
+
+  // 체크페이지 분기처리가 안됨
+
+  const checkPage = MyChallengeList.length;
+  const [checkNum, setCheckNum] = useState(1);
+
+  function CheckNumPage(checkPage) {
+    if (checkPage === 1) {
+      setCheckNum(1);
+    } else if (checkPage === 2) {
+      setCheckNum(2);
+    } else {
+      setCheckNum(3);
+    }
+  }
+
+  useEffect(() => {
+    CheckNumPage(checkPage);
+  });
 
   useEffect(() => {
     fetchMyChallengeCalendarPageCnt(
@@ -98,8 +116,8 @@ export default function Main() {
         display: "flex",
       }}
     >
-        <Box sx={{ margin: "0 auto", display: "flex", flexDirection: "column" }}>
-          <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+      <Box sx={{ margin: "0 auto", display: "flex", flexDirection: "column" }}>
+        <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
           <Text size="m" weight="semibold" mt="30" my="15">
             {"안녕하세요\u00A0"}
           </Text>
@@ -109,7 +127,7 @@ export default function Main() {
           <Text size="m" weight="semibold" mt="30" my="15">
             님
           </Text>
-          <Box sx={{mt:3.75, ml: 1 }}>
+          <Box sx={{ mt: 3.75, ml: 1 }}>
             <ProfileImage type="small" num={Number(user.imgurl)}></ProfileImage>
           </Box>
         </Box>
@@ -133,7 +151,7 @@ export default function Main() {
                   >
                     <Stack spacing={2}>
                       <Pagination
-                        count={3}
+                        count={checkNum}
                         defaultPage={1}
                         shape="rounded"
                         onChange={(e) => handlePage(e)}
