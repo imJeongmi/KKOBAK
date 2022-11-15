@@ -189,4 +189,10 @@ public class ChallengeController {
         return ResponseEntity.ok().body(challengeService.getMedStatList(cid, req));
     }
 
+    @GetMapping("/rank/{cid}")
+    @ApiOperation(value="챌린지별 속력 일일 랭킹 api", notes = "'/api/challenge/rank/1' 형식으로 사용")
+    public ResponseEntity<List<ChlRankResponse>> getRank(@PathVariable("cid") Long cid) throws NotFoundException{
+        return ResponseEntity.ok().body(challengeService.getRank(cid));
+    }
+
 }

@@ -185,7 +185,90 @@ public class StatgpsServiceImpl implements StatgpsService{
                 .avg_speed(speed)
                 .build();
     }
-    
+
+    @Override
+    public ResultResponse findRank(PrtChl p) throws NotFoundException {
+
+        LocalDate date = LocalDate.now(ZoneId.of("Asia/Seoul"));
+
+        Log log = logRepository.findByPrtChlAndDate(p,date);
+        List<GpsMiddleInterface> statgpsList = statgpsRepository.findByChkAndPrtChl(date.toString(),p);
+
+        if(statgpsList.size()==0)
+            return ResultResponse.builder()
+                    .flag(false)
+                    .gpsList(new LinkedList<GpsResultResponse>())
+                    .total_dist(0)
+                    .time_len("0")
+                    .avg_speed(0)
+                    .build();
+
+        boolean flag = statgpsList.get(statgpsList.size()-1).getSuccess();
+        LocalDateTime sendTime = statgpsList.get(statgpsList.size()-1).getChk();
+        if(!flag){
+            for(int i = statgpsList.size()-2;i>=0;i--){
+                if(flag) {
+                    flag = statgpsList.get(statgpsList.size()-1).getSuccess();
+                    sendTime = statgpsList.get(statgpsList.size()-1).getChk();
+                    break;
+                }
+            }
+        }
+
+        List<Statgps> list = statgpsRepository.findByChkTimeAndPrtChl(p,sendTime);
+        List<GpsResultResponse> output = new LinkedList<>();
+        for(Statgps statgps:list){
+            output.add(GpsResultResponse.builder()
+                    .lat(statgps.getLat()).lng(statgps.getLng()).time(statgps.getTime())
+                    .build());
+        }
+        LocalDateTime st=LocalDateTime.now(), ed=LocalDateTime.now();
+        if (list.size() != 0) {
+            st = list.get(0).getTime();
+            ed = list.get(list.size()-1).getTime();
+        }
+
+        long hour = ChronoUnit.HOURS.between(st, ed);
+        long minute = ChronoUnit.MINUTES.between(st, ed)%60;
+        long sec = ChronoUnit.SECONDS.between(st, ed)%60;
+
+        String h,m,s;
+        if(hour<=9) h = "0"+hour;
+        else h = ""+hour;
+
+        if(minute<=9) m = "0"+minute;
+        else m = ""+minute;
+
+        if(sec<=9) s = "0"+sec;
+        else s = ""+sec;
+
+        String timelen = h+":"+m+":"+s;
+
+        double dist=0;
+
+        for (int i=0; i< output.size()-1; i++){
+            GpsResultResponse now = output.get(i);
+            GpsResultResponse next = output.get(i+1);
+            dist += getDistance(now.getLat(), now.getLng(), next.getLat(), next.getLng());
+        }
+
+        double speed = 0;
+        if(list.size() == 0){
+            speed=0;
+        }
+        else {
+            speed = dist/ChronoUnit.SECONDS.between(st, ed);
+        }
+
+        return ResultResponse.builder()
+                .flag(flag)
+                .gpsList(output)
+                .total_dist(dist)
+                .time_len(timelen)
+                .avg_speed(speed)
+                .build();
+    }
+
     //gps 거리 계산용 함수
     public static double getDistance(String lat1_s, String lng1_s, String lat2_s, String lng2_s) {
 

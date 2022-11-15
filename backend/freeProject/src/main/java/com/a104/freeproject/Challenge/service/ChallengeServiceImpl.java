@@ -31,6 +31,7 @@ import com.a104.freeproject.Statbpm.response.BpmResultResponse;
 import com.a104.freeproject.Statbpm.service.StatbpmServiceImpl;
 import com.a104.freeproject.Statgps.entity.Statgps;
 import com.a104.freeproject.Statgps.repository.StatgpsRepository;
+import com.a104.freeproject.Statgps.response.GpsMiddleInterface;
 import com.a104.freeproject.Statgps.response.GpsResultResponse;
 import com.a104.freeproject.Statgps.response.ResultResponse;
 import com.a104.freeproject.Statgps.service.StatgpsServiceImpl;
@@ -827,6 +828,84 @@ public class ChallengeServiceImpl implements ChallengeService {
             output.add(MedTotalStatResponse.builder()
                     .year(year).month(month).day(day)
                     .done(log.isFin()).timelen(timelen)
+                    .build());
+        }
+
+        return output;
+    }
+
+    @Override
+    public List<ChlRankResponse> getRank(Long cid) throws NotFoundException {
+
+        if(!challengeRepository.existsById(cid)) throw new NotFoundException("존재하지 않는 챌린지입니다.");
+        Challenge c = challengeRepository.findById(cid).get();
+
+        List<PrtChl> prtChlList = c.getChlList();
+        if(prtChlList.size()==0) return new LinkedList<>();
+
+        LocalDate today = LocalDate.now(ZoneId.of("Asia/Seoul"));
+
+        List<ChlRankResponse> rankList = new LinkedList<>();
+        for(PrtChl p : prtChlList){
+
+            if(p.is_fin()) continue;
+            if(!logRepository.existsByPrtChlAndDate(p,today)) continue;
+            Log log = logRepository.findByPrtChlAndDate(p,today);
+            if(!log.isFin()) continue;
+
+            if(!gpsRepository.existsByChkAndPrtChl(p,today.toString())) continue;
+            List<GpsMiddleInterface> list = gpsRepository.findByChkAndPrtChl(today.toString(),p);
+
+            if(list.size()==0) continue;
+
+            Member member = p.getMember();
+            ResultResponse res = statgpsService.findRank(p);
+            rankList.add(ChlRankResponse.builder()
+                    .nickname(member.getNickname())
+                    .imgurl(member.getImgurl())
+                    .total_dist(res.getTotal_dist())
+                    .avg_speed(res.getAvg_speed())
+                    .time_len(res.getTime_len())
+                    .build());
+        }
+
+        rankList.sort(new Comparator<ChlRankResponse>() {
+            @Override
+            public int compare(ChlRankResponse o1, ChlRankResponse o2) {
+                double speed_1 = o1.getAvg_speed();
+                double speed_2 = o2.getAvg_speed();
+                if(speed_1!=speed_2){
+                    return Double.compare(speed_2,speed_1);//속력 내림차순
+                }
+                else {
+                    String[] time_1 = o1.getTime_len().split(":");
+                    String[] time_2 = o2.getTime_len().split(":");
+
+                    long t1 = Long.parseLong(time_1[0])*3600+Long.parseLong(time_1[1])*60+Long.parseLong(time_1[2]);
+                    long t2 = Long.parseLong(time_2[0])*3600+Long.parseLong(time_2[1])*60+Long.parseLong(time_2[2]);
+
+                    if(t1!=t2){
+                        return Long.compare(t2,t1); // 시간 길이 내림차순
+                    }
+                    else {
+                        return Double.compare(o2.getTotal_dist(), o1.getTotal_dist());
+                    }
+                }
+            }
+        });
+        List<ChlRankResponse> output = new LinkedList<>();
+        for(int i=0;i<rankList.size();i++){
+            if(i==3) break;
+            ChlRankResponse now = rankList.get(i);
+            if(now.getTotal_dist() < c.getGoal()) continue;
+
+            output.add(ChlRankResponse.builder()
+                    .rank(i+1)
+                    .nickname(now.getNickname())
+                    .imgurl(now.getImgurl())
+                    .total_dist(now.getTotal_dist())
+                    .avg_speed(now.getAvg_speed())
+                    .time_len(now.getTime_len())
                     .build());
         }
 
