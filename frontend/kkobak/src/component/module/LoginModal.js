@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Box } from "@mui/system";
+import { Box, styled } from "@mui/system";
 import { Modal } from "@mui/material";
 
 import CloseIcon from "@mui/icons-material/Close";
@@ -34,6 +34,22 @@ const LogoStyle = {
   justifyContent: "center",
   alignItems: "center",
 };
+
+const ContentBox = styled(Box)(
+  () => `
+  height: 50px; 
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  `
+);
+
+const InputBox = styled(Box)(
+  () => `
+  width: 400px;
+  height: 40px;
+  `
+);
 
 export default function LoginModal() {
   const navigate = useNavigate();
@@ -100,26 +116,42 @@ export default function LoginModal() {
           <img alt="logo" src={Logo} height="80%" />
         </Box>
 
-        <Box sx={{ width: "65%", margin: "auto", textAlign: "center", mt: 2 }}>
-          <Input
-            type="text"
-            placeholder="이메일"
-            onChange={onChangeEmail}
-          ></Input>
+        <Box
+          sx={{
+            width: "100%",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <ContentBox>
+            <InputBox>
+              <Input
+                type="text"
+                placeholder="이메일"
+                onChange={onChangeEmail}
+              ></Input>
+            </InputBox>
+          </ContentBox>
 
-          <Input
-            type="password"
-            placeholder="비밀번호"
-            onChange={onChangePasswd}
-          ></Input>
+          <ContentBox>
+            <InputBox>
+              <Input
+                type="password"
+                placeholder="비밀번호"
+                onChange={onChangePasswd}
+              ></Input>
+            </InputBox>
+          </ContentBox>
 
-          <Box onClick={onClickLogin} sx={{ mt: "20px" }}>
-            <TextButton size="m" my="15px">
+          <Box onClick={onClickLogin} sx={{ mt: "30px" }}>
+            <TextButton size="m" my="15">
               로그인
             </TextButton>
           </Box>
-          <Box onClick={goToSignup}>
-            <TextButton size="m" color="secondary" my="5px">
+          <Box onClick={goToSignup} sx={{ mt: "10px" }}>
+            <TextButton size="m" color="secondary" my="5">
               회원가입
             </TextButton>
           </Box>
