@@ -58,10 +58,10 @@ public class PrtChlServiceImpl implements PrtChlService{
         ChlTime chl = chlTimeRepository.findByChallenge(c);
 
         if(prtChlRepository.existsByChallengeAndMember(c,member)) throw new NotFoundException("이미 가입한 챌린지입니다.");
-
-        Long prtId = prtChlRepository.save(PrtChl.builder().challenge(c).member(member)
+        prtChlRepository.save(PrtChl.builder().challenge(c).member(member)
                 .is_fin(false).startDate(now.toLocalDateTime().toLocalDate()).alarmDir(alarm)
-                .endDate(chl.getEndTime().toLocalDateTime().toLocalDate()).sucDay(0).failDay(0).build()).getId();
+                .endDate(chl.getEndTime().toLocalDateTime().toLocalDate()).sucDay(0).failDay(0).build());
+        Long prtId = prtChlRepository.findByChallengeAndMember(c,member).getId();
 
         // 로그 생성
         logService.createLog(prtChlRepository.findById(prtId).get());
