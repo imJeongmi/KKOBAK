@@ -97,11 +97,13 @@ public class LogServiceImpl implements LogService {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:00");
 
         int goal = challenge.getGoal();
-        if(log.getCnt()+1>=goal) {
-            log.setFin(true);
-            log.setCompleteTime(Timestamp.valueOf(LocalDateTime.now()));
-            p.setSucDay(p.getSucDay()+1);
-            p.setFailDay(p.getFailDay()-1);
+        if(log.getCnt()+1>=goal) { // 성공
+            if(!log.isFin()){ // 실패 -> 성공
+                log.setFin(true);
+                log.setCompleteTime(Timestamp.valueOf(LocalDateTime.now()));
+                p.setSucDay(p.getSucDay()+1);
+                p.setFailDay(p.getFailDay()-1);
+            }
         }
         else {
             log.setCompleteTime(null);
