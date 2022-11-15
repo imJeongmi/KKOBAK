@@ -21,6 +21,15 @@ const StatisticsBox = styled(Box)(
   `
 );
 
+const CheckCalendarBox = styled(Box)(
+  () => `
+    width: 10px;
+    height: 20px;
+    z-index: 100;
+    margin-left: 50px;
+  `
+);
+
 const CardBox = styled(Box)(
   ({ height, margin }) => `
     width: 100%;
@@ -66,16 +75,9 @@ export default function Statistics() {
 
   return detailCategoryId === 1 || detailCategoryId === 2 ? (
     <StatisticsBox>
-      <Box
-        sx={{
-          width: "100%",
-          height: "20px",
-          marginLeft: "-55px",
-          zIndex: 100,
-        }}
-      >
+      <CheckCalendarBox>
         <CheckDayForm findTime={findTime} setFindTime={setFindTime} />
-      </Box>
+      </CheckCalendarBox>
       <CardBox height="350px">
         <ChallengeMap findTime={findTime} setFindTime={setFindTime} />
       </CardBox>
@@ -94,16 +96,9 @@ export default function Statistics() {
     </StatisticsBox>
   ) : detailCategoryId === 3 ? (
     <StatisticsBox>
-      <Box
-        sx={{
-          width: "100%",
-          height: "20px",
-          marginLeft: "-55px",
-          zIndex: 100,
-        }}
-      >
+      <CheckCalendarBox>
         <CheckDayForm findTime={findTime} setFindTime={setFindTime} />
-      </Box>
+      </CheckCalendarBox>
       <CardBox margin="center">
         <HeartRateChart findTime={findTime} setFindTime={setFindTime} />
       </CardBox>
@@ -117,16 +112,9 @@ export default function Statistics() {
     </StatisticsBox>
   ) : detailCategoryId === 7 ? (
     <StatisticsBox>
-      <Box
-        sx={{
-          width: "100%",
-          height: "20px",
-          marginLeft: "-55px",
-          zIndex: 100,
-        }}
-      >
+      <CheckCalendarBox>
         <CheckDayForm findTime={findTime} setFindTime={setFindTime} />
-      </Box>
+      </CheckCalendarBox>
       <CardBox height="250px">
         <ChallengeMap findTime={findTime} setFindTime={setFindTime} />
       </CardBox>
@@ -134,16 +122,9 @@ export default function Statistics() {
     </StatisticsBox>
   ) : (
     <StatisticsBox>
-      <Box
-        sx={{
-          width: "100%",
-          height: "20px",
-          marginLeft: "-55px",
-          zIndex: 100,
-        }}
-      >
+      <CheckCalendarBox>
         <CheckDayForm findTime={findTime} setFindTime={setFindTime} />
-      </Box>
+      </CheckCalendarBox>
       <CardBox height="250px"></CardBox>
 
       <CardBox>
