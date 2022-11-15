@@ -35,6 +35,8 @@ function getWidthBySize(size) {
       return "10vw";
     case "ss":
       return "120px";
+    case "back":
+      return "30px";
     default:
       return "30vw";
   }
@@ -50,6 +52,8 @@ function getHeightBySize(size) {
       return "3vh";
     case "ss":
       return "30px";
+    case "back":
+      return "50px";
     default:
       return "7vh";
   }

@@ -13,6 +13,9 @@ import Statistics from "component/module/Statistics";
 
 import { requestUserInfo, requestMyChallengeDetail } from "api/userApi";
 
+import Button from "@mui/material/Button";
+import CloseIcon from "@mui/icons-material/Close";
+
 const CardBox = styled(Box)(
   () => `
   background-color: #ffffff;
@@ -134,6 +137,12 @@ export default function ChallengeDetail() {
   const [unit, setUnit] = useState("");
   const [watch, setWatch] = useState("");
   const [kkobakChallenge, setKkobakChallenge] = useState("");
+
+  const navigate = useNavigate();
+
+  function backPage() {
+    navigate(`/myChallenge`);
+  }
 
   function requestUserInfoSuccess(res) {
     setUser(res.data);
@@ -387,8 +396,23 @@ export default function ChallengeDetail() {
             </Text>
             <Statistics />
           </CardBox>
+          <Button
+            onClick={backPage}
+            sx={{
+              color: "gray",
+              "&.MuiButtonBase-root:hover": {
+                bgcolor: "transparent",
+              },
+              position: "absolute",
+              right: "1%",
+              top: "2%",
+            }}
+          >
+            <CloseIcon />
+          </Button>
         </MainBox>
       </Box>
+      <Box sx={{ marginTop: "50px" }}></Box>
       <Box sx={{ width: "150px", height: "100vh", backgroundColor: "white" }} />
     </Box>
   );

@@ -12,6 +12,8 @@ import { registerChallenge } from "api/Challenge";
 import axios from "axios";
 
 import { useNavigate } from "react-router-dom";
+import BackButton from "@mui/material/Button";
+import CloseIcon from "@mui/icons-material/Close";
 
 const ButtonBox = styled(Box)(
   () => `
@@ -40,6 +42,10 @@ export default function GroupChallengeRegister() {
   const navigate = useNavigate();
 
   const [goal, setGoal] = useState("");
+
+  function backPage() {
+    navigate(`/GroupChallenge`);
+  }
 
   function getDetailCategoryListSuccess(res) {
     setDetailCategoryList(res.data);
@@ -260,6 +266,20 @@ export default function GroupChallengeRegister() {
               챌린지 등록
             </Button>
           </ButtonBox>
+          <BackButton
+            onClick={backPage}
+            sx={{
+              color: "gray",
+              "&.MuiButtonBase-root:hover": {
+                bgcolor: "transparent",
+              },
+              position: "absolute",
+              right: "1%",
+              top: "2%",
+            }}
+          >
+            <CloseIcon />
+          </BackButton>
         </MainBox>
       </Box>
       <Box sx={{ width: "150px", height: "100vh", backgroundColor: "white" }} />

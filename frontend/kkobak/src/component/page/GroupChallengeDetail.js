@@ -11,6 +11,8 @@ import MainBox from "component/atom/MainBox";
 import Text from "component/atom/Text";
 import GroupStatistics from "component/module/GroupStatistics";
 import WidgetGroupStat from "component/module/WidgetGroupStat";
+import Button from "@mui/material/Button";
+import CloseIcon from "@mui/icons-material/Close";
 
 import { getChallengeDetail } from "api/Challenge";
 import { requestUserInfo } from "api/userApi";
@@ -127,6 +129,12 @@ export default function ChallengeDetail() {
   const [watch, setWatch] = useState("");
   const [goal, setGoal] = useState("");
   const [unit, setUnit] = useState("");
+
+  const navigate = useNavigate();
+
+  function backPage() {
+    navigate(`/GroupChallenge`);
+  }
 
   function requestUserInfoSuccess(res) {
     setUser(res.data);
@@ -330,6 +338,20 @@ export default function ChallengeDetail() {
           >
             <WidgetGroupStat />
           </Box>
+          <Button
+            onClick={backPage}
+            sx={{
+              color: "gray",
+              "&.MuiButtonBase-root:hover": {
+                bgcolor: "transparent",
+              },
+              position: "absolute",
+              right: "1%",
+              top: "2%",
+            }}
+          >
+            <CloseIcon />
+          </Button>
         </MainBox>
       </Box>
       <Box sx={{ width: "150px", height: "100vh", backgroundColor: "white" }} />

@@ -165,12 +165,11 @@ export default function Main() {
         </MainBox>
       </Box>
       <Box sx={{ margin: "0 auto", display: "flex", flexDirection: "column" }}>
-        <Box sx={{ width: "250px", margin: "30px 30px 50px 30px" }}>
+        <Box sx={{ width: "250px", margin: "30px" }}>
           <WidgetCarousel />
           <Todolist />
         </Box>
       </Box>
-      {/* <Box sx={{ width: "150px", height: "100vh", backgroundColor: "#f8f8f8" }} /> */}
     </Box>
   );
 }

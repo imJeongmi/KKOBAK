@@ -14,8 +14,8 @@ import "./Todolist.scss";
 const TodolistBox = styled(Box)(
   () => `
     width: 250px;
-    height: 465px;
-    margin: 35px 0;
+    height: 500px;
+    margin-top: 40px;
     background-color: #FAFAFA;
     border-radius: 20px;
     `
