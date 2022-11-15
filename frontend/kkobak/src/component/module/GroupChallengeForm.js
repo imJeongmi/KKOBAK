@@ -14,8 +14,8 @@ import FormControl from "@mui/material/FormControl";
 
 import { uploadPhoto } from "api/S3";
 
-import "../atom/DatePicker.scss";
-import "../atom/TimePicker.scss";
+import "component/atom/DatePicker.scss";
+import "component/atom/TimePicker.scss";
 import "component/module/ChallengeForm.css";
 
 const inputStyle = {
@@ -24,28 +24,28 @@ const inputStyle = {
 
 const ImageBox = styled(Box)(
   () => `
-  width: 600px;
-  height: 300px;
-  margin: 25px auto 10px auto;
+  width: 360px;
+  height: 200px;
+  margin: 25px auto 0 auto;
   border-radius: 20px;
   background-size: cover;
   overflow: hidden;
-  background-color: grey;
   `
 );
 
 const SettingBox = styled(Box)(
   () => `
-  width: 35vw;
   display: flex;
   flex-direction: column;
   align-items: start;
-  justify-content: space-between;
+  justify-content: start;
   `
 );
 
 const SettingItem = styled(Box)(
   () => `
+  width: 33vw;
+  margin: 5px;
   display: flex;
   `
 );
@@ -186,7 +186,7 @@ export default function GroupChallengeForm({
         <SettingBox>
           <SettingItem>
             <SettingTitleBox>
-              <Text size="16px" weight="bold">
+              <Text size="15px" weight="bold">
                 카테고리
               </Text>
             </SettingTitleBox>
@@ -212,7 +212,7 @@ export default function GroupChallengeForm({
                           }}
                         />
                       }
-                      label={<Text size="13px">운동</Text>}
+                      label={<Text size="14px">운동</Text>}
                     />
                     <FormControlLabel
                       value={2}
@@ -227,7 +227,7 @@ export default function GroupChallengeForm({
                           }}
                         />
                       }
-                      label={<Text size="13px">생활습관</Text>}
+                      label={<Text size="14px">생활습관</Text>}
                     />
                   </RadioGroup>
                 </FormControl>
@@ -237,7 +237,7 @@ export default function GroupChallengeForm({
 
           <SettingItem>
             <SettingTitleBox>
-              <Text size="16px" weight="bold">
+              <Text size="15px" weight="bold">
                 상세 카테고리
               </Text>
             </SettingTitleBox>
@@ -257,7 +257,7 @@ export default function GroupChallengeForm({
 
           <SettingItem>
             <SettingTitleBox>
-              <Text size="16px" weight="bold">
+              <Text size="15px" weight="bold">
                 제목
               </Text>
             </SettingTitleBox>
@@ -280,7 +280,7 @@ export default function GroupChallengeForm({
 
           <SettingItem>
             <SettingTitleBox sx={{ height: "90px" }}>
-              <Text size="16px" weight="bold">
+              <Text size="15px" weight="bold">
                 상세 설명
               </Text>
             </SettingTitleBox>
@@ -302,14 +302,14 @@ export default function GroupChallengeForm({
         <SettingBox>
           <SettingItem>
             <SettingTitleBox>
-              <Text size="16px" weight="bold">
+              <Text size="15px" weight="bold">
                 목표
               </Text>
             </SettingTitleBox>
             <SettingContentBox>
               <Box
                 sx={{
-                  width: "120px",
+                  width: "150px",
                   height: "40px",
                   display: "flex",
                   alignItems: "center",
@@ -322,7 +322,7 @@ export default function GroupChallengeForm({
                 ></Input>
               </Box>
               <Box sx={{ width: "20px" }}>
-                <Text my="15px" size="16px" weight="medium">
+                <Text my="15px" size="14px" weight="medium">
                   {showunit}
                 </Text>
               </Box>
@@ -331,7 +331,7 @@ export default function GroupChallengeForm({
 
           <SettingItem>
             <SettingTitleBox>
-              <Text size="16px" weight="bold">
+              <Text size="15px" weight="bold">
                 기간
               </Text>
             </SettingTitleBox>
@@ -342,7 +342,7 @@ export default function GroupChallengeForm({
                 justifyContent: "space-between",
               }}
             >
-              <Box sx={{ width: "160px", height: "40px" }}>
+              <Box sx={{ width: "150px", height: "40px" }}>
                 <DatePicker
                   calendarAriaLabel="calendar"
                   locale="ko-KR"
@@ -352,10 +352,10 @@ export default function GroupChallengeForm({
                   calendarType="US"
                 />
               </Box>
-              <Text size="16px" weight="semibold" color="black">
+              <Text size="14px" weight="semibold" color="black">
                 ~
               </Text>
-              <Box sx={{ width: "160px", height: "40px" }}>
+              <Box sx={{ width: "150px", height: "40px" }}>
                 <DatePicker
                   calendarAriaLabel="calendar"
                   locale="ko-KR"
@@ -370,12 +370,12 @@ export default function GroupChallengeForm({
 
           <SettingItem>
             <SettingTitleBox>
-              <Text size="16px" weight="bold">
+              <Text size="15px" weight="bold">
                 알림
               </Text>
             </SettingTitleBox>
             <SettingContentBox>
-              <Box sx={{ width: "160px", height: "40px" }}>
+              <Box sx={{ width: "150px", height: "40px" }}>
                 <TimePicker format="HH:mm" onChange={setAlarm} value={alarm} />
               </Box>
             </SettingContentBox>
@@ -383,7 +383,7 @@ export default function GroupChallengeForm({
 
           <SettingItem>
             <SettingTitleBox>
-              <Text size="16px" weight="bold">
+              <Text size="15px" weight="bold">
                 워치 사용
               </Text>
             </SettingTitleBox>
@@ -409,7 +409,7 @@ export default function GroupChallengeForm({
                           }}
                         />
                       }
-                      label={<Text size="13px">사용</Text>}
+                      label={<Text size="14px">사용</Text>}
                     />
                     <FormControlLabel
                       value={false}
@@ -424,7 +424,7 @@ export default function GroupChallengeForm({
                           }}
                         />
                       }
-                      label={<Text size="13px">사용 안함</Text>}
+                      label={<Text size="14px">사용 안함</Text>}
                     />
                   </RadioGroup>
                 </FormControl>
