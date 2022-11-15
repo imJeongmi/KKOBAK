@@ -51,8 +51,6 @@ export default function Main() {
     setMyPageNation([]);
   }
 
-  // 체크페이지 분기처리가 안됨
-
   const checkPage = MyChallengeList.length;
   const [checkNum, setCheckNum] = useState(1);
 
