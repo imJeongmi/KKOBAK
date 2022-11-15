@@ -7,6 +7,7 @@ import ChallengeMap from "component/atom/ChallengeMap";
 import HeartRateChart from "component/module/HeartRateChart";
 import BarChart from "component/module/BarChart";
 import MedBarChart from "component/module/MedBarChart";
+import HabitBarChart from "component/module/HabitBarChart";
 import CheckDayForm from "component/module/CheckDayForm";
 
 import { requestMyChallengeDetail } from "api/userApi";
@@ -77,7 +78,7 @@ export default function Statistics() {
 
   return detailCategoryId === 1 || detailCategoryId === 2 ? (
     <StatisticsBox>
-      <CheckCalendarBox>
+      <CheckCalendarBox sx={{ height: "60px" }}>
         <CheckDayForm findTime={findTime} setFindTime={setFindTime} />
       </CheckCalendarBox>
       <Box sx={{ width: "350px", display: "flex", alignItems: "center" }}>
@@ -129,12 +130,7 @@ export default function Statistics() {
       <CardBox height="250px"></CardBox>
 
       <CardBox>
-        <BarChart findTime={findTime} setFindTime={setFindTime} />
-        {/* <Text>
-          하루 통계 : 몇시에 진행했는지 하루 전체 시간 리스트 필요(막대 그래프로
-          표현)
-        </Text>
-        <Text> 주간 통계 : 하루에 몇 회했는지 1주일 리스트 필요합니다.</Text> */}
+        <HabitBarChart findTime={findTime} setFindTime={setFindTime} />
       </CardBox>
     </StatisticsBox>
   );

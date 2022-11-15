@@ -21,8 +21,6 @@ export default function BarChartPage({ findTime }) {
 
   const [stat, setStat] = useState([]);
 
-  console.log(stat);
-
   function requestTotalMedStatSuccess(res) {
     setStat(res.data);
   }
@@ -49,7 +47,7 @@ export default function BarChartPage({ findTime }) {
         <BarChart width={400} height={100} data={stat}>
           <XAxis dataKey="day" />
           <YAxis />
-          <Bar type="monotone" dataKey="dist" stroke="black" />
+          <Bar type="monotone" dataKey="timelen" stroke="black" />
         </BarChart>
       </Box>
     </Box>
