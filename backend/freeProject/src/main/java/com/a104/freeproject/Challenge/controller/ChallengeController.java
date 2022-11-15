@@ -195,4 +195,9 @@ public class ChallengeController {
         return ResponseEntity.ok().body(challengeService.getRank(cid));
     }
 
+    @GetMapping("/habit-cnt/{cid}")
+    @ApiOperation(value="생활습관 total cnt 목록 가져오는 api", notes = "'/api/challenge/habit-cnt/1' 형식으로 사용")
+    public ResponseEntity<List<HabitResponse>> getHabitCntList(@PathVariable("cid") Long cid, HttpServletRequest req) throws NotFoundException{
+        return ResponseEntity.ok().body(challengeService.getHabitCntList(cid, req));
+    }
 }

@@ -912,6 +912,36 @@ public class ChallengeServiceImpl implements ChallengeService {
         return output;
     }
 
+    @Override
+    public List<HabitResponse> getHabitCntList(Long cid, HttpServletRequest req) throws NotFoundException {
+        Member member = memberService.findEmailbyToken(req);
+
+        if(!challengeRepository.existsById(cid)) throw new NotFoundException("존재하지 않는 챌린지입니다.");
+        Challenge c = challengeRepository.findById(cid).get();
+
+        if(!prtChlRepository.existsByChallengeAndMember(c,member)) return new LinkedList<>();
+        PrtChl p = prtChlRepository.findByChallengeAndMember(c,member);
+
+        if(p.getLogs().size()==0) return new LinkedList<>();
+        List<Log> logs = p.getLogs();
+
+        List<HabitResponse> output = new LinkedList<>();
+        for(Log log : logs){
+            String date = log.getDate().toString();
+            String year = date.substring(0,4);
+            String month = date.substring(5,7);
+            String day = date.substring(8,10);
+
+            output.add(HabitResponse.builder()
+                    .cnt(log.getCnt())
+                    .done(log.isFin())
+                    .year(year).month(month).day(day)
+                    .build());
+        }
+
+        return output;
+    }
+
     public List<ChallengeListResponse> makeResponse(List<Challenge> content) {
         List<ChallengeListResponse> result = new ArrayList<>();
 
