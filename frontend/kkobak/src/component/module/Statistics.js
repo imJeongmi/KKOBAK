@@ -114,12 +114,17 @@ export default function Statistics() {
     </StatisticsBox>
   ) : detailCategoryId === 7 ? (
     <StatisticsBox>
-      <CheckCalendarBox>
+      <CheckCalendarBox sx={{ height: "60px" }}>
         <CheckDayForm findTime={findTime} setFindTime={setFindTime} />
       </CheckCalendarBox>
-      <CardBox height="250px">
-        <ChallengeMap findTime={findTime} setFindTime={setFindTime} />
-      </CardBox>
+      <Box sx={{ width: "350px", display: "flex", alignItems: "center" }}>
+        <ChallengeMap
+          width="300px"
+          height="150px"
+          findTime={findTime}
+          setFindTime={setFindTime}
+        />
+      </Box>
       <CardBox>{/* <Text>출석 정보 통계 들어갈 곳</Text> */}</CardBox>
     </StatisticsBox>
   ) : (
