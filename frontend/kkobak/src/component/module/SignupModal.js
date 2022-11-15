@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Box } from "@mui/system";
+import { Box, styled } from "@mui/system";
 import { Modal } from "@mui/material";
 
 import CloseIcon from "@mui/icons-material/Close";
@@ -40,6 +40,23 @@ const LogoStyle = {
   justifyContent: "center",
   alignItems: "center",
 };
+
+const ContentBox = styled(Box)(
+  () => `
+  height: 50px; 
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  `
+);
+
+const InputBox = styled(Box)(
+  () => `
+  width: 400px;
+  height: 40px;
+  margin: 0 10px 0 100px;
+  `
+);
 
 export default function SignupModal() {
   const navigate = useNavigate();
@@ -229,10 +246,10 @@ export default function SignupModal() {
   }
   function onClickNicknameCheck() {
     if (nickname !== "") {
-      requestNicknameCheck(nickname, nicknameCheckSuccess, nicknameCheckFail);}
-      else {
-        setSignupMessage("닉네임을 입력해주세요.")
-      }
+      requestNicknameCheck(nickname, nicknameCheckSuccess, nicknameCheckFail);
+    } else {
+      setSignupMessage("닉네임을 입력해주세요.");
+    }
   }
 
   // 인증번호 요청
@@ -269,93 +286,100 @@ export default function SignupModal() {
           <img alt="logo" src={Logo} height="80%" />
         </Box>
 
-        <Box sx={{ width: "80%", margin: "auto", textAlign: "center", mt: 2 }}>
-          <Box
-            sx={{ display: "flex", flexDirection: "col", alignItems: "center" }}
-          >
-            <Input
-              type="text"
-              placeholder="이메일"
-              onChange={onChangeEmail}
-            ></Input>
-            <Box onClick={onClickEmailCheck} sx={{ width: "20%" }}>
+        <Box
+          sx={{
+            width: "100%",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <ContentBox>
+            <InputBox>
+              <Input
+                type="text"
+                placeholder="이메일"
+                onChange={onChangeEmail}
+              ></Input>
+            </InputBox>
+            <Box onClick={onClickEmailCheck} sx={{ width: "90px" }}>
               <Text size="13px" weight="medium" color="grey">
                 중복 확인
               </Text>
             </Box>
-          </Box>
+          </ContentBox>
 
-          <Box
-            sx={{ display: "flex", flexDirection: "col", alignItems: "center" }}
-          >
-            <Input
-              type="password"
-              placeholder="비밀번호"
-              onChange={onChangePasswd}
-            ></Input>
-            <Box sx={{ width: "20%" }} />
-          </Box>
+          <ContentBox>
+            <InputBox>
+              <Input
+                type="password"
+                placeholder="비밀번호"
+                onChange={onChangePasswd}
+              ></Input>
+            </InputBox>
+            <Box sx={{ width: "90px" }} />
+          </ContentBox>
 
-          <Box
-            sx={{ display: "flex", flexDirection: "col", alignItems: "center" }}
-          >
-            <Input
-              type="password"
-              placeholder="비밀번호 재확인"
-              onChange={onChangePasswdCheck}
-            ></Input>
-            <Box sx={{ width: "20%" }} />
-          </Box>
+          <ContentBox>
+            <InputBox>
+              <Input
+                type="password"
+                placeholder="비밀번호 재확인"
+                onChange={onChangePasswdCheck}
+              ></Input>
+            </InputBox>
+            <Box sx={{ width: "90px" }} />
+          </ContentBox>
 
-          <Box
-            sx={{ display: "flex", flexDirection: "col", alignItems: "center" }}
-          >
-            <Input
-              type="text"
-              placeholder="닉네임"
-              onChange={onChangeNickname}
-            ></Input>
-            <Box onClick={onClickNicknameCheck} sx={{ width: "20%" }}>
+          <ContentBox>
+            <InputBox>
+              <Input
+                type="text"
+                placeholder="닉네임"
+                onChange={onChangeNickname}
+              ></Input>
+            </InputBox>
+            <Box onClick={onClickNicknameCheck} sx={{ width: "90px" }}>
               <Text size="13px" weight="medium" color="grey">
                 중복 확인
               </Text>
             </Box>
-          </Box>
+          </ContentBox>
 
-          <Box
-            sx={{ display: "flex", flexDirection: "col", alignItems: "center" }}
-          >
-            <Input
-              type="text"
-              placeholder="전화번호"
-              onChange={onChangePhoneNum}
-            ></Input>
-            <Box onClick={onClickSendAuthNum} sx={{ width: "20%" }}>
+          <ContentBox>
+            <InputBox>
+              <Input
+                type="text"
+                placeholder="전화번호"
+                onChange={onChangePhoneNum}
+              ></Input>
+            </InputBox>
+            <Box onClick={onClickSendAuthNum} sx={{ width: "90px" }}>
               <Text size="13px" weight="medium" color="grey">
                 인증번호 받기
               </Text>
             </Box>
-          </Box>
+          </ContentBox>
 
-          <Box
-            sx={{ display: "flex", flexDirection: "col", alignItems: "center" }}
-          >
-            <Input
-              type="text"
-              placeholder="인증번호"
-              onChange={onChangeAuthNum}
-            ></Input>
-            <Box sx={{ width: "20%" }}></Box>
-          </Box>
+          <ContentBox>
+            <InputBox>
+              <Input
+                type="text"
+                placeholder="인증번호"
+                onChange={onChangeAuthNum}
+              ></Input>
+            </InputBox>
+            <Box sx={{ width: "90px" }}></Box>
+          </ContentBox>
 
-          <Box onClick={onClickSignup} sx={{ mt: "20px" }}>
-            <TextButton size="l" my="15">
+          <Box onClick={onClickSignup} sx={{ mt: "30px" }}>
+            <TextButton size="m" my="15">
               회원가입
             </TextButton>
           </Box>
-          <Box onClick={goToLogin}>
-            {/* <Text size="s">로그인</Text> */}
-            <TextButton size="l" color="secondary" my="5">
+          <Box onClick={goToLogin} sx={{ mt: "10px" }}>
+            <TextButton size="m" color="secondary" my="5">
               로그인
             </TextButton>
           </Box>
