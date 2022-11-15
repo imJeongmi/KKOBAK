@@ -251,19 +251,6 @@ export default function ChallengeRegister() {
           나만의 챌린지 만들기
         </Text>
         <MainBox width="75" flexDir="col">
-          <Box sx={{ marginLeft: "70vw", marginBottom: "-35px" }}>
-            <BackButton
-              onClick={backPage}
-              sx={{
-                color: "gray",
-                "&.MuiButtonBase-root:hover": {
-                  bgcolor: "transparent",
-                },
-              }}
-            >
-              <CloseIcon />
-            </BackButton>
-          </Box>
           <ChallengeForm
             imgSrc={imgSrc}
             category={category}
@@ -298,6 +285,20 @@ export default function ChallengeRegister() {
               챌린지 등록
             </Button>
           </ButtonBox>
+          <BackButton
+            onClick={backPage}
+            sx={{
+              color: "gray",
+              "&.MuiButtonBase-root:hover": {
+                bgcolor: "transparent",
+              },
+              position: "absolute",
+              right: "1%",
+              top: "2%",
+            }}
+          >
+            <CloseIcon />
+          </BackButton>
         </MainBox>
       </Box>
       <Box sx={{ width: "150px", height: "100vh", backgroundColor: "white" }} />
