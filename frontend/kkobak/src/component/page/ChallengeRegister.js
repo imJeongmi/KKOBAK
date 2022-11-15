@@ -48,7 +48,7 @@ export default function ChallengeRegister() {
   }
 
   function backPage() {
-    navigate(`/myChallenge`);
+    navigate(`/`);
   }
 
   function getMyKkobakListFail(err) {}
@@ -301,7 +301,6 @@ export default function ChallengeRegister() {
           </BackButton>
         </MainBox>
       </Box>
-      <Box sx={{ width: "150px", height: "100vh", backgroundColor: "white" }} />
     </Box>
   );
 }

@@ -44,7 +44,7 @@ export default function GroupChallengeRegister() {
   const [goal, setGoal] = useState("");
 
   function backPage() {
-    navigate(`/GroupChallenge`);
+    navigate(`/`);
   }
 
   function getDetailCategoryListSuccess(res) {
@@ -282,7 +282,6 @@ export default function GroupChallengeRegister() {
           </BackButton>
         </MainBox>
       </Box>
-      <Box sx={{ width: "150px", height: "100vh", backgroundColor: "white" }} />
     </Box>
   );
 }
