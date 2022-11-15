@@ -69,6 +69,7 @@ export default function EditProfileModal({ open, setOpen, nickName, imgurl }) {
   }
 
   function changeProfileImageSuccess(res) {
+    window.location.reload();
   }
 
   function changeProfileImageFail(err) {
