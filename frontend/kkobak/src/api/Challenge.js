@@ -167,6 +167,14 @@ function requestChallengeCount(cid, type, success, fail) {
   api.get(`challenge/state/${cid}/${type}`).then(success).catch(fail);
 }
 
+function requestTotalRunStat(cid, success, fail) {
+  api.get(`/challenge/run-stat/${cid}`).then(success).catch(fail);
+}
+
+function requestTotalMedStat(cid, success, fail) {
+  api.get(`/challenge/med-stat/${cid}`).then(success).catch(fail);
+}
+
 export {
   getChallengeDetail,
   checkChallengePassword,
@@ -189,4 +197,6 @@ export {
   requestChallengeUserList,
   requestParticipateCheck,
   requestChallengeCount,
+  requestTotalRunStat,
+  requestTotalMedStat,
 };

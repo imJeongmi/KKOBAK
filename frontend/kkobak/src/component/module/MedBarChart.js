@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
-import { requestTotalRunStat } from "api/Challenge";
+import { requestTotalMedStat } from "api/Challenge";
 
 import {
   BarChart,
@@ -23,19 +23,19 @@ export default function BarChartPage({ findTime }) {
 
   console.log(stat);
 
-  function requestTotalRunStatSuccess(res) {
+  function requestTotalMedStatSuccess(res) {
     setStat(res.data);
   }
 
-  function requestTotalRunStatFail(err) {
+  function requestTotalMedStatFail(err) {
     setStat([]);
   }
 
   useEffect(() => {
-    requestTotalRunStat(
+    requestTotalMedStat(
       cid,
-      requestTotalRunStatSuccess,
-      requestTotalRunStatFail
+      requestTotalMedStatSuccess,
+      requestTotalMedStatFail
     );
   }, [cid]);
 
