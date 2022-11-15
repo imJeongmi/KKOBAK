@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
-import { requestTotalMedStat } from "api/Challenge";
+import { requestTotalHabitStat } from "api/Challenge";
 
 import {
   BarChart,
@@ -21,19 +21,19 @@ export default function BarChartPage({ findTime }) {
 
   const [stat, setStat] = useState([]);
 
-  function requestTotalMedStatSuccess(res) {
+  function requestTotalHabitStatSuccess(res) {
     setStat(res.data);
   }
 
-  function requestTotalMedStatFail(err) {
+  function requestTotalHabitStatFail(err) {
     setStat([]);
   }
 
   useEffect(() => {
-    requestTotalMedStat(
+    requestTotalHabitStat(
       cid,
-      requestTotalMedStatSuccess,
-      requestTotalMedStatFail
+      requestTotalHabitStatSuccess,
+      requestTotalHabitStatFail
     );
   }, [cid]);
 
@@ -47,7 +47,7 @@ export default function BarChartPage({ findTime }) {
         <BarChart width={400} height={100} data={stat}>
           <XAxis dataKey="day" />
           <YAxis />
-          <Bar type="monotone" dataKey="timelen" stroke="black" />
+          <Bar type="monotone" dataKey="cnt" stroke="black" />
         </BarChart>
       </Box>
     </Box>
