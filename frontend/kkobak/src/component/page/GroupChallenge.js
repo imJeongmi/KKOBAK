@@ -4,7 +4,7 @@ import Box from "@mui/material/Box";
 import Text from "component/atom/Text";
 import GroupChallengeCardList from "component/module/GroupChallengeCardList";
 
-export default function Challenge() {
+export default function GroupChallenge() {
   return (
     <Box sx={{ display: "flex", justifyContent: "space-between" }}>
       <Box sx={{ margin: "0 auto" }}>
@@ -15,9 +15,6 @@ export default function Challenge() {
         </Box>
         <GroupChallengeCardList />
       </Box>
-      <Box
-        sx={{ width: "150px", height: "100vh", backgroundColor: "white" }}
-      ></Box>
     </Box>
   );
 }
