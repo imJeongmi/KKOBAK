@@ -47,6 +47,7 @@ function getHeight(height) {
 
 function getMargin(margin) {
   if (margin === "center") return "auto";
+  if (margin == 0) return "0 auto";
   else return "40px auto 0 auto";
 }
 
@@ -78,9 +79,16 @@ export default function Statistics() {
       <CheckCalendarBox>
         <CheckDayForm findTime={findTime} setFindTime={setFindTime} />
       </CheckCalendarBox>
-      <CardBox height="350px">
-        <ChallengeMap findTime={findTime} setFindTime={setFindTime} />
-      </CardBox>
+      <Box sx={{ width: "350px", display: "flex", alignItems: "center" }}>
+        {/* <CardBox width="300px" height="150px" margin={0}> */}
+        <ChallengeMap
+          width="300px"
+          height="150px"
+          findTime={findTime}
+          setFindTime={setFindTime}
+        />
+        {/* </CardBox> */}
+      </Box>
 
       <CardBox height="450px">
         <HeartRateChart findTime={findTime} setFindTime={setFindTime} />

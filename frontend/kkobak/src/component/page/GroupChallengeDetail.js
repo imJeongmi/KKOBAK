@@ -133,7 +133,7 @@ export default function ChallengeDetail() {
   const navigate = useNavigate();
 
   function backPage() {
-    navigate(`/GroupChallenge`);
+    navigate(`/`);
   }
 
   function requestUserInfoSuccess(res) {
@@ -354,7 +354,6 @@ export default function ChallengeDetail() {
           </Button>
         </MainBox>
       </Box>
-      <Box sx={{ width: "150px", height: "100vh", backgroundColor: "white" }} />
     </Box>
   );
 }
