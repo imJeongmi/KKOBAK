@@ -22,9 +22,11 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -87,6 +89,8 @@ public class StatgpsServiceImpl implements StatgpsService{
                     .flag(false)
                     .gpsList(new LinkedList<GpsResultResponse>())
                     .total_dist(0)
+                    .time_len("0")
+                    .avg_speed(0)
                     .build();
 
         Log log = logRepository.findByPrtChlAndDate(p,date);
@@ -97,6 +101,8 @@ public class StatgpsServiceImpl implements StatgpsService{
                     .flag(false)
                     .gpsList(new LinkedList<GpsResultResponse>())
                     .total_dist(0)
+                    .time_len("0")
+                    .avg_speed(0)
                     .build();
 
         boolean flag = statgpsList.get(statgpsList.size()-1).getSuccess();
@@ -118,6 +124,25 @@ public class StatgpsServiceImpl implements StatgpsService{
                     .lat(statgps.getLat()).lng(statgps.getLng()).time(statgps.getTime())
                     .build());
         }
+
+        LocalDateTime st = list.get(0).getTime();
+        LocalDateTime ed = list.get(list.size()-1).getTime();
+
+        long hour = ChronoUnit.HOURS.between(st, ed);
+        long minute = ChronoUnit.MINUTES.between(st, ed)%60;
+        long sec = ChronoUnit.SECONDS.between(st, ed)%60;
+
+        String h,m,s;
+        if(hour<=9) h = "0"+hour;
+        else h = ""+hour;
+
+        if(minute<=9) m = "0"+minute;
+        else m = ""+minute;
+
+        if(sec<=9) s = "0"+sec;
+        else s = ""+sec;
+
+        String timelen = h+":"+m+":"+s;
 
         double dist=0;
 
@@ -146,6 +171,8 @@ public class StatgpsServiceImpl implements StatgpsService{
                 .flag(flag)
                 .gpsList(output)
                 .total_dist(dist)
+                .time_len(timelen)
+                .avg_speed(dist/ChronoUnit.SECONDS.between(st, ed))
                 .build();
     }
     

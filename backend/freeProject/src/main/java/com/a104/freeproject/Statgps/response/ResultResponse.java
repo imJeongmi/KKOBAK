@@ -14,5 +14,7 @@ public class ResultResponse {
     private boolean flag;
     private List<GpsResultResponse> gpsList;
     private double total_dist;
+    private String time_len;
+    private double avg_speed;
 
 }
