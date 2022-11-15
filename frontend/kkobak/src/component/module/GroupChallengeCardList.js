@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import Box from "@mui/material/Box";
 import styled from "@emotion/styled";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 
-import GroupChallengeCard from "component/module/GroupChallengeCard";
 import Button from "component/atom/TextButton";
 import MainBox from "component/atom/MainBox";
+import GroupChallengeCard from "component/module/GroupChallengeCard";
 import EmptyChallenge from "component/module/EmptyChallenge";
 
 import {
   fetchGroupChallengeList,
   fetchGroupChallengePageCnt,
 } from "api/Challenge";
-import { useNavigate } from "react-router-dom";
 
 const ChallengeListBox = styled(Box)(
   () => `
