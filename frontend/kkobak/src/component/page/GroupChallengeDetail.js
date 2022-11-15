@@ -338,28 +338,20 @@ export default function ChallengeDetail() {
           >
             <WidgetGroupStat />
           </Box>
-          <Box
+          <Button
+            onClick={backPage}
             sx={{
-              width: "10px",
-              height: "90%",
-              margin: "0 20px",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
+              color: "gray",
+              "&.MuiButtonBase-root:hover": {
+                bgcolor: "transparent",
+              },
+              position: "absolute",
+              right: "1%",
+              top: "2%",
             }}
           >
-            <Button
-              onClick={backPage}
-              sx={{
-                color: "gray",
-                "&.MuiButtonBase-root:hover": {
-                  bgcolor: "transparent",
-                },
-              }}
-            >
-              <CloseIcon />
-            </Button>
-          </Box>
+            <CloseIcon />
+          </Button>
         </MainBox>
       </Box>
       <Box sx={{ width: "150px", height: "100vh", backgroundColor: "white" }} />
