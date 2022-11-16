@@ -23,9 +23,9 @@
         android:layout_marginTop="10dp"
         tools:text="Seychelles"
         android:textSize="18sp"
-        app:robotoTypeface="roboto_thin"
+        app:robotoTypeface="roboto_bold"
         android:textAllCaps="true"
-        android:textColor="@color/white"/>
+        android:textColor="@color/black"/>
 
     <View
         android:layout_width="match_parent"
@@ -41,6 +41,7 @@
         android:orientation="horizontal">
 
         <com.devspark.robototextview.widget.RobotoTextView
+            android:id="@+id/leftLetter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -48,14 +49,16 @@
             android:gravity="center"
             android:text="NORTH LAT 36"
             app:robotoTypeface="roboto_medium"
-            android:textColor="@color/white"/>
+            android:textColor="@color/black"/>
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/doneImg"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:src="@drawable/circle" />
 
         <com.devspark.robototextview.widget.RobotoTextView
+            android:id="@+id/rightLetter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -63,6 +66,6 @@
             android:gravity="center"
             android:text="EAST LNG 97"
             app:robotoTypeface="roboto_medium"
-            android:textColor="@color/white"/>
+            android:textColor="@color/black"/>
     </LinearLayout>
 </RelativeLayout>

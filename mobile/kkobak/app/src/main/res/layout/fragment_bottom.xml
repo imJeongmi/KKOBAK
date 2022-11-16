@@ -12,10 +12,11 @@
 
     <TextView
         android:textAppearance="?android:attr/textAppearanceSmall"
+        android:id="@+id/bottomContents"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="license: every one can use this code to do everything" />
+        android:text="내용: 챌린지에 대한 상세 내용" />
 
     <RelativeLayout
         android:layout_marginTop="10dp"
@@ -43,9 +44,9 @@
         android:layout_marginTop="10dp">
 
         <ImageView
-            android:src="@drawable/icons"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:src="@drawable/done"
+            android:layout_width="100dp"
+            android:layout_height="95dp"
              />
 
         <ImageView

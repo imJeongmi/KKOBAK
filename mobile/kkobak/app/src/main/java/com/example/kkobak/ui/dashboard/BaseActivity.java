@@ -2,6 +2,7 @@ package com.example.kkobak.ui.dashboard;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,22 +13,23 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.app.ActivityOptionsCompat;
-import androidx.core.util.Pair;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.kkobak.R;
 import com.example.kkobak.data.retrofit.api.ChallengeChkApi;
-import com.example.kkobak.data.retrofit.api.MyChallengeApi;
-import com.example.kkobak.data.retrofit.api.MyChallengeDetailApi;
-import com.example.kkobak.data.retrofit.model.CallengeChkRes;
-import com.example.kkobak.data.retrofit.model.MyChallengeDetailRes;
+import com.example.kkobak.data.retrofit.model.ChallengeAllDataRes;
 import com.example.kkobak.data.retrofit.model.MyChallengeRes;
 import com.example.kkobak.data.room.dao.AccessTokenDao;
 import com.example.kkobak.data.room.database.AccessTokenDatabase;
 import com.example.kkobak.data.room.entity.AccessToken;
+import com.example.kkobak.ui.challenge.AttendActivity;
+import com.example.kkobak.ui.challenge.GpsActivity;
+import com.example.kkobak.ui.challenge.MeditationActivity;
+import com.example.kkobak.ui.challenge.PillActivity;
+import com.example.kkobak.ui.challenge.StandupActivity;
+import com.example.kkobak.ui.challenge.WaterActivity;
 import com.example.kkobak.ui.dashboard.fragments.ExpandingFragment;
+import com.example.kkobak.ui.main.MainActivity;
 import com.example.kkobak.ui.test.TestActivity;
 
 import java.util.ArrayList;
@@ -46,6 +48,15 @@ public class BaseActivity extends AppCompatActivity implements ExpandingFragment
     ViewGroup back;
 
     List<MyChallengeRes> challengeList;
+    List<ChallengeAllDataRes> allData;
+
+    final int RUNNING = 1;
+    final int WALKING = 2;
+    final int MEDITATION = 3;
+    final int DRINK_WATER = 4;
+    final int EAT_NUTRIENTS = 5;
+    final int STAND_UP = 6;
+    final int ATTEND = 7;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -65,38 +76,68 @@ public class BaseActivity extends AppCompatActivity implements ExpandingFragment
             Toast.makeText(this, "에러 발생", Toast.LENGTH_SHORT).show();
         }
 
-//        challengeList = new ArrayList<>();
-        new Thread(new Runnable() {
+        Call<List<ChallengeAllDataRes>> call = ChallengeChkApi.getService().getAllData(accessToken);
+        call.enqueue(new Callback<List<ChallengeAllDataRes>>() {
             @Override
-            public void run() {
-                try {
-                    Call<List<MyChallengeRes>> call = MyChallengeApi.getMyChallengeService().getMyChallenge(accessToken);
-                    call.enqueue(new Callback<List<MyChallengeRes>>() {
-                        @Override
-                        public void onResponse(Call<List<MyChallengeRes>> call, Response<List<MyChallengeRes>> response) {
-                            if (response.code() == 200) {
-                                challengeList = response.body();
-                            }
-                            else {
-                                challengeList = new ArrayList<>();
-                            }
-                        }
+            public void onResponse(Call<List<ChallengeAllDataRes>> call, Response<List<ChallengeAllDataRes>> response) {
+                allData = response.body();
+                Toast.makeText(BaseActivity.this, "호출 성공: " + allData.size() , Toast.LENGTH_SHORT).show();
+                ChallengeViewPagerAdapter adapter = new ChallengeViewPagerAdapter(getSupportFragmentManager());
+                adapter.addAll(generateTravelList());
 
-                        @Override
-                        public void onFailure(Call<List<MyChallengeRes>> call, Throwable t) {
-                            challengeList = new ArrayList<>();
-                        }
-                    });
-                } catch (Exception e) {
-                    e.printStackTrace();
+                ViewGroup.LayoutParams layoutParams = viewPager.getLayoutParams();
+                layoutParams.width = ((Activity) viewPager.getContext()).getWindowManager().getDefaultDisplay().getWidth() / 7 * 5;
+                layoutParams.height = (int) ((layoutParams.width / 0.75));
+                viewPager.setOffscreenPageLimit(2);
+                if (viewPager.getParent() instanceof ViewGroup) {
+                    ViewGroup viewParent = ((ViewGroup) viewPager.getParent());
+                    viewParent.setClipChildren(false);
+                    viewPager.setClipChildren(false);
                 }
+                viewPager.setPageTransformer(true, new ExpandingViewPagerTransformer());
+
+//                viewPager.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.viewpager_margin));
+                viewPager.setAdapter(adapter);
             }
-        }).start();
-        try {
-            Thread.sleep(5000);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
+            @Override
+            public void onFailure(Call<List<ChallengeAllDataRes>> call, Throwable t) {
+                allData = new ArrayList<>();
+            }
+        });
+
+//        challengeList = new ArrayList<>();
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                try {
+//                    Call<List<MyChallengeRes>> call = MyChallengeApi.getMyChallengeService().getMyChallenge(accessToken);
+//                    call.enqueue(new Callback<List<MyChallengeRes>>() {
+//                        @Override
+//                        public void onResponse(Call<List<MyChallengeRes>> call, Response<List<MyChallengeRes>> response) {
+//                            if (response.code() == 200) {
+//                                challengeList = response.body();
+//                            }
+//                            else {
+//                                challengeList = new ArrayList<>();
+//                            }
+//                        }
+//
+//                        @Override
+//                        public void onFailure(Call<List<MyChallengeRes>> call, Throwable t) {
+//                            challengeList = new ArrayList<>();
+//                        }
+//                    });
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }).start();
+//        try {
+//            Thread.sleep(5000);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 //
 //
 //
@@ -125,10 +166,6 @@ public class BaseActivity extends AppCompatActivity implements ExpandingFragment
     @Override
     protected void onResume() {
         super.onResume();
-        ChallengeViewPagerAdapter adapter = new ChallengeViewPagerAdapter(getSupportFragmentManager());
-        adapter.addAll(generateTravelList());
-        viewPager.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.viewpager_margin));
-        viewPager.setAdapter(adapter);
     }
 
     @Override
@@ -147,10 +184,25 @@ public class BaseActivity extends AppCompatActivity implements ExpandingFragment
 
     private List<ChallengeInfo> generateTravelList(){
 
-        Toast.makeText(this, "size: " + challengeList.size(), Toast.LENGTH_SHORT);
         List<ChallengeInfo> info = new ArrayList<>();
-//        for(int i = 0; i < challengeList.size(); ++i) {
-//            ChallengeInfo data = new ChallengeInfo();
+        for(int i = 0; i < allData.size(); ++i) {
+            ChallengeInfo data = new ChallengeInfo();
+
+            data.setName((i + 1) + " 번째");
+            data.setImage(R.drawable.newyork);
+
+            data.setImgUrl(allData.get(i).getImgUrl());
+            data.setDone(allData.get(i).isDone());
+            data.setId(allData.get(i).getId());
+            data.setDetailCategoryId(allData.get(i).getDetailCategoryId());
+            data.setGoal(allData.get(i).getGoal());
+            data.setTitle(allData.get(i).getTitle());
+            data.setEndTime(allData.get(i).getEndTime());
+            data.setContents(allData.get(i).getContents());
+            data.setWatch(allData.get(i).isWatch());
+
+            info.add(data);
+        }
 //            int id = challengeList.get(i).getId();
 //
 //            //detailCatergoryId
@@ -202,21 +254,59 @@ public class BaseActivity extends AppCompatActivity implements ExpandingFragment
 ////            info.add(new ChallengeInfo("3번도시", R.drawable.newyork));
 ////            info.add(new ChallengeInfo("4번도시", R.drawable.p1));
 //        }
-            info.add(new ChallengeInfo("1번도시", R.drawable.seychelles));
-            info.add(new ChallengeInfo("2번도시", R.drawable.shh));
-            info.add(new ChallengeInfo("3번도시", R.drawable.newyork));
-            info.add(new ChallengeInfo("4번도시", R.drawable.p1));
+//            info.add(new ChallengeInfo("1번도시", R.drawable.seychelles));
+//            info.add(new ChallengeInfo("2번도시", R.drawable.shh));
+//            info.add(new ChallengeInfo("3번도시", R.drawable.newyork));
+//            info.add(new ChallengeInfo("4번도시", R.drawable.p1));
         return (info);
     }
+
     @SuppressWarnings("unchecked")
     private void startInfoActivity(View view, ChallengeInfo travel) {
-        Activity activity = this;
-        ActivityCompat.startActivity(activity,
-                InfoActivity.newInstance(activity, travel),
-                ActivityOptionsCompat.makeSceneTransitionAnimation(
-                                activity,
-                                new Pair<>(view, getString(R.string.transition_image)))
-                        .toBundle());
+        Intent intent;
+
+        //여기 손봐야함
+        //추가 데이터들 넣어야하기 때문
+
+        switch (travel.getDetailCategoryId()) {
+            case RUNNING:
+                intent = new Intent(this, GpsActivity.class);
+                break;
+            case WALKING:
+                intent = new Intent(this, GpsActivity.class);
+                break;
+            case MEDITATION:
+                intent = new Intent(this, MeditationActivity.class);
+                break;
+            case DRINK_WATER:
+                intent = new Intent(this, WaterActivity.class);
+                break;
+            case EAT_NUTRIENTS:
+                intent = new Intent(this, PillActivity.class);
+                break;
+            case STAND_UP:
+                intent = new Intent(this, StandupActivity.class);
+                break;
+            case ATTEND:
+                intent = new Intent(this, AttendActivity.class);
+                break;
+            default:
+                intent = new Intent(this, MainActivity.class);
+                break;
+        }
+
+//        Toast.makeText(this,"설마 널이냐?" + travel.getDetailCategoryId(), Toast.LENGTH_SHORT);
+//        Log.d("널이냐", "" + travel.getDetailCategoryId());
+//        Intent it = new Intent(this, SpeedActivity.class);
+        startActivity(intent);
+
+//        Activity activity = this;
+//        ActivityCompat.startActivity(activity,
+//                InfoActivity.newInstance(activity, travel),
+//                ActivityOptionsCompat.makeSceneTransitionAnimation(
+//                                activity,
+//                                new Pair<>(view, getString(R.string.transition_image)))
+//                        .toBundle());
     }
 
     @Override

@@ -43,6 +43,6 @@ public class ChallengeExpandingFragment extends ExpandingFragment {
      */
     @Override
     public Fragment getFragmentBottom() {
-        return FragmentBottom.newInstance();
+        return FragmentBottom.newInstance(travel);
     }
 }

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -16,6 +17,8 @@ public class InfoActivity extends AppCompatActivity {
     private static final String EXTRA_TRAVEL = "EXTRA_TRAVEL";
     ImageView image;
     TextView title;
+
+    ChallengeInfo infoData;
 
     public static Intent newInstance(Context context, ChallengeInfo travel) {
         Intent intent = new Intent(context, InfoActivity.class);
@@ -32,10 +35,11 @@ public class InfoActivity extends AppCompatActivity {
         image = findViewById(R.id.image);
         title = findViewById(R.id.title);
 
-        ChallengeInfo travel = getIntent().getParcelableExtra(EXTRA_TRAVEL);
-        if (travel != null) {
-            image.setImageResource(travel.getImage());
-            title.setText(travel.getName());
+        infoData = getIntent().getParcelableExtra(EXTRA_TRAVEL);
+        if (infoData != null) {
+            Toast.makeText(this, "info: " + infoData.getDetailCategoryId(), Toast.LENGTH_SHORT).show();
+            image.setImageResource(infoData.getImage());
+            title.setText(infoData.getName());
         }
     }
 }

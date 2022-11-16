@@ -1,6 +1,9 @@
 package com.example.kkobak.data.retrofit.service;
 
 import com.example.kkobak.data.retrofit.model.CallengeChkRes;
+import com.example.kkobak.data.retrofit.model.ChallengeAllDataRes;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -25,5 +28,10 @@ public interface ChallengeService {
     Call<Boolean> getFinStatus(
             @Header("Authorization") String authorization,
             @Path("cid") int cid
+    );
+
+    @GET("challenge/app-list")
+    Call<List<ChallengeAllDataRes>> getAllData(
+            @Header("Authorization") String authorization
     );
 }
