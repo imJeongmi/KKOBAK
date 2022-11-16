@@ -20,6 +20,7 @@ public class WatchTodoListInfoResponse {
     private String unit;
     private boolean isDone;
     private int kkobak;
+    private int cnt;
 
 
 }

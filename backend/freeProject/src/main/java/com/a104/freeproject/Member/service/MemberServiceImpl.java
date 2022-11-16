@@ -426,6 +426,7 @@ public class MemberServiceImpl implements MemberService{
                         .unit(c.getUnit())
                         .isDone(log.isFin())
                         .kkobak(p.getKkobak())
+                        .cnt(log.getCnt())
                         .build());
             }
 
