@@ -329,59 +329,6 @@ export default function GroupChallengeForm({
               </Box>
             </SettingContentBox>
           </SettingItem>
-
-          <SettingItem>
-            <SettingTitleBox>
-              <Text size="15px" weight="bold">
-                {"📅\u00A0 기간"}
-              </Text>
-            </SettingTitleBox>
-            <SettingContentBox
-              sx={{
-                width: "350px",
-                paddingRight: "10px",
-                justifyContent: "space-between",
-              }}
-            >
-              <Box sx={{ width: "150px", height: "40px" }}>
-                <DatePicker
-                  calendarAriaLabel="calendar"
-                  locale="ko-KR"
-                  onChange={setStartTime}
-                  value={startTime}
-                  minDate={new Date()}
-                  calendarType="US"
-                />
-              </Box>
-              <Text size="14px" weight="semibold" color="black">
-                ~
-              </Text>
-              <Box sx={{ width: "150px", height: "40px" }}>
-                <DatePicker
-                  calendarAriaLabel="calendar"
-                  locale="ko-KR"
-                  onChange={setEndTime}
-                  value={endTime}
-                  minDate={new Date()}
-                  calendarType="US"
-                />
-              </Box>
-            </SettingContentBox>
-          </SettingItem>
-
-          <SettingItem>
-            <SettingTitleBox>
-              <Text size="15px" weight="bold">
-                {"🔔\u00A0 알림"}
-              </Text>
-            </SettingTitleBox>
-            <SettingContentBox>
-              <Box sx={{ width: "150px", height: "40px" }}>
-                <TimePicker format="HH:mm" onChange={setAlarm} value={alarm} />
-              </Box>
-            </SettingContentBox>
-          </SettingItem>
-
           <SettingItem>
             <SettingTitleBox>
               <Text size="15px" weight="bold">
@@ -431,6 +378,58 @@ export default function GroupChallengeForm({
                     />
                   </RadioGroup>
                 </FormControl>
+              </Box>
+            </SettingContentBox>
+          </SettingItem>
+
+          <SettingItem>
+            <SettingTitleBox>
+              <Text size="15px" weight="bold">
+                {"🔔\u00A0 알림"}
+              </Text>
+            </SettingTitleBox>
+            <SettingContentBox>
+              <Box sx={{ width: "150px", height: "40px" }}>
+                <TimePicker format="HH:mm" onChange={setAlarm} value={alarm} />
+              </Box>
+            </SettingContentBox>
+          </SettingItem>
+
+          <SettingItem>
+            <SettingTitleBox>
+              <Text size="15px" weight="bold">
+                {"📅\u00A0 기간"}
+              </Text>
+            </SettingTitleBox>
+            <SettingContentBox
+              sx={{
+                width: "350px",
+                paddingRight: "10px",
+                justifyContent: "space-between",
+              }}
+            >
+              <Box sx={{ width: "150px", height: "40px" }}>
+                <DatePicker
+                  calendarAriaLabel="calendar"
+                  locale="ko-KR"
+                  onChange={setStartTime}
+                  value={startTime}
+                  minDate={new Date()}
+                  calendarType="US"
+                />
+              </Box>
+              <Text size="14px" weight="semibold" color="black">
+                ~
+              </Text>
+              <Box sx={{ width: "150px", height: "40px" }}>
+                <DatePicker
+                  calendarAriaLabel="calendar"
+                  locale="ko-KR"
+                  onChange={setEndTime}
+                  value={endTime}
+                  minDate={new Date()}
+                  calendarType="US"
+                />
               </Box>
             </SettingContentBox>
           </SettingItem>
