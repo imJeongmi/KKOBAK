@@ -16,8 +16,6 @@ const TodolistBox = styled(Box)(
     width: 250px;
     height: 500px;
     margin-top: 40px;
-    background-color: #FAFAFA;
-    border-radius: 20px;
     `
 );
 
@@ -32,10 +30,11 @@ const DateBox = styled(Box)(
 const TodolistInput = styled(Box)(
   () => `
     width: 278px;
-    height: 30px;
+    height: 31px;
+    margin: 5px 0;
+    padding-left: 25px;
     display: flex;
     align-items: center;
-    margin: 5px 0;
     `
 );
 
@@ -157,7 +156,7 @@ export default function Todolist() {
   }
 
   return (
-    <TodolistBox>
+    <TodolistBox className="todolist-box">
       <DateBox>
         <Box
           onClick={onClickPrevDay}
@@ -165,7 +164,7 @@ export default function Todolist() {
             cursor: "pointer",
           }}
         >
-          <Text color="blue" weight="bold" size="14px">
+          <Text color="navy" weight="bold" size="14px">
             &lt;
           </Text>
         </Box>
@@ -181,7 +180,7 @@ export default function Todolist() {
             cursor: "pointer",
           }}
         >
-          <Text color="blue" weight="bold" size="14px">
+          <Text color="navy" weight="bold" size="14px">
             &gt;
           </Text>
         </Box>
@@ -201,7 +200,7 @@ export default function Todolist() {
             category={item.categoryId}
             dashedNowDate={nowDate.format("YYYY-MM-DD")}
             weight="semibold"
-            color="blue"
+            color="navy"
           />
         );
       })}
