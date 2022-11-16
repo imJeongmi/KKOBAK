@@ -4,7 +4,7 @@ import Slider from "react-slick";
 import WidgetTime from "./WidgetTime";
 import WidgetWeather from "./WidgetWeather";
 
-import "component/module/WidgetCarousel.css" 
+import "component/module/WidgetCarousel.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 export default class VerticalMode extends Component {
@@ -17,8 +17,8 @@ export default class VerticalMode extends Component {
       slidesToScroll: 1,
       vertical: true,
       verticalSwiping: true,
-      autoplay: false,
-      autospeed: 500,
+      autoplay: true,
+      autospeed: 700,
       arrows: false,
     };
 
