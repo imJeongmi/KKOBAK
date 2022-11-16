@@ -35,6 +35,8 @@ function getSizeByType(type) {
 function getMarginY(mb) {
   if (!mb) {
     return "auto";
+  } else if (mb === "none") {
+    return 0;
   } else {
     return mb;
   }

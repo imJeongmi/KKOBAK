@@ -4,46 +4,51 @@ import React from "react";
 import ProfileImage from "./ProfileImage";
 import Text from "./Text";
 
+import first from "static/1st-place-medal.png"
+import second from "static/2nd-place-medal.png"
+import third from "static/3rd-place-medal.png"
+
+
 const AwardsBox = styled(Box)(
   () => `
-  width: 30vw ;
+  width: 100% ;
   margin-y: 2vh;
   display: flex;
   justify-content: space-around;
   `,
 );
 
-export default function Ranking() {
+export default function Ranking({ topThreeList }) {
   // const [topThreeList, setTopThreeList] = useState([]);
-  const topThreeList = [
-    { nickname: "경원", imgurl: "3" },
-    { nickname: "정미", imgurl: "4" },
-    { nickname: "승리", imgurl: "7" },
-  ];
+  // const topThreeList = [
+  //   { nickname: "경원", imgurl: "3" },
+  //   { nickname: "정미", imgurl: "4" },
+  //   { nickname: "승리", imgurl: "7" },
+  // ];
 
   function getRank(rankNum) {
     switch (rankNum) {
       case 1:
         return (
           <img
-            src={require("static/1st_place_medal.svg").default}
-            width="60px"
+            src={first}
+            width="50px"
             alt="gold medal"
           />
         );
       case 2:
         return (
           <img
-            src={require("static/2nd_place_medal.svg").default}
-            width="50px"
+            src={second}
+            width="40px"
             alt="silver medal"
           />
         );
       case 3:
         return (
           <img
-            src={require("static/3rd_place_medal.svg").default}
-            width="50px"
+            src={third}
+            width="40px"
             alt="bronze medal"
           />
         );
@@ -58,11 +63,11 @@ export default function Ranking() {
         sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
       >
         {rankNum === 1 ? (
-          <ProfileImage type="m" mb="5vh" num={imgNum} />
+          <ProfileImage mb="none" type="m" num={imgNum} />
         ) : (
-          <ProfileImage mb="10vh" num={imgNum} />
+          <ProfileImage mb="none" num={imgNum} />
         )}
-        <Text>{playerName}</Text>
+        <Text weight="bold">{playerName}</Text>
         {getRank(rankNum)}
       </Box>
     );
