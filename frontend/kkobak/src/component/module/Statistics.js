@@ -4,10 +4,12 @@ import { Box, styled } from "@mui/system";
 
 import Text from "component/atom/Text";
 import ChallengeMap from "component/atom/ChallengeMap";
+import ChallengeAppearMap from "component/atom/ChallengeAppearMap";
 import HeartRateChart from "component/module/HeartRateChart";
 import BarChart from "component/module/BarChart";
 import MedBarChart from "component/module/MedBarChart";
 import HabitBarChart from "component/module/HabitBarChart";
+import AppearBarChart from "component/module/AppearBarChart";
 import CheckDayForm from "component/module/CheckDayForm";
 
 import { requestMyChallengeDetail } from "api/userApi";
@@ -117,24 +119,33 @@ export default function Statistics() {
       <CheckCalendarBox sx={{ height: "60px" }}>
         <CheckDayForm findTime={findTime} setFindTime={setFindTime} />
       </CheckCalendarBox>
-      <Box sx={{ width: "350px", display: "flex", alignItems: "center" }}>
-        <ChallengeMap
-          width="300px"
-          height="150px"
+      <Box
+        sx={{
+          width: "400px",
+          height: "300px",
+          display: "flex",
+          alignItems: "center",
+        }}
+      >
+        <ChallengeAppearMap
+          width="400px"
+          height="300px"
           findTime={findTime}
           setFindTime={setFindTime}
         />
       </Box>
-      <CardBox>{/* <Text>출석 정보 통계 들어갈 곳</Text> */}</CardBox>
+      <CardBox>
+        <AppearBarChart findTime={findTime} setFindTime={setFindTime} />
+      </CardBox>
     </StatisticsBox>
   ) : (
     <StatisticsBox>
       <CheckCalendarBox>
         <CheckDayForm findTime={findTime} setFindTime={setFindTime} />
       </CheckCalendarBox>
-      <CardBox height="250px"></CardBox>
+      <CardBox height="50px"></CardBox>
 
-      <CardBox>
+      <CardBox height="250px">
         <HabitBarChart findTime={findTime} setFindTime={setFindTime} />
       </CardBox>
     </StatisticsBox>

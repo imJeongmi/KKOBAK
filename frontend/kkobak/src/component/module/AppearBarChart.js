@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
-import { requestTotalHabitStat } from "api/Challenge";
+import { requestAppearStat } from "api/Challenge";
 
 import {
   BarChart,
@@ -21,20 +21,18 @@ export default function BarChartPage({ findTime }) {
 
   const [stat, setStat] = useState([]);
 
-  function requestTotalHabitStatSuccess(res) {
+  function requestAppearStatSuccess(res) {
     setStat(res.data);
+    console.log(res.data);
   }
 
-  function requestTotalHabitStatFail(err) {
+  function requestAppearStatFail(err) {
     setStat([]);
+    console.log(err);
   }
 
   useEffect(() => {
-    requestTotalHabitStat(
-      cid,
-      requestTotalHabitStatSuccess,
-      requestTotalHabitStatFail
-    );
+    requestAppearStat(cid, requestAppearStatSuccess, requestAppearStatFail);
   }, [cid]);
 
   return (
@@ -44,8 +42,8 @@ export default function BarChartPage({ findTime }) {
       </Text>
 
       <Box sx={{ fontFamily: "SUIT-Medium", fontSize: "12px" }}>
-        <BarChart width={400} height={200} data={stat}>
-          <XAxis dataKey="day" />
+        <BarChart width={400} height={100} data={stat}>
+          <XAxis dataKey="date" />
           <YAxis />
           <Bar type="monotone" dataKey="cnt" stroke="black" />
         </BarChart>
