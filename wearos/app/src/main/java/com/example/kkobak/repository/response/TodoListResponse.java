@@ -6,7 +6,7 @@ import lombok.Getter;
 
 @Getter
 public class TodoListResponse {
-    @SerializedName("chlId") private int chlId;
+    @SerializedName("chlId") private Long chlId;
     @SerializedName("done") private boolean done;
     @SerializedName("title") private String title;
     @SerializedName("contents") private String contents;
@@ -14,13 +14,14 @@ public class TodoListResponse {
     @SerializedName("detailCategoryId") private Long detailCategoryId;
     @SerializedName("goal") private int goal;
     @SerializedName("unit") private String unit;
+    @SerializedName("cnt") private int cnt;
     @SerializedName("kkobak") private int kkobak;
 
-    public int getChlId() {
+    public Long getChlId() {
         return chlId;
     }
 
-    public void setChlId(int chlId) {
+    public void setChlId(Long chlId) {
         this.chlId = chlId;
     }
 
@@ -87,4 +88,13 @@ public class TodoListResponse {
     public void setKkobak(int kkobak) {
         this.kkobak = kkobak;
     }
+
+    public int getCnt() {
+        return this.cnt;
+    }
+
+    public void setCnt(int cnt) {
+        this.cnt = cnt;
+    }
+
 }

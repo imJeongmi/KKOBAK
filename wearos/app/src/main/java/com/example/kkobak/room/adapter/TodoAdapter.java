@@ -10,16 +10,17 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.kkobak.R;
-import com.example.kkobak.room.data.Todo;
+import com.example.kkobak.repository.response.TodoListResponse;
+
 
 import java.util.List;
 
 public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder>{
 
-    private List<Todo> items;
+    private List<TodoListResponse> items;
     private Context context;
 
-    public TodoAdapter(Context context, List<Todo> items){
+    public TodoAdapter(Context context, List<TodoListResponse> items){
         this.context = context;
         this.items = items;
     }
@@ -37,7 +38,7 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder>{
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         // 뷰홀더가 재사용될 때 호출되어 뷰 객체는 기존 것을 그대로 사용하고 데이터만 바꿔준다.
-        Todo item = items.get(position);
+        TodoListResponse item = items.get(position);
         holder.textView.setText(item.getTitle());
     }
 
@@ -57,6 +58,7 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder>{
         int goal;
         String unit;
         boolean done;
+        int cnt;
 
         public ViewHolder(View itemView){
             super(itemView);
@@ -91,15 +93,16 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder>{
 
         }
 
-        public void setItem(Todo item){
+        public void setItem(TodoListResponse item){
             chlId = item.getChlId();
-            done = item.getDone();
+            done = item.isDone();
             textView.setText(item.getTitle());
             contents = item.getContents();
             categoryId=item.getCategoryId();
             detailCategoryId=item.getDetailCategoryId();
             goal=item.getGoal();
             unit=item.getUnit();
+            cnt=item.getCnt();
         }
 
     }

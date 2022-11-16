@@ -60,6 +60,14 @@
                 android:value="" />
         </activity>
         <activity
+            android:name=".CountActivity"
+            android:exported="false"
+            android:theme="@android:style/Theme.NoTitleBar">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".LoginActivity"
             android:exported="false"
             android:theme="@android:style/Theme.NoTitleBar">

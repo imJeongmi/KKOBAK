@@ -1,6 +1,8 @@
 package com.example.kkobak;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,7 +28,8 @@ public class LoginActivity extends Activity {
     private EditText et_email;
     private EditText et_pw;
     private Button btn_loginchk;
-    private AccessTokenDao tokenDao;
+//    private AccessTokenDao tokenDao;
+    ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,15 +40,23 @@ public class LoginActivity extends Activity {
         et_pw = findViewById(R.id.et_pw);
         btn_loginchk = findViewById(R.id.btn_loginchk);
 
-        // Room 관련 코드
-        AppDatabase database = AppDatabase.getInstance(getApplicationContext());
+        //로딩
+        dialog = new ProgressDialog(this, AlertDialog.THEME_HOLO_DARK);
+        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        dialog.setMessage("로그인 중...");
+//        dialog.show();
+//        dialog.dismiss();
 
-        tokenDao = database.tokenDao();
+        // Room 관련 코드
+//        AppDatabase database = AppDatabase.getInstance(getApplicationContext());
+//
+//        tokenDao = database.tokenDao();
 
         // btn listener
         btn_loginchk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                dialog.show();
                 System.out.println("로그인 버튼 클릭");
                 getToken(et_email.getText().toString(),et_pw.getText().toString());
             }
@@ -69,22 +80,22 @@ public class LoginActivity extends Activity {
                     TokenResponse token = response.body();
                     Log.d("연결이 성공적 : ", response.body().toString());
 
-                    List<AccessToken> tokenList = tokenDao.getTokenAll();
-                    if(tokenList.size()!=0){
-                        for(int i=tokenList.size();i>0;i--){
-                            AccessToken at = tokenList.get(i-1);
-                            tokenDao.setDeleteToken(at.getId());
-                        }
-                    }
-
-                    AccessToken accessToken = new AccessToken(); // 객체 인스턴스 생성
-                    accessToken.setAccessToken(token.getAccessToken());
-                    tokenDao.setInsertToken(accessToken);
+//                    List<AccessToken> tokenList = tokenDao.getTokenAll();
+//                    if(tokenList.size()!=0){
+//                        for(int i=tokenList.size();i>0;i--){
+//                            AccessToken at = tokenList.get(i-1);
+//                            tokenDao.setDeleteToken(at.getId());
+//                        }
+//                    }
+//
+//                    AccessToken accessToken = new AccessToken(); // 객체 인스턴스 생성
+//                    accessToken.setAccessToken(token.getAccessToken());
+//                    tokenDao.setInsertToken(accessToken);
 
                     // 전역변수로 액세스 토큰 저장
                     ((KkobakApp)getApplication()).setAccessToken(token.getAccessToken());
                     System.out.println("전역 토큰의 내용: "+((KkobakApp)getApplication()).getAccessToken());
-
+                    dialog.dismiss();
                     Intent intent = new Intent(LoginActivity.this, ListActivity.class);
                     startActivity(intent);
                 }

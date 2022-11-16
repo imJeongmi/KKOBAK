@@ -10,25 +10,38 @@
     tools:context=".CheckActivity">
 
     <TextView
-        android:id="@+id/title_check"
+        android:id="@+id/title_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Check"
+        android:text="Counter"
         android:textColor="#000000" />
+
+    <TextView
+        android:id="@+id/status_count"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/max_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:textColor="#000000"/>
 
     <LinearLayout
         android:layout_width="194dp"
         android:layout_height="wrap_content">
 
         <Button
-            android:id="@+id/btn_start"
+            android:id="@+id/btn_count_down"
             android:layout_width="37dp"
             android:layout_height="wrap_content"
-            android:text="l" />
+            android:text="-" />
 
         <TextView
-            android:id="@+id/counter"
+            android:id="@+id/counter_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -38,17 +51,11 @@
             android:textColor="#000000" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/btn_count_up"
             android:layout_width="37dp"
             android:layout_height="wrap_content"
-            android:text="r" />
+            android:text="+" />
 
     </LinearLayout>
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="119dp"
-        android:layout_height="wrap_content"
-        android:text="Button" />
 
 </LinearLayout>

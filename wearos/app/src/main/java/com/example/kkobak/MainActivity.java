@@ -1,6 +1,8 @@
 package com.example.kkobak;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -18,7 +20,6 @@ public class MainActivity extends Activity {
 
     private ActivityMainBinding binding;
     private Button btn_login;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

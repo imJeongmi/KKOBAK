@@ -15,6 +15,7 @@ public class Todo {
     private String title;
     private int goal;
     private String unit;
+    private int cnt;
 
     public long getId() {
         return id;
@@ -88,7 +89,11 @@ public class Todo {
         this.unit = unit;
     }
 
-    public Todo(long chlId, long categoryId, long detailCategoryId, String contents, Boolean done, String title, int goal, String unit) {
+    public int getCnt(){
+        return this.cnt;
+    }
+
+    public Todo(long chlId, long categoryId, long detailCategoryId, String contents, Boolean done, String title, int goal, String unit, int cnt) {
         this.chlId = chlId;
         this.categoryId = categoryId;
         this.detailCategoryId = detailCategoryId;
@@ -97,5 +102,6 @@ public class Todo {
         this.title = title;
         this.goal = goal;
         this.unit = unit;
+        this.cnt = cnt;
     }
 }
