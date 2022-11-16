@@ -35,8 +35,8 @@ const CheckBox = styled(Box)(
 
 const ImageBox = styled(Box)(
   () => `
-    width: 16px;
-    height: 16px;
+    width: 17px;
+    height: 17px;
     display: flex;
     align-items: center;
     justify-content: center;
