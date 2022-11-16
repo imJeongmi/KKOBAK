@@ -7,26 +7,41 @@
     android:background="#FFFFFF"
     android:orientation="vertical"
     android:gravity="center"
-    tools:context=".CheckActivity">
+    tools:context=".AttendanceActivity">
 
     <TextView
-        android:id="@+id/title_check"
+        android:id="@+id/title_attendance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Check"
+        android:text="출석체크"
         android:textColor="#000000" />
+
+    <TextView
+        android:id="@+id/status_attendance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="출석완료"
+        android:textColor="#000000"/>
+
+    <TextView
+        android:id="@+id/adjacency_attendance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="근처가 아닙니다"
+        android:textColor="#000000"/>
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
         <Button
-            android:id="@+id/btn_start"
+            android:id="@+id/btn_attend_attendance"
             android:layout_width="79dp"
             android:layout_height="wrap_content"
             android:text="START" />
 
         <Button
-            android:id="@+id/btn_end"
+            android:id="@+id/btn_cancel_attendance"
             android:layout_width="77dp"
             android:layout_height="wrap_content"
             android:text="END" />
