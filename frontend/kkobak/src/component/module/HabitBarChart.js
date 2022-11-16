@@ -44,7 +44,7 @@ export default function BarChartPage({ findTime }) {
       </Text>
 
       <Box sx={{ fontFamily: "SUIT-Medium", fontSize: "12px" }}>
-        <BarChart width={400} height={100} data={stat}>
+        <BarChart width={400} height={200} data={stat}>
           <XAxis dataKey="day" />
           <YAxis />
           <Bar type="monotone" dataKey="cnt" stroke="black" />
