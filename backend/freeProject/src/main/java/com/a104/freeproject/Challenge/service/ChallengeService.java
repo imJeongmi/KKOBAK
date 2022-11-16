@@ -48,4 +48,5 @@ public interface ChallengeService {
     List<MedTotalStatResponse> getMedStatList(Long cid, HttpServletRequest req) throws NotFoundException;
     List<ChlRankResponse> getRank(Long cid) throws NotFoundException;
     List<HabitResponse> getHabitCntList(Long cid, HttpServletRequest req) throws NotFoundException;
+    List<AppListResponse> getAppList(HttpServletRequest req) throws NotFoundException;
 }

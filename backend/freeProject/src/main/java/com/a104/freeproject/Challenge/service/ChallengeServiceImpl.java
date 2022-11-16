@@ -900,6 +900,40 @@ public class ChallengeServiceImpl implements ChallengeService {
         return output;
     }
 
+    @Override
+    public List<AppListResponse> getAppList(HttpServletRequest req) throws NotFoundException {
+
+        Member member = memberService.findEmailbyToken(req);
+        List<PrtChl> prtChlList = member.getChallenges();
+        if(prtChlList.size()==0) return new LinkedList<>();
+
+
+        List<AppListResponse> output = new LinkedList<>();
+
+        for(PrtChl p : prtChlList){
+            if(p.is_fin()) continue;
+            Challenge c = p.getChallenge();
+            ChlTime cTime = chlTimeRepository.findByChallenge(c);
+            LocalDate today = LocalDate.now(ZoneId.of("Asia/Seoul"));
+            if(!logRepository.existsByPrtChlAndDate(p,today)) continue;
+            Log log = logRepository.findByPrtChlAndDate(p,today);
+
+            output.add(AppListResponse.builder()
+                    .chlId(c.getId())
+                    .imgurl(c.getImgurl())
+                    .detailCategoryId(c.getDetailCategory().getId())
+                    .goal(c.getGoal())
+                    .title(c.getTitle())
+                    .endTime(cTime.getEndTime().toLocalDateTime().toLocalDate())
+                    .contents(c.getContents())
+                    .done(log.isFin())
+                    .watch(c.isWatch())
+                    .build());
+        }
+
+        return output;
+    }
+
     public List<ChallengeListResponse> makeResponse(List<Challenge> content) {
         List<ChallengeListResponse> result = new ArrayList<>();
 

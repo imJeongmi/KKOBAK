@@ -3,11 +3,9 @@ package com.a104.freeproject.Challenge.controller;
 import com.a104.freeproject.Challenge.request.*;
 import com.a104.freeproject.Challenge.response.*;
 import com.a104.freeproject.Challenge.service.ChallengeServiceImpl;
-import com.a104.freeproject.Member.request.NickRequest;
 import com.a104.freeproject.advice.exceptions.NotFoundException;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
-import org.aspectj.weaver.ast.Not;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -199,5 +197,11 @@ public class ChallengeController {
     @ApiOperation(value="생활습관 total cnt 목록 가져오는 api", notes = "'/api/challenge/habit-cnt/1' 형식으로 사용")
     public ResponseEntity<List<HabitResponse>> getHabitCntList(@PathVariable("cid") Long cid, HttpServletRequest req) throws NotFoundException{
         return ResponseEntity.ok().body(challengeService.getHabitCntList(cid, req));
+    }
+
+    @GetMapping("/app-list")
+    @ApiOperation(value="어플에서 요청하는 api", notes = "'/api/challenge/app-list' 형식으로 사용")
+    public ResponseEntity<List<AppListResponse>> getAppList(HttpServletRequest req) throws NotFoundException{
+        return ResponseEntity.ok().body(challengeService.getAppList(req));
     }
 }
