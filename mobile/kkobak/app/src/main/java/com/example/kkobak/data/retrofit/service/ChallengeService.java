@@ -20,4 +20,10 @@ public interface ChallengeService {
             @Path("cid") int cid,
             @Path("cnt") int cnt
     );
+
+    @GET("challenge/done/{cid}")
+    Call<Boolean> getFinStatus(
+            @Header("Authorization") String authorization,
+            @Path("cid") int cid
+    );
 }

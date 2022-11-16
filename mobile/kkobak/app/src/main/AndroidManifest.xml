@@ -67,7 +67,7 @@
 
         <activity android:name=".ui.challenge.StandupActivity" />
 
-        <activity android:name=".ui.dashboard.DesignActivity" />
+        <activity android:name=".ui.dashboard.BaseActivity" />
 
         <activity android:name=".ui.dashboard.InfoActivity" />
 

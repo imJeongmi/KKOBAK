@@ -6,15 +6,15 @@ import androidx.fragment.app.FragmentManager;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TravelViewPagerAdapter extends ExpandingViewPagerAdapter {
-    List<Travel> travels;
+public class ChallengeViewPagerAdapter extends ExpandingViewPagerAdapter {
+    List<ChallengeInfo> travels;
 
-    public TravelViewPagerAdapter(FragmentManager fm) {
+    public ChallengeViewPagerAdapter(FragmentManager fm) {
         super(fm);
         travels = new ArrayList<>();
     }
 
-    public void addAll(List<Travel> travels){
+    public void addAll(List<ChallengeInfo> travels){
 //        if (this.travels == null)
 //            this.travels = new ArrayList<>();
 //        Log.d("data size", "addAll: " + travels.size());
@@ -24,8 +24,8 @@ public class TravelViewPagerAdapter extends ExpandingViewPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        Travel travel = travels.get(position);
-        return TravelExpandingFragment.newInstance(travel);
+        ChallengeInfo travel = travels.get(position);
+        return ChallengeExpandingFragment.newInstance(travel);
     }
 
     @Override

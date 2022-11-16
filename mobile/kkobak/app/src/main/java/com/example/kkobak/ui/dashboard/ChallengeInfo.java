@@ -3,29 +3,29 @@ package com.example.kkobak.ui.dashboard;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Travel implements Parcelable {
+public class ChallengeInfo implements Parcelable {
     private String name;
     private int image;
 
-    public Travel(String name, int image) {
+    public ChallengeInfo(String name, int image) {
         this.name = name;
         this.image = image;
     }
 
-    protected Travel(Parcel in) {
+    protected ChallengeInfo(Parcel in) {
         name = in.readString();
         image = in.readInt();
     }
 
-    public static final Creator<Travel> CREATOR = new Creator<Travel>() {
+    public static final Creator<ChallengeInfo> CREATOR = new Creator<ChallengeInfo>() {
         @Override
-        public Travel createFromParcel(Parcel in) {
-            return new Travel(in);
+        public ChallengeInfo createFromParcel(Parcel in) {
+            return new ChallengeInfo(in);
         }
 
         @Override
-        public Travel[] newArray(int size) {
-            return new Travel[size];
+        public ChallengeInfo[] newArray(int size) {
+            return new ChallengeInfo[size];
         }
     };
 

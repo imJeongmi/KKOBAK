@@ -7,12 +7,12 @@ import androidx.fragment.app.Fragment;
 
 import com.example.kkobak.ui.dashboard.fragments.ExpandingFragment;
 
-public class TravelExpandingFragment extends ExpandingFragment {
+public class ChallengeExpandingFragment extends ExpandingFragment {
     static final String ARG_TRAVEL = "ARG_TRAVEL";
-    Travel travel;
+    ChallengeInfo travel;
 
-    public static TravelExpandingFragment newInstance(Travel travel){
-        TravelExpandingFragment fragment = new TravelExpandingFragment();
+    public static ChallengeExpandingFragment newInstance(ChallengeInfo travel){
+        ChallengeExpandingFragment fragment = new ChallengeExpandingFragment();
         Bundle args = new Bundle();
         args.putParcelable(ARG_TRAVEL, travel);
         fragment.setArguments(args);

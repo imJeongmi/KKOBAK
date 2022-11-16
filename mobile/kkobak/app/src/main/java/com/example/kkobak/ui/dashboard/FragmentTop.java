@@ -20,12 +20,12 @@ import butterknife.ButterKnife;
 
 public class FragmentTop extends Fragment {
     static final String ARG_TRAVEL = "ARG_TRAVEL";
-    Travel travel;
+    ChallengeInfo travel;
 
     ImageView image;
     TextView title;
 
-    public static FragmentTop newInstance(Travel travel) {
+    public static FragmentTop newInstance(ChallengeInfo travel) {
         Bundle args = new Bundle();
         FragmentTop fragmentTop = new FragmentTop();
         args.putParcelable(ARG_TRAVEL, travel);
@@ -67,7 +67,7 @@ public class FragmentTop extends Fragment {
     }
 
     @SuppressWarnings("unchecked")
-    private void startInfoActivity(View view, Travel travel) {
+    private void startInfoActivity(View view, ChallengeInfo travel) {
         FragmentActivity activity = getActivity();
         ActivityCompat.startActivity(activity,
                 InfoActivity.newInstance(activity, travel),

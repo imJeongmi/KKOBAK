@@ -17,7 +17,7 @@ public class InfoActivity extends AppCompatActivity {
     ImageView image;
     TextView title;
 
-    public static Intent newInstance(Context context, Travel travel) {
+    public static Intent newInstance(Context context, ChallengeInfo travel) {
         Intent intent = new Intent(context, InfoActivity.class);
         intent.putExtra(EXTRA_TRAVEL, travel);
         return intent;
@@ -32,7 +32,7 @@ public class InfoActivity extends AppCompatActivity {
         image = findViewById(R.id.image);
         title = findViewById(R.id.title);
 
-        Travel travel = getIntent().getParcelableExtra(EXTRA_TRAVEL);
+        ChallengeInfo travel = getIntent().getParcelableExtra(EXTRA_TRAVEL);
         if (travel != null) {
             image.setImageResource(travel.getImage());
             title.setText(travel.getName());

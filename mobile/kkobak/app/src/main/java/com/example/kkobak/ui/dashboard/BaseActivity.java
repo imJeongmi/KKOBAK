@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.transition.Explode;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,7 +23,7 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 
-public class DesignActivity extends AppCompatActivity implements ExpandingFragment.OnExpandingClickListener {
+public class BaseActivity extends AppCompatActivity implements ExpandingFragment.OnExpandingClickListener {
     ViewPager viewPager;
     ViewGroup back;
 
@@ -39,7 +38,7 @@ public class DesignActivity extends AppCompatActivity implements ExpandingFragme
         ButterKnife.bind(this);
         setupWindowAnimations();
 //
-        TravelViewPagerAdapter adapter = new TravelViewPagerAdapter(getSupportFragmentManager());
+        ChallengeViewPagerAdapter adapter = new ChallengeViewPagerAdapter(getSupportFragmentManager());
         adapter.addAll(generateTravelList());
         viewPager.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.viewpager_margin));
         viewPager.setAdapter(adapter);
@@ -81,18 +80,18 @@ public class DesignActivity extends AppCompatActivity implements ExpandingFragme
         getWindow().setExitTransition(slideTransition);
     }
 
-    private List<Travel> generateTravelList(){
-        List<Travel> travels = new ArrayList<>();
+    private List<ChallengeInfo> generateTravelList(){
+        List<ChallengeInfo> travels = new ArrayList<>();
         for(int i=0;i<5;++i){
-            travels.add(new Travel("1번도시", R.drawable.seychelles));
-            travels.add(new Travel("2번도시", R.drawable.shh));
-            travels.add(new Travel("3번도시", R.drawable.newyork));
-            travels.add(new Travel("4번도시", R.drawable.p1));
+            travels.add(new ChallengeInfo("1번도시", R.drawable.seychelles));
+            travels.add(new ChallengeInfo("2번도시", R.drawable.shh));
+            travels.add(new ChallengeInfo("3번도시", R.drawable.newyork));
+            travels.add(new ChallengeInfo("4번도시", R.drawable.p1));
         }
         return travels;
     }
     @SuppressWarnings("unchecked")
-    private void startInfoActivity(View view, Travel travel) {
+    private void startInfoActivity(View view, ChallengeInfo travel) {
         Activity activity = this;
         ActivityCompat.startActivity(activity,
                 InfoActivity.newInstance(activity, travel),
@@ -106,7 +105,7 @@ public class DesignActivity extends AppCompatActivity implements ExpandingFragme
     public void onExpandingClick(View v) {
         //v is expandingfragment layout
         View view = v.findViewById(R.id.image);
-        Travel travel = generateTravelList().get(viewPager.getCurrentItem());
-        startInfoActivity(view,travel);
+        ChallengeInfo challengeInfo = generateTravelList().get(viewPager.getCurrentItem());
+        startInfoActivity(view, challengeInfo);
     }
 }
