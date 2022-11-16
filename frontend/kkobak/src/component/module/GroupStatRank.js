@@ -45,7 +45,8 @@ export default function GroupStatistics() {
   function requestRankingFail() {
   }
 
-  return (
+  
+  return (rankingList.length === 5) ? (
     <StatisticsBox>
       <Text mt="40" weight="semibold" size="18px">
         오늘의 순위
@@ -59,5 +60,12 @@ export default function GroupStatistics() {
         <RankingList rankNum={5} userName={rankingList[4]?.nickname} speed={rankingList[4]?.avg_speed}></RankingList>
       </ListBox>
     </StatisticsBox>
-  );
+  ):
+
+  (<Box>
+      <Text mt="270" weight="semibold" size="18px">참가 인원이 부족합니다</Text>
+      <Text weight="semibold" size="18px">챌린지 참여 인원을 더 모아볼까요?</Text>
+
+  </Box>)
+  ;
 }
