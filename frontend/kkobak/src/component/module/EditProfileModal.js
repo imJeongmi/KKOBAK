@@ -29,7 +29,7 @@ const LogoStyle = {
   bgcolor: "#E8F2F9",
   width: "100%",
   height: "15%",
-  my: 5,
+  my: 4,
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
@@ -38,12 +38,12 @@ const LogoStyle = {
 const IconStyle = {
   position: "absolute",
   left: "58%",
-  top: "66%",
+  top: "63%",
 };
 
 const BoxStyle = {
   textAlign: "center",
-  margin: "2vh auto",
+  margin: "10px auto",
 };
 
 export default function EditProfileModal({ open, setOpen, nickName, imgurl }) {
@@ -104,7 +104,7 @@ export default function EditProfileModal({ open, setOpen, nickName, imgurl }) {
           </Box>
         </Box>
 
-        <Box sx={{ width: "65%", margin: "auto", textAlign: "center", mt: 3 }}>
+        <Box sx={{ width: "50%", marginX: "auto",  textAlign: "center", mt: 5 }}>
           <Input
             type="text"
             placeholder="닉네임"

@@ -13,11 +13,11 @@ import storage from 'helper/storage';
 import EditProfileModal from 'component/module/EditProfileModal';
 
 
-export default function ProfileMenu({ nickName, imgurl}) {
+export default function ProfileMenu({ nickName, imgurl }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [modalOpen, setModalOpen] = React.useState(false);
   const navigate = useNavigate();
-  
+
   const open = Boolean(anchorEl);
 
   const handleClick = (event) => {
@@ -35,10 +35,10 @@ export default function ProfileMenu({ nickName, imgurl}) {
     window.location.reload();
   }
 
-function clickSetProfile(e) {
-  e.preventDefault();
-  setModalOpen(true)
-}
+  function clickSetProfile(e) {
+    e.preventDefault();
+    setModalOpen(true)
+  }
 
   return (
     <React.Fragment>
