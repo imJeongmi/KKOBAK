@@ -8,22 +8,28 @@ import Pagination from "@mui/material/Pagination";
 import MainBox from "component/atom/MainBox";
 import Text from "component/atom/Text";
 import MainCalendar from "component/atom/MainCalendar";
+import ProfileMenu from "component/atom/ProfileMenu";
 import Todolist from "component/module/Todolist";
 import WidgetCarousel from "component/module/WidgetCarousel";
 import EmptyChallenge from "component/module/EmptyChallenge";
 
+// import { getChallengeDetail } from "api/Challenge";
 import {
   requestUserInfo,
   fetchMyChallengeCalendarPageCnt,
   getMyKkobakList,
 } from "api/userApi";
-import ProfileMenu from "component/atom/ProfileMenu";
+
 
 export default function Main() {
   const [user, setUser] = useState([]);
+  // const detailCategoryId = [];
+  // const [detailCategoryId, setDetailCategoryId] = useState([]);
   const [MyChallengeList, setMyChallengeList] = useState([]);
+  const checkPage = MyChallengeList.length;
   const [TotalMyPage, setMyPageNation] = useState([]);
   const [page, setPage] = useState(1);
+  const [checkNum, setCheckNum] = useState(1);
 
   const handlePage = (event) => {
     const nowPageInt = parseInt(event.target.outerText);
@@ -32,15 +38,15 @@ export default function Main() {
 
   function getMyKkobakListSuccess(res) {
     setMyChallengeList(res.data.reverse());
+
+    // for (let i=0; i<3; i++) {
+    //   getChallengeDetail(res.data[i].chlId, getChallengeDetailSuccess, getChallengeDetailFail)
+    // }
   }
 
   function getMyKkobakListFail(err) {
     setMyChallengeList([]);
   }
-
-  useEffect(() => {
-    getMyKkobakList(getMyKkobakListSuccess, getMyKkobakListFail);
-  }, []);
 
   function fetchChallengePageCntSuccess(res) {
     setMyPageNation(res.data);
@@ -50,8 +56,19 @@ export default function Main() {
     setMyPageNation([]);
   }
 
-  const checkPage = MyChallengeList.length;
-  const [checkNum, setCheckNum] = useState(1);
+  function requestUserInfoSuccess(res) {
+    setUser(res.data);
+  }
+
+  function requestUserInfoFail(res) {
+    setUser([]);
+  }
+
+  // function getChallengeDetailSuccess(res) {
+  //   detailCategoryId.push(res.data.detailCategoryId);
+  // }
+
+  // function getChallengeDetailFail(err) {}
 
   function CheckNumPage(checkPage) {
     if (checkPage === 1) {
@@ -63,27 +80,24 @@ export default function Main() {
     }
   }
 
-  useEffect(() => {
-    CheckNumPage(checkPage);
-  });
+  function getEmoji(detailCategoryId) {
+    if (detailCategoryId < 3) return "🏃🏻‍♂️";
+    else if (detailCategoryId === 3) return "🧘🏼";
+    else if (detailCategoryId === 4) return "🥛";
+    else if (detailCategoryId === 5) return "💊";
+    else if (detailCategoryId === 6) return "🧍🏻";
+    else if (detailCategoryId === 7) return "💁🏻";
+    else return "📌";
+  }
 
   useEffect(() => {
+    CheckNumPage(checkPage);
     fetchMyChallengeCalendarPageCnt(
       fetchChallengePageCntSuccess,
       fetchChallengePageCntFail
     );
-  }, []);
-
-  function requestUserInfoSuccess(res) {
-    setUser(res.data);
-  }
-
-  function requestUserInfoFail(res) {
-    setUser([]);
-  }
-
-  useEffect(() => {
     requestUserInfo(requestUserInfoSuccess, requestUserInfoFail);
+    getMyKkobakList(getMyKkobakListSuccess, getMyKkobakListFail);
   }, []);
 
   return MyChallengeList.length === 0 ? (
@@ -109,7 +123,7 @@ export default function Main() {
         ></ProfileMenu>
         <MainBox height="622px">
           <Box sx={{ display: "flex", flexDirection: "column" }}>
-            {MyChallengeList.slice(page - 1, page).map((item) => {
+            {MyChallengeList.slice(page - 1, page).map((item, index) => {
               const startTimeCheck = moment(item.startTime).format(
                 "YYYY/MM/DD"
               );
@@ -137,7 +151,11 @@ export default function Main() {
                     </Stack>
                     <Box sx={{ width: "200px" }}>
                       <Text size="20px" weight="bold" my="25">
-                        {item.title}
+                        {/* {console.log(detailCategoryId[index])} */}
+                        {item.watch === true
+                          ? `⌚️ ${item.title}`
+                          // : `${getEmoji(detailCategoryId[index])} ${item.title}`}
+                          : `📌 ${item.title}`}
                       </Text>
                     </Box>
                     <Box
