@@ -135,7 +135,10 @@ export default function GroupStatistics() {
           return (
             <CardBox>
               <ImageBox>
-                <ProfileImage type="small" num={Number(item.imgurl)}></ProfileImage>
+                <ProfileImage
+                  type="small"
+                  num={Number(item.imgurl)}
+                ></ProfileImage>
               </ImageBox>
               <Box sx={{ width: "100px", textAlign: "center" }}>
                 <Text size="14px" weight="semibold">

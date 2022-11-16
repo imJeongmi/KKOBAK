@@ -179,9 +179,8 @@ function requestTotalHabitStat(cid, success, fail) {
   api.get(`/challenge/habit-cnt/${cid}`).then(success).catch(fail);
 }
 
-
 function requestRanking(cid, success, fail) {
-  api.get(`/challenge/ranking/${cid}`).then(success).catch(fail);
+  api.get(`/challenge/rank/${cid}`).then(success).catch(fail);
 }
 
 function requestAppearStat(cid, success, fail) {
