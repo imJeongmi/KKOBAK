@@ -799,7 +799,10 @@ public class ChallengeServiceImpl implements ChallengeService {
         Challenge c = challengeRepository.findById(cid).get();
 
         List<PrtChl> prtChlList = c.getChlList();
+        System.out.println("prtChlList.size() = " + prtChlList.size());
+
         if(prtChlList.size()==0) return new LinkedList<>();
+        System.out.println("잘 가져옴 prtchllist size 0 아님");
 
         LocalDate today = LocalDate.now(ZoneId.of("Asia/Seoul"));
 
@@ -809,7 +812,7 @@ public class ChallengeServiceImpl implements ChallengeService {
             if(p.is_fin()) continue;
             if(!logRepository.existsByPrtChlAndDate(p,today)) continue;
             Log log = logRepository.findByPrtChlAndDate(p,today);
-            if(!log.isFin()) continue;
+//            if(!log.isFin()) continue;
 
             if(!gpsRepository.existsByChkAndPrtChl(p,today.toString())) continue;
             List<GpsMiddleInterface> list = gpsRepository.findByChkAndPrtChl(today.toString(),p);
