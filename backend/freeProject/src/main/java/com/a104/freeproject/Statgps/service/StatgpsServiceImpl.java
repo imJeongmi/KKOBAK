@@ -202,10 +202,12 @@ public class StatgpsServiceImpl implements StatgpsService{
                     .time_len("0")
                     .avg_speed(0)
                     .build();
-
+        System.out.println("statgpsList size가 0이 아님");
         boolean flag = statgpsList.get(statgpsList.size()-1).getSuccess();
+        System.out.println("flag = " + flag);
         LocalDateTime sendTime = statgpsList.get(statgpsList.size()-1).getChk();
-        if(!flag){
+        System.out.println("sendTime = " + sendTime);
+//        if(!flag){
             for(int i = statgpsList.size()-2;i>=0;i--){
                 if(flag) {
                     flag = statgpsList.get(statgpsList.size()-1).getSuccess();
@@ -213,7 +215,7 @@ public class StatgpsServiceImpl implements StatgpsService{
                     break;
                 }
             }
-        }
+//        }
 
         List<Statgps> list = statgpsRepository.findByChkTimeAndPrtChl(p,sendTime);
         List<GpsResultResponse> output = new LinkedList<>();
