@@ -44,6 +44,8 @@ function getColor(color) {
       return "#7B9888";
     case "blue":
       return "#4B79A6";
+    case "navy":
+      return "#36577D";
     case "purple":
       return "#8F5E97";
     case "grey":
