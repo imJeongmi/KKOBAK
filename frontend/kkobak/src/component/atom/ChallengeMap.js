@@ -37,10 +37,17 @@ export default function ChallengeMap({ findTime, width, height }) {
   const [gpsStat, setGpsStat] = useState({ lat: 37.5016644, lng: 127.0396081 });
   const [gpsDaily, setGpsDaily] = useState([]);
 
+  const [speedDaily, setSpeedDaily] = useState("");
+  const [timeDaily, setTimeDaily] = useState("");
+  const [totalDistDaily, setTotalDistDaily] = useState("");
+
   function requestStatGpsSuccess(res) {
     setGps(res.data.gpsList);
     setGpsStat(res.data.gpsList[0]);
     setGpsDaily(res.data);
+    setSpeedDaily(res.data.avg_speed.toFixed(2));
+    setTimeDaily(res.data.time_len);
+    setTotalDistDaily(res.data.total_dist.toFixed(2));
   }
 
   function requestStatGpsFail(err) {
@@ -117,9 +124,9 @@ export default function ChallengeMap({ findTime, width, height }) {
           width: "90px",
         }}
       >
-        <Text size="10px">평균 속력 : {gpsDaily.avg_speed}</Text>
-        <Text size="10px">진행 시간 : {gpsDaily.time_len}</Text>
-        <Text size="10px">이동 거리 : {gpsDaily.total_dist}</Text>
+        <Text size="10px">평균 속력 : {speedDaily} m/s</Text>
+        <Text size="10px">진행 시간 : {timeDaily}</Text>
+        <Text size="10px">이동 거리 : {totalDistDaily} m</Text>
       </Box>
     </Box>
   );
