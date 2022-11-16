@@ -159,7 +159,7 @@ export default function ChallengeDetail() {
     setUnit(data.unit);
   }
 
-  function getChallengeDetailFail(res) {}
+  function getChallengeDetailFail(res) { }
 
   useEffect(() => {
     requestUserInfo(requestUserInfoSuccess, requestUserInfoFail);
@@ -169,6 +169,15 @@ export default function ChallengeDetail() {
       getChallengeDetailFail
     );
   }, []);
+
+  function checkDetailCategory(detailCategoryId) {
+    if (detailCategoryId === 1) {
+      return true;
+    } else if (detailCategoryId === 2) {
+      return true;
+    }
+    return false;
+  }
 
   return (
     <Box
@@ -336,7 +345,8 @@ export default function ChallengeDetail() {
               flexDirection: "column",
             }}
           >
-            <WidgetGroupStat />
+            {checkDetailCategory(detailCategoryId) ? <WidgetGroupStat /> : <GroupStatistics />}
+
           </Box>
           <Button
             onClick={backPage}
