@@ -3,11 +3,11 @@ import { Box } from "@mui/system";
 import moment from "moment";
 
 import Calendar from "react-calendar";
-import smile from "../../static/emoji/smile.png";
-import cry from "../../static/emoji/cry.png";
+import smile from "static/emoji/smile.png";
+import cry from "static/emoji/cry.png";
 
 import { requestCalendarCheckChallenge } from "api/Challenge";
-import { logController } from "api/log";
+import { requestChallengeCount, getChallengeDetail } from "api/Challenge";
 
 import "react-calendar/dist/Calendar.css";
 import "./MainCalendar.css";
@@ -20,24 +20,102 @@ const CalendarBox = {
   justifyContent: "center",
 };
 
-// year, month, chlId 수정하기
-// 달력 클릭시 바로 수정되기!(현재는 클릭하고 새롣고침 해야함)
-
-export default function MainCalendar({ chlId, startTime, endTime, title }) {
+export default function MainCalendar({
+  chlId,
+  startTime,
+  endTime,
+  watch,
+  title,
+}) {
   const [mark, setMark] = useState([]);
+  const [value, setValue] = useState(new Date());
   const [year, setYear] = useState(new Date().getFullYear());
   const [month, setMonth] = useState(new Date().getMonth() + 1);
+  const [categoryId, setCategoryId] = useState();
 
-  // >>>>>>>>>>>>>>로그 월별로 조회 부분
   function requestCalendarCheckSuccess(res) {
     setMark(res.data);
-    // console.log(res.data);
-    // console.log(user.nickName);
   }
 
   function requestCalendarCheckFail(err) {
     setMark([]);
   }
+
+  function requestChallengeCountSuccess(res) {
+    requestCalendarCheckChallenge(
+      chlId,
+      year,
+      month,
+      requestCalendarCheckSuccess,
+      requestCalendarCheckFail
+    );
+  }
+
+  function requestChallengeCountFail(err) {}
+
+  function getChallengeDetailSuccess(res) {
+    console.log("data: ", res.data);
+    setCategoryId(res.data.categoryId);
+  }
+
+  function getChallengeDetailFail(err) {}
+
+  function isDone(date) {
+    return mark.find((x) => x === moment(date).format("YYYY-MM-DD"));
+  }
+
+  function clickDay(e) {
+    console.log(title, categoryId, isDone(e));
+    if (!isSameDate(e, new Date())) return;
+    if (watch === true) return;
+
+    if (categoryId === 1) {
+      if (isDone(e)) {
+        requestChallengeCount(
+          chlId,
+          2,
+          requestChallengeCountSuccess,
+          requestChallengeCountFail
+        );
+      } else {
+        requestChallengeCount(
+          chlId,
+          1,
+          requestChallengeCountSuccess,
+          requestChallengeCountFail
+        );
+      }
+    } else if (categoryId === 2) {
+      requestChallengeCount(
+        chlId,
+        1,
+        requestChallengeCountSuccess,
+        requestChallengeCountFail
+      );
+    }
+  }
+
+  function isSameDate(date1, date2) {
+    return (
+      date1.getFullYear() === date2.getFullYear() &&
+      date1.getMonth() === date2.getMonth() &&
+      date1.getDate() === date2.getDate()
+    );
+  }
+
+  function onDateChange(e) {
+    setValue(e);
+    setYear(e.getFullYear());
+    setMonth(e.getMonth() + 1);
+  }
+
+  useEffect(() => {
+    getChallengeDetail(
+      chlId,
+      getChallengeDetailSuccess,
+      getChallengeDetailFail
+    );
+  }, [chlId]);
 
   useEffect(() => {
     requestCalendarCheckChallenge(
@@ -48,54 +126,7 @@ export default function MainCalendar({ chlId, startTime, endTime, title }) {
       requestCalendarCheckFail
     );
   }, [chlId, year, month]);
-  // >>>>>>>>>>>>>>
 
-  // >>>>>>>>>>>>>>로그 찍는 부분
-  function logControllerSuccess(res) {
-    const today = moment(new Date()).format("YYYY-MM-DD");
-    if (mark.find((x) => x === today)) {
-      let filtered = mark.filter((element) => element !== today);
-      setMark(filtered);
-    } else {
-      setMark([...mark, today]);
-    }
-  }
-
-  function logControllerFail(err) {}
-
-  // useEffect(() => {
-  //   logController(chlId, day, logControllerSuccess, logControllerFail);
-  // }, []);
-  // >>>>>>>>>>>>>>
-
-  function clickDay(e) {
-    if (isSameDate(e, new Date())) {
-      const day = moment(e).format("YYYY-MM-DD");
-      logController(chlId, day, logControllerSuccess, logControllerFail);
-    }
-  }
-
-  function isDone(date) {
-    // console.log(date);
-    return mark.find((x) => x === moment(date).format("YYYY-MM-DD"));
-    // 해당 날짜까지의 값이랑 월별로 갖고 온 날짜의 done을 비교해서 true false 판단
-  }
-
-  const isSameDate = (date1, date2) => {
-    return (
-      date1.getFullYear() === date2.getFullYear() &&
-      date1.getMonth() === date2.getMonth() &&
-      date1.getDate() === date2.getDate()
-    );
-  };
-
-  function onDateChange(e) {
-    setValue(e);
-    setYear(e.getFullYear());
-    setMonth(e.getMonth() + 1);
-  }
-
-  const [value, setValue] = useState(new Date());
   return (
     <Box
       sx={{
@@ -106,10 +137,6 @@ export default function MainCalendar({ chlId, startTime, endTime, title }) {
         justifyContent: "start",
       }}
     >
-      {/* <Box>{title}</Box>
-      <Text my="5" size="12px" color="grey">
-        {startTime} - {endTime}
-      </Text> */}
       <Box sx={CalendarBox}>
         <Calendar
           next2Label={null}
@@ -128,8 +155,6 @@ export default function MainCalendar({ chlId, startTime, endTime, title }) {
           }
           tileContent={({ date, view }) => {
             if (
-              // 챌린지 기간 내인지?
-
               (isSameDate(new Date(startTime), date) ||
                 new Date(startTime) <= date) &&
               date < new Date(endTime)
@@ -150,8 +175,6 @@ export default function MainCalendar({ chlId, startTime, endTime, title }) {
                     ) : (
                       <img object-fit="cover" src={cry} alt="cry" />
                     )}
-
-                    {/* <div className="dot"></div> */}
                   </Box>
                 );
               }
