@@ -70,32 +70,46 @@ export default function ChallengeMap({ findTime, width, height }) {
 
   // 역삼역 위치 { lat: 37.5016644, lng: 127.0396081 }
   return gpsStat === undefined ? (
-    <Box sx={{ display: "flex" }}>
+    <Box>
       <CardBox>
-        <Map
-          center={{ lat: 37.5016644, lng: 127.0396081 }}
-          style={{
-            display: "inline-block",
-            width: `${getWidth(width)}`,
-            height: `${getHeight(height)}`,
+        <Box
+          sx={{
+            width: "100%",
+            height: "100%",
+            backgroundColor: "black",
           }}
         >
-          <Polyline
-            path={gps}
-            strokeWeight={5} // 선의 두께 입니다
-            strokeColor={"#000000"} // 선의 색깔입니다
-            strokeOpacity={1} // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
-            strokeStyle={"solid"} // 선의 스타일입니다
-          />
-        </Map>
+          <Map
+            center={{ lat: 37.5016644, lng: 127.0396081 }}
+            style={{
+              display: "inline-block",
+              width: `${getWidth(width)}`,
+              height: `${getHeight(height)}`,
+              opacity: 0.5,
+            }}
+          >
+            <Polyline
+              path={gps}
+              strokeWeight={5} // 선의 두께 입니다
+              strokeColor={"#000000"} // 선의 색깔입니다
+              strokeOpacity={1} // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+              strokeStyle={"solid"} // 선의 스타일입니다
+            />
+          </Map>
+        </Box>
       </CardBox>
       <Box
         sx={{
           height: "100%",
-          width: "90px",
+          width: "190px",
+          marginTop: "-90px",
+          marginLeft: "55px",
+          position: "absolute",
         }}
       >
-        <Text size="10px">해당 통계가 없습니다.</Text>
+        <Text size="22px" color="white">
+          통계가 없습니다.
+        </Text>
       </Box>
     </Box>
   ) : (

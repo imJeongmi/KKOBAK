@@ -42,9 +42,9 @@ export default function MainCarousel() {
         <Challenge />
         <Box
           sx={{
-            position: "absolute",
-            right: "9%",
-            bottom: "5%",
+            position: "relative",
+            left: "20px",
+            top: "650px",
             cursor: "pointer",
           }}
         >
@@ -59,9 +59,9 @@ export default function MainCarousel() {
         <GroupChallenge />
         <Box
           sx={{
-            position: "absolute",
-            right: "9%",
-            bottom: "5%",
+            position: "relative",
+            left: "20px",
+            top: "650px",
             cursor: "pointer",
           }}
         >
