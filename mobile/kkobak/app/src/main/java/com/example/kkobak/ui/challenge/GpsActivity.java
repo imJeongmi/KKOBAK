@@ -65,6 +65,8 @@ public class GpsActivity extends AppCompatActivity implements LocationListener {
     String name;
     double goal;
 
+    int imgFlag;
+
     LocalDateTime startTime;
 
     final int TIMER = 1;
@@ -90,7 +92,7 @@ public class GpsActivity extends AppCompatActivity implements LocationListener {
         btn = findViewById(R.id.gpsBtn);
         img = findViewById(R.id.gpsImg);
 
-        Glide.with(this).load(R.drawable.running).into(img);
+//        Glide.with(this).load(R.drawable.running).into(img);
 
         //권한 체크
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) 
@@ -165,6 +167,29 @@ public class GpsActivity extends AppCompatActivity implements LocationListener {
 
             distance += interval;
             speed = (interval / deltaTime);
+
+            if (imgFlag == 0) {
+                if (speed < 6.0) {
+                    Glide.with(this).load(R.drawable.walk).into(img);
+                    imgFlag = 1;
+                }
+                else {
+                    Glide.with(this).load(R.drawable.run).into(img);
+                    imgFlag = 2;
+                }
+            }
+            else if (imgFlag == 1) {
+                if (speed >= 6.0) {
+                    Glide.with(this).load(R.drawable.run).into(img);
+                    imgFlag = 2;
+                }
+            }
+            else {
+                if (speed < 6.0) {
+                    Glide.with(this).load(R.drawable.walk).into(img);
+                    imgFlag = 1;
+                }
+            }
 
 //            distance = Double.parseDouble(String.format("%.2f", distance));
 //            speed = Double.parseDouble(String.format("%.2f", speed));
@@ -270,6 +295,7 @@ public class GpsActivity extends AppCompatActivity implements LocationListener {
         if (!flag) {
             btn.setText("종료");
             runTimer();
+            imgFlag = 0;
             distance = speed = 0;
             flag = true;
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

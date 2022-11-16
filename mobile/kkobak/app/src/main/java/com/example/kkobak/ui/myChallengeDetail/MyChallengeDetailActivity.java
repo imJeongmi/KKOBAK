@@ -96,21 +96,21 @@ public class MyChallengeDetailActivity extends AppCompatActivity {
         }
 
 //        Toast.makeText(this, "" + new LogChkReq().makeDate(), Toast.LENGTH_SHORT).show();
-        Call<Boolean> call = LogChkApi.getLogChkService().isValid(accessToken, new LogChkReq(Long.parseLong(chlId), LogChkReq.makeDate()));
-        call.enqueue(new Callback<Boolean>() {
-            @Override
-            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                if(!response.isSuccessful()){
-                    Toast.makeText(MyChallengeDetailActivity.this, "에러: " + response.code(), Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                else {
-//                    Toast.makeText(MyChallengeDetailActivity.this, "성공: " + response.body().toString(), Toast.LENGTH_SHORT).show();
-                }
-            }
-            @Override
-            public void onFailure(Call<Boolean> call, Throwable t) {}
-        });
+//        Call<Boolean> call = LogChkApi.getLogChkService().isValid(accessToken, new LogChkReq(Long.parseLong(chlId), LogChkReq.makeDate()));
+//        call.enqueue(new Callback<Boolean>() {
+//            @Override
+//            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+//                if(!response.isSuccessful()){
+//                    Toast.makeText(MyChallengeDetailActivity.this, "에러: " + response.code(), Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
+//                else {
+////                    Toast.makeText(MyChallengeDetailActivity.this, "성공: " + response.body().toString(), Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//            @Override
+//            public void onFailure(Call<Boolean> call, Throwable t) {}
+//        });
     }
 
     @Override

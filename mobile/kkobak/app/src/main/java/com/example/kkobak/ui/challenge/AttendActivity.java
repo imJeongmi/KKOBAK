@@ -134,7 +134,7 @@ public class AttendActivity extends AppCompatActivity implements LocationListene
         if (distance <= DISTANCE_RANGE && attendBtn.getVisibility() == View.INVISIBLE) {
             String currentAddress = getCurrentAddress(location.getLatitude(), location.getLongitude());
             attendBtn.setVisibility(View.VISIBLE);
-            Glide.with(this).load(R.drawable.waterfinish).into(searchIV);
+            Glide.with(this).load(R.drawable.attendfinish).into(searchIV);
             searchTV.setText("[현재 위치]\n" + currentAddress);
             Vibrator vib = (Vibrator)getSystemService(VIBRATOR_SERVICE);
             vib.vibrate(1000);

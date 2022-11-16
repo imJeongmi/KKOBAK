@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.transition.Explode;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -40,6 +41,7 @@ public class DesignActivity extends AppCompatActivity implements ExpandingFragme
 //
         TravelViewPagerAdapter adapter = new TravelViewPagerAdapter(getSupportFragmentManager());
         adapter.addAll(generateTravelList());
+        viewPager.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.viewpager_margin));
         viewPager.setAdapter(adapter);
 //
 //
@@ -82,10 +84,10 @@ public class DesignActivity extends AppCompatActivity implements ExpandingFragme
     private List<Travel> generateTravelList(){
         List<Travel> travels = new ArrayList<>();
         for(int i=0;i<5;++i){
-            travels.add(new Travel("Seychelles", R.drawable.seychelles));
-            travels.add(new Travel("Shang Hai", R.drawable.shh));
-            travels.add(new Travel("New York", R.drawable.newyork));
-            travels.add(new Travel("castle", R.drawable.p1));
+            travels.add(new Travel("1번도시", R.drawable.seychelles));
+            travels.add(new Travel("2번도시", R.drawable.shh));
+            travels.add(new Travel("3번도시", R.drawable.newyork));
+            travels.add(new Travel("4번도시", R.drawable.p1));
         }
         return travels;
     }
