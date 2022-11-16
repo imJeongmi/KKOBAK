@@ -43,9 +43,6 @@ function getMarginY(mb) {
 export default function ProfileImage({ type, mb, src, num }) {
   if (num >= 0) {
     return <Image type={type} src={ProfileImgs[num]} mb={mb}></Image>;
-    // } else if (!!src) {
-    //   return <Image type={type} src={src} mb={mb}></Image>;
-    // }
   } else {
     return <Image type={type} src={src} mb={mb}></Image>;
   }

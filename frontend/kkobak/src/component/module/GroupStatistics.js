@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Box, styled } from "@mui/system";
 
 import Text from "component/atom/Text";
 import Button from "component/atom/TextButton";
-import { useNavigate } from "react-router-dom";
+import ProfileImage from "component/atom/ProfileImage";
 
 import {
   requestChallengeParticipate,
@@ -51,8 +51,11 @@ const ImageBox = styled(Box)(
   width: 40px;
   height: 40px;
   margin: auto 40px auto 20px;
+  // background-color: #ffffff;
   border-radius: 100%;
   overflow: hidden;
+  display: flex;
+  align-items: center;
   `
 );
 
@@ -63,7 +66,6 @@ function getMargin(margin) {
 
 export default function GroupStatistics() {
   const chlId = Number(useParams().chlId);
-  const navigate = useNavigate();
 
   const [check, setCheck] = useState([]);
   const [userList, setUserList] = useState([]);
@@ -79,7 +81,6 @@ export default function GroupStatistics() {
 
   function requestChallengeUserListSuccess(res) {
     setUserList(res.data);
-    // console.log(res.data);
   }
 
   function requestChallengeUserListFail(res) {
@@ -134,30 +135,13 @@ export default function GroupStatistics() {
           return (
             <CardBox>
               <ImageBox>
-                {/* <img src={item.imgurl} alt="img" width="100%" height="100%" /> */}
-                <img
-                  src={
-                    "https://initpjtbucket.s3.ap-northeast-2.amazonaws.com/images/95479caa-be3f-4473-95a5-f1d07f2ffe75.png"
-                  }
-                  alt="img"
-                  width="100%"
-                  height="100%"
-                />
+                <ProfileImage type="small" num={Number(item.imgurl)}></ProfileImage>
               </ImageBox>
               <Box sx={{ width: "100px", textAlign: "center" }}>
                 <Text size="14px" weight="semibold">
                   {item.nickname}
                 </Text>
               </Box>
-              {/* <Text my="4" size="13px" weight="medium">
-                  성공률 : {item.sucRatio}
-                </Text>
-                <Text my="4" size="13px" weight="medium">
-                  성공 횟수 : {item.sucCnt}
-                </Text>
-                <Text my="4" size="13px" weight="medium">
-                  실패 횟수 : {item.failCnt}
-                </Text> */}
             </CardBox>
           );
         })}
