@@ -143,9 +143,9 @@ export default function Statistics() {
       <CheckCalendarBox>
         <CheckDayForm findTime={findTime} setFindTime={setFindTime} />
       </CheckCalendarBox>
-      <CardBox height="250px"></CardBox>
+      <CardBox height="50px"></CardBox>
 
-      <CardBox>
+      <CardBox height="250px">
         <HabitBarChart findTime={findTime} setFindTime={setFindTime} />
       </CardBox>
     </StatisticsBox>
