@@ -42,10 +42,10 @@
   text-align: center;
   content: '•';
   opacity: 0.8;
-  color: #4B79A6;
+  color: #f0f0f0;
 }
 
 .dots-css li.slick-active button:before {
   opacity: 1; 
-  color: #f0f0f0;
+  color: #4B79A6;
 }
