@@ -34,6 +34,7 @@ function getJustifyContent(justifyContent) {
 const GreyMainBox = styled(Box)(
   ({ width, height, flexDir, alignItems, justifyContent }) => `
   width: ${getWidth(width)}vw;
+  min-width: 1000px;
   height: ${getHeight(height)};
   background-color: #F7F7F7;
   border-radius: 20px;
