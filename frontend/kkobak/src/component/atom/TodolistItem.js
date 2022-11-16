@@ -14,7 +14,7 @@ import { requestChallengeCount } from "api/Challenge";
 const TodolistItemBox = styled(Box)(
   () => `
     width: 278px;
-    height: 31px;
+    height: 25px;
     margin: 5px 0;
     padding-left: 25px;
     display: flex;
