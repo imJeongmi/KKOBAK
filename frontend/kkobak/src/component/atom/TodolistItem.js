@@ -14,8 +14,9 @@ import { requestChallengeCount } from "api/Challenge";
 const TodolistItemBox = styled(Box)(
   () => `
     width: 278px;
-    height: 30px;
+    height: 31px;
     margin: 5px 0;
+    padding-left: 25px;
     display: flex;
     align-items: center;
     `
@@ -23,8 +24,8 @@ const TodolistItemBox = styled(Box)(
 
 const CheckBox = styled(Box)(
   () => `
-    width: 16px;
-    height: 16px;
+    width: 17px;
+    height: 17px;
     background-color: #ffffff;
     border-radius: 5px;
     border: 1px solid #CCCCCC;
@@ -147,13 +148,11 @@ export default function TodolistItem({
           ""
         )}
       </CheckBox>
-      <Box sx={{ width: "170px" }}>
+      <Box sx={{ width: "160px" }}>
         <Text
           size="12px"
           color={color}
           weight={weight}
-          py="1"
-          px="2"
           done={cancelText && done}
         >
           {contents}

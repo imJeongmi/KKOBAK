@@ -165,7 +165,7 @@ export default function Main() {
         </MainBox>
       </Box>
       <Box sx={{ margin: "0 auto", display: "flex", flexDirection: "column" }}>
-        <Box sx={{ width: "250px", margin: "30px" }}>
+        <Box sx={{ width: "250px", margin: "30px 0 30px 60px" }}>
           <WidgetCarousel />
           <Todolist />
         </Box>
