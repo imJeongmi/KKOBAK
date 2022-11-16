@@ -55,11 +55,11 @@ public class StatgpsServiceImpl implements StatgpsService{
         PrtChl p = prtChlRepository.findByChallengeAndMember(c,member);
 
         Statgps statgps = Statgps.builder().prtChl(p)
-                .time(input.getTime().atZone(ZoneId.of("Asia/Seoul")).toLocalDateTime().plusHours(9))
+                .time(input.getTime().atZone(ZoneId.of("Asia/Seoul")).toLocalDateTime())
                 .lat(input.getLat())
                 .lng(input.getLng())
                 .success(false)
-                .chk(input.getChk().atZone(ZoneId.of("Asia/Seoul")).toLocalDateTime().plusHours(9))
+                .chk(input.getChk().atZone(ZoneId.of("Asia/Seoul")).toLocalDateTime())
                 .build();
 
         statgpsRepository.save(statgps);
