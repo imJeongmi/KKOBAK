@@ -54,7 +54,6 @@ export default function MainCalendar({
   function requestChallengeCountFail(err) {}
 
   function getChallengeDetailSuccess(res) {
-    console.log("data: ", res.data);
     setCategoryId(res.data.categoryId);
   }
 
@@ -65,7 +64,6 @@ export default function MainCalendar({
   }
 
   function clickDay(e) {
-    console.log(title, categoryId, isDone(e));
     if (!isSameDate(e, new Date())) return;
     if (watch === true) return;
 
