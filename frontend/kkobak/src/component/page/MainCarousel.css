@@ -22,3 +22,13 @@
   /* -webkit-align-items: center;
   align-items: center; */
 }
+
+.swiper-pagination-bullet {
+  background-color: #4b79a6;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: #4b79a6;
+  opacity: 0.7;
+}
+
