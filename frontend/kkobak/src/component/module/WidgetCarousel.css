@@ -40,12 +40,12 @@
   font-size: 1.8rem;
   line-height: 20px;
   text-align: center;
-  content: "•";
-  opacity: 1;
-  color: #f0f0f0;
+  content: '•';
+  opacity: 0.8;
+  color: #4B79A6;
 }
 
 .dots-css li.slick-active button:before {
-  opacity: 0.8;
-  color: #4b79a6;
+  opacity: 1; 
+  color: #f0f0f0;
 }
