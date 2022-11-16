@@ -90,22 +90,11 @@ export default function Main() {
     <Box
       sx={{
         display: "flex",
-        justifyContent: "space-between",
+        alignItems: "center",
+        justifyContent: "center",
       }}
     >
-      <Box sx={{ margin: "0 auto" }}>
-        <Box
-          sx={{
-            flex: 1,
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            marginTop: "200px",
-          }}
-        >
-          <EmptyChallenge />
-        </Box>
-      </Box>
+      <EmptyChallenge />
     </Box>
   ) : (
     <Box
@@ -114,8 +103,10 @@ export default function Main() {
       }}
     >
       <Box sx={{ margin: "0 auto", display: "flex", flexDirection: "column" }}>
-
-        <ProfileMenu nickName={user?.nickName} imgurl={user?.imgurl}></ProfileMenu>
+        <ProfileMenu
+          nickName={user?.nickName}
+          imgurl={user?.imgurl}
+        ></ProfileMenu>
         <MainBox height="622px">
           <Box sx={{ display: "flex", flexDirection: "column" }}>
             {MyChallengeList.slice(page - 1, page).map((item) => {
@@ -134,7 +125,7 @@ export default function Main() {
                       justifyContent: "space-between",
                     }}
                   >
-                    <Stack spacing={2}>
+                    <Stack spacing={2} sx={{ width: "200px" }}>
                       <Pagination
                         count={checkNum}
                         defaultPage={1}
@@ -144,18 +135,29 @@ export default function Main() {
                         hideNextButton
                       />
                     </Stack>
-                    <Text size="20px" weight="bold" my="25">
-                      {item.title}
-                    </Text>
-                    <Text size="14px">{`${startTimeCheck}-${endTimeCheck}`}</Text>
+                    <Box sx={{ width: "200px" }}>
+                      <Text size="20px" weight="bold" my="25">
+                        {item.title}
+                      </Text>
+                    </Box>
+                    <Box
+                      sx={{
+                        width: "200px",
+                        display: "flex",
+                        justifyContent: "end",
+                      }}
+                    >
+                      <Text size="14px">{`${startTimeCheck}-${endTimeCheck}`}</Text>
+                    </Box>
                   </Box>
                   <Box>
                     <MainCalendar
-                      title={item.title}
                       chlId={item.chlId}
                       key={item.id}
                       startTime={item.startTime}
                       endTime={item.endTime}
+                      watch={item.watch}
+                      title={item.title}
                     />
                   </Box>
                 </Box>

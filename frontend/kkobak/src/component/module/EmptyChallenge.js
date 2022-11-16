@@ -1,9 +1,12 @@
 import React from "react";
-import Box from "@mui/material/Box";
-import Button from "component/atom/TextButton";
-import styled from "@emotion/styled";
 import { useNavigate } from "react-router-dom";
-import char from "../../static/char.png";
+
+import Box from "@mui/material/Box";
+import styled from "@emotion/styled";
+
+import Button from "component/atom/TextButton";
+import Text from "component/atom/Text";
+import char from "static/char.png";
 
 export default function EmptyChallenge() {
   const navigate = useNavigate();
@@ -22,11 +25,11 @@ export default function EmptyChallenge() {
           textAlign: "center",
         }}
       >
-        <Box sx={{ flex: 1, marginTop: "10px" }}>
-          현재 생성된 챌린지가 없습니다.
+        <Box sx={{ flex: 1, marginY: "20px" }}>
+          <Text>현재 생성된 챌린지가 없습니다.</Text>
         </Box>
         <Box sx={{ flex: 1 }}>
-          <img src={char} width="400px" height="400px" />
+          <img src={char} width="350px" height="350px" />
         </Box>
 
         <Box sx={{ flex: 1 }}>
