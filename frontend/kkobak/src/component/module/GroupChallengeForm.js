@@ -98,6 +98,7 @@ export default function GroupChallengeForm({
 }) {
   const challengeImgInput = useRef();
   const [showunit, setShowUnit] = useState("");
+  const [watchValue, setWatchValue] = useState(false);
 
   function changeDetailCategory(e) {
     e.preventDefault();
@@ -115,21 +116,27 @@ export default function GroupChallengeForm({
     if (detailCategory === "1") {
       setShowUnit("km");
       setWatch(true);
+      setWatchValue(true);
     } else if (detailCategory === "2") {
       setShowUnit("km");
       setWatch(true);
+      setWatchValue(true);
     } else if (detailCategory === "3") {
       setShowUnit("분");
       setWatch(true);
+      setWatchValue(true);
     } else if (detailCategory === "7") {
       setShowUnit("주소");
       setWatch(true);
+      setWatchValue(true);
     } else if (category === "1") {
       setShowUnit("분");
+      setWatch(undefined);
+      setWatchValue(false);
     } else if (category === "2") {
       setShowUnit("회");
-    } else {
-      setWatch(false);
+      setWatch(undefined);
+      setWatchValue(false);
     }
   }
 
@@ -322,7 +329,7 @@ export default function GroupChallengeForm({
                   onChange={(e) => setGoal(e.target.value)}
                 ></Input>
               </Box>
-              <Box sx={{ width: "20px" }}>
+              <Box sx={{ width: "25px" }}>
                 <Text my="15px" size="14px" weight="medium">
                   {showunit}
                 </Text>
@@ -392,45 +399,88 @@ export default function GroupChallengeForm({
               <Box
                 sx={{ height: "50px", display: "flex", alignItems: "center" }}
               >
-                <FormControl>
-                  <RadioGroup
-                    row
-                    aria-labelledby="demo-row-controlled-radio-buttons-group"
-                    name="controlled-radio-buttons-group"
-                    onChange={(e) => setWatch(e.target.value)}
-                  >
-                    <FormControlLabel
-                      value={true}
-                      control={
-                        <Radio
-                          size="small"
-                          sx={{
-                            color: "default",
-                            "&.Mui-checked": {
-                              color: "#99b9d6",
-                            },
-                          }}
-                        />
-                      }
-                      label={<Text size="14px">사용</Text>}
-                    />
-                    <FormControlLabel
-                      value={false}
-                      control={
-                        <Radio
-                          size="small"
-                          sx={{
-                            color: "default",
-                            "&.Mui-checked": {
-                              color: "#99b9d6",
-                            },
-                          }}
-                        />
-                      }
-                      label={<Text size="14px">사용 안함</Text>}
-                    />
-                  </RadioGroup>
-                </FormControl>
+                {watch === true && watchValue === true ? (
+                  <FormControl>
+                    <RadioGroup
+                      row
+                      aria-labelledby="demo-row-controlled-radio-buttons-group"
+                      name="controlled-radio-buttons-group"
+                    >
+                      <FormControlLabel
+                        checked={true}
+                        value={true}
+                        control={
+                          <Radio
+                            size="small"
+                            sx={{
+                              color: "default",
+                              "&.Mui-checked": {
+                                color: "#99b9d6",
+                              },
+                            }}
+                          />
+                        }
+                        label={<Text size="14px">사용</Text>}
+                      />
+                      <FormControlLabel
+                        checked={false}
+                        value={false}
+                        control={
+                          <Radio
+                            size="small"
+                            sx={{
+                              color: "default",
+                              "&.Mui-checked": {
+                                color: "#99b9d6",
+                              },
+                            }}
+                          />
+                        }
+                        label={<Text size="14px">사용 안함</Text>}
+                      />
+                    </RadioGroup>
+                  </FormControl>
+                ) : (
+                  <FormControl>
+                    <RadioGroup
+                      row
+                      aria-labelledby="demo-row-controlled-radio-buttons-group"
+                      name="controlled-radio-buttons-group"
+                      onChange={(e) => setWatch(e.target.value)}
+                    >
+                      <FormControlLabel
+                        value={true}
+                        control={
+                          <Radio
+                            size="small"
+                            sx={{
+                              color: "default",
+                              "&.Mui-checked": {
+                                color: "#99b9d6",
+                              },
+                            }}
+                          />
+                        }
+                        label={<Text size="14px">사용</Text>}
+                      />
+                      <FormControlLabel
+                        value={false}
+                        control={
+                          <Radio
+                            size="small"
+                            sx={{
+                              color: "default",
+                              "&.Mui-checked": {
+                                color: "#99b9d6",
+                              },
+                            }}
+                          />
+                        }
+                        label={<Text size="14px">사용 안함</Text>}
+                      />
+                    </RadioGroup>
+                  </FormControl>
+                )}
               </Box>
             </SettingContentBox>
           </SettingItem>
