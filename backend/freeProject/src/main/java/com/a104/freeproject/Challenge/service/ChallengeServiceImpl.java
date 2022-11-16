@@ -814,11 +814,9 @@ public class ChallengeServiceImpl implements ChallengeService {
             System.out.println("log.getId() = " + log.getId());
             if(!log.isFin()) continue;
             System.out.println(log.getId()+" log는 fin임");
-
-            if(!gpsRepository.existsByChkAndPrtChl(p,today.toString())) continue;
-            System.out.println("1");
             List<GpsMiddleInterface> list = gpsRepository.findByChkAndPrtChl(today.toString(),p);
 
+            System.out.println("1");
             if(list.size()==0) continue;
             System.out.println("list.size() = " + list.size());
 
