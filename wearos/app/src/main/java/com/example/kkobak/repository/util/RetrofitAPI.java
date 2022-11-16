@@ -14,6 +14,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 public interface RetrofitAPI {
 
@@ -32,5 +33,11 @@ public interface RetrofitAPI {
 
     @POST("gps/add")
     Call<Boolean> sendGPSOne(@Body GPSRequest gpsRequest, @Header("Authorization") String authorization);
+
+    @GET("challenge/state/{cid}/{type}")
+    Call<Boolean> sendChlCheckChange(@Path("cid") Long chlId, @Path("type") int type, @Header("Authorization") String authorization);
+
+    @POST("todolist/change/status/{todoId}")
+    Call<Boolean> sendTodoStatusChange(@Path("todoId") Long todoId, @Header("Authorization") String authorization);
 
 }

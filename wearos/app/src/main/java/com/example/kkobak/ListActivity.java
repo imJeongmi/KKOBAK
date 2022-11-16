@@ -93,6 +93,8 @@ public class ListActivity extends Activity {
 
                 intent.putExtra("chlId",clickTodo.getChlId());
                 intent.putExtra("detailCategory",clickTodo.getDetailCategoryId());
+                intent.putExtra("title",clickTodo.getTitle());
+                intent.putExtra("contents",clickTodo.getContents());
                 intent.putExtra("done", clickTodo.getDone());
                 intent.putExtra("goal",clickTodo.getGoal());
                 intent.putExtra("id",clickTodo.getId());
