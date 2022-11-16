@@ -156,7 +156,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void testBt(View v) {
         Intent intent = new Intent(this, BaseActivity.class);
-        Toast.makeText(this, "눌렸는데..", Toast.LENGTH_SHORT).show();
         startActivity(intent);
     }
 }
