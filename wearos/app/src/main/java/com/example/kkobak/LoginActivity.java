@@ -14,7 +14,6 @@ import com.example.kkobak.repository.util.RetrofitClient;
 import com.example.kkobak.room.dao.AccessTokenDao;
 import com.example.kkobak.room.data.AccessToken;
 import com.example.kkobak.room.db.AppDatabase;
-import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.List;
 

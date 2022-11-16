@@ -51,6 +51,11 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder>{
 
         TextView textView;
         Long chlId;
+        Long categoryId;
+        Long detailCategoryId;
+        String contents;
+        int goal;
+        String unit;
         boolean done;
 
         public ViewHolder(View itemView){
@@ -90,6 +95,11 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder>{
             chlId = item.getChlId();
             done = item.getDone();
             textView.setText(item.getTitle());
+            contents = item.getContents();
+            categoryId=item.getCategoryId();
+            detailCategoryId=item.getDetailCategoryId();
+            goal=item.getGoal();
+            unit=item.getUnit();
         }
 
     }

@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.wear.widget.WearableRecyclerView;
@@ -44,7 +43,7 @@ public class ListActivity extends Activity {
         List<AccessToken> tokenList = tokenDao.getTokenAll();
         accessToken = tokenList.get(0).getAccessToken();
 
-        getTodoList(accessToken);
+        getTodoList(accessToken); // todo-list 목록 가져옴
 
         // WearableRecyclerView ------------------------------------
 
@@ -62,10 +61,41 @@ public class ListActivity extends Activity {
         todoAdapter.setOnItemClickListener(new TodoAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int pos) {
-                Toast.makeText(getApplicationContext(), "임시적으로 HEART로 연결" + pos, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(), "임시적으로 HEART로 연결" + pos, Toast.LENGTH_SHORT).show();
                 Todo clickTodo = todoList.get(pos);
-                Intent intent = new Intent(ListActivity.this, HeartrateActivity.class);
+
+                //======================================분기처리======================================
+
+                long chlId = clickTodo.getChlId();
+                Intent intent;
+
+                if(chlId>0){ // challenge
+                    long dc = clickTodo.getDetailCategoryId();
+                    if(dc==1 || dc==2){ // 달리기 KM, 걷기 KM
+                        intent = new Intent(ListActivity.this, RunActivity.class);
+                    }
+                    else if (dc==3){ // 명상 분
+                        intent = new Intent(ListActivity.this, HeartrateActivity.class);
+                    }
+                    else if (dc==4 || dc==5 || dc==6 || dc==0){ // 물마시기 회, 영양제 먹기 회, 일어서기 회
+                        // countactivity 없음 이후 변경하기 ===================================================
+                        intent = new Intent(ListActivity.this, CheckActivity.class);
+                    }
+                    else { // dc==7, 출석
+                        intent = new Intent(ListActivity.this, GpsActivity.class);
+                    }
+                }
+                else { // todo-list
+                    intent = new Intent(ListActivity.this, CheckActivity.class);
+                }
+
+                //==================================================================================
+
                 intent.putExtra("chlId",clickTodo.getChlId());
+                intent.putExtra("detailCategory",clickTodo.getDetailCategoryId());
+                intent.putExtra("done", clickTodo.getDone());
+                intent.putExtra("goal",clickTodo.getGoal());
+                intent.putExtra("id",clickTodo.getId());
                 startActivity(intent);
             }
         });
@@ -108,7 +138,10 @@ public class ListActivity extends Activity {
                     }
 
                     for(TodoListResponse res : todoList){
-                        Todo todo = new Todo(res.getChlId(), res.isDone(), res.getTitle());
+                        Todo todo = new Todo(
+                            res.getChlId(), res.getCategoryId(), res.getDetailCategoryId(),
+                                res.getContents(), res.isDone(), res.getTitle(), res.getGoal(),
+                                res.getUnit());
                         todoDao.setInsertTodo(todo);
                     }
                 }

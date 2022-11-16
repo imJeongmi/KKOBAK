@@ -3,7 +3,6 @@ package com.example.kkobak.repository.response;
 import com.google.gson.annotations.SerializedName;
 
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
 public class TodoListResponse {
@@ -39,5 +38,53 @@ public class TodoListResponse {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getContents() {
+        return contents;
+    }
+
+    public void setContents(String contents) {
+        this.contents = contents;
+    }
+
+    public Long getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public Long getDetailCategoryId() {
+        return detailCategoryId;
+    }
+
+    public void setDetailCategoryId(Long detailCategoryId) {
+        this.detailCategoryId = detailCategoryId;
+    }
+
+    public int getGoal() {
+        return goal;
+    }
+
+    public void setGoal(int goal) {
+        this.goal = goal;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+
+    public int getKkobak() {
+        return kkobak;
+    }
+
+    public void setKkobak(int kkobak) {
+        this.kkobak = kkobak;
     }
 }
