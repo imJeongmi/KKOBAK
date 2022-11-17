@@ -149,7 +149,7 @@ export default function Main() {
                         hideNextButton
                       />
                     </Stack>
-                    <Box sx={{ width: "200px" }}>
+                    <Box sx={{ width: "350px" }}>
                       <Text size="20px" weight="bold" my="25">
                         {/* {console.log(detailCategoryId[index])} */}
                         {item.watch === true
