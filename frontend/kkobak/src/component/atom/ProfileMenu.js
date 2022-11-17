@@ -49,17 +49,17 @@ export default function ProfileMenu({ nickName, imgurl }) {
             aria-controls={open ? 'account-menu' : undefined}
             aria-haspopup="true"
             aria-expanded={open ? 'true' : undefined}
-            sx={{ display: "flex", justifyContent: "flex-end" }}>
-            <Text size="m" weight="semibold" mt="30" my="15">
+            sx={{ display: "flex", alignItems: "end"}}>
+            <Text size="17px" weight="bold" mt="30" my="15">
               {"안녕하세요\u00A0"}
             </Text>
             <Text size="m" weight="bold" mt="30" my="15" color="blue">
               {` ${nickName}`}
             </Text>
-            <Text size="m" weight="semibold" mt="30" my="15">
+            <Text size="17px" weight="bold" mt="30" my="15">
               님
             </Text>
-            <Box sx={{ mt: 3.75, ml: 1 }}>
+            <Box sx={{mb: "10px", ml: 1 }}>
               <ProfileImage type="small" num={Number(imgurl)}></ProfileImage>
             </Box>
           </Box>
