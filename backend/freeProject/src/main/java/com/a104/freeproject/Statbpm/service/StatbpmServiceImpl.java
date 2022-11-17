@@ -52,10 +52,10 @@ public class StatbpmServiceImpl implements StatbpmService{
         PrtChl p = prtChlRepository.findByChallengeAndMember(c,member);
 
         Statbpm statbpm = Statbpm.builder().prtChl(p)
-                .time(input.getTime().atZone(ZoneId.of("Asia/Seoul")).toLocalDateTime().plusHours(9))
+                .time(input.getTime().atZone(ZoneId.of("Asia/Seoul")).toLocalDateTime())
                 .bpm(input.getBpm())
                 .success(false)
-                .chk(input.getChk().atZone(ZoneId.of("Asia/Seoul")).toLocalDateTime().plusHours(9))
+                .chk(input.getChk().atZone(ZoneId.of("Asia/Seoul")).toLocalDateTime())
                 .build();
 
         statbpmRepository.save(statbpm);
