@@ -187,12 +187,12 @@ export default function ChallengeDetail() {
       }}
     >
       <Box sx={{ margin: "0 auto" }}>
-        <Box sx={{ display: "flex" }}>
+        <Box sx={{ display: "flex", alignItems: "end" }}>
           <Text size="m" weight="bold" mt="30" my="15" color="blue">
-            {user.nickName}
+            {title}
           </Text>
-          <Text size="m" weight="semibold" mt="30" my="15">
-            {"님의 챌린지 상세보기"}
+          <Text size="17px" weight="bold" mt="30" my="15">
+            {`\u00A0상세 화면`}
           </Text>
         </Box>
         <MainBox width="75" flexDir="row" justifyContent="center">
@@ -242,7 +242,7 @@ export default function ChallengeDetail() {
                 </SettingTitleBox>
                 <SettingContentBox>
                   <Text size="13px" color="grey">
-                    {startTime.substr(0, 10)} ~ {endTime.substr(0, 10)}
+                    {startTime.substr(0, 10).replace(/-/gi, '.')} ~ {endTime.substr(0, 10).replace(/-/gi, '.')}
                   </Text>
                 </SettingContentBox>
               </SettingItem>
@@ -391,9 +391,6 @@ export default function ChallengeDetail() {
           </CardBox>
 
           <CardBox>
-            <Text weight="semibold" size="18px" my="3">
-              {"통계 화면"}
-            </Text>
             <Statistics />
           </CardBox>
           <Button

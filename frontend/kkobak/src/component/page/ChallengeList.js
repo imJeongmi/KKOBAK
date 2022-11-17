@@ -8,7 +8,7 @@ import { requestUserInfo } from "api/userApi";
 
 export default function Challenge() {
   const [user, setUser] = useState([]);
-  
+
   function requestUserInfoSuccess(res) {
     setUser(res.data);
   }
@@ -24,12 +24,14 @@ export default function Challenge() {
   return (
     <Box sx={{ display: "flex", justifyContent: "space-between" }}>
       <Box sx={{ margin: "0 auto" }}>
-        <Box sx={{ display: "flex" }}>
+        <Box
+          sx={{ display: "flex", alignItems: "end", letterSpacing: "0.3px" }}
+        >
           <Text size="m" weight="bold" mt="30" my="15" color="blue">
-            {user.nickName}
+            {`${user.nickName}`}
           </Text>
-          <Text size="m" weight="semibold" mt="30" my="15">
-            {"님의 챌린지 리스트"}
+          <Text size="17px" weight="bold" mt="30" my="15">
+            {"님의 챌린지 🏳️"}
           </Text>
         </Box>
         <MyChallengeCardList />

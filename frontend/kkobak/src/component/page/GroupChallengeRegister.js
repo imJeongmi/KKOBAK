@@ -229,8 +229,8 @@ export default function GroupChallengeRegister() {
       }}
     >
       <Box sx={{ margin: "0 auto" }}>
-        <Text size="m" weight="semibold" mt="30" my="15">
-          다 같이 챌린지 만들기
+        <Text size="m" weight="bold" mt="30" my="15">
+          다 같이 챌린지 만들기 🏴
         </Text>
         <MainBox width="75" flexDir="col">
           <GroupChallengeForm
