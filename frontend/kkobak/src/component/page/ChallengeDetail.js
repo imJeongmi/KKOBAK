@@ -391,9 +391,6 @@ export default function ChallengeDetail() {
           </CardBox>
 
           <CardBox>
-            <Text weight="semibold" size="18px" my="3">
-              {"통계 화면"}
-            </Text>
             <Statistics />
           </CardBox>
           <Button

@@ -46,8 +46,8 @@ export default function LineChartPage({ findTime }) {
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column" }}>
-      <Text weight="semibold" size="15px" my="3">
-        {"심박수 정보"}
+      <Text weight="semibold" size="14px" my="3">
+        {"💗 심박수 정보"}
       </Text>
       <Box sx={{ flexDirecton: "row" }}>
         <Box
