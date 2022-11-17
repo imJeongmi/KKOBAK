@@ -76,7 +76,7 @@ export default function ChallengeCard({
           {title}
         </Text>
         <Text my="3" size="10px" color="grey">
-          {startTime.substr(0, 10)} - {endTime.substr(0, 10)}
+          {startTime.replace(/-/gi, '.')} ~ {endTime.replace(/-/gi, '.')}
         </Text>
       </TextBox>
     </CardBox>
@@ -91,7 +91,7 @@ export default function ChallengeCard({
           {title}
         </Text>
         <Text my="3" size="10px" color="grey">
-          {startTime.substr(0, 10)} - {endTime.substr(0, 10)}
+          {startTime.replace(/-/gi, '.')} ~ {endTime.replace(/-/gi, '.')}
         </Text>
       </TextBox>
     </CardBox>

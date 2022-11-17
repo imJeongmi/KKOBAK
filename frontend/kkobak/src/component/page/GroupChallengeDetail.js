@@ -242,7 +242,7 @@ export default function ChallengeDetail() {
                 </SettingTitleBox>
                 <SettingContentBox>
                   <Text size="13px" color="grey">
-                    {startTime.substr(0, 10)} ~ {endTime.substr(0, 10)}
+                    {startTime.substr(0, 10).replace(/-/gi, '.')} ~ {endTime.substr(0, 10).replace(/-/gi, '.')}
                   </Text>
                 </SettingContentBox>
               </SettingItem>
