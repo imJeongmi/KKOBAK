@@ -17,6 +17,22 @@ public class ChallengeAllDataRes {
     private String title;
     @SerializedName("endTime")
     private String endTime;
+
+    @Override
+    public String toString() {
+        return "ChallengeAllDataRes{" +
+                "imgUrl='" + imgUrl + '\'' +
+                ", done=" + done +
+                ", id=" + id +
+                ", detailCategoryId=" + detailCategoryId +
+                ", goal=" + goal +
+                ", title='" + title + '\'' +
+                ", endTime='" + endTime + '\'' +
+                ", contents='" + contents + '\'' +
+                ", watch=" + watch +
+                '}';
+    }
+
     @SerializedName("contents")
     private String contents;
     @SerializedName("watch")

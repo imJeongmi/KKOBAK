@@ -1,5 +1,7 @@
 package com.example.kkobak.ui.dashboard;
 
+import android.widget.Toast;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -24,6 +26,7 @@ public class ChallengeViewPagerAdapter extends ExpandingViewPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
+        System.out.println(">>> pos: "+ position);
         ChallengeInfo travel = travels.get(position);
         return ChallengeExpandingFragment.newInstance(travel);
     }

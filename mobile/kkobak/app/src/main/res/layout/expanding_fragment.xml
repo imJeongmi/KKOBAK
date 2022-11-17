@@ -9,8 +9,8 @@
         android:id="@+id/back"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
-        android:background="@android:color/holo_purple">
+        android:layout_alignParentBottom="true" >
+<!--        android:background="@color/brand">-->
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -20,7 +20,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_above="@+id/bottomLayout"
-                android:background="@android:color/holo_purple"/>
+                android:background="@android:color/holo_purple" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/bottomLayout"
@@ -28,12 +28,13 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:background="@android:color/holo_blue_bright"
-                android:orientation="vertical"/>
+                android:orientation="vertical" />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/front"
+        android:background="@color/colorPrimaryDark"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerInParent="true"

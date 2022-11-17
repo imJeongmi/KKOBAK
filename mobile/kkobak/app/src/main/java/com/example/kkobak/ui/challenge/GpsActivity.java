@@ -28,8 +28,10 @@ import androidx.core.app.ActivityCompat;
 
 import com.bumptech.glide.Glide;
 import com.example.kkobak.R;
+import com.example.kkobak.data.retrofit.api.ChallengeChkApi;
 import com.example.kkobak.data.retrofit.api.GpsDataApi;
 import com.example.kkobak.data.retrofit.model.GpsDataReq;
+import com.example.kkobak.data.retrofit.model.JudgeReq;
 import com.example.kkobak.data.room.dao.AccessTokenDao;
 import com.example.kkobak.data.room.database.AccessTokenDatabase;
 import com.example.kkobak.data.room.entity.AccessToken;
@@ -305,20 +307,44 @@ public class GpsActivity extends AppCompatActivity implements LocationListener {
         else {
             timer.cancel();
 
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle(name + " 결과");
-            builder.setMessage("[ " + (remind > 0 ? "실패" : "성공") + " ]\n" +
-                    "남은거리: " + remind + " km\n" + "소요시간: " +
-                    (_hour <= 9 ? "0" + _hour : "" + _hour) + ":" +
-                    (_minute <= 9 ? "0" + _minute : "" + _minute) + ":" +
-                    (_second <= 9 ? "0" + _second : "" + _second));
-            builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    finish();
-                }
-            });
-            builder.create().show();
+            if (mLastLocation != null) {
+                JudgeReq judgeReq = new JudgeReq(Long.parseLong(chlId), String.valueOf(mLastLocation.getLatitude()), String.valueOf(mLastLocation.getLongitude()), null);
+                Call<Boolean> call = ChallengeChkApi.getService().judgeChallenge(accessToken, judgeReq);
+                call.enqueue(new Callback<Boolean>() {
+                    @Override
+                    public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                        Toast.makeText(GpsActivity.this, "code: " + response.code() + "\nresult: " + response.body(), Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onFailure(Call<Boolean> call, Throwable t) {
+
+                    }
+                });
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle(name + " 결과");
+                builder.setMessage("[ " + (remind > 0 ? "실패" : "성공") + " ]\n" +
+                        "남은거리: " + String.format("%.2f", remind) + " km\n" + "소요시간: " +
+                        (_hour <= 9 ? "0" + _hour : "" + _hour) + ":" +
+                        (_minute <= 9 ? "0" + _minute : "" + _minute) + ":" +
+                        (_second <= 9 ? "0" + _second : "" + _second));
+                builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        finish();
+                    }
+                });
+                builder.create().show();
+            }
+            else {
+                flag = false;
+                _hour = _minute = _second = 0;
+                hour.setText("00");
+                minute.setText("00");
+                second.setText("00");
+                btn.setText("시작");
+            }
         }
     }
 

@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.transition.Explode;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -47,7 +48,6 @@ public class BaseActivity extends AppCompatActivity implements ExpandingFragment
     ViewPager viewPager;
     ViewGroup back;
 
-    List<MyChallengeRes> challengeList;
     List<ChallengeAllDataRes> allData;
 
     final int RUNNING = 1;
@@ -82,22 +82,54 @@ public class BaseActivity extends AppCompatActivity implements ExpandingFragment
             public void onResponse(Call<List<ChallengeAllDataRes>> call, Response<List<ChallengeAllDataRes>> response) {
                 allData = response.body();
                 Toast.makeText(BaseActivity.this, "호출 성공: " + allData.size() , Toast.LENGTH_SHORT).show();
+
+                for (int i = 0; i < allData.size(); i++){
+                    System.out.println(">>>1 " + (i + 1) + " : " + allData.get(i));
+                }
+
                 ChallengeViewPagerAdapter adapter = new ChallengeViewPagerAdapter(getSupportFragmentManager());
                 adapter.addAll(generateTravelList());
 
-                ViewGroup.LayoutParams layoutParams = viewPager.getLayoutParams();
-                layoutParams.width = ((Activity) viewPager.getContext()).getWindowManager().getDefaultDisplay().getWidth() / 7 * 5;
-                layoutParams.height = (int) ((layoutParams.width / 0.75));
-                viewPager.setOffscreenPageLimit(2);
-                if (viewPager.getParent() instanceof ViewGroup) {
-                    ViewGroup viewParent = ((ViewGroup) viewPager.getParent());
-                    viewParent.setClipChildren(false);
-                    viewPager.setClipChildren(false);
-                }
-                viewPager.setPageTransformer(true, new ExpandingViewPagerTransformer());
+                Toast.makeText(BaseActivity.this, "size: " + adapter.getCount(), Toast.LENGTH_SHORT).show();
+
+//                ViewGroup.LayoutParams layoutParams = viewPager.getLayoutParams();
+//                layoutParams.width = ((Activity) viewPager.getContext()).getWindowManager().getDefaultDisplay().getWidth() / 7 * 5;
+//                layoutParams.height = (int) ((layoutParams.width / 0.75));
+//                viewPager.setOffscreenPageLimit(2);
+//                viewPager.setCurrentItem(4);
+//                if (viewPager.getParent() instanceof ViewGroup) {
+//                    ViewGroup viewParent = ((ViewGroup) viewPager.getParent());
+//                    viewParent.setClipChildren(false);
+//                    viewPager.setClipChildren(false);
+//                }
+//                viewPager.setPageTransformer(true, new ExpandingViewPagerTransformer());
 
 //                viewPager.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.viewpager_margin));
                 viewPager.setAdapter(adapter);
+
+                ExpandingPagerFactory.setupViewPager(viewPager);
+                viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                    @Override
+                    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                        Toast.makeText(BaseActivity.this, "변경 감지감지감지: " + position, Toast.LENGTH_SHORT).show();
+                        ExpandingFragment expandingFragment = ExpandingPagerFactory.getCurrentFragment(viewPager);
+                        if(expandingFragment != null && expandingFragment.isOpenend()){
+                            expandingFragment.close();
+                        }
+                    }
+
+                    @Override
+                    public void onPageSelected(int position) {
+//                        Toast.makeText(BaseActivity.this, "onPageSelected", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(BaseActivity.this, "?: " + adapter.getItem(position).toString(), Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onPageScrollStateChanged(int state) {
+//                        Toast.makeText(BaseActivity.this, "onPageScrollStateChanged", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
             }
 
             @Override
@@ -267,28 +299,46 @@ public class BaseActivity extends AppCompatActivity implements ExpandingFragment
 
         //여기 손봐야함
         //추가 데이터들 넣어야하기 때문
+        int cnt = 0;
+        String unit = "123,123";
 
         switch (travel.getDetailCategoryId()) {
             case RUNNING:
                 intent = new Intent(this, GpsActivity.class);
+                intent.putExtra("title", "달리기");
+                intent.putExtra("goal", travel.getGoal());
                 break;
             case WALKING:
                 intent = new Intent(this, GpsActivity.class);
+                intent.putExtra("title", "걷기");
+                intent.putExtra("goal", travel.getGoal());
                 break;
             case MEDITATION:
                 intent = new Intent(this, MeditationActivity.class);
+                intent.putExtra("goal", travel.getGoal());
                 break;
             case DRINK_WATER:
                 intent = new Intent(this, WaterActivity.class);
+                intent.putExtra("cnt", cnt);
+                intent.putExtra("goal", travel.getGoal());
                 break;
             case EAT_NUTRIENTS:
                 intent = new Intent(this, PillActivity.class);
+                intent.putExtra("cnt", cnt);
+                intent.putExtra("goal", travel.getGoal());
                 break;
             case STAND_UP:
                 intent = new Intent(this, StandupActivity.class);
+                intent.putExtra("cnt", cnt);
+                intent.putExtra("goal", travel.getGoal());
                 break;
             case ATTEND:
                 intent = new Intent(this, AttendActivity.class);
+                String[] location = unit.split(",");
+                if (location.length == 2) {
+                    intent.putExtra("lon", location[0]);
+                    intent.putExtra("lat", location[1]);
+                }
                 break;
             default:
                 intent = new Intent(this, MainActivity.class);
@@ -298,6 +348,7 @@ public class BaseActivity extends AppCompatActivity implements ExpandingFragment
 //        Toast.makeText(this,"설마 널이냐?" + travel.getDetailCategoryId(), Toast.LENGTH_SHORT);
 //        Log.d("널이냐", "" + travel.getDetailCategoryId());
 //        Intent it = new Intent(this, SpeedActivity.class);
+        intent.putExtra("chlId", String.valueOf(travel.getId()));
         startActivity(intent);
 
 //        Activity activity = this;

@@ -25,8 +25,8 @@ public class ExpandingViewPagerTransformer implements ViewPager.PageTransformer 
         float scaleValue = MIN_SCALE + tempScale * slope;
         page.setScaleX(scaleValue);
         page.setScaleY(scaleValue);
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+//        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
             page.getParent().requestLayout();
-        }
+//        }
     }
 }

@@ -32,7 +32,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.kkobak.R;
 import com.example.kkobak.data.retrofit.api.BpmDataApi;
+import com.example.kkobak.data.retrofit.api.ChallengeChkApi;
 import com.example.kkobak.data.retrofit.model.BpmDataReq;
+import com.example.kkobak.data.retrofit.model.JudgeReq;
 import com.example.kkobak.data.room.dao.AccessTokenDao;
 import com.example.kkobak.data.room.database.AccessTokenDatabase;
 import com.example.kkobak.data.room.entity.AccessToken;
@@ -187,8 +189,8 @@ public class MeditationActivity extends AppCompatActivity implements SensorEvent
             printValue = (int) (value / 100);
             heartRateTv.setText("" + printValue);
 
-            if (printValue != 0)    controlFlow = true;
-            else                    controlFlow = false;
+//            if (printValue != 0)    controlFlow = true;
+//            else                    controlFlow = false;
 
             if (printValue != 0){
                 maxBpm = Math.max(maxBpm, printValue);
@@ -244,6 +246,19 @@ public class MeditationActivity extends AppCompatActivity implements SensorEvent
             Ringtone ringtone = RingtoneManager.getRingtone(getApplicationContext(), notification);
             ringtone.play();
 
+            Call<Boolean> call = ChallengeChkApi.getService().judgeChallenge(accessToken, new JudgeReq(Long.parseLong(chlId),"","",null));
+            call.enqueue(new Callback<Boolean>() {
+                @Override
+                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                    Toast.makeText(MeditationActivity.this, "code: " + response.code() + "\nresult: " + response.body(), Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onFailure(Call<Boolean> call, Throwable t) {
+
+                }
+            });
+
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("명상 결과");
             builder.setMessage("최고 심박수: " + maxBpm + "\n최저 심박수:" + minBpm + "\n [ " + (maxBpm >= BPM_LIMIT ? "실패" : "성공") + " ]");
@@ -262,6 +277,7 @@ public class MeditationActivity extends AppCompatActivity implements SensorEvent
 
         _minute = 0;
         _second = 3;
+        controlFlow = true;//삭제해야함
 
         if (btnState) {
             if (_minute <= 9)   timerMinute.setText("0" + _minute);

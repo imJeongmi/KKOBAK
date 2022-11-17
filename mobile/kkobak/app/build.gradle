@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.kkobak"
-        minSdk 25
+        minSdk 23
         targetSdk 32
         versionCode 1
         versionName "1.0"
@@ -94,4 +94,5 @@ dependencies {
 
 //    implementation 'androidx.recyclerview:recyclerview:1.0.0'
 //    implementation 'androidx.cardview:cardview:1.0.0'
+    //noinspection GradleCompatible
 }
