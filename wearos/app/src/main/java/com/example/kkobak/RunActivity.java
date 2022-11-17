@@ -93,7 +93,7 @@ public class RunActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_run);
         // 뷰 컴포넌트 연결
-        titleView = findViewById(R.id.txt_run);
+        titleView = findViewById(R.id.title_run);
         hourView = findViewById(R.id.run_hour);
         minuteView = findViewById(R.id.run_minute);
         secondView = findViewById(R.id.run_second);
@@ -108,7 +108,8 @@ public class RunActivity extends Activity {
         //챌린지 아이디 가져오기
         intent = getIntent();
         chlId = intent.getLongExtra("chlId",-1);
-
+//        String title = intent.getStringExtra("title");
+//        titleView.setText(title);
 
         // 장소, 심박수 권한 확인
         checkPermission();
@@ -153,7 +154,7 @@ public class RunActivity extends Activity {
         locationManager = (LocationManager) this.getSystemService(LOCATION_SERVICE);
         System.out.println("위치 매니저 설정 완료");
 
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,2000,20,locationListener);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,locationListener);
         System.out.println("위치 연결");
 
         // 심박수 설정

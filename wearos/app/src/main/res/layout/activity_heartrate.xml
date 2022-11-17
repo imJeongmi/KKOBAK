@@ -7,7 +7,8 @@
     android:background="#FFFFFF"
     android:orientation="vertical"
     android:gravity="center"
-    tools:context=".HeartrateActivity">
+    tools:context=".HeartrateActivity"
+    android:keepScreenOn="true">
 
     <TextView
         android:id="@+id/txt_heartrate"

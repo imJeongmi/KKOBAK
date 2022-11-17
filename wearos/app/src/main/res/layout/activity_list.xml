@@ -9,7 +9,8 @@
     android:paddingTop="10dp"
     android:paddingBottom="20dp"
     android:orientation="vertical"
-    tools:context=".ListActivity">
+    tools:context=".ListActivity"
+    android:keepScreenOn="true">
 
     <TextView
         android:layout_width="match_parent"

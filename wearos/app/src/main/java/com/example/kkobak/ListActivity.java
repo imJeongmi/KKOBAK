@@ -209,7 +209,7 @@ public class ListActivity extends Activity {
                                     intent = new Intent(ListActivity.this, CountActivity.class);
                                 }
                                 else { // dc==7, 출석
-                                    intent = new Intent(ListActivity.this, GpsActivity.class);
+                                    intent = new Intent(ListActivity.this, AttendanceActivity.class);
                                 }
                             }
                             else { // todo-list

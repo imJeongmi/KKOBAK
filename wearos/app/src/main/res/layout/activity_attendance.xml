@@ -7,7 +7,8 @@
     android:background="#FFFFFF"
     android:orientation="vertical"
     android:gravity="center"
-    tools:context=".AttendanceActivity">
+    tools:context=".AttendanceActivity"
+    android:keepScreenOn="true">
 
     <TextView
         android:id="@+id/title_attendance"

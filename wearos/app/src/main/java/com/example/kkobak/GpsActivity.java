@@ -61,6 +61,7 @@ public class GpsActivity extends Activity {
     // 리스트에서 넘어온 데이터
     Intent intent;
     private Long chlId;
+    private int goal;
 
     // 토큰
     private String accessToken;
@@ -104,15 +105,15 @@ public class GpsActivity extends Activity {
 //        textView.setMovementMethod(new ScrollingMovementMethod());
 
         // 토큰 세팅
-        AppDatabase database = AppDatabase.getInstance(getApplicationContext());
-        tokenDao = database.tokenDao();
-        todoDao = database.todoDao();
-        List<AccessToken> tokenList = tokenDao.getTokenAll();
-        accessToken = tokenList.get(0).getAccessToken();
+
+        accessToken =((KkobakApp)getApplication()).getAccessToken();
 
         //챌린지 아이디 세팅
         intent = getIntent();
         chlId = intent.getLongExtra("chlId",1);
+        goal = intent.getIntExtra("goal",0)*1000;
+
+        System.out.println(goal);
 
         // 권한 확인
         checkPermission();

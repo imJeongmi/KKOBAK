@@ -48,8 +48,6 @@ public class HeartrateActivity extends Activity implements SensorEventListener {
     private LocalDateTime chk;
     // 토큰
     private String accessToken;
-    private AccessTokenDao tokenDao;
-    private TodoDao todoDao;
 
     private static final String TAG = "____Main___";
 
@@ -68,12 +66,8 @@ public class HeartrateActivity extends Activity implements SensorEventListener {
 
         textView = findViewById(R.id.txt_heartrate);
 
-        // Room 관련 코드(토큰 세팅)
-        AppDatabase database = AppDatabase.getInstance(getApplicationContext());
-        tokenDao = database.tokenDao();
-        todoDao = database.todoDao();
-        List<AccessToken> tokenList = tokenDao.getTokenAll();
-        accessToken = tokenList.get(0).getAccessToken();
+        //(토큰 세팅)
+        accessToken = ((KkobakApp)getApplication()).getAccessToken();
 
         checkPermission();
 

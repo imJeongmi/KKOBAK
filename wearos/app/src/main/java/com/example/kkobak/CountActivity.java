@@ -50,10 +50,12 @@ public class CountActivity extends Activity {
         intent = getIntent();
         chlId = intent.getLongExtra("chlId",0);
         max = intent.getIntExtra("goal",-1);
+        System.out.println(max);
         count = intent.getIntExtra("cnt",0);
         boolean done = intent.getBooleanExtra("done", true);
         title.setText(intent.getStringExtra("title"));
-        counter.setText(count);
+        maxView.setText(max+"");
+        counter.setText(count+"");
 
         // 버튼 연결 설정
         btn_count_up.setOnClickListener(new View.OnClickListener() {
@@ -61,7 +63,7 @@ public class CountActivity extends Activity {
             public void onClick(View view) {
                 sendChlCheck(chlId,1);// 값 올리기
                 count++;
-                counter.setText(count);
+                counter.setText(count+"");
                 if(max==count){
                     status.setText("성공!");
                     btn_count_up.setClickable(false);
@@ -75,7 +77,8 @@ public class CountActivity extends Activity {
             public void onClick(View view) {
                 sendChlCheck(chlId,2);// 값 내리기
                 count--;
-                counter.setText(count);
+                counter.setText(count+"");
+                status.setText("미완료");
                 if(count==0){
                     btn_count_down.setClickable(false);
                 }
