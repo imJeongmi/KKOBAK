@@ -350,124 +350,6 @@ export default function ChallengeForm({
               <Box
                 sx={{ height: "50px", display: "flex", alignItems: "center" }}
               >
-                <FormControl>
-                  <RadioGroup
-                    row
-                    aria-labelledby="demo-row-controlled-radio-buttons-group"
-                    name="controlled-radio-buttons-group"
-                    onChange={(e) => setWatch(e.target.value)}
-                  >
-                    <FormControlLabel
-                      value={true}
-                      control={
-                        <Radio
-                          size="small"
-                          sx={{
-                            color: "default",
-                            "&.Mui-checked": {
-                              color: "#99b9d6",
-                            },
-                          }}
-                        />
-                      }
-                      label={<Text size="14px">사용</Text>}
-                    />
-                    <FormControlLabel
-                      value={false}
-                      control={
-                        <Radio
-                          size="small"
-                          sx={{
-                            color: "default",
-                            "&.Mui-checked": {
-                              color: "#99b9d6",
-                            },
-                          }}
-                        />
-                      }
-                      label={<Text size="14px">사용 안함</Text>}
-                    />
-                  </RadioGroup>
-                </FormControl>
-              </Box>
-            </SettingContentBox>
-          </SettingItem>
-
-          <SettingItem>
-            <SettingTitleBox>
-              <Text size="15px" weight="bold">
-                {"🔔\u00A0 알림"}
-              </Text>
-            </SettingTitleBox>
-            <SettingContentBox>
-              <Box sx={{ width: "150px", height: "40px" }}>
-                <TimePicker format="HH:mm" onChange={setAlarm} value={alarm} />
-              </Box>
-            </SettingContentBox>
-          </SettingItem>
-
-          <SettingItem>
-            <SettingTitleBox>
-              <Text size="15px" weight="bold">
-                {"✔️\u00A0 꼬박챌린지 설정"}
-              </Text>
-            </SettingTitleBox>
-            <SettingContentBox>
-              <Box
-                sx={{ height: "50px", display: "flex", alignItems: "center" }}
-              >
-                <FormControl>
-                  <RadioGroup
-                    row
-                    aria-labelledby="demo-row-controlled-radio-buttons-group"
-                    name="controlled-radio-buttons-group"
-                    onChange={(e) => setKkobak(e.target.value)}
-                  >
-                    <FormControlLabel
-                      value={1}
-                      control={
-                        <Radio
-                          size="small"
-                          sx={{
-                            color: "default",
-                            "&.Mui-checked": {
-                              color: "#99b9d6",
-                            },
-                          }}
-                        />
-                      }
-                      label={<Text size="14px">설정</Text>}
-                    />
-                    <FormControlLabel
-                      value={0}
-                      control={
-                        <Radio
-                          size="small"
-                          sx={{
-                            color: "default",
-                            "&.Mui-checked": {
-                              color: "#99b9d6",
-                            },
-                          }}
-                        />
-                      }
-                      label={<Text size="14px">설정 안함</Text>}
-                    />
-                  </RadioGroup>
-                </FormControl>
-              </Box>
-            </SettingContentBox>
-          </SettingItem>
-          <SettingItem>
-            <SettingTitleBox>
-              <Text size="15px" weight="bold">
-                {"📅\u00A0 기간"}
-              </Text>
-            </SettingTitleBox>
-            <SettingContentBox>
-              <Box
-                sx={{ height: "50px", display: "flex", alignItems: "center" }}
-              >
                 {watch === true && watchValue === true ? (
                   <FormControl>
                     <RadioGroup
@@ -550,6 +432,110 @@ export default function ChallengeForm({
                     </RadioGroup>
                   </FormControl>
                 )}
+              </Box>
+            </SettingContentBox>
+          </SettingItem>
+
+          <SettingItem>
+            <SettingTitleBox>
+              <Text size="15px" weight="bold">
+                {"🔔\u00A0 알림"}
+              </Text>
+            </SettingTitleBox>
+            <SettingContentBox>
+              <Box sx={{ width: "150px", height: "40px" }}>
+                <TimePicker format="HH:mm" onChange={setAlarm} value={alarm} />
+              </Box>
+            </SettingContentBox>
+          </SettingItem>
+
+          <SettingItem>
+            <SettingTitleBox>
+              <Text size="15px" weight="bold">
+                {"✔️\u00A0 꼬박챌린지 설정"}
+              </Text>
+            </SettingTitleBox>
+            <SettingContentBox>
+              <Box
+                sx={{ height: "50px", display: "flex", alignItems: "center" }}
+              >
+                <FormControl>
+                  <RadioGroup
+                    row
+                    aria-labelledby="demo-row-controlled-radio-buttons-group"
+                    name="controlled-radio-buttons-group"
+                    onChange={(e) => setKkobak(e.target.value)}
+                  >
+                    <FormControlLabel
+                      value={1}
+                      control={
+                        <Radio
+                          size="small"
+                          sx={{
+                            color: "default",
+                            "&.Mui-checked": {
+                              color: "#99b9d6",
+                            },
+                          }}
+                        />
+                      }
+                      label={<Text size="14px">설정</Text>}
+                    />
+                    <FormControlLabel
+                      value={0}
+                      control={
+                        <Radio
+                          size="small"
+                          sx={{
+                            color: "default",
+                            "&.Mui-checked": {
+                              color: "#99b9d6",
+                            },
+                          }}
+                        />
+                      }
+                      label={<Text size="14px">설정 안함</Text>}
+                    />
+                  </RadioGroup>
+                </FormControl>
+              </Box>
+            </SettingContentBox>
+          </SettingItem>
+          <SettingItem>
+            <SettingTitleBox>
+              <Text size="15px" weight="bold">
+                {"📅\u00A0 기간"}
+              </Text>
+            </SettingTitleBox>
+            <SettingContentBox
+              sx={{
+                width: "350px",
+                paddingRight: "10px",
+                justifyContent: "space-between",
+              }}
+            >
+              <Box sx={{ width: "150px", height: "40px" }}>
+                <DatePicker
+                  calendarAriaLabel="calendar"
+                  locale="ko-KR"
+                  onChange={setStartTime}
+                  value={startTime}
+                  minDate={new Date()}
+                  calendarType="US"
+                />
+              </Box>
+              <Text size="14px" weight="semibold" color="black">
+                ~
+              </Text>
+              <Box sx={{ width: "150px", height: "40px" }}>
+                <DatePicker
+                  calendarAriaLabel="calendar"
+                  locale="ko-KR"
+                  onChange={setEndTime}
+                  value={endTime}
+                  minDate={new Date()}
+                  calendarType="US"
+                />
               </Box>
             </SettingContentBox>
           </SettingItem>
