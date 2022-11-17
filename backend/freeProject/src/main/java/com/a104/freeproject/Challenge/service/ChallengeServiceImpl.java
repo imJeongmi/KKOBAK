@@ -933,6 +933,8 @@ public class ChallengeServiceImpl implements ChallengeService {
                     .contents(c.getContents())
                     .done(log.isFin())
                     .watch(c.isWatch())
+                    .unit(c.getUnit())
+                    .nowCnt(log.getCnt())
                     .build());
         }
 

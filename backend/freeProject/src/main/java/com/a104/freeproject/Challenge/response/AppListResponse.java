@@ -22,5 +22,7 @@ public class AppListResponse {
     private LocalDate endTime;
     private String contents;
     private boolean watch;
+    private String unit;
+    private int nowCnt;
 
 }
