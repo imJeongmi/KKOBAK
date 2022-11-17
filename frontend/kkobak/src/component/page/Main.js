@@ -125,9 +125,9 @@ export default function Main() {
           <Box sx={{ display: "flex", flexDirection: "column" }}>
             {MyChallengeList.slice(page - 1, page).map((item, index) => {
               const startTimeCheck = moment(item.startTime).format(
-                "YYYY/MM/DD"
+                "YYYY.MM.DD"
               );
-              const endTimeCheck = moment(item.endTime).format("YYYY/MM/DD");
+              const endTimeCheck = moment(item.endTime).format("YYYY.MM.DD");
               return (
                 <Box>
                   <Box
@@ -149,7 +149,7 @@ export default function Main() {
                         hideNextButton
                       />
                     </Stack>
-                    <Box sx={{ width: "200px" }}>
+                    <Box sx={{ width: "350px" }}>
                       <Text size="20px" weight="bold" my="25">
                         {/* {console.log(detailCategoryId[index])} */}
                         {item.watch === true
@@ -165,7 +165,7 @@ export default function Main() {
                         justifyContent: "end",
                       }}
                     >
-                      <Text size="14px">{`${startTimeCheck}-${endTimeCheck}`}</Text>
+                      <Text size="14px">{`${startTimeCheck} ~ ${endTimeCheck}`}</Text>
                     </Box>
                   </Box>
                   <Box>

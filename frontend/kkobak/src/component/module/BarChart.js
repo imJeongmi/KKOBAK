@@ -41,8 +41,8 @@ export default function BarChartPage({ findTime }) {
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column" }}>
-      <Text weight="semibold" size="15px" my="3">
-        {"전체 통계 조회"}
+      <Text weight="semibold" size="14px" my="3">
+        {"📊 전체 통계 조회"}
       </Text>
 
       <Box sx={{ fontFamily: "SUIT-Medium", fontSize: "12px" }}>
