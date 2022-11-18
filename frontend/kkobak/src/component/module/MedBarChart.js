@@ -1,22 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+
 import Box from "@mui/material/Box";
+import { BarChart, XAxis, YAxis, Bar } from "recharts";
+
 import { requestTotalMedStat } from "api/Challenge";
 
-import {
-  BarChart,
-  XAxis,
-  YAxis,
-  Cell,
-  Bar,
-  Tooltip,
-  Legend,
-  CartesianGrid,
-} from "recharts";
-import moment from "moment";
-import { useParams } from "react-router-dom";
-import Text from "component/atom/Text";
-
-export default function BarChartPage({ findTime }) {
+export default function BarChartPage() {
   const cid = Number(useParams().chlId);
 
   const [stat, setStat] = useState([]);
@@ -38,18 +28,20 @@ export default function BarChartPage({ findTime }) {
   }, [cid]);
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column" }}>
-      <Text weight="semibold" size="15px" my="3">
-        {"전체 통계 조회"}
-      </Text>
-
-      <Box sx={{ fontFamily: "SUIT-Medium", fontSize: "12px" }}>
-        <BarChart width={400} height={100} data={stat}>
-          <XAxis dataKey="day" />
-          <YAxis />
-          <Bar type="monotone" dataKey="timelen" stroke="black" />
-        </BarChart>
-      </Box>
+    <Box
+      sx={{
+        marginTop: "10px",
+        display: "flex",
+        alignItems: "center",
+        fontFamily: "SUIT",
+        fontSize: "11px",
+      }}
+    >
+      <BarChart width={410} height={100} data={stat}>
+        <XAxis dataKey="day" />
+        <YAxis />
+        <Bar type="monotone" dataKey="dist" fill="#F0F6FB" stroke="#578AAF" />
+      </BarChart>
     </Box>
   );
 }
