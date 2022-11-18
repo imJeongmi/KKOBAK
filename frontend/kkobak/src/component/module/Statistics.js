@@ -28,15 +28,6 @@ const StatisticsBox = styled(Box)(
   `
 );
 
-const CheckCalendarBox = styled(Box)(
-  () => `
-    width: 10px;
-    height: 20px;
-    z-index: 100;
-    margin-left: 50px;
-  `
-);
-
 const CardBox = styled(Box)(
   ({ height, margin }) => `
     width: 100%;
@@ -82,8 +73,15 @@ export default function Statistics() {
   // 3은 명상입니다. 7은 출석체크 입니다. 4, 5, 6은 생활습관 입니다.
 
   return (
-    <Box>
-      <Box sx={{ position: "absolute" }}>
+    <Box sx={{ position: "relative" }}>
+      <Box
+        sx={{
+          position: "absolute",
+          top: "10px",
+          right: "-30px",
+          zIndex: "100",
+        }}
+      >
         <DatePicker
           calendarAriaLabel="calendar"
           locale="ko-KR"
@@ -92,9 +90,10 @@ export default function Statistics() {
           calendarType="US"
         />
       </Box>
+
       {detailCategoryId === 1 || detailCategoryId === 2 ? (
         <Box>
-          <Text weight="semibold" size="14px" my="3">
+          <Text weight="semibold" size="14px" mt="60" my="3">
             {"📍 GPS 정보"}
           </Text>
           <Box sx={{ width: "350px", display: "flex", alignItems: "center" }}>
@@ -145,7 +144,6 @@ export default function Statistics() {
       ) : (
         <StatisticsBox>
           <CardBox height="50px"></CardBox>
-
           <CardBox height="250px">
             <HabitBarChart findTime={findTime} setFindTime={setFindTime} />
           </CardBox>
