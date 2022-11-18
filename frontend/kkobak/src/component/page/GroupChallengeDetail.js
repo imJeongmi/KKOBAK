@@ -159,7 +159,7 @@ export default function ChallengeDetail() {
     setUnit(data.unit);
   }
 
-  function getChallengeDetailFail(res) { }
+  function getChallengeDetailFail(res) {}
 
   useEffect(() => {
     requestUserInfo(requestUserInfoSuccess, requestUserInfoFail);
@@ -189,7 +189,7 @@ export default function ChallengeDetail() {
       <Box sx={{ margin: "0 auto" }}>
         <Box sx={{ display: "flex", alignItems: "end" }}>
           <Text size="m" weight="bold" mt="30" my="15" color="blue">
-              {title}
+            {title}
           </Text>
           <Text size="17px" weight="bold" mt="30" my="15">
             {`\u00A0단체 현황`}
@@ -203,9 +203,11 @@ export default function ChallengeDetail() {
             <Text size="18px" weight="semibold">
               {title}
             </Text>
-            <Text size="12px" color="grey" mt="8">
-              {contents}
-            </Text>
+            <Box sx={{ width: "300px" }}>
+              <Text size="12px" color="grey" mt="10">
+                {contents}
+              </Text>
+            </Box>
 
             <SettingBox>
               <SettingItem>
@@ -242,7 +244,8 @@ export default function ChallengeDetail() {
                 </SettingTitleBox>
                 <SettingContentBox>
                   <Text size="13px" color="grey">
-                    {startTime.substr(0, 10).replace(/-/gi, '.')} ~ {endTime.substr(0, 10).replace(/-/gi, '.')}
+                    {startTime.substr(0, 10).replace(/-/gi, ".")} ~{" "}
+                    {endTime.substr(0, 10).replace(/-/gi, ".")}
                   </Text>
                 </SettingContentBox>
               </SettingItem>
@@ -345,8 +348,11 @@ export default function ChallengeDetail() {
               flexDirection: "column",
             }}
           >
-            {checkDetailCategory(detailCategoryId) ? <WidgetGroupStat /> : <GroupStatistics />}
-
+            {checkDetailCategory(detailCategoryId) ? (
+              <WidgetGroupStat />
+            ) : (
+              <GroupStatistics />
+            )}
           </Box>
           <Button
             onClick={backPage}

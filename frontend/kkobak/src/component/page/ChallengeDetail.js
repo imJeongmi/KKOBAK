@@ -203,9 +203,11 @@ export default function ChallengeDetail() {
             <Text size="18px" weight="semibold">
               {title}
             </Text>
-            <Text size="12px" color="grey" mt="8">
-              {contents}
-            </Text>
+            <Box sx={{ width: "300px" }}>
+              <Text size="12px" color="grey" mt="10">
+                {contents}
+              </Text>
+            </Box>
 
             <SettingBox>
               <SettingItem>
@@ -242,7 +244,8 @@ export default function ChallengeDetail() {
                 </SettingTitleBox>
                 <SettingContentBox>
                   <Text size="13px" color="grey">
-                    {startTime.substr(0, 10).replace(/-/gi, '.')} ~ {endTime.substr(0, 10).replace(/-/gi, '.')}
+                    {startTime.substr(0, 10).replace(/-/gi, ".")} ~{" "}
+                    {endTime.substr(0, 10).replace(/-/gi, ".")}
                   </Text>
                 </SettingContentBox>
               </SettingItem>
@@ -267,9 +270,15 @@ export default function ChallengeDetail() {
                   </Text>
                 </SettingTitleBox>
                 <SettingContentBox>
-                  <Text size="13px" color="grey">
-                    {`${goal} ${unit}`}
-                  </Text>
+                  {detailCategoryId === 1 || detailCategoryId === 2 ? (
+                    <Text size="13px" color="grey">
+                      {`${0.001 * goal} km`}
+                    </Text>
+                  ) : (
+                    <Text size="13px" color="grey">
+                      {`${goal} ${unit}`}
+                    </Text>
+                  )}
                 </SettingContentBox>
               </SettingItem>
 
