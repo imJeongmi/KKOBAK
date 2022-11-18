@@ -197,7 +197,7 @@ public class HeartrateActivity extends Activity implements SensorEventListener {
     public void sendJudge(){
         JudgeRequest judgeRequest = new JudgeRequest( chlId, chk.toString(), "","");
         //Retrofit 호출
-        Call call = RetrofitClient.getApiService().reqJudge(judgeRequest, accessToken);
+        Call<Void> call = RetrofitClient.getApiService().reqJudge(judgeRequest, accessToken);
         call.enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) {

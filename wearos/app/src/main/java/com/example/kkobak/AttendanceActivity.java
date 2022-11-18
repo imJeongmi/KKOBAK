@@ -149,7 +149,7 @@ public class AttendanceActivity extends Activity {
     public void sendJudge(String lat, String lng){
         JudgeRequest judgeRequest = new JudgeRequest( chlId, "", lat, lng );
         //Retrofit 호출
-        Call call = RetrofitClient.getApiService().reqJudge(judgeRequest, accessToken);
+        Call<Void> call = RetrofitClient.getApiService().reqJudge(judgeRequest, accessToken);
         call.enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) {
