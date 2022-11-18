@@ -121,10 +121,10 @@ export default function ChallengeRegister() {
 
   function changeUnit(category, detailCategory) {
     if (detailCategory === "1") {
-      setUnit("km");
+      setUnit("m");
       setWatch(true);
     } else if (detailCategory === "2") {
-      setUnit("km");
+      setUnit("m");
       setWatch(true);
     } else if (detailCategory === "3") {
       setUnit("분");
