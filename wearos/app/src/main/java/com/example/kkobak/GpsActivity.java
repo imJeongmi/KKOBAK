@@ -23,6 +23,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.example.kkobak.repository.request.GPSRequest;
+import com.example.kkobak.repository.request.JudgeRequest;
 import com.example.kkobak.repository.util.RetrofitClient;
 import com.example.kkobak.room.dao.AccessTokenDao;
 import com.example.kkobak.room.dao.TodoDao;
@@ -198,6 +199,8 @@ public class GpsActivity extends Activity {
                     locationManager.removeUpdates(locationListener);
                 }
                 endTimer();
+                // 여기 입력하면 될듯
+                sendJudge();
             }
         });
 
@@ -351,5 +354,31 @@ public class GpsActivity extends Activity {
     public void endTimer() {
         destroyTimer();
         flag = false;
+    }
+
+    public void sendJudge(){
+        JudgeRequest judgeRequest = new JudgeRequest(chlId, chk.toString(), "","");
+        //Retrofit 호출
+        Call call = RetrofitClient.getApiService().reqJudge(judgeRequest, accessToken);
+        call.enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) {
+                if(!response.isSuccessful()){
+                    Log.e("연결이 비정상적 : ", "error code : " + response.code());
+                    System.out.println(chk.toString());
+                    return;
+                }
+                else {
+                    Log.d("연결이 성공적 : ", response.body().toString());
+                    System.out.println(chk.toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+                Log.e("연결실패", t.getMessage());
+                System.out.println(chk.toString());
+            }
+        });
     }
 }

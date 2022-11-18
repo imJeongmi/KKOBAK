@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.kkobak.repository.request.JudgeRequest;
 import com.example.kkobak.repository.util.RetrofitClient;
 
 import retrofit2.Call;
@@ -69,7 +70,11 @@ public class AttendanceActivity extends Activity {
             @Override
             public void onClick(View view) {
                 if(chlId>0){ // 챌린지
-                    sendChlCheck(chlId,2);
+                    // sendChlCheck(chlId,2);
+                    // >>>>>>>>>>>>>>>>>>>>>>>>>> 이 부분은 변경해야함
+
+                    // 여기 입력하면 될듯
+//                    sendJudge(lat, lng);
                 }
                 else if(chlId<0){ // todoList
                     sendTodoChange(-1L*chlId);
@@ -137,6 +142,32 @@ public class AttendanceActivity extends Activity {
             @Override
             public void onFailure(Call<Boolean> call, Throwable t) {
                 Log.e("연결실패", t.getMessage());
+            }
+        });
+    }
+
+    public void sendJudge(String lat, String lng){
+        JudgeRequest judgeRequest = new JudgeRequest( chlId, "", lat, lng );
+        //Retrofit 호출
+        Call call = RetrofitClient.getApiService().reqJudge(judgeRequest, accessToken);
+        call.enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) {
+                if(!response.isSuccessful()){
+                    Log.e("연결이 비정상적 : ", "error code : " + response.code());
+                    System.out.println(lat +" ------ " + lng);
+                    return;
+                }
+                else {
+                    Log.d("연결이 성공적 : ", response.body().toString());
+                    System.out.println(lat +" ------ " + lng);
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+                Log.e("연결실패", t.getMessage());
+                System.out.println(lat +" ------ " + lng);
             }
         });
     }

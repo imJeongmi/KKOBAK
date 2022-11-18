@@ -2,6 +2,7 @@ package com.example.kkobak.repository.util;
 
 import com.example.kkobak.repository.request.GPSRequest;
 import com.example.kkobak.repository.request.HeartRequest;
+import com.example.kkobak.repository.request.JudgeRequest;
 import com.example.kkobak.repository.request.LoginRequest;
 import com.example.kkobak.repository.response.TodoListResponse;
 import com.example.kkobak.repository.response.TokenResponse;
@@ -39,5 +40,8 @@ public interface RetrofitAPI {
 
     @POST("todolist/change/status/{todoId}")
     Call<Boolean> sendTodoStatusChange(@Path("todoId") Long todoId, @Header("Authorization") String authorization);
+
+    @POST("challenge/judge")
+    Call reqJudge(@Body JudgeRequest judgeRequest, @Header("Authorization") String authorization);
 
 }

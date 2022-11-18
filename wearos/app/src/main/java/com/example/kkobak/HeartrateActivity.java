@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.kkobak.repository.request.HeartRequest;
+import com.example.kkobak.repository.request.JudgeRequest;
 import com.example.kkobak.repository.util.RetrofitClient;
 import com.example.kkobak.room.dao.AccessTokenDao;
 import com.example.kkobak.room.dao.TodoDao;
@@ -84,6 +85,9 @@ public class HeartrateActivity extends Activity implements SensorEventListener {
             @Override
             public void onClick(View view) {
                 sensorManager.unregisterListener(registerListener);
+
+                // 여기 입력하면 될듯
+                sendJudge();
             }
         });
     }
@@ -186,6 +190,32 @@ public class HeartrateActivity extends Activity implements SensorEventListener {
             @Override
             public void onFailure(Call<Boolean> call, Throwable t) {
                 Log.e("연결실패", t.getMessage());
+            }
+        });
+    }
+
+    public void sendJudge(){
+        JudgeRequest judgeRequest = new JudgeRequest( chlId, chk.toString(), "","");
+        //Retrofit 호출
+        Call call = RetrofitClient.getApiService().reqJudge(judgeRequest, accessToken);
+        call.enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) {
+                if(!response.isSuccessful()){
+                    Log.e("연결이 비정상적 : ", "error code : " + response.code());
+                    System.out.println(chk.toString());
+                    return;
+                }
+                else {
+                    Log.d("연결이 성공적 : ", response.body().toString());
+                    System.out.println(chk.toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+                Log.e("연결실패", t.getMessage());
+                System.out.println(chk.toString());
             }
         });
     }
