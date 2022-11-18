@@ -13,18 +13,14 @@ import Todolist from "component/module/Todolist";
 import WidgetCarousel from "component/module/WidgetCarousel";
 import EmptyChallenge from "component/module/EmptyChallenge";
 
-// import { getChallengeDetail } from "api/Challenge";
 import {
   requestUserInfo,
   fetchMyChallengeCalendarPageCnt,
   getMyKkobakList,
 } from "api/userApi";
 
-
 export default function Main() {
   const [user, setUser] = useState([]);
-  // const detailCategoryId = [];
-  // const [detailCategoryId, setDetailCategoryId] = useState([]);
   const [MyChallengeList, setMyChallengeList] = useState([]);
   const checkPage = MyChallengeList.length;
   const [TotalMyPage, setMyPageNation] = useState([]);
@@ -38,10 +34,6 @@ export default function Main() {
 
   function getMyKkobakListSuccess(res) {
     setMyChallengeList(res.data.reverse());
-
-    // for (let i=0; i<3; i++) {
-    //   getChallengeDetail(res.data[i].chlId, getChallengeDetailSuccess, getChallengeDetailFail)
-    // }
   }
 
   function getMyKkobakListFail(err) {
@@ -63,13 +55,6 @@ export default function Main() {
   function requestUserInfoFail(res) {
     setUser([]);
   }
-
-  // function getChallengeDetailSuccess(res) {
-  //   detailCategoryId.push(res.data.detailCategoryId);
-  // }
-
-  // function getChallengeDetailFail(err) {}
-
   function CheckNumPage(checkPage) {
     if (checkPage === 1) {
       setCheckNum(1);
@@ -123,7 +108,7 @@ export default function Main() {
         ></ProfileMenu>
         <MainBox height="622px">
           <Box sx={{ display: "flex", flexDirection: "column" }}>
-            {MyChallengeList.slice(page - 1, page).map((item, index) => {
+            {MyChallengeList.slice(page - 1, page).map((item) => {
               const startTimeCheck = moment(item.startTime).format(
                 "YYYY.MM.DD"
               );
@@ -151,11 +136,9 @@ export default function Main() {
                     </Stack>
                     <Box sx={{ width: "350px" }}>
                       <Text size="20px" weight="bold" my="25">
-                        {/* {console.log(detailCategoryId[index])} */}
                         {item.watch === true
                           ? `⌚️ ${item.title}`
-                          // : `${getEmoji(detailCategoryId[index])} ${item.title}`}
-                          : `📌 ${item.title}`}
+                          : `${getEmoji(item.detailCategoryId)} ${item.title}`}
                       </Text>
                     </Box>
                     <Box

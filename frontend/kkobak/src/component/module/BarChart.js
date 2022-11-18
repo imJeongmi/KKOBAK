@@ -18,10 +18,7 @@ import Text from "component/atom/Text";
 
 export default function BarChartPage({ findTime }) {
   const cid = Number(useParams().chlId);
-
   const [stat, setStat] = useState([]);
-
-  // console.log(stat);
 
   function requestTotalRunStatSuccess(res) {
     setStat(res.data);
@@ -40,18 +37,20 @@ export default function BarChartPage({ findTime }) {
   }, [cid]);
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column" }}>
-      <Text weight="semibold" size="14px" my="3">
-        {"📊 전체 통계 조회"}
-      </Text>
-
-      <Box sx={{ fontFamily: "SUIT-Medium", fontSize: "12px" }}>
-        <BarChart width={400} height={100} data={stat}>
-          <XAxis dataKey="day" />
-          <YAxis />
-          <Bar type="monotone" dataKey="dist" stroke="black" />
-        </BarChart>
-      </Box>
+    <Box
+      sx={{
+        marginTop: "10px",
+        display: "flex",
+        alignItems: "center",
+        fontFamily: "SUIT",
+        fontSize: "11px",
+      }}
+    >
+      <BarChart width={410} height={100} data={stat}>
+        <XAxis dataKey="day" />
+        <YAxis />
+        <Bar type="monotone" dataKey="dist" fill="#F0F6FB" stroke="#578AAF" />
+      </BarChart>
     </Box>
   );
 }
