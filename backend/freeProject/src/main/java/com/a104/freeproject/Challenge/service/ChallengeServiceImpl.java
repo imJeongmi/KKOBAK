@@ -649,8 +649,9 @@ public class ChallengeServiceImpl implements ChallengeService {
         }
 
         int nowCnt = (type==1) ? 1 : -1;
+        int goal = (!c.getUnit().equals("회"))? 1:c.getGoal();
 
-        if(log.getCnt()+nowCnt >= c.getGoal()){ // 성공 시
+        if(log.getCnt()+nowCnt >= goal){ // 성공 시
             if(!log.isFin()){ // 실패 -> 성공
                 log.setFin(true);
                 p.setSucDay(p.getSucDay()+1);
