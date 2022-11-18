@@ -164,7 +164,7 @@ public class PrtChlServiceImpl implements PrtChlService{
 
             output.add(LikeDetail.builder()
                     .chlId(c.getId()).title(c.getTitle()).imgurl(c.getImgurl()).watch(c.isWatch())
-                    .roomtype(c.getRoomtype())
+                    .roomtype(c.getRoomtype()).detailCategoryId(c.getDetailCategory().getId())
                     .startTime(chlTime.getStartTime().toLocalDateTime().toLocalDate())
                     .endTime(chlTime.getEndTime().toLocalDateTime().toLocalDate())
                     .build());

@@ -15,6 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 public class LikeDetail {
     private Long chlId;
+    private Long detailCategoryId;
     private String title;
     private String imgurl;
     private boolean watch;

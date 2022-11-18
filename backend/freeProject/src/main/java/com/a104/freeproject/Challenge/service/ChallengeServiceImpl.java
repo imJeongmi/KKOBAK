@@ -484,7 +484,7 @@ public class ChallengeServiceImpl implements ChallengeService {
             if(!log.isFin()){ // 실패 -> 성공
                 log.setFin(true);
                 log.setCnt(log.getCnt()+c.getGoal());
-
+                log.setCompleteTime(Timestamp.valueOf(LocalDateTime.now()));
                 p.setFailDay(p.getFailDay()-1);
                 p.setSucDay(p.getSucDay()+1);
             }
