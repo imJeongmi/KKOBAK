@@ -113,16 +113,15 @@ export default function ChallengeForm({
     if (category && detailCategory) {
       changeUnit(category, detailCategory);
     }
-    console.log(watch);
   }, [category, detailCategory]);
 
   function showUnit(category, detailCategory) {
     if (detailCategory === "1") {
-      setShowUnit("km");
+      setShowUnit("m");
       setWatch(true);
       setWatchValue(true);
     } else if (detailCategory === "2") {
-      setShowUnit("km");
+      setShowUnit("m");
       setWatch(true);
       setWatchValue(true);
     } else if (detailCategory === "3") {
@@ -158,9 +157,7 @@ export default function ChallengeForm({
     setImgSrc(res.data);
   }
 
-  function uploadFail(err) {
-    // console.log(err);
-  }
+  function uploadFail(err) {}
 
   const imgDivClick = (e) => {
     e.preventDefault();

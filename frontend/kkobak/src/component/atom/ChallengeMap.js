@@ -52,7 +52,6 @@ export default function ChallengeMap({ findTime, width, height }) {
 
   function requestStatGpsFail(err) {
     setGps([]);
-    // console.log(err.data);
     setGpsStat([]);
     setGpsDaily([]);
   }
@@ -77,6 +76,7 @@ export default function ChallengeMap({ findTime, width, height }) {
             width: "100%",
             height: "100%",
             backgroundColor: "black",
+            position: "relative",
           }}
         >
           <Map
@@ -85,35 +85,32 @@ export default function ChallengeMap({ findTime, width, height }) {
               display: "inline-block",
               width: `${getWidth(width)}`,
               height: `${getHeight(height)}`,
-              opacity: 0.5,
+              opacity: 0.4,
             }}
-          >
-            <Polyline
-              path={gps}
-              strokeWeight={5} // 선의 두께 입니다
-              strokeColor={"#000000"} // 선의 색깔입니다
-              strokeOpacity={1} // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
-              strokeStyle={"solid"} // 선의 스타일입니다
-            />
-          </Map>
+          />
         </Box>
       </CardBox>
       <Box
         sx={{
-          height: "100%",
-          width: "190px",
-          marginTop: "-90px",
-          marginLeft: "55px",
+          width: "100%",
+          margin: "165px auto",
           position: "absolute",
+          top: "0",
+          zIndex: "100",
         }}
       >
-        <Text size="22px" color="white">
-          통계가 없습니다.
+        <Text size="15px" weight="light" color="white">
+          통계가 없어요 🤔
         </Text>
       </Box>
     </Box>
   ) : (
-    <Box sx={{ display: "flex" }}>
+    <Box
+      sx={{
+        display: "flex",
+        alignItems: "center",
+      }}
+    >
       <CardBox>
         <Map
           center={gpsStat}
@@ -126,7 +123,7 @@ export default function ChallengeMap({ findTime, width, height }) {
           <Polyline
             path={gps}
             strokeWeight={5} // 선의 두께 입니다
-            strokeColor={"#000000"} // 선의 색깔입니다
+            strokeColor={"#559AD9"} // 선의 색깔입니다
             strokeOpacity={1} // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
             strokeStyle={"solid"} // 선의 스타일입니다
           />
@@ -134,13 +131,22 @@ export default function ChallengeMap({ findTime, width, height }) {
       </CardBox>
       <Box
         sx={{
-          height: "100%",
-          width: "90px",
+          width: "120px",
+          textAlign: "center",
         }}
       >
-        <Text size="10px">평균 속력 : {speedDaily} m/s</Text>
-        <Text size="10px">진행 시간 : {timeDaily}</Text>
-        <Text size="10px">이동 거리 : {totalDistDaily} m</Text>
+        <Text size="12px" weight="medium">
+          평균 속력 : {speedDaily} m/s
+        </Text>
+        <Text size="10px" mt="10">
+          {`진행 시간 : ${timeDaily.substr(1, 1)}시간 ${timeDaily.substr(
+            3,
+            2
+          )}분 ${timeDaily.substr(6, 2)}초 `}
+        </Text>
+        <Text size="10px" mt="3">
+          이동 거리 : {Math.round(0.1 * totalDistDaily) / 100} km
+        </Text>
       </Box>
     </Box>
   );
