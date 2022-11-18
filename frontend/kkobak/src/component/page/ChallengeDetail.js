@@ -274,7 +274,6 @@ export default function ChallengeDetail() {
                     <Text size="13px" color="grey">
                       {`${0.001 * goal} km`}
                     </Text>
-                  ) : detailCategoryId === 7 ? (
                   ) : (
                     <Text size="13px" color="grey">
                       {`${goal} ${unit}`}
