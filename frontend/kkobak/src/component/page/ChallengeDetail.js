@@ -15,6 +15,7 @@ import { requestUserInfo, requestMyChallengeDetail } from "api/userApi";
 
 import Button from "@mui/material/Button";
 import CloseIcon from "@mui/icons-material/Close";
+import axios from "axios";
 
 const CardBox = styled(Box)(
   () => `
@@ -152,6 +153,26 @@ export default function ChallengeDetail() {
     setUser([]);
   }
 
+  useEffect(() => {
+    if (detailCategoryId === 7 && unit) {
+      const x = unit.split(",")[0]
+      const y = unit.split(",")[1]
+
+      axios
+      .get(
+        `https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${x}&y=${y}`,
+        {
+          headers: {
+            Authorization: `KakaoAK ${process.env.REACT_APP_KAKAO_REST_API}`,
+          },
+        }
+      ).then((res) => {
+        const location = res.data.documents[0];
+        setUnit(location.road_address.address_name)
+      })
+    }
+  }, [detailCategoryId, unit])
+
   function requestMyChallengeDetailSuccess(res) {
     const data = res.data;
     setImgurl(data.imgurl);
@@ -270,13 +291,13 @@ export default function ChallengeDetail() {
                   </Text>
                 </SettingTitleBox>
                 <SettingContentBox>
-                  {detailCategoryId === 1 || detailCategoryId === 2 ? (
+                  {detailCategoryId !== 7 ? (
                     <Text size="13px" color="grey">
-                      {`${0.001 * goal} km`}
+                      {`${goal} ${unit}`}
                     </Text>
                   ) : (
                     <Text size="13px" color="grey">
-                      {`${goal} ${unit}`}
+                      {`${unit}`}
                     </Text>
                   )}
                 </SettingContentBox>
