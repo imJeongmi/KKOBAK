@@ -11,53 +11,107 @@
     android:keepScreenOn="true">
 
     <TextView
-        android:id="@+id/title_count"
+        android:id="@+id/title_run"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:layout_gravity="center"
-        android:text="Counter"
-        android:textColor="#000000" />
+        android:layout_marginBottom="5dp"
+        android:gravity="center"
+        android:scrollbars="vertical"
+        android:text="COUNTER"
+        android:textColor="#16537e"
+        android:textFontWeight="@integer/google_play_services_version" />
+
+    <LinearLayout
+        android:layout_marginBottom="5dp"
+        android:layout_width="180dp"
+        android:layout_height="50dp">
+
+        <TextView
+            android:id="@+id/title_count"
+            android:layout_width="140dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="title"
+            android:textSize="15dp"
+            android:textColor="#000000" />
+
+        <LinearLayout
+            android:layout_width="40dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:layout_width="40dp"
+                android:layout_height="10dp"
+                android:gravity="center"
+                android:text="목표"
+                android:textSize="8dp"
+                android:textFontWeight="@integer/google_play_services_version"
+                android:textColor="#000000"/>
+
+            <TextView
+                android:id="@+id/max_count"
+                android:layout_width="40dp"
+                android:layout_height="25dp"
+                android:gravity="center"
+                android:text="0"
+                android:textSize="20dp"
+                android:textFontWeight="@integer/google_play_services_version"
+                android:textColor="#2986cc"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginBottom="5dp"
+        android:layout_width="154dp"
+        android:layout_height="wrap_content">
+
+        <ImageButton
+            android:id="@+id/btn_count_down"
+            android:layout_width="37dp"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            android:background="#ffffff"
+            android:layout_gravity="center"
+            android:src="@drawable/minus_button"
+            />
+
+        <TextView
+            android:id="@+id/counter_count"
+            android:layout_width="80dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:text="0"
+            android:textSize="20dp"
+            android:textAlignment="center"
+            android:textColor="#000000" />
+
+        <ImageButton
+            android:id="@+id/btn_count_up"
+            android:layout_width="37dp"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            android:background="#ffffff"
+            android:layout_gravity="center"
+            android:src="@drawable/plus_button"
+            />
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/status_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#000000"
-        android:text="TextView" />
-
-    <TextView
-        android:id="@+id/max_count"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="0"
-        android:textColor="#000000"/>
-
-    <LinearLayout
-        android:layout_width="194dp"
-        android:layout_height="wrap_content">
-
-        <Button
-            android:id="@+id/btn_count_down"
-            android:layout_width="37dp"
-            android:layout_height="wrap_content"
-            android:text="-" />
-
-        <TextView
-            android:id="@+id/counter_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="0"
-
-            android:textAlignment="center"
-            android:textColor="#000000" />
-
-        <Button
-            android:id="@+id/btn_count_up"
-            android:layout_width="37dp"
-            android:layout_height="wrap_content"
-            android:text="+" />
-
-    </LinearLayout>
+        android:textColor="#DB4455"
+        android:textSize="25dp"
+        android:textFontWeight="@integer/google_play_services_version"
+        android:text="미완료" />
 
 </LinearLayout>

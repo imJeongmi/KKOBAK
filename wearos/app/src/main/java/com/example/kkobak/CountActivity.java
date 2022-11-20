@@ -2,10 +2,12 @@ package com.example.kkobak;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.kkobak.repository.util.RetrofitClient;
@@ -18,8 +20,7 @@ public class CountActivity extends Activity {
 
     // 출력용 뷰
     TextView title, status, maxView, counter;
-    Button btn_count_up;
-    Button btn_count_down;
+    ImageButton btn_count_up,btn_count_down;
 
     // 리스트에서 넘어온 데이터
     Intent intent;
@@ -66,6 +67,7 @@ public class CountActivity extends Activity {
                 counter.setText(count+"");
                 if(max==count){
                     status.setText("성공!");
+                    status.setTextColor(Color.parseColor("#32CD32"));
                     btn_count_up.setClickable(false);
                 }
 
@@ -79,6 +81,7 @@ public class CountActivity extends Activity {
                 count--;
                 counter.setText(count+"");
                 status.setText("미완료");
+                status.setTextColor(Color.parseColor("#DB4455"));
                 if(count==0){
                     btn_count_down.setClickable(false);
                 }
