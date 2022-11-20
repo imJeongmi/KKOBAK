@@ -101,9 +101,10 @@ public class StatbpmServiceImpl implements StatbpmService{
         
         if(!flag){
             for(int i = statbpmList.size()-2;i>=0;i--){
-                if(flag) {
-                    flag = statbpmList.get(statbpmList.size()-1).getSuccess();
-                    sendTime = statbpmList.get(statbpmList.size()-1).getChk();
+                boolean f = statbpmList.get(i).getSuccess();
+                if(f) {
+                    flag = f;
+                    sendTime = statbpmList.get(i).getChk();
                     break;
                 }
             }
