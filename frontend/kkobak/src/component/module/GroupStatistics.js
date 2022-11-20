@@ -67,7 +67,7 @@ function getMargin(margin) {
 export default function GroupStatistics() {
   const chlId = Number(useParams().chlId);
 
-  const [check, setCheck] = useState([]);
+  const [check, setCheck] = useState();
   const [userList, setUserList] = useState([]);
   const [participate, setParticipate] = useState([]);
 
@@ -76,7 +76,7 @@ export default function GroupStatistics() {
   }
 
   function requestParticipateCheckFail(res) {
-    setCheck([]);
+    setCheck();
   }
 
   function requestChallengeUserListSuccess(res) {
@@ -97,7 +97,6 @@ export default function GroupStatistics() {
   }
 
   function moveToStart(e) {
-    // navigate("/myChallenge");
     window.location.reload();
     e.preventDefault();
     requestChallengeParticipate(
@@ -150,6 +149,7 @@ export default function GroupStatistics() {
         })}
       </ListBox>
       <Button size="m" my="15px" onClick={moveToStart} disabled={check}>
+        {/* {console.log(check)} */}
         <Comment />
       </Button>
     </StatisticsBox>
