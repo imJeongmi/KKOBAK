@@ -38,15 +38,13 @@
         android:background="@drawable/input_form"
         />
 
-    <Button
+    <ImageButton
         android:id="@+id/btn_loginchk"
         android:layout_width="100dp"
         android:layout_height="40dp"
-        android:textSize="20dp"
-        android:text="LOGIN"
-        android:textAlignment="center"
-        android:textColor="#ffffff"
-        android:background="@drawable/solid_button"
+        android:scaleType="centerCrop"
+        android:background="#ffffff"
+        android:src="@drawable/login_button"
         />
 
 </LinearLayout>

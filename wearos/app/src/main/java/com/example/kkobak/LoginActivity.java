@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import com.example.kkobak.repository.request.LoginRequest;
 import com.example.kkobak.repository.response.TokenResponse;
@@ -27,7 +28,7 @@ public class LoginActivity extends Activity {
 
     private EditText et_email;
     private EditText et_pw;
-    private Button btn_loginchk;
+    private ImageButton btn_loginchk;
 //    private AccessTokenDao tokenDao;
     ProgressDialog dialog;
 
