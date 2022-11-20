@@ -90,7 +90,7 @@ export default function Statistics() {
 
       {detailCategoryId === 1 || detailCategoryId === 2 ? (
         <Box sx={{ width: "450px" }}>
-          <Text weight="semibold" size="14px" mt="70">
+          <Text weight="semibold" size="14px" mt="60">
             {"📍 GPS 정보"}
           </Text>
           <CardBox>
@@ -101,7 +101,7 @@ export default function Statistics() {
               setFindTime={setFindTime}
             />
           </CardBox>
-          <Text weight="semibold" size="14px" mt="35">
+          <Text weight="semibold" size="14px" mt="20">
             {"💗 심박수 정보"}
           </Text>
           <Box sx={{ float: "left" }}>
@@ -110,7 +110,7 @@ export default function Statistics() {
           <CardBox height="130px">
             <HeartRateChart findTime={findTime} setFindTime={setFindTime} />
           </CardBox>
-          <Text weight="semibold" size="14px" mt="25">
+          <Text weight="semibold" size="14px" mt="15">
             {"📊 전체 통계 조회"}
           </Text>
           <Box sx={{ float: "left" }}>
