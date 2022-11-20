@@ -1,0 +1,32 @@
+.todolist-box {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.todolist-box::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  content: "";
+  background-image: url("/static/todolist_background.jpg");
+  background-size: cover;  
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 20px;
+  overflow: hidden;
+  z-index: -1;
+  opacity: 0.2;
+}
+
+input {
+  font-family: "SUIT-Medium";
+  font-size: 12px;
+  border: 0;
+  outline: 0;
+  background: none;
+  color: #333333;
+}
