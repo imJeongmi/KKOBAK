@@ -48,7 +48,7 @@ export default function LineChartPage({ findTime }) {
       >
         <LineChart width={300} height={120} data={bpm}>
           <XAxis dataKey="time" />
-          <YAxis domain={[60, 130]} />
+          <YAxis domain={[stat.minBpm - 10, stat.maxBpm + 10]} />
           <Line type="linear" dataKey="bpm" stroke="#36577D" dot={false} />
         </LineChart>
       </Box>
