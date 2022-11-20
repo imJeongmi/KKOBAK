@@ -250,7 +250,7 @@ export default function ChallengeRegister() {
         <Text size="m" weight="bold" mt="30" my="15">
           나만의 챌린지 만들기 🏳️
         </Text>
-        <MainBox width="75" flexDir="col">
+        <MainBox width="75">
           <ChallengeForm
             imgSrc={imgSrc}
             category={category}

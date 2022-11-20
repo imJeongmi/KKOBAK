@@ -232,7 +232,7 @@ export default function GroupChallengeRegister() {
         <Text size="m" weight="bold" mt="30" my="15">
           다 같이 챌린지 만들기 🏴
         </Text>
-        <MainBox width="75" flexDir="col">
+        <MainBox width="75">
           <GroupChallengeForm
             imgSrc={imgSrc}
             category={category}
