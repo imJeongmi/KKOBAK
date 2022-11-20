@@ -89,6 +89,7 @@ public class AttendanceActivity extends Activity {
             status.setText("성공!");
             status.setTextColor(Color.parseColor("#32CD32"));
             btn_attend_start.setVisibility(View.INVISIBLE);
+            adjacent.setVisibility(View.INVISIBLE);
         }
         else {
             status.setText("미완료");
@@ -108,6 +109,7 @@ public class AttendanceActivity extends Activity {
                     status.setTextColor(Color.parseColor("#32CD32"));
                     btn_attend_start.setClickable(false);
                     btn_attend_start.setVisibility(View.INVISIBLE);
+                    adjacent.setVisibility(View.INVISIBLE);
                     done = true;
                 }
             }
@@ -119,6 +121,7 @@ public class AttendanceActivity extends Activity {
             status.setTextColor(Color.parseColor("#32CD32"));
             btn_attend_start.setClickable(false);
             btn_attend_start.setVisibility(View.INVISIBLE);
+            adjacent.setVisibility(View.INVISIBLE);
             btn_attend_start.setImageDrawable(unchk);
         }
         else {
