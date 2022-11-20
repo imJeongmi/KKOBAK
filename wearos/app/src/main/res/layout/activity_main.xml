@@ -22,6 +22,7 @@
         android:id="@+id/btn_login"
         android:layout_width="100dp"
         android:layout_height="40dp"
+        android:textSize="20dp"
         android:layout_gravity="center"
         android:text="LOGIN"
         android:background="@drawable/solid_button"

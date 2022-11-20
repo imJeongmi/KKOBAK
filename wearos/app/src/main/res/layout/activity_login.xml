@@ -20,7 +20,9 @@
         android:inputType="textEmailAddress"
         android:text="sj8731@naver.com"
         android:textAlignment="center"
-        android:textSize="13sp" />
+        android:textSize="13sp"
+        android:background="@drawable/input_form"
+        />
 
     <EditText
         android:id="@+id/et_pw"
@@ -32,15 +34,19 @@
         android:inputType="textPassword"
         android:text="qwer1234!"
         android:textAlignment="center"
-        android:textSize="12sp" />
+        android:textSize="12sp"
+        android:background="@drawable/input_form"
+        />
 
     <Button
         android:id="@+id/btn_loginchk"
-        android:layout_width="82dp"
-        android:layout_height="25dp"
-        android:background="#808080"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:textSize="20dp"
         android:text="LOGIN"
         android:textAlignment="center"
-        android:textColor="#ffffff" />
+        android:textColor="#ffffff"
+        android:background="@drawable/solid_button"
+        />
 
 </LinearLayout>
