@@ -22,7 +22,6 @@ export default function BarChartPage() {
 
   function requestAppearStatSuccess(res) {
     setStat(res.data);
-    console.log(res.data);
   }
 
   function requestAppearStatFail(err) {
@@ -45,9 +44,9 @@ export default function BarChartPage() {
       }}
     >
       <BarChart width={410} height={100} data={stat}>
-        <XAxis dataKey="day" />
-        <YAxis />
-        <Bar type="monotone" dataKey="dist" fill="#F0F6FB" stroke="#578AAF" />
+        <XAxis dataKey="date" />
+        <YAxis dataKey="cnt" domain={[0, 2]} />
+        <Bar type="monotone" dataKey="cnt" fill="#F0F6FB" stroke="#578AAF" />
       </BarChart>
     </Box>
   );
