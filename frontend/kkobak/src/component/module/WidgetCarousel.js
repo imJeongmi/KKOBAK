@@ -17,7 +17,7 @@ export default class VerticalMode extends Component {
       slidesToScroll: 1,
       vertical: true,
       verticalSwiping: true,
-      autoplay: true,
+      autoplay: false,
       autospeed: 700,
       arrows: false,
     };
