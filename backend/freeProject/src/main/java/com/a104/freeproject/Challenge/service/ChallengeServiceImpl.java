@@ -445,6 +445,7 @@ public class ChallengeServiceImpl implements ChallengeService {
         if(dc==1 || dc==2){ // 달리기 KM, 걷기 KM
             int goal = c.getGoal();
             List<Statgps> gpsList = gpsRepository.findByChkTimeAndPrtChl(p,input.getStartTime());
+            System.out.println("gpsList.size() = " + gpsList.size());
 
             double dist = 0;
             for (int i = 0; i < gpsList.size()-1; i++) {
@@ -452,6 +453,7 @@ public class ChallengeServiceImpl implements ChallengeService {
                 Statgps s2 = gpsList.get(i+1);
                 dist += getDistance(s1.getLat(),s1.getLng(),s2.getLat(),s2.getLng());
             }
+            System.out.println("dist = " + dist);
 
             if(dist >= goal) { // 성공
                 if(!log.isFin()){ // 실패 -> 성공
