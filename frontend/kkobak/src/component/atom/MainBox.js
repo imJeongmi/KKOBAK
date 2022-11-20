@@ -12,8 +12,8 @@ function getHeight(height) {
   return "88vh";
 }
 
-function getDirection(flexDir) {
-  switch (flexDir) {
+function getDirection(flexdir) {
+  switch (flexdir) {
     case "row":
       return "row";
     default:
@@ -32,7 +32,7 @@ function getJustifyContent(justifyContent) {
 }
 
 const GreyMainBox = styled(Box)(
-  ({ width, height, flexDir, alignItems, justifyContent }) => `
+  ({ width, height, flexdir, alignItems, justifyContent }) => `
   width: ${getWidth(width)}vw;
   min-width: 1000px;
   height: ${getHeight(height)};
@@ -41,7 +41,7 @@ const GreyMainBox = styled(Box)(
   text-align: center;
   position: relative;
   display: flex;
-  flex-direction: ${getDirection(flexDir)};
+  flex-direction: ${getDirection(flexdir)};
   align-items: ${getAlignItems(alignItems)};
   justify-content: ${getJustifyContent(justifyContent)};
   `
@@ -51,7 +51,7 @@ export default function MainBox({
   children,
   width,
   height,
-  flexDir,
+  flexdir,
   alignItems,
   justifyContent,
 }) {
@@ -59,7 +59,7 @@ export default function MainBox({
     <GreyMainBox
       width={width}
       height={height}
-      flexDir={flexDir}
+      flexdir={flexdir}
       alignItems={alignItems}
       justifyContent={justifyContent}
     >

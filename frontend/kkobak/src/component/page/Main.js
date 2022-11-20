@@ -117,7 +117,7 @@ export default function Main() {
               );
               const endTimeCheck = moment(item.endTime).format("YYYY.MM.DD");
               return (
-                <Box>
+                <Box key={item.chlId}>
                   <Box
                     sx={{
                       height: "45px",
@@ -157,7 +157,7 @@ export default function Main() {
                   <Box>
                     <MainCalendar
                       chlId={item.chlId}
-                      key={item.id}
+                      key={item.chlId}
                       startTime={item.startTime}
                       endTime={item.endTime}
                       watch={item.watch}
