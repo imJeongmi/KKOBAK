@@ -26,11 +26,11 @@ export default function GroupChallengeRegister() {
   const [category, setCategory] = useState(1);
   const [detailCategory, setDetailCategory] = useState(1);
   const [detailCategoryList, setDetailCategoryList] = useState([]);
-  // const [imgSrc, setImgSrc] = useState(initial);
+  const [imgSrc, setImgSrc] = useState(initial);
   // default imgsrc로 등록해둠!
-  const [imgSrc, setImgSrc] = useState(
-    "https://initpjtbucket.s3.ap-northeast-2.amazonaws.com/images/95479caa-be3f-4473-95a5-f1d07f2ffe75.png"
-  );
+  // const [imgSrc, setImgSrc] = useState(
+  //   "https://initpjtbucket.s3.ap-northeast-2.amazonaws.com/images/95479caa-be3f-4473-95a5-f1d07f2ffe75.png"
+  // );
   const [watch, setWatch] = useState(true);
   const [kkobak, setKkobak] = useState(0);
   const [startTime, setStartTime] = useState(new Date());
