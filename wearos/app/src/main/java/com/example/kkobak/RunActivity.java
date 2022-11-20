@@ -303,7 +303,7 @@ public class RunActivity extends Activity {
 //        얘가 심박수 문제인듯?
 //        heartRate = 0;
         runHeartView.setText("심박수: 0");
-        runDistanceView.setText("이동거리: 0m" );
+        runDistanceView.setText("0m" );
         runSpeedView.setText("현재 속력: 0km/h" );
         runTimer();
     }
