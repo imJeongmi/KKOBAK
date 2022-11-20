@@ -114,7 +114,7 @@ export default function Todolist() {
   function getKkobakChallengeListSuccess(res) {
     const data = res.data;
     const list = [];
-    data.map((item, index) => {
+    data.map((item) => {
       if (item.kkobak === 1 && item.watch === false) {
         list.push(item);
       }
@@ -186,9 +186,10 @@ export default function Todolist() {
         </Box>
       </DateBox>
 
-      {kkobaklist.map((item, index) => {
+      {kkobaklist.map((item) => {
         return (
           <TodolistItem
+            key={item.chlId}
             refresh={refresh}
             setRefresh={setRefresh}
             nowDate={formedNowDate}
@@ -205,9 +206,10 @@ export default function Todolist() {
         );
       })}
 
-      {todolist.map((item, index) => {
+      {todolist.map((item) => {
         return (
           <TodolistItem
+            key={item.todoId}
             refresh={refresh}
             setRefresh={setRefresh}
             nowDate={formedNowDate}

@@ -133,7 +133,7 @@ export default function GroupStatistics() {
       <ListBox>
         {userList.map((item) => {
           return (
-            <CardBox>
+            <CardBox key={item.nickname}>
               <ImageBox>
                 <ProfileImage
                   type="small"
