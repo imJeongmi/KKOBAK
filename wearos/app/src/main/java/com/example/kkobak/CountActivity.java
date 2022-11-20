@@ -58,10 +58,10 @@ public class CountActivity extends Activity {
         maxView.setText(max+"");
         counter.setText(count+"");
 
-        if(max==count){
+        if(max<=count){
             status.setText("성공!");
             status.setTextColor(Color.parseColor("#32CD32"));
-            btn_count_up.setClickable(false);
+//            btn_count_up.setClickable(false);
         }
 
         // 버튼 연결 설정
@@ -71,10 +71,10 @@ public class CountActivity extends Activity {
                 sendChlCheck(chlId,1);// 값 올리기
                 count++;
                 counter.setText(count+"");
-                if(max==count){
+                if(max<=count){
                     status.setText("성공!");
                     status.setTextColor(Color.parseColor("#32CD32"));
-                    btn_count_up.setClickable(false);
+//                    btn_count_up.setClickable(false);
                 }
 
             }
@@ -86,9 +86,16 @@ public class CountActivity extends Activity {
                 sendChlCheck(chlId,2);// 값 내리기
                 count--;
                 counter.setText(count+"");
-                status.setText("미완료");
-                status.setTextColor(Color.parseColor("#DB4455"));
-                btn_count_up.setClickable(true);
+                if(max<=count){
+                    status.setText("성공!");
+                    status.setTextColor(Color.parseColor("#32CD32"));
+//                    btn_count_up.setClickable(false);
+                }
+                else{
+                    status.setText("미완료");
+                    status.setTextColor(Color.parseColor("#DB4455"));
+                    btn_count_up.setClickable(true);
+                }
                 if(count==0){
                     btn_count_down.setClickable(false);
                 }
