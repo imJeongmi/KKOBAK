@@ -11,11 +11,16 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
 
 import com.example.kkobak.repository.request.HeartRequest;
 import com.example.kkobak.repository.request.JudgeRequest;
@@ -28,13 +33,17 @@ import com.example.kkobak.room.db.AppDatabase;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class HeartrateActivity extends Activity implements SensorEventListener {
+public class HeartrateActivity extends Activity {
 
+    //심박수 센서 리스너 선언 및 설정
+    private SensorEventListener sensorEventListener;
     private SensorManager sensorManager;
     private Sensor hr;
 
@@ -44,59 +53,85 @@ public class HeartrateActivity extends Activity implements SensorEventListener {
 
     private ImageButton btn_play;
     private Boolean btn_flag=false;
-    private SensorEventListener registerListener;
-    private Intent intent;
 
-    // intent로 넘어온 chlId 저장 (Create 시)
+    // 리스트에서 넘어온 데이터
+    private Intent intent;
     private long chlId;
+
     // startTime 저장용
     private LocalDateTime chk;
     // 토큰
     private String accessToken;
 
-    private static final String TAG = "____Main___";
+    // 타이머
+    int heart_hour, heart_minute, heart_second;
+    Timer timer;
 
-    private List<Integer> heartRate = new ArrayList<>();
+    //심박수
+    int heartRate=80;
+
+    // 출력 플래그
+    boolean flag;
+
+    final int TIMER = 1;
+
+    private static final String TAG = "____Heart___";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_heartrate);
-        registerListener = this;
-        intent = getIntent();
-        chlId = intent.getLongExtra("chlId",1);
-
-        sensorManager = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
-        hr = sensorManager.getDefaultSensor(Sensor.TYPE_HEART_RATE);
-        hourView = findViewById(R.id.run_hour);
-        minuteView = findViewById(R.id.run_minute);
-        secondView = findViewById(R.id.run_second);
-
+        // 뷰 컴포넌트 연결
+        hourView = findViewById(R.id.heart_hour);
+        minuteView = findViewById(R.id.heart_minute);
+        secondView = findViewById(R.id.heart_second);
         textView = findViewById(R.id.txt_heartrate);
-
+        heartView = findViewById(R.id.now_heartrate);
+        goalView = findViewById(R.id.goal_minute);
         //(토큰 세팅)
         accessToken = ((KkobakApp)getApplication()).getAccessToken();
 
+        //인덴트 값 가져오기
+        intent = getIntent();
+        chlId = intent.getLongExtra("chlId",1);
+        goalView.setText(intent.getIntExtra("goal",1)+"분");
+
         checkPermission();
 
-//        btn_start = findViewById(R.id.btn_start);
-//        btn_start.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                sensorManager.registerListener(registerListener, hr, SensorManager.SENSOR_DELAY_NORMAL);
-//                chk = LocalDateTime.now().withNano(0);
-//            }
-//        });
-//        btn_end = findViewById(R.id.btn_end);
-//        btn_end.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                sensorManager.unregisterListener(registerListener);
-//
-//                // 여기 입력하면 될듯
-//                sendJudge();
-//            }
-//        });
+        sensorManager = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
+        hr = sensorManager.getDefaultSensor(Sensor.TYPE_HEART_RATE);
+
+        sensorEventListener = new SensorEventListener() {
+            @Override
+            public void onSensorChanged(SensorEvent sensorEvent) {
+                System.out.println("심박수 센서 이벤트 발생");
+                if (sensorEvent.sensor.getType()== Sensor.TYPE_HEART_RATE){
+                    int heartValue = (int)sensorEvent.values[0];
+                    if(heartValue!=0) {
+                        heartRate = heartValue;
+                    }
+                    System.out.println(LocalDateTime.now().withNano(0));
+                    System.out.println("센서가 인식한 심박수: "+heartValue);
+
+                    if(flag) {
+                        heartView.setText(heartRate+"bpm");
+                        sendOne(heartRate, LocalDateTime.now().withNano(0));
+                        System.out.println("심박수 보냈습니다");
+                    }
+
+                }
+            }
+
+            @Override
+            public void onAccuracyChanged(Sensor sensor, int i) {
+
+            }
+        };
+
+        sensorManager.registerListener(sensorEventListener, hr, SensorManager.SENSOR_DELAY_NORMAL);
+        System.out.println("심박수 등록 완료");
+
         btn_play=findViewById(R.id.btn_play);
         btn_flag=false;
         Drawable img = getResources().getDrawable( R.drawable.stop_button );
@@ -105,15 +140,20 @@ public class HeartrateActivity extends Activity implements SensorEventListener {
             @Override
             public void onClick(View view) {
                 if (btn_flag){ // 정지
-                    sensorManager.unregisterListener(registerListener);
+                    flag = false;
+                    endTimer();
                     sendJudge();
                     btn_flag=false;
                     btn_play.setVisibility(View.INVISIBLE);
                 }
                 else { // 시작
-                    sensorManager.registerListener(registerListener, hr, SensorManager.SENSOR_DELAY_NORMAL);
+                    checkPermission();
+                    flag = true;
+
                     chk = LocalDateTime.now().withNano(0);
+                    startTimer();
                     btn_flag=true;
+                    btn_play.setImageDrawable(img);
                 }
             }
         });
@@ -122,28 +162,15 @@ public class HeartrateActivity extends Activity implements SensorEventListener {
     @Override
     protected void onResume(){
         super.onResume();
-//        sensorManager.registerListener(this, hr, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
 
     @Override
-    public void onSensorChanged(SensorEvent sensorEvent) { // 시작
-        System.out.println("센서 이벤트 발생");
-        if (sensorEvent.sensor.getType()== Sensor.TYPE_HEART_RATE){
-            int heartValue = (int)sensorEvent.values[0];
-//            System.out.println(LocalDateTime.now());
-            textView.setText(heartValue+"");
-//            System.out.println(sensorEvent.values[0]);
-            heartRate.add(heartValue);
-            if(heartValue!=0) {
-                sendOne(heartValue, LocalDateTime.now().withNano(0));
-            }
-        }
-    }
-
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int i) {
-
+    protected void onDestroy() {
+        System.out.println("종료!!");
+        destroyTimer();
+        sensorManager.unregisterListener(sensorEventListener);
+        super.onDestroy();
     }
 
     private void checkPermission() { // step 3 started (according to content detail)
@@ -159,44 +186,70 @@ public class HeartrateActivity extends Activity implements SensorEventListener {
         }
     }
 
-    @Override
-    protected void onDestroy() {
-        System.out.println("========================================심박수 데이터 입니다!!");
-//        System.out.println(heartRate.size());
-//        for (Integer integer : heartRate) {
-//            System.out.println(integer);
-//        }
+    private final Handler mHandler = new Handler(Looper.getMainLooper()) {
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            switch (msg.what) {
+                case TIMER:
+                    updateTimer();
 
+                    break;
 
-
-
-//        sendData();
-
-//        sensorManager.unregisterListener(this);
-        super.onDestroy();
-    }
-    //리스트로 보내는 함수 (안씀)
-    public void sendData() {
-        //Retrofit 호출
-        Call<Boolean> call = RetrofitClient.getApiService().sendHeartList(heartRate);
-        call.enqueue(new Callback<Boolean>() {
-            @Override
-            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                if(!response.isSuccessful()){
-                    Log.e("연결이 비정상적 : ", "error code : " + response.code());
-                    return;
-                }
-                else {
-                    Log.d("연결이 성공적 : ", response.body().toString());
-                }
+                default:
+                    System.out.println("Run Default Handler");
+                    break;
             }
+        }
+    };
 
-            @Override
-            public void onFailure(Call<Boolean> call, Throwable t) {
-                Log.e("연결실패", t.getMessage());
-            }
-        });
+    public void startTimer() {
+        runTimer();
     }
+
+    public void endTimer() {
+        destroyTimer();
+    }
+
+    private void updateTimer() {
+        heart_second++;
+        if (heart_second == 60) {
+            heart_second = 0;
+            heart_minute++;
+        }
+        if (heart_minute == 60) {
+            heart_minute = 0;
+            heart_hour++;
+        }
+
+        if (heart_second <= 9) secondView.setText("0" + heart_second);
+        else        secondView.setText(Integer.toString(heart_second));
+        if (heart_minute <= 9) minuteView.setText("0" + heart_minute);
+        else        minuteView.setText(Integer.toString(heart_minute));
+        if (heart_hour <= 9) hourView.setText("0" + heart_hour);
+        else        hourView.setText(Integer.toString(heart_hour));
+    }
+
+    private void runTimer() {
+        heart_hour = heart_minute = heart_second = 0;
+
+        timer = new Timer();
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                mHandler.sendEmptyMessage(TIMER);
+            }
+        };
+        timer.schedule(timerTask, 0, 1000); //Timer 실행
+    }
+
+    private void destroyTimer() {
+
+        if (timer != null) {
+            timer.cancel();
+            System.out.println("타이머 종료");
+        }
+    }
+
 
     public void sendOne(int heartValue, LocalDateTime time) {
         HeartRequest heartRequest = new HeartRequest(chlId, time.withNano(0).toString(), heartValue, chk.toString());
