@@ -21,11 +21,11 @@ function getHeight(height) {
 
 const CardBox = styled(Box)(
   ({ height, margin }) => `
-    width: 400px;
-    height: 400px;
-    margin: 0 auto;
-    border-radius: 20px;
-    overflow: hidden;
+  width: 300px;
+  height: 150px;
+  margin: 0 auto;
+  border-radius: 20px;
+  overflow: hidden;
   `
 );
 
@@ -60,25 +60,33 @@ export default function ChallengeMap({ findTime, width, height }) {
   // 37.5012767241426, 127.039600248343
   // 역삼역 위치 { lat: 37.5016644, lng: 127.0396081 }
   return (
-    <Box sx={{ display: "flex", flexDirection: "column" }}>
-      <Box sx={{ height: "30px", marginTop: "100px" }}>출석 위치 입니다.</Box>
+    <Box>
       <CardBox>
-        <Map
-          center={{ lat: checkLat, lng: checkLng }}
-          style={{
-            display: "inline-block",
-            width: "400px",
-            height: "300px",
+        <Box
+          sx={{
+            width: "100%",
+            height: "100%",
+            backgroundColor: "black",
+            position: "relative",
           }}
         >
-          <Polyline
-            path={[{ lat: checkLat, lng: checkLng }]}
-            strokeWeight={100} // 선의 두께 입니다
-            strokeColor={"#4b79a6"} // 선의 색깔입니다
-            strokeOpacity={0.3} // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
-            strokeStyle={"solid"} // 선의 스타일입니다
-          />
-        </Map>
+          <Map
+            center={{ lat: checkLat, lng: checkLng }}
+            style={{
+              display: "inline-block",
+              width: `${getWidth(width)}`,
+              height: `${getHeight(height)}`,
+            }}
+          >
+            <Polyline
+              path={[{ lat: checkLat, lng: checkLng }]}
+              strokeWeight={100} // 선의 두께 입니다
+              strokeColor={"#4b79a6"} // 선의 색깔입니다
+              strokeOpacity={0.3} // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+              strokeStyle={"solid"} // 선의 스타일입니다
+            />
+          </Map>
+        </Box>
       </CardBox>
     </Box>
   );
