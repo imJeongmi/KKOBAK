@@ -1,6 +1,7 @@
 package com.example.kkobak.room.adapter;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +41,12 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder>{
         // 뷰홀더가 재사용될 때 호출되어 뷰 객체는 기존 것을 그대로 사용하고 데이터만 바꿔준다.
         TodoListResponse item = items.get(position);
         holder.textView.setText(item.getTitle());
+
+        Drawable img = context.getResources().getDrawable( R.drawable.done_image );
+        if(item.isDone()){
+            System.out.println(item.getChlId()+" "+item.getContents());
+            holder.textView.setCompoundDrawables(img,null,null,null);
+        }
     }
 
     @Override
@@ -64,6 +71,12 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder>{
             super(itemView);
             textView = itemView.findViewById(R.id.textView);
 
+//            Drawable img = context.getResources().getDrawable( R.drawable.done_image );
+//            System.out.println(chlId+" "+contents);
+//            if(done){
+//                System.out.println(chlId+" "+contents);
+//                textView.setCompoundDrawables(img,null,null,null);
+//            }
 
             textView.setOnClickListener(new View.OnClickListener() {
                 @Override

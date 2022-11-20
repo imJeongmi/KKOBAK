@@ -74,10 +74,8 @@ public class ListActivity extends Activity {
                 }
                 else{
                     todoList = response.body();
-                    for (TodoListResponse todoListResponse : todoList) {
-                        System.out.println("ㅁㄴㅇㄹ"+todoListResponse.getGoal());
-                    }
                     todoAdapter = new TodoAdapter(getApplication(), todoList);
+
                     todoAdapter.setOnItemClickListener(new TodoAdapter.OnItemClickListener() {
                         @Override
                         public void onItemClick(int pos) {
