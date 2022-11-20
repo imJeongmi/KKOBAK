@@ -143,6 +143,7 @@ export default function WidgetWeather() {
             if (index === currentDayIdx) {
               return (
                 <div
+                  key={item}
                   onClick={() => {
                     setCurrentDayIdx(index);
                   }}
@@ -155,6 +156,7 @@ export default function WidgetWeather() {
             } else {
               return (
                 <div
+                  key={item}
                   onClick={() => {
                     setCurrentDayIdx(index);
                   }}
