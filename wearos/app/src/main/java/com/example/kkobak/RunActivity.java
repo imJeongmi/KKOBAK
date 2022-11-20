@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -19,6 +20,7 @@ import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,11 +53,13 @@ public class RunActivity extends Activity {
     // 출력용 뷰
     String str;
     private TextView titleView;
-    private TextView hourView, minuteView, secondView, runHeartView, runSpeedView, runDistanceView;
+    private TextView hourView, minuteView, secondView, runHeartView, runSpeedView, runDistanceView,goalDistanceView;
 
-    private Button btn_run_start;
-    private Button btn_run_stop;
-    private Button btn_run_end;
+//    private Button btn_run_start;
+//    private Button btn_run_stop;
+//    private Button btn_run_end;
+    private ImageButton btn_play;
+    private Boolean btn_flag=false;
 
     // 리스트에서 넘어온 데이터
     Intent intent;
@@ -101,6 +105,7 @@ public class RunActivity extends Activity {
         runSpeedView = findViewById(R.id.run_speed);
         runDistanceView = findViewById(R.id.run_distance);
         runHeartView = findViewById(R.id.run_heartRate);
+        goalDistanceView = findViewById(R.id.goal_distance);
 
         // 토큰 세팅
         accessToken = ((KkobakApp)getApplication()).getAccessToken();
@@ -109,6 +114,7 @@ public class RunActivity extends Activity {
         //챌린지 아이디 가져오기
         intent = getIntent();
         chlId = intent.getLongExtra("chlId",-1);
+        goalDistanceView.setText(intent.getIntExtra("goal",1000)+"m");
 //        String title = intent.getStringExtra("title");
 //        titleView.setText(title);
 
@@ -195,34 +201,66 @@ public class RunActivity extends Activity {
         System.out.println("심박수 등록 완료");
 
         //시작 버튼
-        btn_run_start = findViewById(R.id.button_run_start);
-        btn_run_start.setOnClickListener(new View.OnClickListener() {
+//        btn_run_start = findViewById(R.id.button_run_start);
+//        btn_run_start.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                // 권한 확인
+//                checkPermission();
+//                flag = true;
+//                // 클릭하면 센서를 로케이션 리스너에 등록
+//
+//                // 시작 시간 등록
+//                chk = LocalDateTime.now(). withNano(0);
+//                startTimer();
+//            }
+//        });
+//
+//        // 종료 버튼
+//        btn_run_end = findViewById(R.id.button_run_end);
+//        btn_run_end.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                flag = false;
+//                endTimer();
+//                // 여기 입력하면 될듯
+//                sendJudge();
+//            }
+//        });
+
+//        btn_run_end.setClickable(false);
+
+        btn_play=findViewById(R.id.btn_play);
+        btn_flag=false;
+        Drawable img = getResources().getDrawable( R.drawable.stop_button );
+
+        btn_play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // 권한 확인
-                checkPermission();
-                flag = true;
-                // 클릭하면 센서를 로케이션 리스너에 등록
+                if (btn_flag){ // 정지
+                    flag = false;
+                    endTimer();
+                    // 여기 입력하면 될듯
+                    sendJudge();
+                    btn_flag=false;
+                    btn_play.setVisibility(View.INVISIBLE);
+                }
+                else { // 시작
+                    // 권한 확인
+                    checkPermission();
+                    flag = true;
+                    // 클릭하면 센서를 로케이션 리스너에 등록
 
-                // 시작 시간 등록
-                chk = LocalDateTime.now(). withNano(0);
-                startTimer();
+                    // 시작 시간 등록
+                    chk = LocalDateTime.now(). withNano(0);
+                    startTimer();
+                    btn_flag=true;
+                    btn_play.setImageDrawable(img);
+                }
             }
         });
 
-        // 종료 버튼
-        btn_run_end = findViewById(R.id.button_run_end);
-        btn_run_end.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                flag = false;
-                endTimer();
-                // 여기 입력하면 될듯
-                sendJudge();
-            }
-        });
 
-        btn_run_end.setClickable(false);
     }
 
     @Override
@@ -341,8 +379,8 @@ public class RunActivity extends Activity {
     private void runTimer() {
         gps_hour = gps_minute = gps_second = 0;
 
-        btn_run_start.setClickable(false);
-        btn_run_end.setClickable(true);
+//        btn_run_start.setClickable(false);
+//        btn_run_end.setClickable(true);
 
         timer = new Timer();
         TimerTask timerTask = new TimerTask() {
@@ -355,8 +393,8 @@ public class RunActivity extends Activity {
     }
 
     private void destroyTimer() {
-        btn_run_start.setClickable(true);
-        btn_run_end.setClickable(false);
+//        btn_run_start.setClickable(true);
+//        btn_run_end.setClickable(false);
 
         if (timer != null) {
             timer.cancel();
