@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "902584146912",
+    "project_id": "kkobak-205d2",
+    "storage_bucket": "kkobak-205d2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:902584146912:android:aa5ac40b5cb6ec23ec6985",
+        "android_client_info": {
+          "package_name": "com.example.kkobak"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "902584146912-dgqae2e210j48uaar2k6opfm3hcpudce.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCcHsdLefQ8_HG2vZXQ0z3JSbw2HTW59Ss"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "902584146912-dgqae2e210j48uaar2k6opfm3hcpudce.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
