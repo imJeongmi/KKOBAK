@@ -41,4 +41,6 @@ public interface ChallengeRepository extends JpaRepository<Challenge,Long> {
 
     @Query(value="select * from challenge where is_fin=false and limit_people>1", nativeQuery = true)
     Page<Challenge> findByLimitPeopleCnt(Pageable pageable);
+
+    List<Challenge> findAllByAlarmAndIsFin(String alarm, boolean isFin);
 }
