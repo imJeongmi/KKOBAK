@@ -815,17 +815,14 @@ public class ChallengeServiceImpl implements ChallengeService {
             if(p.is_fin()) continue;
             if(!logRepository.existsByPrtChlAndDate(p,today)) continue;
             Log log = logRepository.findByPrtChlAndDate(p,today);
-            System.out.println("log.getId() = " + log.getId());
+
             if(!log.isFin()) continue;
-            System.out.println(log.getId()+" log는 fin임");
+
             List<GpsMiddleInterface> list = gpsRepository.findByChkAndPrtChl(today.toString(),p);
 
-            System.out.println("1");
             if(list.size()==0) continue;
-            System.out.println("list.size() = " + list.size());
 
             Member member = p.getMember();
-            System.out.println("member.getEmail() = " + member.getEmail());
             ResultResponse res = statgpsService.findRank(p);
             rankList.add(ChlRankResponse.builder()
                     .nickname(member.getNickname())
