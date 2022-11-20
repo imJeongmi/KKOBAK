@@ -438,7 +438,7 @@ public class ChallengeServiceImpl implements ChallengeService {
         if(!logRepository.existsByPrtChlAndDate(p,now))
             throw new NotFoundException("해당 챌린지의 당일 로그가 존재하지 않습니다.");
         Log log = logRepository.findByPrtChlAndDate(p,now);
-        if (log.isFin()) return true;  // 이미 진행한 챌린지의 경우 판단하지 않고 끝내기
+//        if (log.isFin()) return true;  // 이미 진행한 챌린지의 경우 판단하지 않고 끝내기
 
         Long dc = c.getDetailCategory().getId();
 
