@@ -422,6 +422,8 @@ public class ChallengeServiceImpl implements ChallengeService {
     public boolean judgeDone(JudgeRequest input, HttpServletRequest req) throws NotFoundException {
         Member member = memberService.findEmailbyToken(req);
 
+        System.out.println("judge 결과: "+input.getCid()+" "+input.getStartTime()+ " "+input.getLat()+" "+input.getLng());
+
         if(!challengeRepository.existsById(input.getCid())) throw new NotFoundException("존재하지 않는 챌린지입니다.");
         Challenge c = challengeRepository.findById(input.getCid()).get();
 
