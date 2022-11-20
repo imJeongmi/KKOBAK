@@ -782,7 +782,8 @@ public class ChallengeServiceImpl implements ChallengeService {
             if(sec<=9) s = "0"+sec;
             else s = ""+sec;
 
-            String timelen = h+":"+m+":"+s;
+//            String timelen = h+":"+m+":"+s;
+            String timelen = m;
 
             output.add(MedTotalStatResponse.builder()
                     .year(year).month(month).day(day)
