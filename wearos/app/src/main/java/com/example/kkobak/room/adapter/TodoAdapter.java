@@ -45,7 +45,7 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder>{
         Drawable img = context.getResources().getDrawable( R.drawable.done_image );
         if(item.isDone()){
             System.out.println(item.getChlId()+" "+item.getContents());
-            holder.textView.setCompoundDrawables(img,null,null,null);
+            holder.textView.setCompoundDrawablesWithIntrinsicBounds(img,null,null,null);
         }
     }
 
