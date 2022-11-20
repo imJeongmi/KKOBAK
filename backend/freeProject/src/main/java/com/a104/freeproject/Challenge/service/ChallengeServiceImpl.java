@@ -447,6 +447,7 @@ public class ChallengeServiceImpl implements ChallengeService {
         if(dc==1 || dc==2){ // 달리기 KM, 걷기 KM
             int goal = c.getGoal();
             List<Statgps> gpsList = gpsRepository.findByChkTimeAndPrtChl(p,input.getStartTime());
+            List<Statbpm> bpmList = bpmRepository.findByChkTimeAndPrtChl(p,input.getStartTime());
             System.out.println("gpsList.size() = " + gpsList.size());
 
             double dist = 0;
@@ -467,6 +468,9 @@ public class ChallengeServiceImpl implements ChallengeService {
                 }
 
                 for(Statgps s : gpsList){
+                    s.setSuccess(true);
+                }
+                for (Statbpm s : bpmList){
                     s.setSuccess(true);
                 }
             }
