@@ -109,9 +109,10 @@ public class StatgpsServiceImpl implements StatgpsService{
         LocalDateTime sendTime = statgpsList.get(statgpsList.size()-1).getChk();
         if(!flag){
             for(int i = statgpsList.size()-2;i>=0;i--){
-                if(flag) {
-                    flag = statgpsList.get(statgpsList.size()-1).getSuccess();
-                    sendTime = statgpsList.get(statgpsList.size()-1).getChk();
+                boolean f = statgpsList.get(i).getSuccess();
+                if(f) {
+                    flag = f;
+                    sendTime = statgpsList.get(i).getChk();
                     break;
                 }
             }
