@@ -104,12 +104,18 @@ export default function Statistics() {
           <Text weight="semibold" size="14px" mt="35">
             {"💗 심박수 정보"}
           </Text>
+          <Box sx={{ float: "left" }}>
+            <Text size="8px">[시간 / 심박수]</Text>
+          </Box>
           <CardBox height="130px">
             <HeartRateChart findTime={findTime} setFindTime={setFindTime} />
           </CardBox>
           <Text weight="semibold" size="14px" mt="25">
             {"📊 전체 통계 조회"}
           </Text>
+          <Box sx={{ float: "left" }}>
+            <Text size="8px">[요일 / 거리(m)]</Text>
+          </Box>
           <CardBox height="110px">
             <BarChart findTime={findTime} setFindTime={setFindTime} />
           </CardBox>
@@ -119,12 +125,18 @@ export default function Statistics() {
           <Text weight="semibold" size="14px" mt="130">
             {"💗 심박수 정보"}
           </Text>
+          <Box sx={{ float: "left" }}>
+            <Text size="8px">[시간 / 심박수]</Text>
+          </Box>
           <CardBox height="130px">
             <HeartRateChart findTime={findTime} setFindTime={setFindTime} />
           </CardBox>
           <Text weight="semibold" size="14px" mt="70">
             {"📊 전체 통계 조회"}
           </Text>
+          <Box sx={{ float: "left" }}>
+            <Text size="8px">[날짜 / 진행시간(분)]</Text>
+          </Box>
           <CardBox height="110px">
             <MedBarChart findTime={findTime} setFindTime={setFindTime} />
           </CardBox>
@@ -145,6 +157,9 @@ export default function Statistics() {
           <Text weight="semibold" size="14px" mt="100">
             {"📊 전체 통계 조회"}
           </Text>
+          <Box sx={{ float: "left" }}>
+            <Text size="8px">[날짜 / 출석(횟수)]</Text>
+          </Box>
           <CardBox height="110px">
             <AppearBarChart findTime={findTime} setFindTime={setFindTime} />
           </CardBox>
@@ -169,12 +184,18 @@ export default function Statistics() {
         //   <CardBox>
         //   </CardBox>
         // </StatisticsBox>
-        <StatisticsBox>
+        <Box sx={{ width: "450px" }}>
           <CardBox height="50px"></CardBox>
+          <Text weight="semibold" size="14px" mt="100">
+            {"📊 전체 통계 조회"}
+          </Text>
+          <Box sx={{ float: "left" }}>
+            <Text size="8px">[날짜 / 횟수]</Text>
+          </Box>
           <CardBox height="250px">
             <HabitBarChart findTime={findTime} setFindTime={setFindTime} />
           </CardBox>
-        </StatisticsBox>
+        </Box>
       )}
     </Box>
   );

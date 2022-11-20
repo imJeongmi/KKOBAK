@@ -39,8 +39,13 @@ export default function BarChartPage() {
     >
       <BarChart width={410} height={100} data={stat}>
         <XAxis dataKey="day" />
-        <YAxis />
-        <Bar type="monotone" dataKey="dist" fill="#F0F6FB" stroke="#578AAF" />
+        <YAxis dataKey="timelen" />
+        <Bar
+          type="monotone"
+          dataKey="timelen"
+          fill="#F0F6FB"
+          stroke="#578AAF"
+        />
       </BarChart>
     </Box>
   );

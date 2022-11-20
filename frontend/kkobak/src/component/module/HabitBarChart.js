@@ -39,15 +39,11 @@ export default function BarChartPage({ findTime }) {
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column" }}>
-      <Text weight="semibold" size="15px" my="3">
-        {"전체 통계 조회"}
-      </Text>
-
       <Box sx={{ fontFamily: "SUIT-Medium", fontSize: "12px" }}>
         <BarChart width={400} height={200} data={stat}>
           <XAxis dataKey="day" />
           <YAxis />
-          <Bar type="monotone" dataKey="cnt" stroke="black" />
+          <Bar type="monotone" dataKey="cnt" fill="#F0F6FB" stroke="#578AAF" />
         </BarChart>
       </Box>
     </Box>
