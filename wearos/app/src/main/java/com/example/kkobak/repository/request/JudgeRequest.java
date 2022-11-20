@@ -7,7 +7,7 @@ import lombok.Getter;
 
 @Getter
 public class JudgeRequest {
-    @SerializedName("chlId") private Long chlId;
+    @SerializedName("cid") private Long chlId;
     @SerializedName("startTime") private String startTime;
     @SerializedName("lat") private String lat;
     @SerializedName("lng") private String lng;

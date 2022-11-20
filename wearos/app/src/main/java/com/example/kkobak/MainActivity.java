@@ -42,6 +42,8 @@ public class MainActivity extends Activity {
                 String token = task.getResult();
 
                 System.out.println("FCM 토큰입니다!!!! : "+ token);
+                // FCM 토큰 전역변수 세팅
+                ((KkobakApp)getApplication()).setFcmToken(token);
             }
         });
 

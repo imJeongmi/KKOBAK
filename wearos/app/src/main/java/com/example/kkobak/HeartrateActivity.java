@@ -61,6 +61,7 @@ public class HeartrateActivity extends Activity implements SensorEventListener {
         registerListener = this;
         intent = getIntent();
         chlId = intent.getLongExtra("chlId",1);
+        System.out.println(chlId);
 
         sensorManager = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
         hr = sensorManager.getDefaultSensor(Sensor.TYPE_HEART_RATE);
@@ -196,6 +197,7 @@ public class HeartrateActivity extends Activity implements SensorEventListener {
 
     public void sendJudge(){
         JudgeRequest judgeRequest = new JudgeRequest( chlId, chk.toString(), "","");
+        System.out.println("출력: "+chlId+" "+chk.toString());
         //Retrofit 호출
         Call<Void> call = RetrofitClient.getApiService().reqJudge(judgeRequest, accessToken);
         call.enqueue(new Callback() {
@@ -203,12 +205,11 @@ public class HeartrateActivity extends Activity implements SensorEventListener {
             public void onResponse(Call call, Response response) {
                 if(!response.isSuccessful()){
                     Log.e("연결이 비정상적 : ", "error code : " + response.code());
-                    System.out.println(chk.toString());
                     return;
                 }
                 else {
-                    Log.d("연결이 성공적 : ", response.body().toString());
-                    System.out.println(chk.toString());
+//                    Log.d("연결이 성공적 : ", response.body().toString());
+                    System.out.println("연결이 성공적 : "+ chk.toString());
                 }
             }
 

@@ -213,7 +213,7 @@ public class AttendanceActivity extends Activity {
                     return;
                 }
                 else {
-                    Log.d("연결이 성공적 : ", response.body().toString());
+//                    Log.d("연결이 성공적 : ", response.body().toString());
                     System.out.println(lat +" ------ " + lng);
                 }
             }
