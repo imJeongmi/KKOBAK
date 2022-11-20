@@ -3,6 +3,7 @@ package com.example.kkobak;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -54,54 +55,21 @@ public class CheckActivity extends Activity {
 
         done = intent.getBooleanExtra("done", true);
         title.setText(intent.getStringExtra("title"));
+
+        Drawable unchk = getResources().getDrawable( R.drawable.noncheck_button );
+        Drawable chk = getResources().getDrawable( R.drawable.check_button );
+
+
         if(done){
             status.setText("성공!");
+            btn_check.setImageDrawable(unchk);
             status.setTextColor(Color.parseColor("#32CD32"));
         }
         else {
             status.setText("미완료");
+            btn_check.setImageDrawable(chk);
             status.setTextColor(Color.parseColor("#DB4455"));
         }
-
-        // 버튼 연결 설정
-//        btn_check_start.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if(chlId>0){// 챌린지
-//                    sendChlCheck(chlId,1);
-//                }
-//                else if(chlId<0){ // todoList
-//                    sendTodoChange(-1L*chlId);
-//                }
-//                status.setText("성공!");
-////                btn_check_start.setClickable(false);
-////                btn_check_end.setClickable(true);
-//
-//            }
-//        });
-
-//        btn_check_end.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if(chlId>0){ // 챌린지
-//                    sendChlCheck(chlId,2);
-//                }
-//                else if(chlId<0){ // todoList
-//                    sendTodoChange(-1L*chlId);
-//                }
-//                status.setText("미완료");
-//                btn_check_start.setClickable(true);
-//                btn_check_end.setClickable(false);
-//            }
-//        });
-//        if(done){ // 이미 완료 상태라면
-//            status.setText("성공!");
-//            btn_check_start.setClickable(false);
-//        }
-//        else {
-//            status.setText("미완료");
-//            btn_check_end.setClickable(false);
-//        }
 
         btn_check.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,8 +82,10 @@ public class CheckActivity extends Activity {
                         sendTodoChange(-1L*chlId);
                     }
                     status.setText("성공!");
+                    btn_check.setImageDrawable(unchk);
                     done=true;
                     status.setTextColor(Color.parseColor("#32CD32"));
+
                 }
                 else {
                     if(chlId>0){ // 챌린지
@@ -126,6 +96,7 @@ public class CheckActivity extends Activity {
                     }
                     done=false;
                     status.setText("미완료");
+                    btn_check.setImageDrawable(chk);
                     status.setTextColor(Color.parseColor("#DB4455"));
                 }
             }

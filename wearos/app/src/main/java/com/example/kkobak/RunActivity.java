@@ -198,37 +198,6 @@ public class RunActivity extends Activity {
         };
         
         sensorManager.registerListener(sensorEventListener, hr, SensorManager.SENSOR_DELAY_NORMAL);
-        System.out.println("심박수 등록 완료");
-
-        //시작 버튼
-//        btn_run_start = findViewById(R.id.button_run_start);
-//        btn_run_start.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                // 권한 확인
-//                checkPermission();
-//                flag = true;
-//                // 클릭하면 센서를 로케이션 리스너에 등록
-//
-//                // 시작 시간 등록
-//                chk = LocalDateTime.now(). withNano(0);
-//                startTimer();
-//            }
-//        });
-//
-//        // 종료 버튼
-//        btn_run_end = findViewById(R.id.button_run_end);
-//        btn_run_end.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                flag = false;
-//                endTimer();
-//                // 여기 입력하면 될듯
-//                sendJudge();
-//            }
-//        });
-
-//        btn_run_end.setClickable(false);
 
         btn_play=findViewById(R.id.btn_play);
         btn_flag=false;

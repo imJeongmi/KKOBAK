@@ -4,6 +4,8 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -11,6 +13,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,7 +36,7 @@ public class AttendanceActivity extends Activity {
 
     // 출력용 뷰
     TextView title, status, adjacent;
-    Button btn_attend_start;
+    ImageButton btn_attend_start;
 
     // 리스트에서 넘어온 데이터
     Intent intent;
@@ -75,25 +78,54 @@ public class AttendanceActivity extends Activity {
         target_lng = str[0];
         target_lat = str[1];
 
+        Drawable unchk = getResources().getDrawable( R.drawable.noncheck_button );
+        Drawable chk = getResources().getDrawable( R.drawable.check_button );
+
+        adjacent.setText("근처가 아닙니다!");
+        btn_attend_start.setClickable(false);
+        System.out.println(">>>>>>>>>>>>> done = " + done);
+
+        if(done){
+            status.setText("성공!");
+            status.setTextColor(Color.parseColor("#32CD32"));
+            btn_attend_start.setVisibility(View.INVISIBLE);
+        }
+        else {
+            status.setText("미완료");
+            status.setTextColor(Color.parseColor("#DB4455"));
+            btn_attend_start.setImageDrawable(chk);
+            btn_attend_start.setClickable(false);
+        }
+
 
         // 버튼 연결 설정
         btn_attend_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 sendJudge(nowLat, nowLng);
-                status.setText("출석 성공!");
-                btn_attend_start.setClickable(false);
-                done = true;
+                if(!adjacent.getText().equals("근처가 아닙니다!")){
+                    status.setText("성공!");
+                    status.setTextColor(Color.parseColor("#32CD32"));
+                    btn_attend_start.setClickable(false);
+                    btn_attend_start.setVisibility(View.INVISIBLE);
+                    done = true;
+                }
             }
         });
 
 
         if(done){ // 이미 완료 상태라면
-            status.setText("출석 완료!");
+            status.setText("완료!");
+            status.setTextColor(Color.parseColor("#32CD32"));
             btn_attend_start.setClickable(false);
+            btn_attend_start.setVisibility(View.INVISIBLE);
+            btn_attend_start.setImageDrawable(unchk);
         }
         else {
-            status.setText("출석 미완료");
+            status.setText("미완료");
+            status.setTextColor(Color.parseColor("#DB4455"));
+            btn_attend_start.setImageDrawable(chk);
+            btn_attend_start.setClickable(false);
         }
 
         // 퍼미션 체크
@@ -109,12 +141,16 @@ public class AttendanceActivity extends Activity {
 
                 if(distance<100) {
                     adjacent.setText("근처입니다!");
+                    adjacent.setTextColor(Color.parseColor("#32CD32"));
                     if(!done) {
+                        btn_attend_start.setImageDrawable(chk);
                         btn_attend_start.setClickable(true);
                     }
                 }
                 else{
                     adjacent.setText("근처가 아닙니다!");
+                    adjacent.setTextColor(Color.parseColor("#808080"));
+                    btn_attend_start.setImageDrawable(unchk);
                     btn_attend_start.setClickable(false);
                 }
             }
