@@ -58,6 +58,12 @@ public class CountActivity extends Activity {
         maxView.setText(max+"");
         counter.setText(count+"");
 
+        if(max==count){
+            status.setText("성공!");
+            status.setTextColor(Color.parseColor("#32CD32"));
+            btn_count_up.setClickable(false);
+        }
+
         // 버튼 연결 설정
         btn_count_up.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,6 +88,7 @@ public class CountActivity extends Activity {
                 counter.setText(count+"");
                 status.setText("미완료");
                 status.setTextColor(Color.parseColor("#DB4455"));
+                btn_count_up.setClickable(true);
                 if(count==0){
                     btn_count_down.setClickable(false);
                 }
