@@ -76,7 +76,6 @@ export default function Main() {
   }
 
   useEffect(() => {
-    CheckNumPage(checkPage);
     fetchMyChallengeCalendarPageCnt(
       fetchChallengePageCntSuccess,
       fetchChallengePageCntFail
@@ -84,6 +83,10 @@ export default function Main() {
     requestUserInfo(requestUserInfoSuccess, requestUserInfoFail);
     getMyKkobakList(getMyKkobakListSuccess, getMyKkobakListFail);
   }, []);
+
+  useEffect(() => {
+    CheckNumPage(checkPage);
+  });
 
   return MyChallengeList.length === 0 ? (
     <Box
