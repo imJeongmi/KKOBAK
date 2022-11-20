@@ -135,7 +135,7 @@ export default function Statistics() {
             {"📍 GPS 정보"}
           </Text>
           <CardBox>
-            <ChallengeMap
+            <ChallengeAppearMap
               width="300px"
               height="150px"
               findTime={findTime}
@@ -149,7 +149,7 @@ export default function Statistics() {
             <AppearBarChart findTime={findTime} setFindTime={setFindTime} />
           </CardBox>
         </Box>
-
+      ) : (
         // <StatisticsBox>
         //   <Box
         //     sx={{
@@ -169,7 +169,6 @@ export default function Statistics() {
         //   <CardBox>
         //   </CardBox>
         // </StatisticsBox>
-      ) : (
         <StatisticsBox>
           <CardBox height="50px"></CardBox>
           <CardBox height="250px">
