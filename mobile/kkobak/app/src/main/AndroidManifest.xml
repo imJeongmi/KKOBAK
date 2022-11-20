@@ -2,24 +2,31 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!--  Retrofit의 사용을 위항 인터넷 허가  -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!--    GPS데이터를 사용하기 위한 허가 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!-- 속도 데이터를 사용하기 위한 허가 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!-- 진동 울리기 위한 허가 -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <!-- 심박수 사용을 위한 허가  -->
+    <uses-permission android:name="android.permission.BODY_SENSORS" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/logo"
+        android:icon="@drawable/done"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/logo"
+        android:roundIcon="@drawable/done"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Kkobak"
+        android:theme="@style/Theme.KKOBAK"
         tools:targetApi="31">
         <activity
-            android:name=".ui.main.MainActivity"
-            android:label="@string/app_name">
-        </activity>
-
-        <activity
-            android:name=".ui.login.LoginActivity"
-            android:label="@string/app_name"
+            android:name=".ui.member.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,6 +39,21 @@
                 android:value="" />
         </activity>
 
+        <activity android:name=".ui.main.MainActivity" />
+
+        <activity android:name=".ui.member.RegisterActivity" />
+
+        <activity android:name=".ui.challenge.AttendActivity" />
+
+        <activity android:name=".ui.challenge.GpsActivity" />
+
+        <activity android:name=".ui.challenge.MeditationActivity" />
+
+        <activity android:name=".ui.challenge.PillActivity" />
+
+        <activity android:name=".ui.challenge.StandupActivity" />
+
+        <activity android:name=".ui.challenge.WaterActivity" />
     </application>
 
 </manifest>
