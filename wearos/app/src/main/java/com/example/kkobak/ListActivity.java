@@ -224,6 +224,7 @@ public class ListActivity extends Activity {
                             intent.putExtra("contents",clickTodo.getContents());
                             intent.putExtra("done", clickTodo.isDone());
                             intent.putExtra("goal",clickTodo.getGoal());
+                            intent.putExtra("unit",clickTodo.getUnit());
                             intent.putExtra("cnt",clickTodo.getCnt());
                             startActivity(intent);
                         }

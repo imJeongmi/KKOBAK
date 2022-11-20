@@ -21,6 +21,7 @@ public class MyFirebaseMessageService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
+        System.out.println("메세지 도착했네!!");
         System.out.println("파이어베이스 메세지 제목: "+remoteMessage.getNotification().getTitle());
         System.out.println("파이어베이스 메세지 내용: "+remoteMessage.getNotification().getBody());
         System.out.println("파이어베이스 메세지 데이터: "+remoteMessage.getData());

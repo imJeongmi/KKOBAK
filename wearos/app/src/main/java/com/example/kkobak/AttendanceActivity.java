@@ -1,15 +1,25 @@
 package com.example.kkobak;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 
 import com.example.kkobak.repository.request.JudgeRequest;
 import com.example.kkobak.repository.util.RetrofitClient;
+
+import java.time.LocalDateTime;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -17,27 +27,39 @@ import retrofit2.Response;
 
 public class AttendanceActivity extends Activity {
 
+    //로케이션 리스너 선언 및 설정
+    LocationListener locationListener;
+    LocationManager locationManager;
+
     // 출력용 뷰
-    TextView title, status;
-    Button btn_check_start;
-    Button btn_check_end;
+    TextView title, status, adjacent;
+    Button btn_attend_start;
 
     // 리스트에서 넘어온 데이터
     Intent intent;
     private Long chlId;
+    private String unit;
+    private String target_lng;
+    private String target_lat;
+    private boolean done;
 
     // 액세스 토큰
     private String accessToken;
 
+    String nowLat;
+    String nowLng;
+
+    private static final String TAG = "____Attendance____";
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_check);
+        setContentView(R.layout.activity_attendance);
         // 뷰  컴포넌트 연결
-        title = findViewById(R.id.title_check);
-        status = findViewById(R.id.status_check);
-        btn_check_start = findViewById(R.id.btn_check_start);
-        btn_check_end = findViewById(R.id.btn_check_end);
+        title = findViewById(R.id.title_attendance);
+        status = findViewById(R.id.status_attendance);
+        adjacent = findViewById(R.id.adjacency_attendance);
+        btn_attend_start = findViewById(R.id.btn_attend_attendance);
 
         // 토큰 세팅
         accessToken = ((KkobakApp)getApplication()).getAccessToken();
@@ -45,53 +67,82 @@ public class AttendanceActivity extends Activity {
         //인텐트에서 값 가져오기
         intent = getIntent();
         chlId = intent.getLongExtra("chlId",0);
-        System.out.println("챌린지 아이디값입니다!!: "+chlId);
-        boolean done = intent.getBooleanExtra("done", true);
+        done = intent.getBooleanExtra("done", true);
         title.setText(intent.getStringExtra("title"));
+        unit = intent.getStringExtra("unit");
+
+        String[] str = unit.split(",");
+        target_lng = str[0];
+        target_lat = str[1];
+
 
         // 버튼 연결 설정
-        btn_check_start.setOnClickListener(new View.OnClickListener() {
+        btn_attend_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(chlId>0){// 챌린지
-                    sendChlCheck(chlId,1);
-                }
-                else if(chlId<0){ // todoList
-                    sendTodoChange(-1L*chlId);
-                }
-                status.setText("성공!");
-                btn_check_start.setClickable(false);
-                btn_check_end.setClickable(true);
-
+                sendJudge(nowLat, nowLng);
+                status.setText("출석 성공!");
+                btn_attend_start.setClickable(false);
+                done = true;
             }
         });
 
-        btn_check_end.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(chlId>0){ // 챌린지
-                    // sendChlCheck(chlId,2);
-                    // >>>>>>>>>>>>>>>>>>>>>>>>>> 이 부분은 변경해야함
 
-                    // 여기 입력하면 될듯
-//                    sendJudge(lat, lng);
-                }
-                else if(chlId<0){ // todoList
-                    sendTodoChange(-1L*chlId);
-                }
-                status.setText("미완료");
-                btn_check_start.setClickable(true);
-                btn_check_end.setClickable(false);
-            }
-        });
         if(done){ // 이미 완료 상태라면
-            status.setText("성공!");
-            btn_check_start.setClickable(false);
+            status.setText("출석 완료!");
+            btn_attend_start.setClickable(false);
         }
         else {
-            status.setText("미완료");
-            btn_check_end.setClickable(false);
+            status.setText("출석 미완료");
         }
+
+        // 퍼미션 체크
+        checkPermission();
+
+        // 로케이션 설정
+        locationListener = new LocationListener() {
+            @Override
+            public void onLocationChanged(@NonNull Location location) {
+                double distance = getDistance(target_lat,target_lng,location.getLatitude(),location.getLongitude());
+                nowLng = location.getLongitude()+"";
+                nowLat = location.getLatitude()+"";
+
+                if(distance<100) {
+                    adjacent.setText("근처입니다!");
+                    if(!done) {
+                        btn_attend_start.setClickable(true);
+                    }
+                }
+                else{
+                    adjacent.setText("근처가 아닙니다!");
+                    btn_attend_start.setClickable(false);
+                }
+            }
+            @Override
+            public void onFlushComplete(int requestCode) {
+                System.out.println("플러시");
+            }
+
+            @Override
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+                System.out.println("상태변경");
+            }
+
+            @Override
+            public void onProviderEnabled(@NonNull String provider) {
+                System.out.println("제공가능");
+            }
+
+            @Override
+            public void onProviderDisabled(@NonNull String provider) {
+                System.out.println("제공안됨");
+            }
+        };
+
+        locationManager = (LocationManager) this.getSystemService(LOCATION_SERVICE);
+
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,locationListener);
+
     }
     @Override
     protected void onResume(){
@@ -100,6 +151,9 @@ public class AttendanceActivity extends Activity {
     }
     @Override
     protected void onDestroy() {
+        if(locationManager != null){
+            locationManager.removeUpdates(locationListener);
+        }
         super.onDestroy();
     }
 
@@ -170,5 +224,34 @@ public class AttendanceActivity extends Activity {
                 System.out.println(lat +" ------ " + lng);
             }
         });
+    }
+
+    private void checkPermission() { // 권한 확인 함수
+
+        // 위치 권한 확인
+        if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) // check runtime permission for location
+                != PackageManager.PERMISSION_GRANTED) {
+
+            requestPermissions(
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1); // If BODY_SENSORS permission has not been taken before then ask for the permission with popup
+        } else {
+            Log.d(TAG, "ALREADY GRANTED"); //if BODY_SENSORS is allowed for this app then print this line in log.
+        }
+    }
+
+    public static double getDistance(String lat1_s, String lng1_s, double lat2_s, double lng2_s) {
+
+        double lat1 = Double.parseDouble(lat1_s);
+        double lng1 = Double.parseDouble(lng1_s);
+        double lat2 = lat2_s;
+        double lng2 = lng2_s;
+
+        double dLat = Math.toRadians(lat2 - lat1);
+        double dLon = Math.toRadians(lng2 - lng1);
+
+        double a = Math.sin(dLat/2)* Math.sin(dLat/2)+ Math.cos(Math.toRadians(lat1))* Math.cos(Math.toRadians(lat2))* Math.sin(dLon/2)* Math.sin(dLon/2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        double d = 6371 * c * 1000;    // 미터로 바꾸기
+        return d;
     }
 }

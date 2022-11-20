@@ -42,6 +42,6 @@ public interface RetrofitAPI {
     Call<Boolean> sendTodoStatusChange(@Path("todoId") Long todoId, @Header("Authorization") String authorization);
 
     @POST("challenge/judge")
-    Call reqJudge(@Body JudgeRequest judgeRequest, @Header("Authorization") String authorization);
+    Call<Void> reqJudge(@Body JudgeRequest judgeRequest, @Header("Authorization") String authorization);
 
 }
