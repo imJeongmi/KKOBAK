@@ -308,7 +308,7 @@ public class GpsActivity extends AppCompatActivity implements LocationListener {
             timer.cancel();
 
             if (mLastLocation != null) {
-                JudgeReq judgeReq = new JudgeReq(Long.parseLong(chlId), String.valueOf(mLastLocation.getLatitude()), String.valueOf(mLastLocation.getLongitude()), null);
+                JudgeReq judgeReq = new JudgeReq(Long.parseLong(chlId), "", "", startTime.toString());
                 Call<Boolean> call = ChallengeChkApi.getService().judgeChallenge(accessToken, judgeReq);
                 call.enqueue(new Callback<Boolean>() {
                     @Override

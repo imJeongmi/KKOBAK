@@ -1,7 +1,6 @@
 package com.example.kkobak.ui.dashboard;
 
 import android.os.Bundle;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -16,6 +15,7 @@ public class ChallengeExpandingFragment extends ExpandingFragment {
         ChallengeExpandingFragment fragment = new ChallengeExpandingFragment();
         Bundle args = new Bundle();
         args.putParcelable(ARG_TRAVEL, travel);
+        System.out.println(">>><<<<<>>>>> info: " + travel.getTitle());
         fragment.setArguments(args);
         return fragment;
     }

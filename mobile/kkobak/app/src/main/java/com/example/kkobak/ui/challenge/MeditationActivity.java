@@ -246,7 +246,7 @@ public class MeditationActivity extends AppCompatActivity implements SensorEvent
             Ringtone ringtone = RingtoneManager.getRingtone(getApplicationContext(), notification);
             ringtone.play();
 
-            Call<Boolean> call = ChallengeChkApi.getService().judgeChallenge(accessToken, new JudgeReq(Long.parseLong(chlId),"","",null));
+            Call<Boolean> call = ChallengeChkApi.getService().judgeChallenge(accessToken, new JudgeReq(Long.parseLong(chlId),"","",startTime.toString()));
             call.enqueue(new Callback<Boolean>() {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {

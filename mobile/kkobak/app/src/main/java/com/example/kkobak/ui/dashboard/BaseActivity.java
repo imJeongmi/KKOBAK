@@ -1,15 +1,14 @@
 package com.example.kkobak.ui.dashboard;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.transition.Explode;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -19,7 +18,6 @@ import androidx.viewpager.widget.ViewPager;
 import com.example.kkobak.R;
 import com.example.kkobak.data.retrofit.api.ChallengeChkApi;
 import com.example.kkobak.data.retrofit.model.ChallengeAllDataRes;
-import com.example.kkobak.data.retrofit.model.MyChallengeRes;
 import com.example.kkobak.data.room.dao.AccessTokenDao;
 import com.example.kkobak.data.room.database.AccessTokenDatabase;
 import com.example.kkobak.data.room.entity.AccessToken;
@@ -90,7 +88,7 @@ public class BaseActivity extends AppCompatActivity implements ExpandingFragment
                 ChallengeViewPagerAdapter adapter = new ChallengeViewPagerAdapter(getSupportFragmentManager());
                 adapter.addAll(generateTravelList());
 
-                Toast.makeText(BaseActivity.this, "size: " + adapter.getCount(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(BaseActivity.this, "size: " + adapter.getCount(), Toast.LENGTH_SHORT).show();
 
 //                ViewGroup.LayoutParams layoutParams = viewPager.getLayoutParams();
 //                layoutParams.width = ((Activity) viewPager.getContext()).getWindowManager().getDefaultDisplay().getWidth() / 7 * 5;
@@ -111,17 +109,19 @@ public class BaseActivity extends AppCompatActivity implements ExpandingFragment
                 viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
                     @Override
                     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                        Toast.makeText(BaseActivity.this, "변경 감지감지감지: " + position, Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(BaseActivity.this, "변경 감지감지감지: " + position, Toast.LENGTH_SHORT).show();
                         ExpandingFragment expandingFragment = ExpandingPagerFactory.getCurrentFragment(viewPager);
                         if(expandingFragment != null && expandingFragment.isOpenend()){
-                            expandingFragment.close();
+//                            expandingFragment.close();
                         }
                     }
 
                     @Override
                     public void onPageSelected(int position) {
 //                        Toast.makeText(BaseActivity.this, "onPageSelected", Toast.LENGTH_SHORT).show();
-                        Toast.makeText(BaseActivity.this, "?: " + adapter.getItem(position).toString(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(BaseActivity.this, "?: " + adapter.getItem(position), Toast.LENGTH_SHORT).show();
+                        TextView tv = findViewById(R.id.title);
+                        tv.setText("이거 되냐");
                     }
 
                     @Override
