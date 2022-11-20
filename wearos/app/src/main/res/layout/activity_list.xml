@@ -13,14 +13,16 @@
     android:keepScreenOn="true">
 
     <TextView
+        android:id="@+id/text_todo"
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:textAlignment="center"
-        android:gravity="center"
-        android:textSize="15dp"
-        android:textColor="#000000"
         android:background="#FFFFFF"
-        android:text="TODO LIST"/>
+        android:gravity="center"
+        android:text="TODO LIST"
+        android:textAlignment="center"
+        android:textColor="#2986cc"
+        android:textFontWeight="@integer/google_play_services_version"
+        android:textSize="17dp" />
 
     <androidx.wear.widget.WearableRecyclerView
         android:id="@+id/rv"
