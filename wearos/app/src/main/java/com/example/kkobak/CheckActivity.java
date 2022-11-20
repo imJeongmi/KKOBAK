@@ -2,10 +2,12 @@ package com.example.kkobak;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.kkobak.repository.util.RetrofitClient;
@@ -20,12 +22,14 @@ public class CheckActivity extends Activity {
 
     // 출력용 뷰
     TextView title, status;
-    Button btn_check_start;
-    Button btn_check_end;
+//    Button btn_check_start;
+//    Button btn_check_end;
+    ImageButton btn_check;
 
     // 리스트에서 넘어온 데이터
     Intent intent;
     private Long chlId;
+    boolean done;
 
     // 액세스 토큰
     private String accessToken;
@@ -37,8 +41,9 @@ public class CheckActivity extends Activity {
         // 뷰  컴포넌트 연결
         title = findViewById(R.id.title_check);
         status = findViewById(R.id.status_check);
-        btn_check_start = findViewById(R.id.btn_check_start);
-        btn_check_end = findViewById(R.id.btn_check_end);
+//        btn_check_start = findViewById(R.id.btn_check_start);
+//        btn_check_end = findViewById(R.id.btn_check_end);
+        btn_check = findViewById(R.id.btn_check);
 
         // 토큰 세팅
         accessToken = ((KkobakApp)getApplication()).getAccessToken();
@@ -46,49 +51,86 @@ public class CheckActivity extends Activity {
         //인텐트에서 값 가져오기
         intent = getIntent();
         chlId = intent.getLongExtra("chlId",0);
-        System.out.println("챌린지 아이디값입니다!!: "+chlId);
-        boolean done = intent.getBooleanExtra("done", true);
+
+        done = intent.getBooleanExtra("done", true);
         title.setText(intent.getStringExtra("title"));
-
-        // 버튼 연결 설정
-        btn_check_start.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(chlId>0){// 챌린지
-                    sendChlCheck(chlId,1);
-                }
-                else if(chlId<0){ // todoList
-                    sendTodoChange(-1L*chlId);
-                }
-                status.setText("성공!");
-                btn_check_start.setClickable(false);
-                btn_check_end.setClickable(true);
-
-            }
-        });
-
-        btn_check_end.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(chlId>0){ // 챌린지
-                    sendChlCheck(chlId,2);
-                }
-                else if(chlId<0){ // todoList
-                    sendTodoChange(-1L*chlId);
-                }
-                status.setText("미완료");
-                btn_check_start.setClickable(true);
-                btn_check_end.setClickable(false);
-            }
-        });
-        if(done){ // 이미 완료 상태라면
+        if(done){
             status.setText("성공!");
-            btn_check_start.setClickable(false);
+            status.setTextColor(Color.parseColor("#32CD32"));
         }
         else {
             status.setText("미완료");
-            btn_check_end.setClickable(false);
+            status.setTextColor(Color.parseColor("#DB4455"));
         }
+
+        // 버튼 연결 설정
+//        btn_check_start.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if(chlId>0){// 챌린지
+//                    sendChlCheck(chlId,1);
+//                }
+//                else if(chlId<0){ // todoList
+//                    sendTodoChange(-1L*chlId);
+//                }
+//                status.setText("성공!");
+////                btn_check_start.setClickable(false);
+////                btn_check_end.setClickable(true);
+//
+//            }
+//        });
+
+//        btn_check_end.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if(chlId>0){ // 챌린지
+//                    sendChlCheck(chlId,2);
+//                }
+//                else if(chlId<0){ // todoList
+//                    sendTodoChange(-1L*chlId);
+//                }
+//                status.setText("미완료");
+//                btn_check_start.setClickable(true);
+//                btn_check_end.setClickable(false);
+//            }
+//        });
+//        if(done){ // 이미 완료 상태라면
+//            status.setText("성공!");
+//            btn_check_start.setClickable(false);
+//        }
+//        else {
+//            status.setText("미완료");
+//            btn_check_end.setClickable(false);
+//        }
+
+        btn_check.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!done){
+                    if(chlId>0){// 챌린지
+                        sendChlCheck(chlId,1);
+                    }
+                    else if(chlId<0){ // todoList
+                        sendTodoChange(-1L*chlId);
+                    }
+                    status.setText("성공!");
+                    done=true;
+                    status.setTextColor(Color.parseColor("#32CD32"));
+                }
+                else {
+                    if(chlId>0){ // 챌린지
+                        sendChlCheck(chlId,2);
+                    }
+                    else if(chlId<0){ // todoList
+                        sendTodoChange(-1L*chlId);
+                    }
+                    done=false;
+                    status.setText("미완료");
+                    status.setTextColor(Color.parseColor("#DB4455"));
+                }
+            }
+        });
+
     }
     @Override
     protected void onResume(){
