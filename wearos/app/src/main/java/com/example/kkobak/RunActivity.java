@@ -131,7 +131,7 @@ public class RunActivity extends Activity {
 //                Toast.makeText(getApplicationContext(), "GPS: " + location.getLatitude() +"\n"+ location.getLongitude(), Toast.LENGTH_LONG).show();
                 updateMap(location);
                 if (flag) {
-                    runDistanceView.setText("이동거리: "+distance+"m" );
+                    runDistanceView.setText(distance+"m" );
                     runSpeedView.setText("현재 속력: "+speed+"km/h" );
                     sendGPSOne(location.getLatitude(), location.getLongitude(), LocalDateTime.now().withNano(0));
                 }
