@@ -263,7 +263,7 @@ export default function MyChallengeCardList() {
               ? MyChallengeNoFilterList.map((item) => {
                   return (
                     <ChallengeCard
-                      key={item.id}
+                      key={item.chlId}
                       chlId={item.id}
                       imgurl={item.imgurl}
                       tagList={item.tagList}
@@ -280,7 +280,7 @@ export default function MyChallengeCardList() {
               : MyChallengeFilterList.map((item) => {
                   return (
                     <ChallengeCard
-                      key={item.id}
+                      key={item.chlId}
                       chlId={item.id}
                       imgurl={item.imgurl}
                       tagList={item.tagList}

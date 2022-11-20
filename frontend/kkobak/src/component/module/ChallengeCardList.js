@@ -97,7 +97,7 @@ export default function ChallengeCardList() {
         {ChallengeList.map((item) => {
           return (
             <ChallengeCard
-              key={item.id}
+              key={item.chlId}
               chlId={item.chlId}
               imgurl={item.imgurl}
               tagList={item.tagList}

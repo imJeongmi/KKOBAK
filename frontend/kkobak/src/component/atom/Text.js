@@ -100,7 +100,7 @@ function getPaddingX(px) {
 }
 
 function getStyle(done) {
-  if (!!done) return "line-through";
+  if (done === "true") return "line-through";
   return "none";
 }
 
@@ -116,19 +116,19 @@ export default function Text({
   px,
   done,
 }) {
-  return (
-    <TextBox
-      size={size}
-      color={color}
-      weight={weight}
-      my={my}
-      mx={mx}
-      mt={mt}
-      py={py}
-      px={px}
-      done={done}
-    >
-      {children}
-    </TextBox>
-  );
+    return (
+      <TextBox
+        size={size}
+        color={color}
+        weight={weight}
+        my={my}
+        mx={mx}
+        mt={mt}
+        py={py}
+        px={px}
+        done={done + ""}
+      >
+        {children}
+      </TextBox>
+    );
 }

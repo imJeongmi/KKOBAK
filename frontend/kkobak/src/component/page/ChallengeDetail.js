@@ -216,7 +216,7 @@ export default function ChallengeDetail() {
             {`\u00A0상세 화면`}
           </Text>
         </Box>
-        <MainBox width="75" flexDir="row" justifyContent="center">
+        <MainBox width="75" flexdir="row" justifyContent="center">
           <CardBox>
             <ImageBox>
               {<img src={imgurl} alt="img" width="100%" height="100%" />}

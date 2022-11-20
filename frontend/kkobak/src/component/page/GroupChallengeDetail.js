@@ -195,7 +195,7 @@ export default function ChallengeDetail() {
             {`\u00A0단체 현황`}
           </Text>
         </Box>
-        <MainBox width="75" flexDir="row" justifyContent="center">
+        <MainBox width="75" flexdir="row" justifyContent="center">
           <CardBox>
             <ImageBox>
               {<img src={imgurl} alt="img" width="100%" height="100%" />}
