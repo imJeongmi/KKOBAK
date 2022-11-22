@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:orientation="vertical"
+    android:gravity="center"
+    tools:context=".AttendanceActivity"
+    android:keepScreenOn="true">
+
+    <TextView
+        android:id="@+id/title_run"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="5dp"
+        android:gravity="center"
+        android:scrollbars="vertical"
+        android:text="ATTENDANCE"
+        android:textColor="#16537e"
+        android:textFontWeight="@integer/google_play_services_version" />
+
+    <TextView
+        android:id="@+id/title_attendance"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_marginBottom="10dp"
+        android:textSize="15dp"
+        android:text="title"
+        android:textColor="#000000" />
+
+    <TextView
+        android:id="@+id/status_attendance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:textColor="#DB4455"
+        android:textSize="20dp"
+        android:textFontWeight="@integer/google_play_services_version"
+        android:text="미완료"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageButton
+            android:id="@+id/btn_attend_attendance"
+            android:layout_width="60dp"
+            android:layout_height="35dp"
+            android:scaleType="centerCrop"
+            android:background="#ffffff"
+            android:layout_gravity="center"
+            android:textSize="10dp"
+            android:text="근처가 아닙니다"
+            android:textFontWeight="@integer/google_play_services_version"
+            android:src="@drawable/noncheck_button"
+            />
+
+    </LinearLayout>
+    <TextView
+        android:id="@+id/adjacency_attendance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="근처가 아닙니다"
+        android:textSize="9dp"
+        android:textColor="#808080"/>
+
+</LinearLayout>
